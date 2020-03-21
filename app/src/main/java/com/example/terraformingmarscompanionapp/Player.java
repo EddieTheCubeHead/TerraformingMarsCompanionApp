@@ -2,8 +2,8 @@ package com.example.terraformingmarscompanionapp;
 import java.util.Map;
 import java.util.HashMap;
 
-public class Player {
+class Player {
 
-    Map resources = new HashMap();
+    HashMap<String, Integer> resources = new HashMap<>();
 
 }
