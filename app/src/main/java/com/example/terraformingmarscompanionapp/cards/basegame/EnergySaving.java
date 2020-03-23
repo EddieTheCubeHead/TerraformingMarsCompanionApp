@@ -4,24 +4,20 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class LakeMarineris extends Card {
-    public LakeMarineris(Game game) {
-        name = "Lake marineris";
-        price = 18;
-        requirements.put("min_temperature", 0);
-        victory_points = 2;
+public final class EnergySaving extends Card {
+    public EnergySaving(Game game) {
+        name = "Energy saving";
+        price = 15;
+        tags.put("energy", 1);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addNullTag();
+        player.addEnergyTag();
+        player.changeEnergyProduction(owner_game.getCitiesOnMars() + owner_game.getCitiesInSpace());
         player.addGreen(this);
-        owner_game.placeOcean(player, false);
-        //TODO selvitä placeOcean ajoitus
-        owner_game.placeOcean(player, false);
         owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

@@ -21,6 +21,7 @@ public final class ElectroCatapult extends Card {
         player.addAction(this);
         player.changeEnergyProduction(-1);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override
@@ -31,10 +32,10 @@ public final class ElectroCatapult extends Card {
     @Override
     public boolean cardAction() {
         if (action_used) {
-            //TODO Valitse kasvi/teräs
             return false;
         }
         else {
+            //TODO Valitse kasvi/teräs
             owner_player.changeMoney(7);
             action_used = true;
             return true;

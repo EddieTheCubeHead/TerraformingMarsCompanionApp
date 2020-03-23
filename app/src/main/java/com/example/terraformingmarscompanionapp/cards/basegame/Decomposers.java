@@ -19,6 +19,7 @@ public final class Decomposers extends Card {
         owner_player = player;
         player.addPassive(this);
         player.addMicrobeTag();
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

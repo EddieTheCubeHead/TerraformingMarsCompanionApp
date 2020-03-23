@@ -4,24 +4,23 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class LakeMarineris extends Card {
-    public LakeMarineris(Game game) {
-        name = "Lake marineris";
-        price = 18;
-        requirements.put("min_temperature", 0);
-        victory_points = 2;
+public final class MagneticDomeField extends Card {
+    public MagneticDomeField(Game game) {
+        name = "Magnetic dome field";
+        price = 5;
+        tags.put("building", 1);
+        requirements.put("min_energy_production", 2);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addNullTag();
+        player.addBuildingTag();
+        player.changeEnergyProduction(-2);
+        player.changePlantsProduction(1);
+        player.changeTerraformingRating(1);
         player.addGreen(this);
-        owner_game.placeOcean(player, false);
-        //TODO selvitä placeOcean ajoitus
-        owner_game.placeOcean(player, false);
         owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

@@ -21,6 +21,7 @@ public final class Trees extends Card {
         player.changePlants(1);
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

@@ -8,7 +8,7 @@ public final class RadSuits extends Card {
     public RadSuits(Game game) {
         name = "Rad-suits";
         price = 6;
-        requirements.put("min_cities", 2);
+        requirements.put("min_personal_cities", 2);
         victory_points = 1;
         owner_game = game;
     }
@@ -18,6 +18,7 @@ public final class RadSuits extends Card {
         player.changeMoneyProduction(1);
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

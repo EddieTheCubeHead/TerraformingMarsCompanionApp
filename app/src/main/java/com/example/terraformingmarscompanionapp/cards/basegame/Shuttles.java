@@ -25,6 +25,7 @@ public final class Shuttles extends Card {
         player.addSpaceTag();
         player.addPassive(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

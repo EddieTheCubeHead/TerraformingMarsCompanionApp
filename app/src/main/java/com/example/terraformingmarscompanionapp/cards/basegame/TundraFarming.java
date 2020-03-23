@@ -22,6 +22,7 @@ public final class TundraFarming extends Card {
         player.changeMoneyProduction(2);
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

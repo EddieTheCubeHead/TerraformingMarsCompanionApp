@@ -20,6 +20,7 @@ public final class Fish extends Card {
         player.addAction(this);
         //TODO toiselta kasvintuotannon ottaminen
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

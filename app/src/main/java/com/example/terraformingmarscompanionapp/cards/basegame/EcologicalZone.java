@@ -10,7 +10,7 @@ public final class EcologicalZone extends Card {
         price = 12;
         tags.put("animal", 1);
         tags.put("plant", 1);
-        requirements.put("min_forests_personal", 1);
+        requirements.put("min_personal_forests", 1);
         resource_type = 2;
         owner_game = game;
     }
@@ -22,6 +22,7 @@ public final class EcologicalZone extends Card {
         player.addAnimalTag();
         player.addPlantTag();
         owner_game.placeTile(player, 8);
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

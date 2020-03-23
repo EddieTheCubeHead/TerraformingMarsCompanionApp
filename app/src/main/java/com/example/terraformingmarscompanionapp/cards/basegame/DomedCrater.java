@@ -26,6 +26,7 @@ public final class DomedCrater extends Card {
         owner_game.placeCity(player, 0);
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

@@ -1,11 +1,19 @@
 package com.example.terraformingmarscompanionapp;
 
+import com.example.terraformingmarscompanionapp.cards.basegame.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 class GameConstructor {
-    GameConstructor() {
+    private HashMap<String, Card> deck;
+    private HashMap<String, Card> preludes;
+    private HashMap<String, Card> corporations;
 
+    GameConstructor() {
+        deck = new HashMap<>();
+        preludes = new HashMap<>();
+        corporations = new HashMap<>();
     }
 
     HashMap<String, Card> createDeck(Game game,
@@ -14,9 +22,10 @@ class GameConstructor {
                                      boolean colonies,
                                      boolean venus,
                                      boolean turmoil) {
-        HashMap<String, Card> deck = new HashMap<>();
 
         //Peruspelin kortit:
+        
+
         //TODO lisää kaikki peruspelin kortit tähän
 
         //Corporate eran kortit:

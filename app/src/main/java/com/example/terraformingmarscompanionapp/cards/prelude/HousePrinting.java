@@ -19,6 +19,7 @@ public final class HousePrinting extends Card {
         player.addBuildingTag();
         player.changeSteelProduction(1);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

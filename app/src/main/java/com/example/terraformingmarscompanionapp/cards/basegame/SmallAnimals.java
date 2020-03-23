@@ -20,6 +20,7 @@ public final class SmallAnimals extends Card {
         //TODO toiselta pelaajalta kasvien poistaminen
         player.addAction(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

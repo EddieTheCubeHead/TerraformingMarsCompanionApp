@@ -22,6 +22,7 @@ public final class PhobosSpaceHaven extends Card {
         player.addCityTag();
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override
