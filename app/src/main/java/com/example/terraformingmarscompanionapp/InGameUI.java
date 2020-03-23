@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,9 +32,18 @@ public class InGameUI extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startTestingActivity();
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    //toiminnallisuuden voi kopioida muihinkin activiteihin.
+    //tästä voi vaihtaa myös aktiviteettia johon fab vie.
+    private void startTestingActivity()
+    {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
     }
 }

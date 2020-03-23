@@ -30,7 +30,6 @@ public class Game {
 
     public Game(int player_count, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil) {
 
-
         for (int i = 0; i < player_count; i++) {
             players.add(new Player(this));
         }
