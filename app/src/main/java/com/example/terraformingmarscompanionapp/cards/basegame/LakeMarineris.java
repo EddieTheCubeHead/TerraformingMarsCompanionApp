@@ -17,9 +17,9 @@ public final class LakeMarineris extends Card {
     public void onPlay(Player player) {
         player.addNullTag();
         player.addGreen(this);
-        owner_game.placeOcean(player);
+        owner_game.placeOcean(player, false);
         //TODO selvitä placeOcean ajoitus
-        owner_game.placeOcean(player);
+        owner_game.placeOcean(player, false);
         owner_player = player;
     }
 

@@ -26,6 +26,9 @@ public final class ImmigrantCity extends Card {
 
     @Override
     public void cardEffect(Player player) {
+        if (owner_player == null) {
+            return;
+        }
         owner_player.changeMoneyProduction(1);
     }
 

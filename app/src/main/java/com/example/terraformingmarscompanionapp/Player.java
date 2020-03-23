@@ -25,7 +25,10 @@ public class Player {
         return true;
     }
     public Integer getMoneyProduction() {return money_production;}
-    public void changeMoneyProduction(Integer change_amount) {money_production += change_amount;}
+    public void changeMoneyProduction(Integer change_amount) {
+        money_production += change_amount;
+        game.updateManager.onMoneyProductionRaised(this, change_amount);
+    }
 
     //Teräs
     private Integer steel = 0;
@@ -44,6 +47,7 @@ public class Player {
             return false;
         }
         steel_production += change_amount;
+        game.updateManager.onSteelProductionRaised(this, change_amount);
         return true;
     }
 
@@ -64,6 +68,7 @@ public class Player {
             return false;
         }
         titanium_production += change_amount;
+        game.updateManager.onTitaniumProductionRaised(this, change_amount);
         return true;
     }
 
@@ -84,6 +89,7 @@ public class Player {
             return false;
         }
         plants_production += change_amount;
+        game.updateManager.onPlantsProductionRaised(this, change_amount);
         return true;
     }
 
@@ -104,6 +110,7 @@ public class Player {
             return false;
         }
         energy_production += change_amount;
+        game.updateManager.onEnergyProductionRaised(this, change_amount);
         return true;
     }
 
@@ -124,6 +131,7 @@ public class Player {
             return false;
         }
         heat_production += change_amount;
+        game.updateManager.onHeatProductionRaised(this, change_amount);
         return true;
     }
 
@@ -144,55 +152,124 @@ public class Player {
     //Tagit:
     private Integer building_tags = 0;
     public Integer getBuildingTags() {return building_tags;}
-    public void addBuildingTag() {building_tags++;}
+    public void addBuildingTag() {
+        if (building_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        building_tags++;
+    }
 
     private Integer space_tags = 0;
     public Integer getSpaceTags() {return space_tags;}
-    public void addSpaceTag() {space_tags++;}
+    public void addSpaceTag() {
+        if (space_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        space_tags++;
+    }
 
     private Integer science_tags = 0;
     public Integer getScienceTags() {return science_tags;}
-    public void addScienceTag() {science_tags++;}
+    public void addScienceTag() {
+        if (science_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        science_tags++;
+        game.updateManager.onScienceTag(this);
+    }
 
     private Integer plant_tags = 0;
     public Integer getPlantTags() {return plant_tags;}
-    public void addPlantTag() {plant_tags++;}
+    public void addPlantTag() {
+        if (plant_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        plant_tags++;
+        game.updateManager.onPlantTag(this);
+    }
 
     private Integer microbe_tags = 0;
     public Integer getMicrobeTags() {return  microbe_tags;}
-    public void addMicrobeTag() {microbe_tags++;}
+    public void addMicrobeTag() {
+        if (microbe_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        microbe_tags++;
+        game.updateManager.onMicrobeTag(this);
+    }
 
     private Integer animal_tags = 0;
     public Integer getAnimalTags() {return animal_tags;}
-    public void addAnimalTag() {animal_tags++;}
+    public void addAnimalTag() {
+        if (animal_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        animal_tags++;
+        game.updateManager.onAnimalTag(this);
+    }
 
     private Integer energy_tags = 0;
     public Integer getEnergyTags() {return energy_tags;}
-    public void addEnergyTag() {energy_tags++;}
+    public void addEnergyTag() {
+        if (energy_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        energy_tags++;
+    }
 
     private Integer jovian_tags = 0;
     public Integer getJovianTags() {return jovian_tags;}
-    public void addJovianTag() {jovian_tags++;}
+    public void addJovianTag() {
+        if (jovian_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        jovian_tags++;
+        game.updateManager.onJovianTag(this);
+    }
 
     private Integer earth_tags = 0;
     public Integer getEarthTags() {return earth_tags;}
-    public void addEarthTag() {earth_tags++;}
+    public void addEarthTag() {
+        if (earth_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        earth_tags++;
+        game.updateManager.onEarthTag(this);
+    }
 
     private Integer city_tags = 0;
     public Integer getCityTags() {return city_tags;}
-    public void addCityTag() {city_tags++;}
+    public void addCityTag() {
+        if (city_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        city_tags++;
+    }
 
     private Integer event_tags = 0;
     public Integer getEventTags() {return event_tags;}
-    public void addEventTag() {event_tags++;}
+    public void addEventTag() {
+        event_tags++;
+        game.updateManager.onEventPlayed(this);
+    }
 
     private Integer venus_tags = 0;
     public Integer getVenusTags() {return venus_tags;}
-    public void addVenusTag() {venus_tags++;}
+    public void addVenusTag() {
+        if (venus_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        venus_tags++;
+    }
 
     private Integer joker_tags = 0;
     public Integer getJokerTags() {return joker_tags;}
-    public void addJokerTag() {joker_tags++;}
+    public void addJokerTag() {
+        if (joker_tags == 0) {
+            game.updateManager.onNewUniqueTag(this);
+        }
+        joker_tags++;
+    }
 
     private Integer null_tags = 0;
     public Integer getNullTags() {return null_tags;}

@@ -28,11 +28,12 @@ public final class SpaceMirrors extends Card {
 
     @Override
     public boolean cardAction() {
-        if (owner_player.getMoney() < 7) {
+        if ((owner_player.getMoney() < 7) | action_used) {
             return false;
         } else {
             owner_player.changeMoney(-7);
             owner_player.changeEnergyProduction(1);
+            action_used = true;
             return true;
         }
     }

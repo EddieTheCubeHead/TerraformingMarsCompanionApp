@@ -4,18 +4,21 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class MartianRails extends Card {
-    public MartianRails(Game game) {
-        name = "Martian rails";
-        price = 13;
-        tags.put("building", 1);
+public final class Bushes extends Card {
+    public Bushes(Game game) {
+        name = "Bushes";
+        price = 10;
+        tags.put("plant", 1);
+        requirements.put("min_temperature", 10);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addAction(this);
+        player.addPlantTag();
+        player.changePlantsProduction(2);
+        player.changePlants(2);
+        player.addGreen(this);
         owner_player = player;
     }
 
@@ -26,12 +29,6 @@ public final class MartianRails extends Card {
 
     @Override
     public boolean cardAction() {
-        if (owner_player.changeEnergy(-1) | action_used) {
-            return false;
-        } else {
-            owner_player.changeMoney(owner_game.getCitiesOnMars());
-            action_used = true;
-            return true;
-        }
+        return false;
     }
 }
