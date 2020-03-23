@@ -7,10 +7,12 @@ public class Player {
     private ArrayList<Card> red_cards = new ArrayList<>();
     private ArrayList<Card> action_cards = new ArrayList<>();
     private ArrayList<Card> passive_effect_cards = new ArrayList<>();
+    private ArrayList<Card> preludes = new ArrayList<>();
     public void addGreen(Card card) {green_cards.add(card);}
     public void addRed(Card card) {red_cards.add(card);}
     public void addAction(Card card) {action_cards.add(card);}
     public void addPassive(Card card) {passive_effect_cards.add(card);}
+    public void addPrelude(Card card) {preludes.add(card);}
 
     //Resurssit:
     //Raha

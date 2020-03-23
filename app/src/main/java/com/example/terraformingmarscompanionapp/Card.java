@@ -5,7 +5,7 @@ import java.util.HashMap;
 public abstract class Card {
     protected Game owner_game;
     protected String name;
-    protected Integer price;
+    protected Integer price = 0;
     protected Integer victory_points = 0;
     protected Boolean action_used = false;
     protected Player owner_player = null; //Omistava pelaaja, null jos pelaamaton

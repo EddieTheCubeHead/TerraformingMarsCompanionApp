@@ -26,7 +26,7 @@ public final class MartianRails extends Card {
 
     @Override
     public boolean cardAction() {
-        if (owner_player.changeEnergy(-1) | action_used) {
+        if (!owner_player.changeEnergy(-1) | action_used) {
             return false;
         } else {
             owner_player.changeMoney(owner_game.getCitiesOnMars());
