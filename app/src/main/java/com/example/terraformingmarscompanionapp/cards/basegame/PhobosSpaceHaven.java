@@ -17,10 +17,11 @@ public final class PhobosSpaceHaven extends Card {
     @Override
     public void onPlay(Player player) {
         player.changeTitaniumProduction(1);
-        owner_game.placeCity(player, 4);
+        owner_game.placeCity(player, 6);
         player.addSpaceTag();
         player.addCityTag();
         player.addGreen(this);
+        owner_player = player;
     }
 
     @Override
@@ -29,7 +30,7 @@ public final class PhobosSpaceHaven extends Card {
     }
 
     @Override
-    public boolean cardAction(Player player) {
+    public boolean cardAction() {
         return false;
     }
 }

@@ -20,6 +20,7 @@ public final class NitrophilicMoss extends Card {
         player.changePlantsProduction(2);
         player.addPlantTag();
         player.addGreen(this);
+        owner_player = player;
     }
 
     @Override
@@ -28,7 +29,7 @@ public final class NitrophilicMoss extends Card {
     }
 
     @Override
-    public boolean cardAction(Player player) {
+    public boolean cardAction() {
         return false;
     }
 }

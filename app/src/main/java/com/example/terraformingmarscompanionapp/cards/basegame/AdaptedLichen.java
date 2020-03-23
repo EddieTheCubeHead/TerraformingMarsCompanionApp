@@ -17,6 +17,7 @@ public final class AdaptedLichen extends Card {
         player.changePlantsProduction(1);
         player.addPlantTag();
         player.addGreen(this);
+        owner_player = player;
     }
 
     @Override
@@ -25,7 +26,7 @@ public final class AdaptedLichen extends Card {
     }
 
     @Override
-    public boolean cardAction(Player player) {
+    public boolean cardAction() {
         return false;
     }
 }

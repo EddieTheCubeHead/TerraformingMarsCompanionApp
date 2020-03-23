@@ -14,6 +14,7 @@ public final class WaterSplittingPlant extends Card {
     public void onPlay(Player player) {
         player.addBuildingTag();
         player.addAction(this);
+        owner_player = player;
     }
 
     @Override
@@ -22,12 +23,12 @@ public final class WaterSplittingPlant extends Card {
     }
 
     @Override
-    public boolean cardAction(Player player) {
-        if (player.getEnergy() < 3) {
+    public boolean cardAction() {
+        if (owner_player.getEnergy() < 3) {
             return false;
         } else {
-            player.changeEnergy(-3);
-            owner_game.raiseOxygen(player);
+            owner_player.changeEnergy(-3);
+            owner_game.raiseOxygen(owner_player);
             return true;
         }
     }

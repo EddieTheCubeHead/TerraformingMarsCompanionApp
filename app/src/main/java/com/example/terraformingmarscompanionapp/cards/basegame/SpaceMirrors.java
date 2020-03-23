@@ -18,6 +18,7 @@ public final class SpaceMirrors extends Card {
         player.addEnergyTag();
         player.addSpaceTag();
         player.addAction(this);
+        owner_player = player;
     }
 
     @Override
@@ -26,12 +27,12 @@ public final class SpaceMirrors extends Card {
     }
 
     @Override
-    public boolean cardAction(Player player) {
-        if (player.getMoney() < 7) {
+    public boolean cardAction() {
+        if (owner_player.getMoney() < 7) {
             return false;
         } else {
-            player.changeMoney(-7);
-            player.changeEnergyProduction(1);
+            owner_player.changeMoney(-7);
+            owner_player.changeEnergyProduction(1);
             return true;
         }
     }

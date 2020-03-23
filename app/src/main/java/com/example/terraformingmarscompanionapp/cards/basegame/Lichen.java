@@ -4,20 +4,19 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class PowerPlant extends Card {
-    public PowerPlant(Game game) {
-        name = "Power plant";
-        price = 4;
-        tags.put("energy", 1);
-        tags.put("building", 1);
+public final class Lichen extends Card {
+    public Lichen(Game game) {
+        name = "Lichen";
+        price = 7;
+        tags.put("plant", 1);
+        requirements.put("min_temperature", -24);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.changeEnergyProduction(1);
-        player.addEnergyTag();
-        player.addBuildingTag();
+        player.addPlantTag();
+        player.changePlantsProduction(1);
         player.addGreen(this);
         owner_player = player;
     }

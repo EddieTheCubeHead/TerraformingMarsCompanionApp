@@ -1,19 +1,16 @@
 package com.example.terraformingmarscompanionapp;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
 
 public class Player {
-    Game game;
-    ArrayList<Card> green_cards = new ArrayList<>();
-    ArrayList<Card> red_cards = new ArrayList<>();
-    ArrayList<Card> effect_cards = new ArrayList<>();
-    ArrayList<Card> action_cards = new ArrayList<>();
+    private Game game;
+    private ArrayList<Card> green_cards = new ArrayList<>();
+    private ArrayList<Card> red_cards = new ArrayList<>();
+    private ArrayList<Card> action_cards = new ArrayList<>();
+    private ArrayList<Card> passive_effect_cards = new ArrayList<>();
     public void addGreen(Card card) {green_cards.add(card);}
     public void addRed(Card card) {red_cards.add(card);}
-    public void addEffect(Card card) {effect_cards.add(card);}
     public void addAction(Card card) {action_cards.add(card);}
-
+    public void addPassive(Card card) {passive_effect_cards.add(card);}
 
     //Resurssit:
     //Raha
@@ -133,7 +130,15 @@ public class Player {
     //TR
     private Integer terraforming_rating = 20;
     public Integer getTerraformingRating() {return terraforming_rating;}
-    public void changeTerraformingRating(Integer change_amount) {terraforming_rating += change_amount;}
+    public void changeTerraformingRating(Integer change_amount) {
+        terraforming_rating += change_amount;
+        raised_tr_this_generation = true;
+    }
+
+    //Voittopisteet
+    private Integer victory_points = 0;
+    public Integer getVictoryPoints() {return victory_points;}
+    public void changeVictoryPoints(Integer change_amount) {victory_points += change_amount;}
 
 
     //Tagit:
@@ -272,6 +277,10 @@ public class Player {
     private Boolean heat_is_money = false;
     public Boolean getHeatIsMoney() {return heat_is_money;}
     public void setHeatIsMoney(Boolean value) {heat_is_money = value;}
+
+    private Boolean raised_tr_this_generation = false;
+    public Boolean getRaisedTrThisGeneration() {return raised_tr_this_generation;}
+    //Ei tarvitse setteriä, manipulointi puhtaasti luokan sisällä
     /***********************************************************************************
      Passiivisten vaikutusten loppu
      ************************************************************************************/

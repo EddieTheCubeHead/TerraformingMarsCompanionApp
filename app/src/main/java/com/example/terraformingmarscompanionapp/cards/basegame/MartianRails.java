@@ -4,21 +4,18 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class PowerPlant extends Card {
-    public PowerPlant(Game game) {
-        name = "Power plant";
-        price = 4;
-        tags.put("energy", 1);
+public final class MartianRails extends Card {
+    public MartianRails(Game game) {
+        name = "Martian rails";
+        price = 13;
         tags.put("building", 1);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.changeEnergyProduction(1);
-        player.addEnergyTag();
         player.addBuildingTag();
-        player.addGreen(this);
+        player.addAction(this);
         owner_player = player;
     }
 
@@ -29,6 +26,11 @@ public final class PowerPlant extends Card {
 
     @Override
     public boolean cardAction() {
-        return false;
+        if (owner_player.changeEnergy(-1)) {
+            return false;
+        } else {
+            owner_player.changeMoney(owner_game.getCitiesOnMars());
+            return true;
+        }
     }
 }

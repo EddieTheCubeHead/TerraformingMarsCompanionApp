@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
+    private UpdateManager updateManager = new UpdateManager(this);
     private ArrayList<Player> players = new ArrayList<>();
     private HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
     private HashMap<String, Card> corporations = new HashMap<>();
+
+    public ArrayList<Player> getPlayers() {return  players;}
+    public HashMap<String, Card> getDeck() {return deck;}
+    public HashMap<String, Card> getPreludes() {return preludes;}
+    public HashMap<String, Card> getCorporations() {return  corporations;}
+
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
     private Integer global_oxygen;
@@ -16,6 +23,10 @@ public class Game {
     public Integer getOceansPlaced() {return oceans_placed;}
     private Integer venus_terraform;
     public Integer getVenusTerraform() {return venus_terraform;}
+    private Integer cities_on_mars;
+    public Integer getCitiesOnMars() {return cities_on_mars;}
+    private Integer cities_in_space;
+    public Integer getCitiesInSpace() {return cities_in_space;}
 
     public Game(int player_count, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil) {
 
@@ -25,7 +36,7 @@ public class Game {
         }
 
         GameConstructor constructor = new GameConstructor();
-        deck = constructor.createDeck(corporate_era, prelude, colonies, venus, turmoil);
+        deck = constructor.createDeck(this, corporate_era, prelude, colonies, venus, turmoil);
 
         if (prelude) {
             preludes = constructor.createPreludes();
@@ -85,12 +96,62 @@ public class Game {
     public boolean placeCity(Player placing_player, Integer type) {
         /*Luokat:
         0: tavallinen
-        1: pääkaupunki
+        1: tutkimusasema
         2: noctis
         3: vulkaaninen
-        4: phobos space haven
+        4: urbaani alue
+        5: pääkaupunki
+        6: phobos space haven
+        7: ganymede
+        8: dawn city
+        9: luna metropolis
+        10: maxwell base
+        11: stratopolis
+        12: stanford torus (promokortti, ei varmaan toteuteta)
          */
         //TODO tämä
+        if (type < 6) {
+            updateManager.onCityPlaced(placing_player, true);
+            cities_on_mars++;
+        } else {
+            updateManager.onCityPlaced(placing_player, false);
+            cities_in_space++;
+        }
+
+        if (type < 5) {
+            placeTile(placing_player, 4);
+        } else if (type == 5) {
+            placeTile(placing_player, 5);
+        }
+
+        placing_player.changeMoneyProduction(1);
+        return true;
+    }
+
+    public boolean placeForest(Player placing_player, Boolean place_on_ocean) {
+        //TODO myös tämä
+        updateManager.onGreeneryPlaced(placing_player);
+        if (place_on_ocean) {
+            placeTile(placing_player, 1);
+        } else {
+            placeTile(placing_player, 0);
+        }
+        raiseOxygen(placing_player);
+        return true;
+    }
+
+    public boolean placeTile(Player placing_player, Integer tile_type) {
+        /* Tyypit:
+         * 0: metsä
+         * 1: metsä meren paikalle
+         * 2: meri
+         * 3: meri maalle
+         * 4: kaupinkitiili
+         * 5: pääkaupunki
+         * 6: luonnonsuojelualue
+         *
+         *
+         */
         return true;
     }
 
@@ -102,6 +163,7 @@ public class Game {
         Integer titanium_amount = 0;
         Integer heat_amount = 0;
         Integer plants_amount = 0;
+        Integer floaters_amount = 0;
         Integer needed_money;
         HashMap<String, Integer> card_tags = card.getTags();
 
@@ -132,6 +194,10 @@ public class Game {
 
         if (card_tags.containsKey("Venus")) {
             actual_price -= player.getVenusTagDiscount();
+        }
+
+        if (actual_price < 0) {
+            actual_price = 0;
         }
 
 
@@ -169,6 +235,8 @@ public class Game {
             }
 
             //TODO lisää psychrophiles check tähän jahka kortti implementoitu
+
+            //TODO Lisää floater = venus tag rahaa jahka kortti implementoitu
 
             if (player.getHeatIsMoney()) {
                 if (player.getHeat() >= needed_money) {

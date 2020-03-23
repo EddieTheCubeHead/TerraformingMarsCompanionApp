@@ -1,29 +1,30 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
+import android.graphics.Path;
+
 import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class Shuttles extends Card {
-    public Shuttles(Game game) {
-        name = "Shuttles";
-        price = 10;
-        tags.put("space", 1);
-        requirements.put("min_oxygen", 5);
+public final class OpenCity extends Card {
+    public OpenCity(Game game) {
+        name = "Open city";
+        price = 23;
+        tags.put("building", 1);
+        tags.put("city", 1);
+        requirements.put("min_oxygen", 12);
         requirements.put("min_energy_production", 1);
-        victory_points = 0;
+        victory_points = 1;
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.changeSpaceTagDiscount(2);
-        if (!player.changeEnergyProduction(-1)) {
-            System.out.println("Virhe korttien vaatimusten tarkistamisessa.");
-        }
-        player.changeMoneyProduction(2);
-        player.addSpaceTag();
-        player.addPassive(this);
+        player.changeEnergyProduction(-1);
+        player.changeMoneyProduction(4);
+        player.changePlants(2);
+        owner_game.placeCity(player, 0);
+        player.addGreen(this);
         owner_player = player;
     }
 

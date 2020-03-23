@@ -16,6 +16,7 @@ public final class SymbioticFungus extends Card {
     public void onPlay(Player player) {
         player.addMicrobeTag();
         player.addAction(this);
+        owner_player = player;
     }
 
     @Override
@@ -24,7 +25,7 @@ public final class SymbioticFungus extends Card {
     }
 
     @Override
-    public boolean cardAction(Player player) {
+    public boolean cardAction() {
         //TODO lisää toiminto jahka korttiresurssijärjestelmä implementoitu
         return true;
     }

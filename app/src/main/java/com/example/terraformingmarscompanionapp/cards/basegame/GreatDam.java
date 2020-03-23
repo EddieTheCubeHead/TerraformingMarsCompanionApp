@@ -21,6 +21,7 @@ public final class GreatDam extends Card {
         player.addEnergyTag();
         player.addBuildingTag();
         player.addGreen(this);
+        owner_player = player;
     }
 
     @Override
@@ -29,7 +30,7 @@ public final class GreatDam extends Card {
     }
 
     @Override
-    public boolean cardAction(Player player) {
+    public boolean cardAction() {
         return false;
     }
 }

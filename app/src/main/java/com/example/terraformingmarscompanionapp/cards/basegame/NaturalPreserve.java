@@ -4,20 +4,23 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class PowerPlant extends Card {
-    public PowerPlant(Game game) {
-        name = "Power plant";
-        price = 4;
-        tags.put("energy", 1);
+public final class NaturalPreserve extends Card {
+    public NaturalPreserve(Game game) {
+        name = "Natural preserve";
+        price = 9;
+        tags.put("science", 1);
         tags.put("building", 1);
+        requirements.put("max_oxygen", 4);
+        victory_points = 1;
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.changeEnergyProduction(1);
-        player.addEnergyTag();
+        player.addScienceTag();
         player.addBuildingTag();
+        player.changeMoneyProduction(1);
+        owner_game.placeTile(player, 6);
         player.addGreen(this);
         owner_player = player;
     }

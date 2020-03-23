@@ -8,7 +8,8 @@ class GameConstructor {
 
     }
 
-    HashMap<String, Card> createDeck(boolean corporate_era,
+    HashMap<String, Card> createDeck(Game game,
+                                     boolean corporate_era,
                                      boolean prelude,
                                      boolean colonies,
                                      boolean venus,
