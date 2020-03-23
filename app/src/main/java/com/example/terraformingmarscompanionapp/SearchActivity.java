@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,36 +17,32 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
     SearchView searchview;
-    ArrayAdapter adapter;
+    //ArrayAdapter adapter;
+    RecyclerView result_recyclerview;
     ArrayList<Card> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        ListView search_listview = findViewById(R.id.search_listview);
 
-
-        //adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, results);
-        search_listview.setAdapter(adapter);
-
-        searchview = findViewById(R.id.searchview);
-
-        /*
-        textbox.addTextChangedListener(new TextWatcher()
+        searchview = (SearchView) findViewById(R.id.searchview);
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener()
         {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                String search_string = "placeholder";
-                searchCards(search_string);
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
             }
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void afterTextChanged(Editable s) {}
+            public boolean onQueryTextSubmit(String query)
+            {
+                System.out.println("SEARCH TEXT SUBMIT DETECTED");
+                return false;
+            }
         });
-         */
+
+        result_recyclerview = (RecyclerView) findViewById(R.id.result_recyclerview);
 
     }
 
