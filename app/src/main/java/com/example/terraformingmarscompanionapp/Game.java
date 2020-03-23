@@ -129,8 +129,6 @@ public class Game {
         } else if (type == 5) {
             placeTile(placing_player, 5);
         }
-
-        placing_player.changeMoneyProduction(1);
         return true;
     }
 
@@ -157,7 +155,8 @@ public class Game {
          * 6: luonnonsuojelualue
          * 7: tutkimusasema
          * 8: ekologinen alue
-         *
+         * 9: mining area (mining rights)
+         * 10: mining area ()
          */
         return true;
     }
