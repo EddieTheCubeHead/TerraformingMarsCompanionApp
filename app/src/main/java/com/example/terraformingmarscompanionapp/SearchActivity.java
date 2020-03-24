@@ -4,15 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
 
-import java.lang.reflect.Array;
+import com.example.terraformingmarscompanionapp.ui.main.CardView;
+
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
@@ -26,6 +21,16 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        ArrayList<CardView> recycler_list = new ArrayList<>();
+
+
+        /*
+        for (Card card : deck)//TODO joku getdeck funktio tähän
+        {
+            recycler_list.add(new CardView(card.name, card.number)))
+        }
+
+         */
         searchview = (SearchView) findViewById(R.id.searchview);
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener()
         {
@@ -47,6 +52,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     //TODO korttien etsimisfunktio valmiiksi
+    //TODO sovi pitääkö jo-pelattujen korttien hävitä poolista
     private void searchCards(String search_string)
     {
         //hakutoiminnot tähän
