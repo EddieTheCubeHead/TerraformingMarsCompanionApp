@@ -22,6 +22,7 @@ public final class Windmills extends Card {
         player.changeSteelProduction(1);
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

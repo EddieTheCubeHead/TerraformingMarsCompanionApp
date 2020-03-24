@@ -19,6 +19,8 @@ public final class Mangrove extends Card {
         player.addPlantTag();
         owner_game.placeForest(player, true);
         player.addGreen(this);
+        owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
-    private UpdateManager updateManager = new UpdateManager(this);
+    public UpdateManager updateManager = new UpdateManager(this);
     private ArrayList<Player> players = new ArrayList<>();
     private HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
@@ -48,7 +48,7 @@ public class Game {
         //TODO finish constructor
     }
 
-    public boolean placeOcean(Player placing_player) {
+    public boolean placeOcean(Player placing_player, Boolean place_on_land) {
         if (oceans_placed >= 9) {
             return false;
         }
@@ -56,6 +56,11 @@ public class Game {
         //TODO Lisää pelaajan manipulointi (TR yms.)
         placing_player.changeTerraformingRating(1);
         oceans_placed++;
+        if (place_on_land) {
+            placeTile(placing_player, 3);
+        } else {
+            placeTile(placing_player, 2);
+        }
         return true;
     }
 
@@ -117,8 +122,10 @@ public class Game {
             cities_in_space++;
         }
 
-        if (type < 5) {
+        if (type == 0) {
             placeTile(placing_player, 4);
+        } else if (type == 1) {
+            placeTile(placing_player, 7);
         } else if (type == 5) {
             placeTile(placing_player, 5);
         }
@@ -148,7 +155,8 @@ public class Game {
          * 4: kaupinkitiili
          * 5: pääkaupunki
          * 6: luonnonsuojelualue
-         *
+         * 7: tutkimusasema
+         * 8: ekologinen alue
          *
          */
         return true;

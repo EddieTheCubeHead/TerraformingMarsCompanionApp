@@ -23,6 +23,7 @@ public final class NaturalPreserve extends Card {
         owner_game.placeTile(player, 6);
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

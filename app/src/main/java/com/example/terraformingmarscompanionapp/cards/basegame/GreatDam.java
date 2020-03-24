@@ -22,6 +22,7 @@ public final class GreatDam extends Card {
         player.addBuildingTag();
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

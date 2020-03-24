@@ -1,14 +1,17 @@
-package com.example.terraformingmarscompanionapp.cards.basegame;
+package com.example.terraformingmarscompanionapp.cards.corporate_era;
 
 import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class MartianRails extends Card {
-    public MartianRails(Game game) {
-        name = "Martian rails";
-        price = 13;
+public final class ElectroCatapult extends Card {
+    public ElectroCatapult(Game game) {
+        name = "Electro catapult";
+        price = 17;
         tags.put("building", 1);
+        requirements.put("max_oxygen", 8);
+        requirements.put("min_energy_production", 1);
+        victory_points = 1;
         owner_game = game;
     }
 
@@ -16,7 +19,9 @@ public final class MartianRails extends Card {
     public void onPlay(Player player) {
         player.addBuildingTag();
         player.addAction(this);
+        player.changeEnergyProduction(-1);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override
@@ -26,10 +31,12 @@ public final class MartianRails extends Card {
 
     @Override
     public boolean cardAction() {
-        if (!owner_player.changeEnergy(-1) | action_used) {
+        if (action_used) {
             return false;
-        } else {
-            owner_player.changeMoney(owner_game.getCitiesOnMars());
+        }
+        else {
+            //TODO Valitse kasvi/teräs
+            owner_player.changeMoney(7);
             action_used = true;
             return true;
         }

@@ -4,16 +4,21 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class WaterSplittingPlant extends Card {
-    public WaterSplittingPlant(Game game) {
-        name = "Water splitting plant";
-
+public final class DeepWellHeating extends Card {
+    public DeepWellHeating(Game game) {
+        name = "Deep well heating";
+        price = 13;
+        tags.put("energy", 1);
+        tags.put("building", 1);
+        owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
         player.addBuildingTag();
-        player.addAction(this);
+        player.changeEnergyProduction(1);
+        owner_game.raiseTemperature(player);
+        player.addGreen(this);
         owner_player = player;
     }
 
@@ -24,13 +29,6 @@ public final class WaterSplittingPlant extends Card {
 
     @Override
     public boolean cardAction() {
-        if ((owner_player.getEnergy() < 3) | action_used) {
-            return false;
-        } else {
-            owner_player.changeEnergy(-3);
-            owner_game.raiseOxygen(owner_player);
-            action_used = true;
-            return true;
-        }
+        return false;
     }
 }

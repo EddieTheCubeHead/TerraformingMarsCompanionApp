@@ -4,33 +4,40 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class LakeMarineris extends Card {
-    public LakeMarineris(Game game) {
-        name = "Lake marineris";
-        price = 18;
-        requirements.put("min_temperature", 0);
-        victory_points = 2;
+public final class Decomposers extends Card {
+    public Decomposers(Game game) {
+        name = "Decomposers";
+        price = 5;
+        tags.put("microbe", 1);
+        requirements.put("min_oxygen", 3);
+        resource_type = 1;
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addNullTag();
-        player.addGreen(this);
-        owner_game.placeOcean(player, false);
-        //TODO selvitä placeOcean ajoitus
-        owner_game.placeOcean(player, false);
         owner_player = player;
+        player.addPassive(this);
+        player.addMicrobeTag();
         owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override
     public void cardEffect(Player player) {
-
+        if (owner_player == null) {
+            return;
+        } else if (owner_player == player) {
+            resource_amount++;
+        }
     }
 
     @Override
     public boolean cardAction() {
         return false;
+    }
+
+    @Override
+    public void onGameEnd() {
+        owner_player.changeVictoryPoints(resource_amount/3);
     }
 }

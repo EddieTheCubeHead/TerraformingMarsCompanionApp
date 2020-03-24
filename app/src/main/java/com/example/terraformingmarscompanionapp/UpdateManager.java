@@ -1,12 +1,15 @@
 package com.example.terraformingmarscompanionapp;
 
-import java.util.ArrayList;
+import com.example.terraformingmarscompanionapp.cards.basegame.Plantation;
 
-final class UpdateManager {
-    Game super_game;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public final class UpdateManager {
+    private HashMap<String, Card> game_deck = new HashMap<>();
 
     UpdateManager(Game game) {
-        super_game = game;
+        game_deck = game.getDeck();
     }
 
     void onVenusTrUp(Player player) {
@@ -14,14 +17,22 @@ final class UpdateManager {
     }
 
     void onCityPlaced(Player player, Boolean onMars) {
-        super_game.getDeck().get("Immigrant city").cardEffect(player);
+        game_deck.get("Immigrant city").cardEffect(player);
     }
 
     void onNewUniqueTag(Player player) {
 
     }
 
-    void onTagPlayedGrassAnimal(Player player) {
+    void onPlantTag(Player player) {
+        game_deck.get("Ecological zone").cardEffect(player);
+    }
+
+    void onAnimalTag(Player player) {
+        game_deck.get("Ecological zone").cardEffect(player);
+    }
+
+    void onMicrobeTag(Player player) {
 
     }
 
@@ -29,14 +40,28 @@ final class UpdateManager {
 
     }
 
-    void onProductionRaised(Player player, Integer type) {
-        /* 0: raha
-         * 1: teräs
-         * 2: titaani
-         * 3: kasvi
-         * 4: energia
-         * 5: lämpö
-         */
+    void onMoneyProductionRaised(Player player, Integer amount) {
+
+    }
+
+    void onSteelProductionRaised(Player player, Integer amount) {
+
+    }
+
+    void onTitaniumProductionRaised(Player player, Integer amount) {
+
+    }
+
+    void onPlantsProductionRaised(Player player, Integer amount) {
+
+    }
+
+    void onEnergyProductionRaised(Player player, Integer amount) {
+
+    }
+
+    void onHeatProductionRaised(Player player, Integer amount) {
+
     }
 
     void onOceanPlaced(Player player) {
@@ -65,7 +90,8 @@ final class UpdateManager {
          */
     }
 
-    void onVpCardPlayed(Player player) {
+    //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
+    public void onVpCardPlayed(Player player) {
 
     }
 
@@ -85,7 +111,8 @@ final class UpdateManager {
 
     }
 
-    void onSpaceEvent(Player player) {
+    //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
+    public void onSpaceEvent(Player player) {
 
     }
 }

@@ -1,27 +1,23 @@
-package com.example.terraformingmarscompanionapp.cards.basegame;
+package com.example.terraformingmarscompanionapp.cards.colonies;
 
 import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class Trees extends Card {
-    public Trees(Game game) {
-        name = "Trees";
-        price = 13;
-        tags.put("plant", 1);
-        requirements.put("min_temperature", -4);
-        victory_points = 1;
+public final class SolarReflectors extends Card {
+    public SolarReflectors(Game game) {
+        name = "Solar reflectors";
+        price = 23;
+        tags.put("space", 1);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addPlantTag();
-        player.changePlantsProduction(3);
-        player.changePlants(1);
+        player.addSpaceTag();
+        player.changeHeatProduction(5);
         player.addGreen(this);
         owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

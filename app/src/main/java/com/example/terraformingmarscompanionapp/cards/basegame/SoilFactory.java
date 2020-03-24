@@ -23,6 +23,7 @@ public final class SoilFactory extends Card {
         player.changePlantsProduction(1);
         player.addGreen(this);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override

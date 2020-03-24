@@ -23,6 +23,7 @@ public final class Capital extends Card {
         player.changeEnergyProduction(-2);
         player.changeMoneyProduction(5);
         owner_player = player;
+        owner_game.updateManager.onVpCardPlayed(player);
     }
 
     @Override
