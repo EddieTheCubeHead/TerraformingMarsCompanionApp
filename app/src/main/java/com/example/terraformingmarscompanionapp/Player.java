@@ -357,6 +357,10 @@ public class Player {
     public Boolean getHeatIsMoney() {return heat_is_money;}
     public void setHeatIsMoney(Boolean value) {heat_is_money = value;}
 
+    private Boolean special_design_effect = false;
+    public Boolean getSpecialDesignEffect() {return  special_design_effect;}
+    public void setSpecialDesignEffect(Boolean value) {special_design_effect = value;}
+
     private Boolean raised_tr_this_generation = false;
     public Boolean getRaisedTrThisGeneration() {return raised_tr_this_generation;}
     //Ei tarvitse setteriä, manipulointi puhtaasti luokan sisällä

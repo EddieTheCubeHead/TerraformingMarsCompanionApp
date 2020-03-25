@@ -4,22 +4,21 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class ImportOfAdvancedGHG extends Card {
-    public ImportOfAdvancedGHG(Game game) {
-        name = "Import of advanced GHG";
-        price = 9;
-        tags.put("space", 1);
-        tags.put("earth", 1);
-        tags.put("event", 1);
+public final class GeothermalPower extends Card {
+    public GeothermalPower(Game game) {
+        name = "Geothermal power";
+        price = 11;
+        tags.put("building", 1);
+        tags.put("energy", 1);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        owner_game.updateManager.onSpaceEvent(player);
-        player.changeHeatProduction(2);
-        player.addEventTag();
-        player.addRed(this);
+        player.addBuildingTag();
+        player.addEnergyTag();
+        player.changeEnergyProduction(2);
+        player.addGreen(this);
         owner_player = player;
     }
 

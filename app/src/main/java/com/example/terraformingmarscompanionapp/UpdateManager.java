@@ -114,6 +114,6 @@ public final class UpdateManager {
 
     //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
     public void onSpaceEvent(Player player) {
-
+        game_deck.get("Optimal aerobraking").cardEffect(player);
     }
 }
