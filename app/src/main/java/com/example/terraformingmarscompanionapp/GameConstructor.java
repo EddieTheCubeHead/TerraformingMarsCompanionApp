@@ -24,7 +24,7 @@ class GameConstructor {
                                      boolean turmoil) {
 
         //Peruspelin kortit:
-        
+
 
         //TODO lisää kaikki peruspelin kortit tähän
 

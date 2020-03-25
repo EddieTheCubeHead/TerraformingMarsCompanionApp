@@ -18,6 +18,7 @@ public final class UpdateManager {
 
     void onCityPlaced(Player player, Boolean onMars) {
         game_deck.get("Immigrant city").cardEffect(player);
+        game_deck.get("Rover construction").cardEffect(player);
     }
 
     void onNewUniqueTag(Player player) {
