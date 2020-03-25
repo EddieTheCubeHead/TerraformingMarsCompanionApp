@@ -59,6 +59,7 @@ public class Game {
         //TODO Lisää pelaajan manipulointi (TR yms.)
         placing_player.changeTerraformingRating(1);
         oceans_placed++;
+        updateManager.onOceanPlaced(placing_player);
         if (place_on_land) {
             placeTile(placing_player, 3);
         } else {

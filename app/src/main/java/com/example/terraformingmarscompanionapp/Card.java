@@ -23,6 +23,7 @@ public abstract class Card {
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}
     public final void takeResources(Integer amount) {resource_amount -= amount;}
+    public final Boolean isOwned() {return owner_player != null;}
     public final String getName() {return name;}
     public final Integer getPrice() {return price;}
     public final HashMap<String, Integer> getTags() {return tags;}
@@ -46,32 +47,46 @@ public abstract class Card {
 
                 //TODO Aleksanteri laittaa luvut kuntoon
 
-                if (entry.getKey() == "building") {
-                    tag_integers.add(1);
-                } else if (entry.getKey() == "space") {
-                    tag_integers.add(2);
-                } else if (entry.getKey() == "earth") {
-                    tag_integers.add(3);
-                } else if (entry.getKey() == "city") {
-                    tag_integers.add(4);
-                } else if (entry.getKey() == "plant") {
-                    tag_integers.add(5);
-                } else if (entry.getKey() == "microbe") {
-                    tag_integers.add(6);
-                } else if (entry.getKey() == "science") {
-                    tag_integers.add(7);
-                } else if (entry.getKey() == "energy") {
-                    tag_integers.add(8);
-                } else if (entry.getKey() == "jovian") {
-                    tag_integers.add(9);
-                } else if (entry.getKey() == "venus") {
-                    tag_integers.add(10);
-                } else if (entry.getKey() == "animal") {
-                    tag_integers.add(11);
-                } else if (entry.getKey() == "event") {
-                    tag_integers.add(12);
-                } else if (entry.getKey() == "joker") {
-                    tag_integers.add(13);
+                switch (entry.getKey()) {
+                    case "building":
+                        tag_integers.add(1);
+                        break;
+                    case "space":
+                        tag_integers.add(2);
+                        break;
+                    case "earth":
+                        tag_integers.add(3);
+                        break;
+                    case "city":
+                        tag_integers.add(4);
+                        break;
+                    case "plant":
+                        tag_integers.add(5);
+                        break;
+                    case "microbe":
+                        tag_integers.add(6);
+                        break;
+                    case "science":
+                        tag_integers.add(7);
+                        break;
+                    case "energy":
+                        tag_integers.add(8);
+                        break;
+                    case "jovian":
+                        tag_integers.add(9);
+                        break;
+                    case "venus":
+                        tag_integers.add(10);
+                        break;
+                    case "animal":
+                        tag_integers.add(11);
+                        break;
+                    case "event":
+                        tag_integers.add(12);
+                        break;
+                    case "joker":
+                        tag_integers.add(13);
+                        break;
                 }
             }
         }

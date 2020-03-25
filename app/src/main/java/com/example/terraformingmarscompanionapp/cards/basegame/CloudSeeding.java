@@ -4,30 +4,27 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class OptimalAerobraking extends Card {
-    public OptimalAerobraking(Game game) {
-        name = "Optimal aerobraking";
-        price = 7;
-        tags.put("space", 1);
+public final class CloudSeeding extends Card {
+    public CloudSeeding(Game game) {
+        name = "Cloud seeding";
+        price = 11;
+        requirements.put("min_oceans", 3);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addPassive(this);
-        player.addSpaceTag();
+        player.addNullTag();
+        player.changeMoneyProduction(-1);
+        //TODO poista toiselta pelaajalta lämmöntuotanto
+        player.changePlantsProduction(2);
+        player.addGreen(this);
         owner_player = player;
     }
 
     @Override
     public void cardEffect(Player player) {
-        if (owner_player == null) {
-            return;
-        } else if (owner_player != player){
-            return;
-        }
-        owner_player.changeMoney(3);
-        owner_player.changeHeat(3);
+
     }
 
     @Override
