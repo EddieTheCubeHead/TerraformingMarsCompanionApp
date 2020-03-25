@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Card {
     protected Game owner_game;
@@ -24,6 +25,7 @@ public abstract class Card {
     public final void takeResources(Integer amount) {resource_amount -= amount;}
     public final String getName() {return name;}
     public final Integer getPrice() {return price;}
+    public final HashMap<String, Integer> getTags() {return tags;}
     public final HashMap<String, Integer> getRequirements() {return requirements;}
     public final Integer getResourceType() {return resource_type;}
     public final Integer getResourceAmount() {return resource_amount;}
@@ -36,15 +38,46 @@ public abstract class Card {
             return true;
         }
     }
-    public final ArrayList<Integer> getTags() {
-        ArrayList<Integer> tags = new ArrayList<>();
+    public final ArrayList<Integer> getTagIntegers() {
+        ArrayList<Integer> tag_integers = new ArrayList<>();
 
-        //TODO mitä tarvitsee Aleksanteri?
+        for (Map.Entry<String, Integer> entry : tags.entrySet()) {
+            for (int i = 0; i < entry.getValue(); i++) {
 
-        return tags;
+                //TODO Aleksanteri laittaa luvut kuntoon
+
+                if (entry.getKey() == "building") {
+                    tag_integers.add(1);
+                } else if (entry.getKey() == "space") {
+                    tag_integers.add(2);
+                } else if (entry.getKey() == "earth") {
+                    tag_integers.add(3);
+                } else if (entry.getKey() == "city") {
+                    tag_integers.add(4);
+                } else if (entry.getKey() == "plant") {
+                    tag_integers.add(5);
+                } else if (entry.getKey() == "microbe") {
+                    tag_integers.add(6);
+                } else if (entry.getKey() == "science") {
+                    tag_integers.add(7);
+                } else if (entry.getKey() == "energy") {
+                    tag_integers.add(8);
+                } else if (entry.getKey() == "jovian") {
+                    tag_integers.add(9);
+                } else if (entry.getKey() == "venus") {
+                    tag_integers.add(10);
+                } else if (entry.getKey() == "animal") {
+                    tag_integers.add(11);
+                } else if (entry.getKey() == "event") {
+                    tag_integers.add(12);
+                } else if (entry.getKey() == "joker") {
+                    tag_integers.add(13);
+                }
+            }
+        }
+
+        return tag_integers;
     }
-    public final Card getSelf() {return this;} //Aleksanteri kai tarttes johonki
-
 
     @Override
     public final String toString() {

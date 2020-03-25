@@ -44,6 +44,9 @@ public class Game {
         global_temperature = -30;
         global_oxygen = 0;
         oceans_placed = 0;
+        cities_in_space = 0;
+        cities_on_mars = 0;
+        venus_terraform = 0;
 
         //TODO finish constructor
     }
