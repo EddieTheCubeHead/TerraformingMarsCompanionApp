@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class Card {
@@ -23,7 +24,6 @@ public abstract class Card {
     public final void takeResources(Integer amount) {resource_amount -= amount;}
     public final String getName() {return name;}
     public final Integer getPrice() {return price;}
-    public final HashMap<String, Integer> getTags() {return tags;}
     public final HashMap<String, Integer> getRequirements() {return requirements;}
     public final Integer getResourceType() {return resource_type;}
     public final Integer getResourceAmount() {return resource_amount;}
@@ -36,6 +36,15 @@ public abstract class Card {
             return true;
         }
     }
+    public final ArrayList<Integer> getTags() {
+        ArrayList<Integer> tags = new ArrayList<>();
+
+        //TODO mitä tarvitsee Aleksanteri?
+
+        return tags;
+    }
+    public final Card getSelf() {return this;} //Aleksanteri kai tarttes johonki
+
 
     @Override
     public final String toString() {
