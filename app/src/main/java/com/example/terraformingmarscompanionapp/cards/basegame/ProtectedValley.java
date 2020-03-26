@@ -4,30 +4,28 @@ import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class OptimalAerobraking extends Card {
-    public OptimalAerobraking(Game game) {
-        name = "Optimal aerobraking";
-        price = 7;
-        tags.put("space", 1);
+public final class ProtectedValley extends Card {
+    public ProtectedValley(Game game) {
+        name = "Protected valley";
+        price = 23;
+        tags.put("plant", 1);
+        tags.put("building", 1);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addPassive(this);
-        player.addSpaceTag();
+        player.addPlantTag();
+        player.addBuildingTag();
+        player.changeMoneyProduction(2);
+        owner_game.placeForest(player, true);
+        player.addGreen(this);
         owner_player = player;
     }
 
     @Override
     public void cardEffect(Player player) {
-        if (owner_player == null) {
-            return;
-        } else if (owner_player != player){
-            return;
-        }
-        owner_player.changeMoney(3);
-        owner_player.changeHeat(3);
+
     }
 
     @Override

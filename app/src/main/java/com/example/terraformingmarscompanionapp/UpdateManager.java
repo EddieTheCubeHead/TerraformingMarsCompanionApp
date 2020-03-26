@@ -66,7 +66,7 @@ public final class UpdateManager {
     }
 
     void onOceanPlaced(Player player) {
-
+        game_deck.get("Arctic algae").cardEffect(player);
     }
 
     void onJovianTag(Player player) {
@@ -109,7 +109,7 @@ public final class UpdateManager {
     }
 
     void onGreeneryPlaced(Player player) {
-
+        game_deck.get("Herbivores").cardEffect(player);
     }
 
     //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
