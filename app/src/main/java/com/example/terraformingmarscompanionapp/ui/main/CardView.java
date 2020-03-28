@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Kortin visuaaliset tiedot sisältävä luokka.
  */
-
+//TODO luokan sisällyttäminen cardiin kun tiedetään että toimii.
 public class CardView {
     private String card_name = null;
     private Integer requirement_image_resource = null;
@@ -30,19 +30,10 @@ public class CardView {
         } catch (IndexOutOfBoundsException e) {}
     }
 
-    //set ei päivitä korttiuita. päivittäminen tapahtuu recyclerviewadapter publishresults()
-    /*
-    public void setRequirement  (int resource)  {requirement_image_resource = resource;}
-    public void setTag1         (int resource)  {tag_image_resource_1 = resource;}
-    public void setTag2         (int resource)  {tag_image_resource_2 = resource;}
-    public void setTag3         (int resource)  {tag_image_resource_3 = resource;}
-    public void setTag4         (int resource)  {tag_image_resource_4 = resource;}
-     */
+    public String getCardName() {return card_name;}
+    public Integer getRequirement() {return requirement_image_resource;}
     public int getTag1() {return tag_image_resource_1;}
     public int getTag2() {return tag_image_resource_2;}
     public int getTag3() {return tag_image_resource_3;}
     public int getTag4() {return tag_image_resource_4;}
-
-    public String getCardName() {return card_name;}
-    public void setCardName(String card_name) {this.card_name = card_name;}
 }
