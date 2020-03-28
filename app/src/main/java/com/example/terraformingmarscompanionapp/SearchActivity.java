@@ -1,67 +1,93 @@
 package com.example.terraformingmarscompanionapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+
 
 import android.os.Bundle;
 import android.widget.SearchView;
 
 import com.example.terraformingmarscompanionapp.ui.main.CardView;
+import com.example.terraformingmarscompanionapp.ui.main.RecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SearchActivity extends AppCompatActivity {
     SearchView searchview;
-    //ArrayAdapter adapter;
-    RecyclerView result_recyclerview;
-    ArrayList<Card> results;
+    HashMap<String, Card> deck;
+    ArrayList<CardView> card_list;
+    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        ArrayList<CardView> recycler_list = new ArrayList<>();
+        //korttilistan luominen
+        card_list = new ArrayList<>();
+        for (Map.Entry<String, Card> card : deck.entrySet())
+            card_list.add(new CardView((Card) card));
+
+        RecyclerView recyclerview = findViewById(R.id.result_recyclerview);
+        //TODO testausta recyclerview fixedsize päällä (ilmeisesti parempi performanssi)
+        recyclerview.setHasFixedSize(true);
+
+        adapter = new RecyclerViewAdapter(card_list);
+        recyclerview.setAdapter(adapter);
+
+        RecyclerView.LayoutManager layout_manager = new LinearLayoutManager(this);
+        recyclerview.setLayoutManager(layout_manager);
 
 
         /*
-        for (Card card : deck)//TODO joku getdeck funktio tähän
-        {
-            recycler_list.add(new CardView(card.name, card.number)))
-        }
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
 
-         */
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        adapter = new ExampleAdapter(exampleList);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        */
+
+
+
+
+
+        //recyclerviewn täyttö
+
         searchview = (SearchView) findViewById(R.id.searchview);
-        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener()
-        {
+
+        recyclerview.setAdapter(adapter);
+
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 return false;
             }
+
             @Override
-            public boolean onQueryTextSubmit(String query)
-            {
+            public boolean onQueryTextSubmit(String query) {
                 System.out.println("SEARCH TEXT SUBMIT DETECTED");
                 return false;
             }
         });
-
-        result_recyclerview = (RecyclerView) findViewById(R.id.result_recyclerview);
-
     }
 
-    //TODO korttien etsimisfunktio valmiiksi
-    //TODO sovi pitääkö jo-pelattujen korttien hävitä poolista
+
+
+    /*
     private void searchCards(String search_string)
     {
-        //hakutoiminnot tähän
-
-        setSearchResults(results);
+        Pattern.compile(search_string, Pattern.CASE_INSENSITIVE);
+        String[] key_words = search_string.split(".*");
     }
+     */
 
-    private void setSearchResults(ArrayList<Card> search_results)
-    {
-        System.out.println("Alex: Search made.");
-    }
 }
+

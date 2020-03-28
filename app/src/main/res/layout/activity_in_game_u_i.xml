@@ -27,7 +27,6 @@
         android:visibility="invisible"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:visibility="invisible">
-
     </androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -36,17 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        app:backgroundTint="#BD00FF"
-        app:fabSize="auto"
-        app:layout_anchor="@+id/view_pager"
-        app:layout_anchorGravity="center"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
-
+        app:backgroundTint="@color/colorPrimary"
+        app:srcCompat="@android:drawable/ic_search_category_default" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
