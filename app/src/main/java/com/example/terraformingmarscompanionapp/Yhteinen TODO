@@ -1,9 +1,3 @@
 Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi varata itselleen laittamalla nimen kohdan viereen.
 
-TODO, Eetu: tiilien asettaminen erilliseen luokkaan
-    TODO: ko. luokan integroiminen Game-luokan kanssa
-
-TODO, Eetu: requirement-tarkistus Game-luokkaan
-TODO, Eetu: implementoi isOwned() cardEffect()-funktioihin
-
-TODO: jokin tapa saada deck
+TODO: jokin tapa saada deck (Voin tehdä jos selitetään tarkemmin, -Eetu)

@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
     public UpdateManager updateManager = new UpdateManager(this);
@@ -44,8 +45,6 @@ public class Game {
             preludes = constructor.createPreludes();
         }
 
-        //TODO selvitä mistä saadaan kartta integer
-
         tile_handler = new TileHandler(this, map, venus);
 
         global_temperature = -30;
@@ -55,15 +54,13 @@ public class Game {
         cities_on_mars = 0;
         venus_terraform = 0;
 
-        //TODO finish constructor
+        //TODO viimeistele constructor
     }
 
     public boolean raiseTemperature(Player raising_player) {
         if (global_temperature >= 8) {
             return false;
         }
-        //TODO tarkista onko lämmön nostolle triggeriä, lisää tarvittaessa update manager
-        //TODO Lisää pelaajan manipulointi (TR yms.)
         raising_player.changeTerraformingRating(1);
         global_temperature += 2;
         return true;
@@ -73,8 +70,6 @@ public class Game {
         if (global_oxygen >= 14) {
             return false;
         }
-        //TODO tarkista onko hapen nostolle triggeriä, lisää tarvittaessa update manager
-        //TODO Lisää pelaajan manipulointi (TR yms.)
         raising_player.changeTerraformingRating(1);
         global_oxygen++;
         return true;
@@ -84,14 +79,12 @@ public class Game {
         if (venus_terraform >= 30) {
             return false;
         }
-        //TODO tarkista onko venuksen nostolle triggeriä, lisää tarvittaessa update manager
-        //TODO Lisää pelaajan manipulointi (TR yms.)
         raising_player.changeTerraformingRating(1);
         venus_terraform += 2;
         return true;
     }
 
-    public HashMap<String, Integer> checkCardCost(Card card, Player player) {
+    private HashMap<String, Integer> checkCardCost(Card card, Player player) {
         HashMap<String, Integer> required_resources = new HashMap<>();
         Integer actual_price = card.getPrice();
         Integer money_amount;
@@ -193,8 +186,174 @@ public class Game {
         return required_resources;
     }
 
-    public Boolean checkCardRequirements(Card card, Player player) {
-        //TODO lisää kaikki vaatimukset tähän
+    private Boolean checkCardRequirements(Card card, Player player) {
+        //Erittäin tylsä switch-case hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
+
+        Integer value;
+        Integer min_tr_value;
+        Integer max_tr_value;
+        Integer min_venus_value;
+        Integer max_venus_value;
+        for (Map.Entry<String, Integer> entry : card.getRequirements().entrySet()) {
+
+            //Voi olla muutoksia korteista, tämä hoitaa nämä
+            value = entry.getValue();
+            min_tr_value = entry.getValue() - player.getBaseTrRequirementDiscount();
+            max_tr_value = entry.getValue() + player.getBaseTrRequirementDiscount();
+            min_venus_value = entry.getValue() - player.getVenusTrRequirementDiscount();
+            max_venus_value = entry.getValue() + player.getVenusTrRequirementDiscount();
+
+            switch (entry.getKey()) {
+                case "min_oceans":
+                    if (oceans_placed < min_tr_value) {
+                        return false;
+                    } break;
+                case "min_plants":
+                    if (player.getPlants() < value) {
+                        return false;
+                    } break;
+                case "min_energy_production":
+                    if (player.getEnergyProduction() < value) {
+                        return false;
+                    } break;
+                case "min_oxygen":
+                    if (global_oxygen < min_tr_value) {
+                        return false;
+                    } break;
+                case "min_science_tags":
+                    if (player.getScienceTags() < value) {
+                        return false;
+                    } break;
+                case "min_jovian_tags":
+                    if (player.getJovianTags() < value) {
+                        return false;
+                    } break;
+                case "min_steel_production":
+                    if (player.getSteelProduction() < value) {
+                        return false;
+                    } break;
+                case "min_global_cities":
+                    if ((cities_in_space + cities_on_mars) < value) {
+                        return false;
+                    } break;
+                case "min_personal_cities":
+                    if (player.getCities() < value) {
+                        return false;
+                    } break;
+                case "min_venus_tr":
+                    if (venus_terraform < min_venus_value) {
+                        return false;
+                    } break;
+                case "min_temperature":
+                    if (global_temperature < min_tr_value) {
+                        return false;
+                    } break;
+                case "min_plant_production":
+                    if (player.getPlantsProduction() < value) {
+                        return false;
+                    } break;
+                case "min_plant_tags":
+                    if (player.getPlantTags() < value) {
+                        return false;
+                    } break;
+                case "min_microbe_tags":
+                    if (player.getMicrobeTags() < value) {
+                        return false;
+                    } break;
+                case "min_animal_tags":
+                    if (player.getAnimalTags() < value) {
+                        return false;
+                    } break;
+                case "min_earth_tags":
+                    if (player.getEarthTags() < value) {
+                        return false;
+                    } break;
+                case "min_energy_tags":
+                    if (player.getEnergyTags() < value) {
+                        return false;
+                    } break;
+                case "min_floaters":
+                    int floaters = 0;
+                    for (Card resource_card : player.getActions()) {
+                        if (resource_card.getResourceType() == 4) {
+                            floaters += resource_card.getResourceAmount();
+                        }
+                    }
+                    for (Card resource_card : player.getEffects()) {
+                        if (resource_card.getResourceType() == 4) {
+                            floaters += resource_card.getResourceAmount();
+                        }
+                    }
+                    if (floaters < value) {
+                        return false;
+                    } break;
+                case "min_personal_colonies":
+                    if (player.getColonies() < value) {
+                        return false;
+                    } break;
+                case "min_titanium_production":
+                    if (player.getTitaniumProduction() < value) {
+                        return false;
+                    } break;
+                case "min_personal_greeneries":
+                    if (player.getGreeneries() < value) {
+                        return false;
+                    } break;
+                case "min_heat_production":
+                    if (player.getHeatProduction() < value) {
+                        return false;
+                    } break;
+                case "min_tr":
+                    if (player.getTerraformingRating() < value) {
+                        return false;
+                    } break;
+                case "min_venus_tags":
+                    if (player.getVenusTags() < value) {
+                        return false;
+                    } break;
+
+                case "max_temperature":
+                    if (global_temperature > max_tr_value) {
+                        return false;
+                    } break;
+                case "max_oceans":
+                    if (oceans_placed > max_tr_value) {
+                        return false;
+                    } break;
+                case "max_personal_colonies":
+                    if (player.getColonies() > value) {
+                        return false;
+                    } break;
+                case "max_venus_tr":
+                    if (venus_terraform > max_venus_value) {
+                        return false;
+                    } break;
+            }
+        }
         return true;
+    }
+
+    public void playCard(Card card, Player player) {
+        HashMap<String, Integer> resources_to_use = checkCardCost(card, player);
+        if (resources_to_use == null | !checkCardRequirements(card, player)) {
+            return;
+        }
+
+        //TODO UI kysy haluaako pelaaja muuttaa resurssien
+
+        for (Map.Entry<String, Integer> entry : resources_to_use.entrySet()) {
+            switch (entry.getKey()) {
+                case "money":
+                    player.changeMoney(-entry.getValue());
+                case "steel":
+                    player.changeSteel(-entry.getValue());
+                case "titanium":
+                    player.changeTitanium(-entry.getValue());
+                case "heat":
+                    player.changeHeat(-entry.getValue());
+            }
+        }
+
+        card.onPlay(player);
     }
 }
