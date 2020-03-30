@@ -22,7 +22,6 @@ public abstract class Card {
     public abstract boolean cardAction ();
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}
-    public final void takeResources(Integer amount) {resource_amount -= amount;}
     public final String getName() {return name;}
     public final Integer getPrice() {return price;}
     public final HashMap<String, Integer> getTags() {return tags;}
@@ -30,6 +29,7 @@ public abstract class Card {
     public final Integer getResourceType() {return resource_type;}
     public final Integer getResourceAmount() {return resource_amount;}
     public final void resetActionUsed() {action_used = false;}
+
     public final boolean changeResourceAmount(Integer change_amount) {
         if (resource_amount + change_amount < 0) {
             return false;
@@ -38,6 +38,7 @@ public abstract class Card {
             return true;
         }
     }
+
     public final ArrayList<Integer> getTagIntegers() {
         ArrayList<Integer> tag_integers = new ArrayList<>();
 
@@ -65,10 +66,5 @@ public abstract class Card {
             }
         }
         return tag_integers;
-    }
-
-    @Override
-    public final String toString() {
-        return name;
     }
 }

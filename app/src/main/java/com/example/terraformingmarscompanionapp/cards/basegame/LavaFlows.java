@@ -17,9 +17,15 @@ public final class LavaFlows extends Card {
         player.addEventTag();
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
-        //TODO lisää laatan asettaminen
         player.addRed(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeLavaFlow(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja virheenhallinta jos jokainen volcanic-tiili varattu
+            }
+        }
     }
 
     @Override

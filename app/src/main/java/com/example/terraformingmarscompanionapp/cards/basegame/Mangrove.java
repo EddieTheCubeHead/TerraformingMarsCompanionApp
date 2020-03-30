@@ -17,10 +17,16 @@ public final class Mangrove extends Card {
     @Override
     public void onPlay(Player player) {
         player.addPlantTag();
-        owner_game.placeForest(player, true);
         player.addGreen(this);
         owner_player = player;
         owner_game.updateManager.onVpCardPlayed(player);
+        while (true) {
+            if (owner_game.tile_handler.placeOceanGreenery(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public final class UpdateManager {
-    private HashMap<String, Card> game_deck = new HashMap<>();
+    private HashMap<String, Card> game_deck;
+    private Game owner_game;
 
     UpdateManager(Game game) {
         game_deck = game.getDeck();
+        owner_game = game;
     }
 
     void onVenusTrUp(Player player) {
@@ -17,6 +19,11 @@ public final class UpdateManager {
     }
 
     void onCityPlaced(Player player, Boolean onMars) {
+        if (onMars) {
+            owner_game.addCityOnMars();
+        } else {
+            owner_game.addCityInSpace();
+        }
         game_deck.get("Immigrant city").cardEffect(player);
         game_deck.get("Rover construction").cardEffect(player);
     }

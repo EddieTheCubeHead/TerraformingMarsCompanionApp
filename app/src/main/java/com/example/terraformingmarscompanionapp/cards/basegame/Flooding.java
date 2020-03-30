@@ -18,8 +18,15 @@ public final class Flooding extends Card {
         player.addEventTag();
         player.addRed(this);
         //TODO poista toiselta neljä rahaa UI
-        owner_game.placeOcean(player, false);
         owner_player = player;
+
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

@@ -21,9 +21,16 @@ public final class CupolaCity extends Card {
         player.addCityTag();
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
-        owner_game.placeCity(player, 0);
         player.addGreen(this);
         owner_player = player;
+
+        while (true) {
+            if (owner_game.tile_handler.placeCity(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

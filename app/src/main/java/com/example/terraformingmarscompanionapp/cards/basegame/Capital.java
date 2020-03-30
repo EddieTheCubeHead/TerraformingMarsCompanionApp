@@ -19,11 +19,19 @@ public final class Capital extends Card {
     public void onPlay(Player player) {
         player.addBuildingTag();
         player.addCityTag();
-        owner_game.placeCity(player, 1);
         player.changeEnergyProduction(-2);
         player.changeMoneyProduction(5);
         owner_player = player;
         owner_game.updateManager.onVpCardPlayed(player);
+
+        while (true) {
+            if (owner_game.tile_handler.placeCapital(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
+
     }
 
     @Override

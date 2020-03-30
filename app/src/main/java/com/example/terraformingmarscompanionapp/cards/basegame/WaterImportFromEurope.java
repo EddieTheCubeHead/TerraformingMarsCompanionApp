@@ -29,8 +29,14 @@ public final class WaterImportFromEurope extends Card {
             return false;
         } else {
             //TODO implementoi ota 12 rahana/titaanina
-            owner_game.placeOcean(owner_player, false);
             action_used = true;
+            while (true) {
+                if (owner_game.tile_handler.placeOcean(owner_player)) {
+                    break;
+                } else {
+                    //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+                }
+            }
             return true;
         }
     }

@@ -18,9 +18,15 @@ public final class Comet extends Card {
         owner_game.updateManager.onSpaceEvent(player);
         player.addRed(this);
         owner_game.raiseTemperature(player);
-        owner_game.placeOcean(player, false);
         //TODO poista toiselta kolme kasvia UI
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

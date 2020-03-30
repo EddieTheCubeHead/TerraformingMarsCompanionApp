@@ -17,12 +17,12 @@ public final class PhobosSpaceHaven extends Card {
     @Override
     public void onPlay(Player player) {
         player.changeTitaniumProduction(1);
-        owner_game.placeCity(player, 6);
         player.addSpaceTag();
         player.addCityTag();
         player.addGreen(this);
         owner_player = player;
         owner_game.updateManager.onVpCardPlayed(player);
+        owner_game.tile_handler.placePhobos(player);
     }
 
     @Override

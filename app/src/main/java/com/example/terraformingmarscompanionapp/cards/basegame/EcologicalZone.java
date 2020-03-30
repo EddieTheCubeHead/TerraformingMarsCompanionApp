@@ -21,8 +21,14 @@ public final class EcologicalZone extends Card {
         player.addPassive(this);
         player.addAnimalTag();
         player.addPlantTag();
-        owner_game.placeTile(player, 8);
         owner_game.updateManager.onVpCardPlayed(player);
+        while (true) {
+            if (owner_game.tile_handler.placeEcologicalZone(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

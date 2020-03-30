@@ -9,9 +9,10 @@ public class Game {
     private HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
     private HashMap<String, Card> corporations = new HashMap<>();
+    public TileHandler tile_handler;
 
     public ArrayList<Player> getPlayers() {return  players;}
-    public HashMap<String, Card> getDeck() {return deck;}
+    HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return  corporations;}
 
@@ -20,15 +21,17 @@ public class Game {
     private Integer global_oxygen;
     public Integer getGlobalOxygen() {return global_oxygen;}
     private Integer oceans_placed;
-    public Integer getOceansPlaced() {return oceans_placed;}
+    Integer getOceansPlaced() {return oceans_placed;}
     private Integer venus_terraform;
     public Integer getVenusTerraform() {return venus_terraform;}
     private Integer cities_on_mars;
     public Integer getCitiesOnMars() {return cities_on_mars;}
+    void addCityOnMars() {cities_on_mars++;}
     private Integer cities_in_space;
     public Integer getCitiesInSpace() {return cities_in_space;}
+    void addCityInSpace() {cities_in_space++;}
 
-    public Game(int player_count, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil) {
+    public Game(int player_count, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil, Integer map) {
 
         for (int i = 0; i < player_count; i++) {
             players.add(new Player(this));
@@ -41,6 +44,10 @@ public class Game {
             preludes = constructor.createPreludes();
         }
 
+        //TODO selvitä mistä saadaan kartta integer
+
+        tile_handler = new TileHandler(this, map, venus);
+
         global_temperature = -30;
         global_oxygen = 0;
         oceans_placed = 0;
@@ -49,23 +56,6 @@ public class Game {
         venus_terraform = 0;
 
         //TODO finish constructor
-    }
-
-    public boolean placeOcean(Player placing_player, Boolean place_on_land) {
-        if (oceans_placed >= 9) {
-            return false;
-        }
-        //TODO Lisää UpdateManager.ocean_placed
-        //TODO Lisää pelaajan manipulointi (TR yms.)
-        placing_player.changeTerraformingRating(1);
-        oceans_placed++;
-        updateManager.onOceanPlaced(placing_player);
-        if (place_on_land) {
-            placeTile(placing_player, 3);
-        } else {
-            placeTile(placing_player, 2);
-        }
-        return true;
     }
 
     public boolean raiseTemperature(Player raising_player) {
@@ -101,74 +91,10 @@ public class Game {
         return true;
     }
 
-    public boolean placeCity(Player placing_player, Integer type) {
-        /*Luokat:
-        0: tavallinen
-        1: tutkimusasema
-        2: noctis
-        3: vulkaaninen
-        4: urbaani alue
-        5: pääkaupunki
-        6: phobos space haven
-        7: ganymede
-        8: dawn city
-        9: luna metropolis
-        10: maxwell base
-        11: stratopolis
-        12: stanford torus (promokortti, ei varmaan toteuteta)
-         */
-        //TODO tämä
-        if (type < 6) {
-            updateManager.onCityPlaced(placing_player, true);
-            cities_on_mars++;
-        } else {
-            updateManager.onCityPlaced(placing_player, false);
-            cities_in_space++;
-        }
-
-        if (type == 0) {
-            placeTile(placing_player, 4);
-        } else if (type == 1) {
-            placeTile(placing_player, 7);
-        } else if (type == 5) {
-            placeTile(placing_player, 5);
-        }
-        return true;
-    }
-
-    public boolean placeForest(Player placing_player, Boolean place_on_ocean) {
-        //TODO myös tämä
-        updateManager.onGreeneryPlaced(placing_player);
-        if (place_on_ocean) {
-            placeTile(placing_player, 1);
-        } else {
-            placeTile(placing_player, 0);
-        }
-        raiseOxygen(placing_player);
-        return true;
-    }
-
-    public boolean placeTile(Player placing_player, Integer tile_type) {
-        /* Tyypit:
-         * 0: metsä
-         * 1: metsä meren paikalle
-         * 2: meri
-         * 3: meri maalle
-         * 4: kaupinkitiili
-         * 5: pääkaupunki
-         * 6: luonnonsuojelualue
-         * 7: tutkimusasema
-         * 8: ekologinen alue
-         * 9: mining area (mining rights)
-         * 10: mining area ()
-         */
-        return true;
-    }
-
     public HashMap<String, Integer> checkCardCost(Card card, Player player) {
         HashMap<String, Integer> required_resources = new HashMap<>();
         Integer actual_price = card.getPrice();
-        Integer money_amount = 0;
+        Integer money_amount;
         Integer steel_amount = 0;
         Integer titanium_amount = 0;
         Integer heat_amount = 0;

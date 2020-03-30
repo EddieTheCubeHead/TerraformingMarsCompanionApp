@@ -16,14 +16,26 @@ public final class GiantIceAsteroid extends Card {
     @Override
     public void onPlay(Player player) {
         owner_game.updateManager.onSpaceEvent(player);
-        owner_game.placeOcean(player, false);
-        owner_game.placeOcean(player, false);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
         //TODO vähennä 6 kasvia muulta pelaajalta
         player.addEventTag();
         player.addRed(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

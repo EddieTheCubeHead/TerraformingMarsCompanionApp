@@ -20,10 +20,16 @@ public final class NaturalPreserve extends Card {
         player.addScienceTag();
         player.addBuildingTag();
         player.changeMoneyProduction(1);
-        owner_game.placeTile(player, 6);
         player.addGreen(this);
         owner_player = player;
         owner_game.updateManager.onVpCardPlayed(player);
+        while (true) {
+            if (owner_game.tile_handler.placeNaturalReserve(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

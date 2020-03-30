@@ -20,8 +20,14 @@ public final class ImmigrantCity extends Card {
         player.addBuildingTag();
         player.changeMoneyProduction(-2);
         player.changeEnergyProduction(-1);
-        owner_game.placeCity(player, 0);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeCity(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

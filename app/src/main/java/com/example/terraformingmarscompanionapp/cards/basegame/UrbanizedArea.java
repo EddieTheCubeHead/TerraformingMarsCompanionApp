@@ -20,9 +20,15 @@ public final class UrbanizedArea extends Card {
         player.addCityTag();
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(2);
-        owner_game.placeCity(player, 4);
         player.addGreen(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeUrbanizedArea(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override
