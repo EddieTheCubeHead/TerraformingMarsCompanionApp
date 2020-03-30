@@ -74,9 +74,4 @@ public abstract class Card {
     {
         return R.drawable.ic_ph;
     }
-
-    @Override
-    public final String toString() {
-        return name;
-    }
 }
