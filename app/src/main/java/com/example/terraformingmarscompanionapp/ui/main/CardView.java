@@ -1,29 +1,48 @@
 package com.example.terraformingmarscompanionapp.ui.main;
+import android.widget.TextView;
+
+import com.example.terraformingmarscompanionapp.Card;
+import java.util.ArrayList;
+
 
 /**
- * Korttipohjainen cardviewn ohjaaja, jossa on get-setit.
+ * Kortin visuaaliset tiedot sisältävä luokka.
  */
 
-
-//saa editoida tai uudelleennimetä jos haluaa
-//ei yhtään set in stone implementaatio
-//vois ehkä tehdä osana card-luokkaa.
 public class CardView {
-    private String card_name;
+    private String card_name = null;
+    private Integer requirement_image_resource = null;
+    private Integer tag_image_resource_1 = null;
+    private Integer tag_image_resource_2 = null;
+    private Integer tag_image_resource_3 = null;
+    private Integer tag_image_resource_4 = null;
 
-
-    //jos on jotain muuta joka on kaikilla korteilla niin tähän
-    //ehkä tyyppi?
-    public CardView(String card_name, int card_number){
-        this.card_name = card_name;
-    }
-
-    public void setTag1() {}
-    public void setTag2() {}
-    public void setTag3() {}
-
-    public void setPrice()
+    public CardView(Card card)
     {
-
+        card_name = card.getName();
+        requirement_image_resource = card.getRequirementInt();
+        ArrayList<Integer> tags = card.getTagIntegers();
+        try {
+            tag_image_resource_1 = tags.get(0);
+            tag_image_resource_2 = tags.get(1);
+            tag_image_resource_3 = tags.get(2);
+            tag_image_resource_4 = tags.get(3);
+        } catch (IndexOutOfBoundsException e) {}
     }
+
+    //set ei päivitä korttiuita. päivittäminen tapahtuu recyclerviewadapter publishresults()
+    /*
+    public void setRequirement  (int resource)  {requirement_image_resource = resource;}
+    public void setTag1         (int resource)  {tag_image_resource_1 = resource;}
+    public void setTag2         (int resource)  {tag_image_resource_2 = resource;}
+    public void setTag3         (int resource)  {tag_image_resource_3 = resource;}
+    public void setTag4         (int resource)  {tag_image_resource_4 = resource;}
+     */
+    public int getTag1() {return tag_image_resource_1;}
+    public int getTag2() {return tag_image_resource_2;}
+    public int getTag3() {return tag_image_resource_3;}
+    public int getTag4() {return tag_image_resource_4;}
+
+    public String getCardName() {return card_name;}
+    public void setCardName(String card_name) {this.card_name = card_name;}
 }
