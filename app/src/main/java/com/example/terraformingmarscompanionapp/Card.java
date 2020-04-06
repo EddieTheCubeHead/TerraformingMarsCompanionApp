@@ -22,7 +22,6 @@ public abstract class Card {
     public abstract boolean cardAction ();
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}
-    public final void takeResources(Integer amount) {resource_amount -= amount;}
     public final String getName() {return name;}
     public final Integer getPrice() {return price;}
     public final HashMap<String, Integer> getTags() {return tags;}
@@ -73,10 +72,5 @@ public abstract class Card {
     public Integer getRequirementInt()
     {
         return R.drawable.ic_ph;
-    }
-
-    @Override
-    public final String toString() {
-        return name;
     }
 }

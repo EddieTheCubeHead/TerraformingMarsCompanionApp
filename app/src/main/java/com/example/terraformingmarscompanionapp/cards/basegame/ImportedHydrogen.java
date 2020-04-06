@@ -19,8 +19,14 @@ public final class ImportedHydrogen extends Card {
         player.addEventTag();
         //TODO kasvin, mikrobin tai eläimen lisäys
         owner_game.updateManager.onSpaceEvent(player);
-        owner_game.placeOcean(player, false);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

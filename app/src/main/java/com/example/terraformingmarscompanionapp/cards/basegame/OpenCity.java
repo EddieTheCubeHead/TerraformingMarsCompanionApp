@@ -23,10 +23,16 @@ public final class OpenCity extends Card {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(4);
         player.changePlants(2);
-        owner_game.placeCity(player, 0);
         player.addGreen(this);
         owner_player = player;
         owner_game.updateManager.onVpCardPlayed(player);
+        while (true) {
+            if (owner_game.tile_handler.placeCity(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

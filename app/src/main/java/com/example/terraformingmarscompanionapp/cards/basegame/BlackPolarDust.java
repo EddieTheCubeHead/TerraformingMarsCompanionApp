@@ -15,9 +15,15 @@ public final class BlackPolarDust extends Card {
     public void onPlay(Player player) {
         player.changeMoneyProduction(-2);
         player.changeHeatProduction(3);
-        owner_game.placeOcean(player, false);
         player.addGreen(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

@@ -14,9 +14,15 @@ public final class MiningRights extends Card {
 
     @Override
     public void onPlay(Player player) {
-        owner_game.placeTile(player, 9);
         player.addGreen(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeMiningRights(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

@@ -18,9 +18,15 @@ public final class ArtificialLake extends Card {
     public void onPlay(Player player) {
         player.addBuildingTag();
         player.addGreen(this);
-        owner_game.placeOcean(player, true);
         owner_game.updateManager.onVpCardPlayed(player);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeLandOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

@@ -17,9 +17,15 @@ public final class ResearchOutpost extends Card {
     @Override
     public void onPlay(Player player) {
         player.changeCardDiscount(1);
-        owner_game.placeCity(player, 1);
         player.addPassive(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeResearchOutpost(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

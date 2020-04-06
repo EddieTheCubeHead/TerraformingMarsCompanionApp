@@ -16,8 +16,14 @@ public final class SubterraneanReservoir extends Card {
     public void onPlay(Player player) {
         player.addEventTag();
         player.addRed(this);
-        owner_game.placeOcean(player, false);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

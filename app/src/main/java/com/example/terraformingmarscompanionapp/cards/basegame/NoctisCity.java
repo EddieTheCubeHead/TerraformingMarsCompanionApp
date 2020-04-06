@@ -21,8 +21,14 @@ public final class NoctisCity extends Card {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
         player.addGreen(this);
-        owner_game.placeCity(player, 2);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeNoctis(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

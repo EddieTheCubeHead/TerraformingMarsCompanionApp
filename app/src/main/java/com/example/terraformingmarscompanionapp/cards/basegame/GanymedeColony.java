@@ -16,10 +16,10 @@ public final class GanymedeColony extends Card {
 
     @Override
     public void onPlay(Player player) {
-        owner_game.placeCity(player, 7);
         player.addGreen(this);
         owner_game.updateManager.onVpCardPlayed(player);
         owner_player = player;
+        owner_game.tile_handler.placeGanymede(player);
     }
 
     @Override

@@ -463,15 +463,17 @@ class GameConstructor {
         return deck;
     }
 
-    public HashMap<String, Card> createPreludes() {
+    HashMap<String, Card> createPreludes() {
         HashMap<String, Card> preludes = new HashMap<>();
         //TODO Lisää preludit tähän
         return preludes;
     }
 
-    public HashMap<String, Card> createCorporations() {
+    HashMap<String, Card> createCorporations() {
         HashMap<String, Card> corporations = new HashMap<>();
 
         return corporations;
     }
+
+
 }

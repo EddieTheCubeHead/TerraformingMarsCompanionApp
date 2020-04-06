@@ -20,9 +20,15 @@ public final class UndergroundCity extends Card {
         player.addCityTag();
         player.changeEnergyProduction(-2);
         player.changeSteelProduction(2);
-        owner_game.placeCity(player, 0);
         player.addGreen(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeCity(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

@@ -16,9 +16,15 @@ public final class IceCapMelting extends Card {
     @Override
     public void onPlay(Player player) {
         player.addEventTag();
-        owner_game.placeOcean(player, false);
         player.addRed(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

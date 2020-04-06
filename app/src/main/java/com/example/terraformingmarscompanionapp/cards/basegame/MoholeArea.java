@@ -16,9 +16,15 @@ public final class MoholeArea extends Card {
     public void onPlay(Player player) {
         player.addBuildingTag();
         player.changeHeatProduction(4);
-        //TODO liitä tiilen asettaminen tähän
         player.addGreen(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeMohole(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override

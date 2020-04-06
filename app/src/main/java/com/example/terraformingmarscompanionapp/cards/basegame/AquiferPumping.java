@@ -30,7 +30,13 @@ public final class AquiferPumping extends Card {
             return false;
         } else if (owner_player != null) {
             //TODO implementoi tähän vie 8 rahana tai teräksenä
-            owner_game.placeOcean(owner_player, false);
+            while (true) {
+                if (owner_game.tile_handler.placeOcean(owner_player)) {
+                    break;
+                } else {
+                    //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+                }
+            }
             action_used = true;
             return true;
         }

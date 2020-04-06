@@ -3,6 +3,9 @@ import java.util.ArrayList;
 
 public class Player {
     private Game game;
+    private Integer cities = 0;
+    private Integer greeneries = 0;
+    private Integer colonies = 0;
     private ArrayList<Card> green_cards = new ArrayList<>();
     private ArrayList<Card> red_cards = new ArrayList<>();
     private ArrayList<Card> action_cards = new ArrayList<>();
@@ -13,6 +16,13 @@ public class Player {
     public void addAction(Card card) {action_cards.add(card);}
     public void addPassive(Card card) {passive_effect_cards.add(card);}
     public void addPrelude(Card card) {preludes.add(card);}
+    public Integer getCities() {return cities;}
+    public Integer getGreeneries() {return greeneries;}
+    public Integer getColonies() {return colonies;}
+    public ArrayList<Card> getGreens() {return green_cards;}
+    public ArrayList<Card> getReds() {return red_cards;}
+    public ArrayList<Card> getActions() {return action_cards;}
+    public ArrayList<Card> getEffects() {return passive_effect_cards;}
 
     //Resurssit:
     //Raha

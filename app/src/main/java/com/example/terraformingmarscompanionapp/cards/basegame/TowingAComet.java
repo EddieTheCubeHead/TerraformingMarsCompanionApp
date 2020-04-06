@@ -19,9 +19,15 @@ public final class TowingAComet extends Card {
         player.addEventTag();
         player.changePlants(2);
         owner_game.raiseOxygen(player);
-        owner_game.placeOcean(player, false);
         player.addRed(this);
         owner_player = player;
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
     }
 
     @Override
