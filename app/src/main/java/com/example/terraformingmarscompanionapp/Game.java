@@ -33,7 +33,19 @@ public class Game {
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
 
-    public Game(ArrayList<String> player_names, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil, Integer map) {
+    public Game
+            (
+                    ArrayList<String> player_names,
+                    boolean hellas_elysium,
+                    boolean corporate_era,
+                    boolean prelude,
+                    boolean colonies,
+                    boolean venus,
+                    boolean turmoil,
+                    boolean extra_corporations,
+                    Integer map
+            )
+    {
 
         for (String player_name : player_names) {
             players.add(new Player(this, player_name));
