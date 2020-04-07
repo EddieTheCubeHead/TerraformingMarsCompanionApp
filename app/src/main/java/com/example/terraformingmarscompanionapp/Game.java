@@ -33,9 +33,11 @@ public class Game {
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
 
-    public Game(ArrayList<Player> all_players, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil, Integer map) {
+    public Game(ArrayList<String> player_names, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil, Integer map) {
 
-        players = all_players;
+        for (String player_name : player_names) {
+            players.add(new Player(this, player_name));
+        }
 
         GameConstructor constructor = new GameConstructor();
         deck = constructor.createDeck(this, corporate_era, prelude, colonies, venus, turmoil);
