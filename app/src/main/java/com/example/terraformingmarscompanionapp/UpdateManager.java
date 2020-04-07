@@ -8,10 +8,20 @@ import java.util.HashMap;
 public final class UpdateManager {
     private HashMap<String, Card> game_deck;
     private Game owner_game;
+    private Boolean corporate_era;
+    private Boolean prelude;
+    private Boolean colonies;
+    private Boolean venus;
+    private Boolean turmoil;
 
-    UpdateManager(Game game) {
+    UpdateManager(Game game, boolean game_corporate_era, boolean game_prelude, boolean game_colonies, boolean game_venus, boolean game_turmoil) {
         game_deck = game.getDeck();
         owner_game = game;
+        corporate_era = game_corporate_era;
+        prelude = game_prelude;
+        colonies = game_colonies;
+        venus = game_venus;
+        turmoil = game_turmoil;
     }
 
     void onVenusTrUp(Player player) {

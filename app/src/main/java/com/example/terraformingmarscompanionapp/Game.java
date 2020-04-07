@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Game {
-    public UpdateManager updateManager = new UpdateManager(this);
+    public UpdateManager update_manager;
     private ArrayList<Player> players = new ArrayList<>();
     private HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
@@ -16,6 +16,7 @@ public class Game {
     HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return  corporations;}
+    ArrayList<Card> getDeckAsList() {return new ArrayList<Card>(deck.values());}
 
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
@@ -32,11 +33,9 @@ public class Game {
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
 
-    public Game(int player_count, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil, Integer map) {
+    public Game(ArrayList<Player> all_players, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil, Integer map) {
 
-        for (int i = 0; i < player_count; i++) {
-            players.add(new Player(this));
-        }
+        players = all_players;
 
         GameConstructor constructor = new GameConstructor();
         deck = constructor.createDeck(this, corporate_era, prelude, colonies, venus, turmoil);
@@ -46,6 +45,7 @@ public class Game {
         }
 
         tile_handler = new TileHandler(this, map, venus);
+        update_manager =  new UpdateManager(this, corporate_era, prelude, colonies, venus, turmoil);
 
         global_temperature = -30;
         global_oxygen = 0;
@@ -339,7 +339,7 @@ public class Game {
             return;
         }
 
-        //TODO UI kysy haluaako pelaaja muuttaa resurssien
+        //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
 
         for (Map.Entry<String, Integer> entry : resources_to_use.entrySet()) {
             switch (entry.getKey()) {
@@ -355,5 +355,26 @@ public class Game {
         }
 
         card.onPlay(player);
+    }
+
+    public void onGenerationEnd() {
+        if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
+            endGame();
+        }
+        for (Player player : players) {
+            player.changeMoney(player.getMoneyProduction() + player.getTerraformingRating());
+            player.changeSteel(player.getSteelProduction());
+            player.changeTitanium(player.getTitaniumProduction());
+            player.changePlants(player.getPlantsProduction());
+            player.changeHeat(player.getEnergy());
+            player.changeEnergy(-player.getEnergy());
+            player.changeEnergy(player.getEnergyProduction());
+            player.changeHeat(player.getHeatProduction());
+        }
+        //TODO turmoil-hommat tähän
+    }
+
+    private void endGame() {
+
     }
 }
