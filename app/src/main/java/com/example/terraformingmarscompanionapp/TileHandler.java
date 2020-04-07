@@ -287,7 +287,7 @@ public class TileHandler {
             return false;
         }
         if (placeTile(player, placing_tile, "city")) {
-            game.updateManager.onCityPlaced(player, true);
+            game.update_manager.onCityPlaced(player, true);
             return true;
         }
         return false;
@@ -301,7 +301,7 @@ public class TileHandler {
         }
         if (placeTile(player, placing_tile, "ocean")) {
             player.changeTerraformingRating(1);
-            game.updateManager.onOceanPlaced(player);
+            game.update_manager.onOceanPlaced(player);
             return true;
         }
         return false;
@@ -315,7 +315,7 @@ public class TileHandler {
         }
         if (placeTile(player, placing_tile, "ocean")) {
             player.changeTerraformingRating(1);
-            game.updateManager.onOceanPlaced(player);
+            game.update_manager.onOceanPlaced(player);
             return true;
         }
         return false;
@@ -350,7 +350,7 @@ public class TileHandler {
             }
         }
         if (placeTile(player, placing_tile, "city")) {
-            game.updateManager.onCityPlaced(player, true);
+            game.update_manager.onCityPlaced(player, true);
             return true;
         }
         return false;
@@ -378,7 +378,7 @@ public class TileHandler {
         }
 
         if (placeTile(player, placing_tile, "capital")) {
-            game.updateManager.onCityPlaced(player, true);
+            game.update_manager.onCityPlaced(player, true);
             return true;
         }
         return false;
@@ -389,7 +389,7 @@ public class TileHandler {
             //TODO error handling
             return;
         }
-        game.updateManager.onCityPlaced(player, false);
+        game.update_manager.onCityPlaced(player, false);
         space_tiles[0].placeHex(player, "city");
     }
 
@@ -455,7 +455,7 @@ public class TileHandler {
             //TODO error handling
             return;
         }
-        game.updateManager.onCityPlaced(player, false);
+        game.update_manager.onCityPlaced(player, false);
         space_tiles[1].placeHex(player, "city");
     }
 
@@ -472,7 +472,7 @@ public class TileHandler {
             }
         }
 
-        game.updateManager.onCityPlaced(player, true);
+        game.update_manager.onCityPlaced(player, true);
         return placeTile(player, placing_tile, "city");
     }
 
@@ -493,7 +493,7 @@ public class TileHandler {
             return false;
         }
 
-        game.updateManager.onCityPlaced(player, true);
+        game.update_manager.onCityPlaced(player, true);
         return placeTile(player, placing_tile, "city");
     }
 

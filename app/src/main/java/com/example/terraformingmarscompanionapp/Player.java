@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public class Player {
     private Game game;
+    private Card corporation;
+    private String name;
     private Integer cities = 0;
     private Integer greeneries = 0;
     private Integer colonies = 0;
@@ -12,11 +14,14 @@ public class Player {
     private ArrayList<Card> action_cards = new ArrayList<>();
     private ArrayList<Card> passive_effect_cards = new ArrayList<>();
     private ArrayList<Card> preludes = new ArrayList<>();
+    public void setCorporation(Card card) {corporation=card;}
     public void addGreen(Card card) {green_cards.add(card);}
     public void addRed(Card card) {red_cards.add(card);}
     public void addAction(Card card) {action_cards.add(card);}
     public void addPassive(Card card) {passive_effect_cards.add(card);}
     public void addPrelude(Card card) {preludes.add(card);}
+    public String getName() {return name;}
+    public Card getCorporation() {return corporation;}
     public Integer getCities() {return cities;}
     public Integer getGreeneries() {return greeneries;}
     public Integer getColonies() {return colonies;}
@@ -379,7 +384,8 @@ public class Player {
      Passiivisten vaikutusten loppu
      ************************************************************************************/
 
-    public Player(Game super_game) {
+    public Player(Game super_game, String player_name) {
         game = super_game;
+        name = player_name;
     }
 }
