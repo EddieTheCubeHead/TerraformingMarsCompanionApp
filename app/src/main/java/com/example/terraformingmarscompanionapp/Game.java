@@ -33,8 +33,7 @@ public class Game {
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
 
-    public Game
-            (
+    public Game(
                     ArrayList<String> player_names,
                     boolean hellas_elysium,
                     boolean corporate_era,
@@ -44,7 +43,7 @@ public class Game {
                     boolean turmoil,
                     boolean extra_corporations,
                     Integer map
-            )
+                )
     {
 
         for (String player_name : player_names) {
