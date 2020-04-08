@@ -1,28 +1,43 @@
 package com.example.terraformingmarscompanionapp;
 
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.EffectCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.FirstAction;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ResourceCard;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Game {
-    public UpdateManager update_manager;
-    private ArrayList<Player> players = new ArrayList<>();
-    private HashMap<String, Card> deck;
+    public final UpdateManager update_manager;
+    private final ArrayList<Player> players = new ArrayList<>();
+    private final HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
-    private HashMap<String, Card> corporations = new HashMap<>();
-    public TileHandler tile_handler;
+    private final HashMap<String, Card> corporations = new HashMap<>();
+    public final TileHandler tile_handler;
 
     public ArrayList<Player> getPlayers() {return  players;}
     HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return  corporations;}
-    ArrayList<Card> getDeckAsList() {return new ArrayList<Card>(deck.values());}
+    ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
+    HashMap<String, EffectCard> getEffectCards() {
+        HashMap<String, EffectCard> effect_cards = new HashMap<>();
+        for (Map.Entry<String, Card> entry : deck.entrySet()) {
+            if (entry.getValue() instanceof ActionCard) {
+                effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
+            }
+        }
+        return effect_cards;
+    }
 
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
     private Integer global_oxygen;
     public Integer getGlobalOxygen() {return global_oxygen;}
-    private Integer oceans_placed;
+    private final Integer oceans_placed;
     Integer getOceansPlaced() {return oceans_placed;}
     private Integer venus_terraform;
     public Integer getVenusTerraform() {return venus_terraform;}
@@ -96,34 +111,34 @@ public class Game {
         Integer plants_amount = 0;
         Integer floaters_amount = 0;
         Integer needed_money;
-        HashMap<String, Integer> card_tags = card.getTags();
+        ArrayList<String> card_tags = card.getTags();
 
         //If -tarkistukset tagialennuksille
-        if (!card_tags.containsKey("Standard project")) {
+        if (!card_tags.contains("Standard project")) {
             actual_price -= player.getCardDiscount();
         }
 
-        if (card_tags.containsKey("Building")) {
+        if (card_tags.contains("Building")) {
             actual_price -= player.getBuildingTagDiscount();
         }
 
-        if (card_tags.containsKey("Space")) {
+        if (card_tags.contains("Space")) {
             actual_price -= player.getSpaceTagDiscount();
         }
 
-        if (card_tags.containsKey("Earth")) {
+        if (card_tags.contains("Earth")) {
             actual_price -= player.getEarthTagDiscount();
         }
 
-        if (card_tags.containsKey("Science")) {
+        if (card_tags.contains("Science")) {
             actual_price -= player.getScienceTagDiscount();
         }
 
-        if (card_tags.containsKey("Energy")) {
+        if (card_tags.contains("Energy")) {
             actual_price -= player.getEnergyTagDiscount();
         }
 
-        if (card_tags.containsKey("Venus")) {
+        if (card_tags.contains("Venus")) {
             actual_price -= player.getVenusTagDiscount();
         }
 
@@ -137,7 +152,7 @@ public class Game {
             money_amount = player.getMoney();
             needed_money = actual_price - money_amount;
 
-            if (card_tags.containsKey("Space")) {
+            if (card_tags.contains("Space")) {
                 if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money) {
                     titanium_amount = needed_money / (3 + player.getTitaniumValueModifier());
                     money_amount = actual_price - titanium_amount * (3 + player.getTitaniumValueModifier());
@@ -150,7 +165,7 @@ public class Game {
                 }
             }
 
-            if (card_tags.containsKey("Building")) {
+            if (card_tags.contains("Building")) {
                 if (player.getSteel() * (2 + player.getSteelValueModifier()) >= needed_money) {
                     steel_amount = needed_money / (2 + player.getSteelValueModifier());
                     money_amount = actual_price - (steel_amount * (2 + player.getSteelValueModifier()
@@ -276,12 +291,7 @@ public class Game {
                     } break;
                 case "min_floaters":
                     int floaters = 0;
-                    for (Card resource_card : player.getActions()) {
-                        if (resource_card.getResourceType() == 4) {
-                            floaters += resource_card.getResourceAmount();
-                        }
-                    }
-                    for (Card resource_card : player.getEffects()) {
+                    for (ResourceCard resource_card : player.getResourceHolders()) {
                         if (resource_card.getResourceType() == 4) {
                             floaters += resource_card.getResourceAmount();
                         }
@@ -334,6 +344,7 @@ public class Game {
         }
         return true;
     }
+
 
     public void playCard(Card card, Player player) {
         HashMap<String, Integer> resources_to_use = checkCardCost(card, player);

@@ -1,14 +1,14 @@
 package com.example.terraformingmarscompanionapp;
 
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cards.basegame.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 class GameConstructor {
-    private HashMap<String, Card> deck;
-    private HashMap<String, Card> preludes;
-    private HashMap<String, Card> corporations;
+    private final HashMap<String, Card> deck;
+    private final HashMap<String, Card> preludes;
+    private final HashMap<String, Card> corporations;
 
     GameConstructor() {
         deck = new HashMap<>();

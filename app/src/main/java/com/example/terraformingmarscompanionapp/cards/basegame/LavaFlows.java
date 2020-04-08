@@ -1,24 +1,20 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class LavaFlows extends Card {
     public LavaFlows(Game game) {
+        super("red");
         name = "Lava flows";
         price = 18;
-        tags.put("event", 1);
+        tags.add("event");
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addEventTag();
-        owner_game.raiseTemperature(player);
-        owner_game.raiseTemperature(player);
-        player.addRed(this);
-        owner_player = player;
         while (true) {
             if (owner_game.tile_handler.placeLavaFlow(player)) {
                 break;
@@ -26,15 +22,8 @@ public final class LavaFlows extends Card {
                 //TODO feedback pelaajalle ja virheenhallinta jos jokainen volcanic-tiili varattu
             }
         }
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        owner_game.raiseTemperature(player);
+        owner_game.raiseTemperature(player);
+        super.onPlay(player);
     }
 }

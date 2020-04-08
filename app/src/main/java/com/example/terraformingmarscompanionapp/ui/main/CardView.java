@@ -1,7 +1,6 @@
 package com.example.terraformingmarscompanionapp.ui.main;
-import android.widget.TextView;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import java.util.ArrayList;
 
 

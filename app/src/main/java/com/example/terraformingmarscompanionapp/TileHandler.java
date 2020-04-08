@@ -1,16 +1,14 @@
 package com.example.terraformingmarscompanionapp;
 
-import android.net.wifi.p2p.WifiP2pManager;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 public class TileHandler {
-    private Integer map;
-    private Tile[][] mars_tiles = new Tile[17][9];
-    private Tile[] space_tiles;
-    private Game game;
+    private final Integer map;
+    private final Tile[][] mars_tiles = new Tile[17][9];
+    private final Tile[] space_tiles;
+    private final Game game;
     /* koordinaatit x, y, huomioitavaa, että vain y=4 on täysi rivi heksoja
      * Esimerkiksi 0, 3 on tyhjä
      */
@@ -495,6 +493,16 @@ public class TileHandler {
 
         game.update_manager.onCityPlaced(player, true);
         return placeTile(player, placing_tile, "city");
+    }
+
+    public Boolean placeNuclearZone(Player player) {
+        Tile placing_tile = getCoordinatesFromPlayer("nuclear_zone");
+
+        if (placing_tile.getIsOcean()) {
+            return false;
+        }
+
+        return placeTile(player, placing_tile, "nuclear_zone");
     }
 
     private Boolean placeTile(Player player, Tile to_place, String tile_type) {

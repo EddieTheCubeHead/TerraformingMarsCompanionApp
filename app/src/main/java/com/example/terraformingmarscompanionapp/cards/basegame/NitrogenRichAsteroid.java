@@ -1,21 +1,22 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class NitrogenRichAsteroid extends Card {
     public NitrogenRichAsteroid(Game game) {
+        super("red");
         name = "Nitrogen-rich asteroid";
         price = 31;
-        tags.put("space", 1);
-        tags.put("event", 1);
+        tags.add("space");
+        tags.add("event");
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        owner_game.updateManager.onSpaceEvent(player);
+        owner_game.update_manager.onSpaceEvent(player);
         owner_game.raiseTemperature(player);
         player.changeTerraformingRating(2);
         if (player.getPlantTags() < 3) {
@@ -23,17 +24,6 @@ public final class NitrogenRichAsteroid extends Card {
         } else {
             player.changePlantsProduction(4);
         }
-        player.addRed(this);
-        owner_player = player;
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        super.onPlay(player);
     }
 }

@@ -1,25 +1,31 @@
 package com.example.terraformingmarscompanionapp;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ResourceCard;
+
 import java.util.ArrayList;
 
 public class Player {
-    private Game game;
+    private final Game game;
     private Card corporation;
-    private String name;
-    private Integer cities = 0;
-    private Integer greeneries = 0;
-    private Integer colonies = 0;
+    private final String name;
+    private final Integer cities = 0;
+    private final Integer greeneries = 0;
+    private final Integer colonies = 0;
     private Integer hand_size = 0; //Vaikka ei pidetä tietoa, mitä kortteja kädessä, korttien määrä on helppo pitää ylhäällä milestoneja varten
-    private ArrayList<Card> green_cards = new ArrayList<>();
-    private ArrayList<Card> red_cards = new ArrayList<>();
-    private ArrayList<Card> action_cards = new ArrayList<>();
-    private ArrayList<Card> passive_effect_cards = new ArrayList<>();
-    private ArrayList<Card> preludes = new ArrayList<>();
+    private final ArrayList<Card> green_cards = new ArrayList<>();
+    private final ArrayList<Card> red_cards = new ArrayList<>();
+    private final ArrayList<ActionCard> action_cards = new ArrayList<>();
+    private final ArrayList<Card> blue_cards = new ArrayList<>();
+    private final ArrayList<Card> preludes = new ArrayList<>();
+    private final ArrayList<ResourceCard> resource_holders = new ArrayList<>();
     public void setCorporation(Card card) {corporation=card;}
     public void addGreen(Card card) {green_cards.add(card);}
     public void addRed(Card card) {red_cards.add(card);}
-    public void addAction(Card card) {action_cards.add(card);}
-    public void addPassive(Card card) {passive_effect_cards.add(card);}
+    public void addAction(ActionCard card) {action_cards.add(card);}
+    public void addBlue(Card card) {blue_cards.add(card);}
     public void addPrelude(Card card) {preludes.add(card);}
+    public void addResourceHolder(ResourceCard card) {resource_holders.add(card);}
     public String getName() {return name;}
     public Card getCorporation() {return corporation;}
     public Integer getCities() {return cities;}
@@ -27,10 +33,14 @@ public class Player {
     public Integer getColonies() {return colonies;}
     public ArrayList<Card> getGreens() {return green_cards;}
     public ArrayList<Card> getReds() {return red_cards;}
-    public ArrayList<Card> getActions() {return action_cards;}
-    public ArrayList<Card> getEffects() {return passive_effect_cards;}
+    public ArrayList<ActionCard> getActions() {return action_cards;}
+    public ArrayList<Card> getEffects() {return blue_cards;}
+    public ArrayList<ResourceCard> getResourceHolders() {return resource_holders;}
 
-    //Resurssit:
+    /***********************************************************************************
+     Resurssit
+     ************************************************************************************/
+
     //Raha
     private Integer money = 0;
     private Integer money_production = 0;
@@ -120,7 +130,7 @@ public class Player {
             return false;
         }
         energy += change_amount;
-        return false;
+        return true;
     }
     public Integer getEnergyProduction() {return energy_production;}
     public boolean changeEnergyProduction(Integer change_amount) {
@@ -166,13 +176,15 @@ public class Player {
     public Integer getVictoryPoints() {return victory_points;}
     public void changeVictoryPoints(Integer change_amount) {victory_points += change_amount;}
 
+    /***********************************************************************************
+     Tagit
+     ************************************************************************************/
 
-    //Tagit:
     private Integer building_tags = 0;
     public Integer getBuildingTags() {return building_tags;}
     public void addBuildingTag() {
         if (building_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         building_tags++;
     }
@@ -181,7 +193,7 @@ public class Player {
     public Integer getSpaceTags() {return space_tags;}
     public void addSpaceTag() {
         if (space_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         space_tags++;
     }
@@ -190,47 +202,43 @@ public class Player {
     public Integer getScienceTags() {return science_tags;}
     public void addScienceTag() {
         if (science_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         science_tags++;
-        game.update_manager.onScienceTag(this);
     }
 
     private Integer plant_tags = 0;
     public Integer getPlantTags() {return plant_tags;}
     public void addPlantTag() {
         if (plant_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         plant_tags++;
-        game.update_manager.onPlantTag(this);
     }
 
     private Integer microbe_tags = 0;
     public Integer getMicrobeTags() {return  microbe_tags;}
     public void addMicrobeTag() {
         if (microbe_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         microbe_tags++;
-        game.update_manager.onMicrobeTag(this);
     }
 
     private Integer animal_tags = 0;
     public Integer getAnimalTags() {return animal_tags;}
     public void addAnimalTag() {
         if (animal_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         animal_tags++;
-        game.update_manager.onAnimalTag(this);
     }
 
     private Integer energy_tags = 0;
     public Integer getEnergyTags() {return energy_tags;}
     public void addEnergyTag() {
         if (energy_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         energy_tags++;
     }
@@ -239,27 +247,25 @@ public class Player {
     public Integer getJovianTags() {return jovian_tags;}
     public void addJovianTag() {
         if (jovian_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         jovian_tags++;
-        game.update_manager.onJovianTag(this);
     }
 
     private Integer earth_tags = 0;
     public Integer getEarthTags() {return earth_tags;}
     public void addEarthTag() {
         if (earth_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         earth_tags++;
-        game.update_manager.onEarthTag(this);
     }
 
     private Integer city_tags = 0;
     public Integer getCityTags() {return city_tags;}
     public void addCityTag() {
         if (city_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         city_tags++;
     }
@@ -268,14 +274,13 @@ public class Player {
     public Integer getEventTags() {return event_tags;}
     public void addEventTag() {
         event_tags++;
-        game.update_manager.onEventPlayed(this);
     }
 
     private Integer venus_tags = 0;
     public Integer getVenusTags() {return venus_tags;}
     public void addVenusTag() {
         if (venus_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         venus_tags++;
     }
@@ -284,7 +289,7 @@ public class Player {
     public Integer getJokerTags() {return joker_tags;}
     public void addJokerTag() {
         if (joker_tags == 0) {
-            game.update_manager.onNewUniqueTag(this);
+            addUniqueTag();
         }
         joker_tags++;
     }
@@ -292,6 +297,13 @@ public class Player {
     private Integer null_tags = 0;
     public Integer getNullTags() {return null_tags;}
     public void addNullTag() {null_tags++;}
+
+    private Integer unique_tags = 0;
+    public Integer getUniqueTags() {return unique_tags;}
+    public void addUniqueTag() {
+        unique_tags++;
+        game.update_manager.onNewUniqueTag(this);
+    }
 
 
     /***********************************************************************************
@@ -380,8 +392,9 @@ public class Player {
     private Boolean raised_tr_this_generation = false;
     public Boolean getRaisedTrThisGeneration() {return raised_tr_this_generation;}
     public void setRaisedTrThisGeneration(Boolean value) {raised_tr_this_generation = value;}
+
     /***********************************************************************************
-     Passiivisten vaikutusten loppu
+     Constructor
      ************************************************************************************/
 
     public Player(Game super_game, String player_name) {

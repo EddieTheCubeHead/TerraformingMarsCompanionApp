@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.SearchView;
 
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.ui.main.CardView;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class SearchActivity extends AppCompatActivity {
     SearchView searchview;
@@ -61,7 +61,7 @@ public class SearchActivity extends AppCompatActivity {
 
         //recyclerviewn täyttö
 
-        searchview = (SearchView) findViewById(R.id.searchview);
+        searchview = findViewById(R.id.searchview);
 
         recyclerview.setAdapter(adapter);
 

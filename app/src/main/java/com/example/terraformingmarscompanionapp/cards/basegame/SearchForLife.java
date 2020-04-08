@@ -1,14 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class SearchForLife extends Card {
+public final class SearchForLife extends ResourceCard implements ActionCard {
     public SearchForLife(Game game) {
+        super("blue");
         name = "Search for life";
         price = 3;
-        tags.put("science", 1);
+        tags.add("science");
         requirements.put("max_oxygen", 6);
         resource_type = 1;
         owner_game = game;
@@ -16,18 +19,10 @@ public final class SearchForLife extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addScienceTag();
-        player.addAction(this);
-        owner_game.updateManager.onVpCardPlayed(player);
-        owner_player = player;
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -44,10 +39,17 @@ public final class SearchForLife extends Card {
         }
     }
 
-    @Override
     public void onGameEnd() {
         if (resource_amount < 0) {
             owner_player.changeVictoryPoints(3);
         }
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }

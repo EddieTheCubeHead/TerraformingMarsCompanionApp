@@ -1,23 +1,20 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class MoholeArea extends Card {
     public MoholeArea(Game game) {
+        super("green");
         name = "Mohole area";
         price = 20;
-        tags.put("building", 1);
+        tags.add("building");
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.changeHeatProduction(4);
-        player.addGreen(this);
-        owner_player = player;
         while (true) {
             if (owner_game.tile_handler.placeMohole(player)) {
                 break;
@@ -25,15 +22,7 @@ public final class MoholeArea extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        player.changeHeatProduction(4);
+        super.onPlay(player);
     }
 }

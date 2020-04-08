@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class NaturalPreserve extends Card {
     public NaturalPreserve(Game game) {
+        super("green");
         name = "Natural preserve";
         price = 9;
-        tags.put("science", 1);
-        tags.put("building", 1);
+        tags.add("science");
+        tags.add("building");
         requirements.put("max_oxygen", 4);
         victory_points = 1;
         owner_game = game;
@@ -17,12 +18,6 @@ public final class NaturalPreserve extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addScienceTag();
-        player.addBuildingTag();
-        player.changeMoneyProduction(1);
-        player.addGreen(this);
-        owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
         while (true) {
             if (owner_game.tile_handler.placeNaturalReserve(player)) {
                 break;
@@ -30,15 +25,8 @@ public final class NaturalPreserve extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        player.changeMoneyProduction(1);
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 }

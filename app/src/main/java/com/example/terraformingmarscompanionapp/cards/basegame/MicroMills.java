@@ -1,11 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class MicroMills extends Card {
     public MicroMills(Game game) {
+        super("green");
         name = "Micro-mills";
         price = 3;
         owner_game = game;
@@ -14,17 +15,6 @@ public final class MicroMills extends Card {
     @Override
     public void onPlay(Player player) {
         player.changeHeatProduction(1);
-        player.addGreen(this);
-        owner_player = player;
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        super.onPlay(player);
     }
 }

@@ -1,16 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class FusionPower extends Card {
     public FusionPower(Game game) {
+        super("green");
         name = "Fusion power";
         price = 14;
-        tags.put("science", 1);
-        tags.put("energy", 1);
-        tags.put("building", 1);
+        tags.add("science");
+        tags.add("energy");
+        tags.add("building");
         requirements.put("min_energy_tags", 2);
         owner_game = game;
     }
@@ -18,20 +19,6 @@ public final class FusionPower extends Card {
     @Override
     public void onPlay(Player player) {
         player.changeEnergyProduction(3);
-        player.addScienceTag();
-        player.addEnergyTag();
-        player.addBuildingTag();
-        player.addGreen(this);
-        owner_player = player;
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        super.onPlay(player);
     }
 }

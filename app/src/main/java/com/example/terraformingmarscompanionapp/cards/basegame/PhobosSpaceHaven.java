@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class PhobosSpaceHaven extends Card {
     public PhobosSpaceHaven(Game game) {
+        super("green");
         name = "PhobosSpaceHaven";
         price = 25;
-        tags.put("space", 1);
-        tags.put("city", 1);
+        tags.add("space");
+        tags.add("city");
         victory_points = 3;
         owner_game = game;
     }
@@ -17,21 +18,8 @@ public final class PhobosSpaceHaven extends Card {
     @Override
     public void onPlay(Player player) {
         player.changeTitaniumProduction(1);
-        player.addSpaceTag();
-        player.addCityTag();
-        player.addGreen(this);
-        owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
+        owner_game.update_manager.onVpCardPlayed(player);
         owner_game.tile_handler.placePhobos(player);
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        super.onPlay(player);
     }
 }

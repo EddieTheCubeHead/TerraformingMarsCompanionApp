@@ -1,29 +1,20 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class WaterImportFromEurope extends Card {
+public final class WaterImportFromEurope extends Card implements ActionCard {
     public WaterImportFromEurope(Game game) {
+        super("blue");
         name = "Water import from europe";
         price = 25;
-        tags.put("space", 1);
-        tags.put("jovian", 1);
+        tags.add("space");
+        tags.add("jovian");
         owner_game = game;
     }
 
-    @Override
-    public void onPlay(Player player) {
-
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -44,5 +35,13 @@ public final class WaterImportFromEurope extends Card {
     @Override
     public void onGameEnd() {
         owner_player.changeVictoryPoints(owner_player.getJovianTags());
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }

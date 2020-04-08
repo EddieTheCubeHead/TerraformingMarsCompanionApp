@@ -1,14 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class ElectroCatapult extends Card {
+public final class ElectroCatapult extends Card implements ActionCard {
     public ElectroCatapult(Game game) {
+        super("blue");
         name = "Electro catapult";
         price = 17;
-        tags.put("building", 1);
+        tags.add("building");
         requirements.put("max_oxygen", 8);
         requirements.put("min_energy_production", 1);
         victory_points = 1;
@@ -17,19 +19,11 @@ public final class ElectroCatapult extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addAction(this);
         player.changeEnergyProduction(-1);
-        owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -40,5 +34,13 @@ public final class ElectroCatapult extends Card {
             action_used = true;
             return true;
         }
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }
