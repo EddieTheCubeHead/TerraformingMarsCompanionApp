@@ -69,7 +69,7 @@ public abstract class Card {
         return tag_integers;
     }
 
-    public Integer getRequirementInt()
+    public final Integer getRequirementInt()
     {
         return R.drawable.ic_ph;
     }
