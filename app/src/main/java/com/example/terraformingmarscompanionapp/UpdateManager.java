@@ -102,10 +102,8 @@ public final class UpdateManager {
 
     }
 
-    void onPlacementBonus(Player player, Integer type) {
-        /* 0: teräs
-         * 1: titaani
-         */
+    void onPlacementBonus(Player player) {
+        game_deck.get("Mining guild").cardEffect(player);
     }
 
     //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
@@ -114,7 +112,7 @@ public final class UpdateManager {
     }
 
     void onEventPlayed(Player player) {
-
+        game_deck.get("Interplanetary cinematics").cardEffect(player);
     }
 
     void onOrganicTag(Player player) {

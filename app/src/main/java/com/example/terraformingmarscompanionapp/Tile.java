@@ -50,11 +50,11 @@ class Tile {
                 switch (bonus) {
                     case "steel":
                         player.changeSteel(1);
-                        game.updateManager.onPlacementBonus(player, 0);
+                        game.update_manager.onPlacementBonus(player);
                         break;
                     case "titanium":
                         player.changeTitanium(1);
-                        game.updateManager.onPlacementBonus(player, 1);
+                        game.update_manager.onPlacementBonus(player);
                         break;
                     case "plant":
                         player.changePlants(1);
