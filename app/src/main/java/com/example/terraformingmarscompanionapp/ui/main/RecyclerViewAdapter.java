@@ -20,7 +20,9 @@ import java.util.List;
  * Adapteri joka hakusuodattaa ja pitää cardviewn tietoja.
  */
 
-//TODO jonkinlainen luokkarevision näistä
+//debug: uses unchecked or unsafe operations
+//Note: Recompile with -Xlint:unchecked for details
+//TODO mieti jos cardviewn voi korjata vaan cardilla ja onko performanssimaksua
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.CardViewHolder> implements Filterable
 {
     private ArrayList<CardView> card_view_list;
@@ -68,27 +70,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(@NonNull CardViewHolder holder, int index)
     {
         CardView current_item = card_view_list.get(index);
+
         String card_name = current_item.getCardName();
+        Integer requirement = current_item.getRequirement();
         Integer tag1 = current_item.getTag1();
         Integer tag2 = current_item.getTag2();
         Integer tag3 = current_item.getTag3();
         Integer tag4 = current_item.getTag4();
 
         holder.card_name_view.setText(card_name);
+        holder.requirement_view.setImageResource(requirement);
         holder.tag1_view.setImageResource(tag1);
         holder.tag2_view.setImageResource(tag2);
         holder.tag3_view.setImageResource(tag3);
         holder.tag4_view.setImageResource(tag4);
     }
 
-    @Override
-    public int getItemCount() {
-        return card_view_list.size();
-    }
-
-    private Filter filter = new Filter() {
+    private Filter filter = new Filter()
+    {
         @Override
-        protected FilterResults performFiltering(CharSequence search_string) {
+        protected FilterResults performFiltering(CharSequence search_string)
+        {
             List<CardView> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();
 
@@ -107,7 +109,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String regex = ".*";
                 for (String word : keywords)
                 {
-                    //TODO parantaminen
                     regex += word + ".*";
                 }
 
@@ -122,16 +123,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //päivittää cardviewtä notifydatasetchangedillä
         @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            card_view_list.clear();
-            card_view_list.addAll((List)results.values);
-            notifyDataSetChanged();
+        protected void publishResults(CharSequence constraint, FilterResults results)
+        {
+            try {
+                card_view_list.clear();
+                card_view_list.addAll((List) results.values);
+                notifyDataSetChanged();
+            } catch (Exception e) { System.out.println("Alex,debug: virhe recyclerviewadapterin publishresults"); }
         }
     };
 
     @Override
-    public Filter getFilter() {
-        return filter;
-    }
-
+    public int getItemCount() { return card_view_list.size(); }
+    @Override
+    public Filter getFilter() { return filter; }
 }

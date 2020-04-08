@@ -12,9 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Game implements Serializable {
+
     public final UpdateManager update_manager;
     private final ArrayList<Player> players = new ArrayList<>();
     private final HashMap<String, Card> deck;
+
     private HashMap<String, Card> preludes = new HashMap<>();
     private final HashMap<String, Card> corporations = new HashMap<>();
     public final TileHandler tile_handler;
@@ -49,7 +51,18 @@ public class Game implements Serializable {
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
 
-    public Game(ArrayList<String> player_names, boolean hellas_elysium, boolean corporate_era, boolean prelude, boolean colonies, boolean venus, boolean turmoil, Integer map) {
+    public Game(
+                    ArrayList<String> player_names,
+                    boolean hellas_elysium,
+                    boolean corporate_era,
+                    boolean prelude,
+                    boolean colonies,
+                    boolean venus,
+                    boolean turmoil,
+                    boolean extra_corporations,
+                    Integer map
+                )
+    {
 
         for (String player_name : player_names) {
             players.add(new Player(this, player_name));
