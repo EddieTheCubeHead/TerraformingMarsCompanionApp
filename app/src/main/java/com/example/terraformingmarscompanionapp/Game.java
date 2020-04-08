@@ -6,11 +6,12 @@ import com.example.terraformingmarscompanionapp.CardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.CardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.CardSubclasses.ResourceCard;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Game {
+public class Game implements Serializable {
     public final UpdateManager update_manager;
     private final ArrayList<Player> players = new ArrayList<>();
     private final HashMap<String, Card> deck;

@@ -300,7 +300,7 @@ public class Player {
 
     private Integer unique_tags = 0;
     public Integer getUniqueTags() {return unique_tags;}
-    public void addUniqueTag() {
+    private void addUniqueTag() {
         unique_tags++;
         game.update_manager.onNewUniqueTag(this);
     }
