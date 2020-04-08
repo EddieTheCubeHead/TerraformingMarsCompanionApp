@@ -1,11 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class LakeMarineris extends Card {
     public LakeMarineris(Game game) {
+        super("green");
         name = "Lake marineris";
         price = 18;
         requirements.put("min_temperature", 0);
@@ -15,33 +16,23 @@ public final class LakeMarineris extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addNullTag();
-        player.addGreen(this);
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
+        while (true) {
+            if (owner_game.tile_handler.placeOcean(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
+            }
+        }
         owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
-        while (true) {
-            if (owner_game.tile_handler.placeOcean(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
-            }
-        }
-        while (true) {
-            if (owner_game.tile_handler.placeOcean(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
-            }
-        }
-    }
+        owner_game.update_manager.onVpCardPlayed(player);
 
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        super.onPlay(player);
     }
 }

@@ -1,14 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class AquiferPumping extends Card {
+public final class AquiferPumping extends Card implements ActionCard {
     public AquiferPumping(Game game) {
+        super("blue");
         name = "Aquifer pumping";
         price = 18;
-        tags.put("building", 1);
+        tags.add("building");
         owner_game = game;
     }
 
@@ -19,12 +21,6 @@ public final class AquiferPumping extends Card {
         owner_player = player;
     }
 
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -41,5 +37,13 @@ public final class AquiferPumping extends Card {
             return true;
         }
         return false;
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }

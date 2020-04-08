@@ -1,14 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.EffectCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class Decomposers extends Card {
+public final class Decomposers extends ResourceCard implements EffectCard {
     public Decomposers(Game game) {
+        super("blue");
         name = "Decomposers";
         price = 5;
-        tags.put("microbe", 1);
+        tags.add("microbe");
         requirements.put("min_oxygen", 3);
         resource_type = 1;
         owner_game = game;
@@ -16,24 +19,16 @@ public final class Decomposers extends Card {
 
     @Override
     public void onPlay(Player player) {
-        owner_player = player;
-        player.addPassive(this);
-        player.addMicrobeTag();
-        owner_game.updateManager.onVpCardPlayed(player);
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 
-    @Override
     public void cardEffect(Player player) {
         if (owner_player == null) {
             return;
         } else if (owner_player == player) {
             resource_amount++;
         }
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
     }
 
     @Override

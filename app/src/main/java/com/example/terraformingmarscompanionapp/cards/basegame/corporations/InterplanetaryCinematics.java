@@ -1,23 +1,23 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class InterplanetaryCinematics extends Card {
+public final class InterplanetaryCinematics extends Card implements EffectCard {
     public InterplanetaryCinematics(Game game) {
+        super("corporation");
         name = "Interplanetary cinematics";
-        tags.put("building", 1);
+        tags.add("building");
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addBuildingTag();
         player.changeSteel(20);
         player.changeMoney(30);
-        player.setCorporation(this);
-        owner_player = player;
+        super.onPlay(player);
     }
 
     @Override
@@ -26,10 +26,5 @@ public final class InterplanetaryCinematics extends Card {
             return;
         }
         owner_player.changeMoney(2);
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
     }
 }

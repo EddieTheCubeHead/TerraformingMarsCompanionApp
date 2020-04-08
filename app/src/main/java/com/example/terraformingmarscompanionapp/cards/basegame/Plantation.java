@@ -1,33 +1,28 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class Plantation extends Card {
     public Plantation(Game game) {
+        super("green");
         name = "Plantation";
         price = 15;
-        tags.put("plant", 1);
+        tags.add("plant");
         requirements.put("min_science_tags", 2);
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addPlantTag();
-        player.addGreen(this);
-        owner_game.placeForest(player, false);
-        owner_player = player;
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        while (true) {
+            if (owner_game.tile_handler.placeGreenery(player)) {
+                break;
+            } else {
+                //TODO feedback pelaajalle ja mahdollisuus perua
+            }
+        }
+        super.onPlay(player);
     }
 }

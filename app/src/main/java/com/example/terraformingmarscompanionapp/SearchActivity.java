@@ -10,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import android.widget.SearchView;
-
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
 
 import java.util.ArrayList;
@@ -50,8 +49,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         searchview = (SearchView) findViewById(R.id.searchview);
 
         recyclerview.setAdapter(adapter);
-
-
     }
 
     @Override

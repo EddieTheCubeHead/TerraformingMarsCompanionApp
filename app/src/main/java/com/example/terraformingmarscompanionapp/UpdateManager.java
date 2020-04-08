@@ -1,21 +1,21 @@
 package com.example.terraformingmarscompanionapp;
 
-import com.example.terraformingmarscompanionapp.cards.basegame.Plantation;
+import com.example.terraformingmarscompanionapp.CardSubclasses.EffectCard;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
+@SuppressWarnings("EmptyMethod")
 public final class UpdateManager {
-    private HashMap<String, Card> game_deck;
-    private Game owner_game;
-    private Boolean corporate_era;
-    private Boolean prelude;
-    private Boolean colonies;
-    private Boolean venus;
-    private Boolean turmoil;
+    private final HashMap<String, EffectCard> effect_cards;
+    private final Game owner_game;
+    private final Boolean corporate_era;
+    private final Boolean prelude;
+    private final Boolean colonies;
+    private final Boolean venus;
+    private final Boolean turmoil;
 
     UpdateManager(Game game, boolean game_corporate_era, boolean game_prelude, boolean game_colonies, boolean game_venus, boolean game_turmoil) {
-        game_deck = game.getDeck();
+        effect_cards = game.getEffectCards();
         owner_game = game;
         corporate_era = game_corporate_era;
         prelude = game_prelude;
@@ -34,23 +34,23 @@ public final class UpdateManager {
         } else {
             owner_game.addCityInSpace();
         }
-        game_deck.get("Immigrant city").cardEffect(player);
-        game_deck.get("Rover construction").cardEffect(player);
+        effect_cards.get("Immigrant city").cardEffect(player);
+        effect_cards.get("Rover construction").cardEffect(player);
     }
 
     void onNewUniqueTag(Player player) {
 
     }
 
-    void onPlantTag(Player player) {
-        game_deck.get("Ecological zone").cardEffect(player);
+    public void onPlantTag(Player player) {
+        effect_cards.get("Ecological zone").cardEffect(player);
     }
 
-    void onAnimalTag(Player player) {
-        game_deck.get("Ecological zone").cardEffect(player);
+    public void onAnimalTag(Player player) {
+        effect_cards.get("Ecological zone").cardEffect(player);
     }
 
-    void onMicrobeTag(Player player) {
+    public void onMicrobeTag(Player player) {
 
     }
 
@@ -83,18 +83,18 @@ public final class UpdateManager {
     }
 
     void onOceanPlaced(Player player) {
-        game_deck.get("Arctic algae").cardEffect(player);
+        effect_cards.get("Arctic algae").cardEffect(player);
     }
 
-    void onJovianTag(Player player) {
-
-    }
-
-    void onEarthTag(Player player) {
+    public void onJovianTag(Player player) {
 
     }
 
-    void onScienceTag(Player player) {
+    public void onEarthTag(Player player) {
+
+    }
+
+    public void onScienceTag(Player player) {
 
     }
 
@@ -103,7 +103,7 @@ public final class UpdateManager {
     }
 
     void onPlacementBonus(Player player) {
-        game_deck.get("Mining guild").cardEffect(player);
+        effect_cards.get("Mining guild").cardEffect(player);
     }
 
     //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
@@ -111,12 +111,8 @@ public final class UpdateManager {
 
     }
 
-    void onEventPlayed(Player player) {
-        game_deck.get("Interplanetary cinematics").cardEffect(player);
-    }
-
-    void onOrganicTag(Player player) {
-
+    public void onEventPlayed(Player player) {
+        effect_cards.get("Interplanetary cinematics").cardEffect(player);
     }
 
     void onStandardProjectPayment(Player player) {
@@ -124,11 +120,11 @@ public final class UpdateManager {
     }
 
     void onGreeneryPlaced(Player player) {
-        game_deck.get("Herbivores").cardEffect(player);
+        effect_cards.get("Herbivores").cardEffect(player);
     }
 
     //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
     public void onSpaceEvent(Player player) {
-        game_deck.get("Optimal aerobraking").cardEffect(player);
+        effect_cards.get("Optimal aerobraking").cardEffect(player);
     }
 }

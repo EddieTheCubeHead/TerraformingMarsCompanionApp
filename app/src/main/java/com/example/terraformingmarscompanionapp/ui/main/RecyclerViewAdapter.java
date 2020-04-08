@@ -11,13 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Adapteri joka hakusuodattaa ja pitää cardviewn tietoja.

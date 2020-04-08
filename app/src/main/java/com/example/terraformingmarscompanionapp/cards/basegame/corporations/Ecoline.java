@@ -1,13 +1,14 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class Ecoline extends Card {
     public Ecoline(Game game) {
+        super("corporation");
         name = "Ecoline";
-        tags.put("plant", 1);
+        tags.add("plant");
         owner_game = game;
     }
 
@@ -16,19 +17,7 @@ public final class Ecoline extends Card {
         player.changeGreeneryPlantCostModifier(1);
         player.changePlantsProduction(2);
         player.changePlants(3);
-        player.addPlantTag();
         player.changeMoney(36);
-        owner_player = player;
-        player.setCorporation(this);
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        super.onPlay(player);
     }
 }

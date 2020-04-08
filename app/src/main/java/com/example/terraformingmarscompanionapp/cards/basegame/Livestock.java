@@ -1,14 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class Livestock extends Card {
+public final class Livestock extends ResourceCard implements ActionCard {
     public Livestock(Game game) {
+        super("blue");
         name = "Livestock";
         price = 13;
-        tags.put("animal", 1);
+        tags.add("animal");
         requirements.put("min_oxygen", 9);
         requirements.put("min_plant_production", 1);
         resource_type = 2;
@@ -17,20 +20,11 @@ public final class Livestock extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addAnimalTag();
         player.changePlantsProduction(-1);
         player.changeMoneyProduction(2);
-        player.addAction(this);
-        player.addGreen(this);
-        owner_player = player;
+        super.onPlay(player);
     }
 
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -39,6 +33,14 @@ public final class Livestock extends Card {
             action_used = true;
             return true;
         }
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 
     @Override
