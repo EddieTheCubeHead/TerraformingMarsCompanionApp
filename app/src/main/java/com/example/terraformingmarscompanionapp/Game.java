@@ -1,10 +1,11 @@
 package com.example.terraformingmarscompanionapp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Game {
+public class Game implements Serializable {
     public UpdateManager update_manager;
     private ArrayList<Player> players = new ArrayList<>();
     private HashMap<String, Card> deck;
