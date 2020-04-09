@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:textStyle="bold"
         android:textColor="@color/colorWindowText"
         android:text=""
@@ -21,13 +22,14 @@
     <EditText
         android:id="@+id/editText"
         android:layout_height="50dp"
-        android:width="200dp"
+        android:layout_width="match_parent"
         android:textSize="30dp"
-        android:text="Moikka"
+        android:text=""
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="60dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/button_start" />
 
     <Button
