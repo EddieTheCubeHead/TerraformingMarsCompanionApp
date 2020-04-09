@@ -1,14 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class Birds extends Card {
+public final class Birds extends ResourceCard implements ActionCard {
     public Birds(Game game) {
+        super("blue");
         name = "Birds";
         price = 10;
-        tags.put("animal", 1);
+        tags.add("animal");
         requirements.put("min_oxygen", 13);
         resource_type = 2;
         owner_game = game;
@@ -16,19 +19,11 @@ public final class Birds extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addAnimalTag();
-        player.addAction(this);
         //TODO vie toiselta 2 kasvintuotantoa
-        owner_game.updateManager.onVpCardPlayed(player);
-        owner_player = player;
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -38,8 +33,16 @@ public final class Birds extends Card {
         }
     }
 
+    public String getActionName() {
+        return getName();
+    }
+
     @Override
     public void onGameEnd() {
         owner_player.changeVictoryPoints(resource_amount);
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }

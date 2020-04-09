@@ -1,16 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class AdvancedEcosystems extends Card {
     public AdvancedEcosystems(Game game) {
+        super("green");
         name = "Advanced ecosystems";
         price = 11;
-        tags.put("plant", 1);
-        tags.put("microbe", 1);
-        tags.put("animal", 1);
+        tags.add("plant");
+        tags.add("microbe");
+        tags.add("animal");
         requirements.put("min_plant_tags", 1);
         requirements.put("min_microbe_tags", 1);
         requirements.put("min_animal_tags", 1);
@@ -20,21 +21,7 @@ public final class AdvancedEcosystems extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addPlantTag();
-        player.addMicrobeTag();
-        player.addAnimalTag();
-        owner_game.updateManager.onVpCardPlayed(player);
-        player.addGreen(this);
-        owner_player = player;
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 }

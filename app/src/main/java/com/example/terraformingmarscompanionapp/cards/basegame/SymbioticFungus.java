@@ -1,14 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class SymbioticFungus extends Card {
+public final class SymbioticFungus extends Card implements ActionCard {
     public SymbioticFungus(Game game) {
+        super("blue");
         name = "Symbiotic fungus";
         price = 4;
-        tags.put("microbe", 1);
+        tags.add("microbe");
         requirements.put("min_temperature", -14);
     }
 
@@ -19,14 +21,16 @@ public final class SymbioticFungus extends Card {
         owner_player = player;
     }
 
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         //TODO lisää toiminto jahka korttiresurssijärjestelmä implementoitu
         return true;
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }

@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class DomedCrater extends Card {
     public DomedCrater(Game game) {
+        super("green");
         name = "Domed crater";
         price = 24;
-        tags.put("building", 1);
-        tags.put("city", 1);
+        tags.add("building");
+        tags.add("city");
         requirements.put("max_oxygen", 7);
         requirements.put("min_energy_production", 1);
         victory_points = 1;
@@ -18,14 +19,6 @@ public final class DomedCrater extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addCityTag();
-        player.changePlants(3);
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(3);
-        player.addGreen(this);
-        owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
         while (true) {
             if (owner_game.tile_handler.placeCity(player)) {
                 break;
@@ -33,15 +26,12 @@ public final class DomedCrater extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-    }
 
-    @Override
-    public void cardEffect(Player player) {
+        player.changePlants(3);
+        player.changeEnergyProduction(-1);
+        player.changeMoneyProduction(3);
+        owner_game.update_manager.onVpCardPlayed(player);
 
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        super.onPlay(player);
     }
 }

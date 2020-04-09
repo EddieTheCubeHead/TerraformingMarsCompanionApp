@@ -1,14 +1,15 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
 public final class Mangrove extends Card {
     public Mangrove(Game game) {
+        super("green");
         name = "Mangrove";
         price = 12;
-        tags.put("plant", 1);
+        tags.add("plant");
         requirements.put("min_temperature", 4);
         victory_points = 1;
         owner_game = game;
@@ -16,10 +17,6 @@ public final class Mangrove extends Card {
 
     @Override
     public void onPlay(Player player) {
-        player.addPlantTag();
-        player.addGreen(this);
-        owner_player = player;
-        owner_game.updateManager.onVpCardPlayed(player);
         while (true) {
             if (owner_game.tile_handler.placeOceanGreenery(player)) {
                 break;
@@ -27,15 +24,7 @@ public final class Mangrove extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
-    public boolean cardAction() {
-        return false;
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 }

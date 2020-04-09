@@ -3,7 +3,7 @@ package com.example.terraformingmarscompanionapp;
 import java.util.ArrayList;
 
 class Tile {
-    private Game game;
+    private final Game game;
     private Boolean is_ocean = false;
     private ArrayList<String> placement_bonuses = new ArrayList<>();
     private Integer[] coordinates = new Integer[2];

@@ -1,30 +1,23 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class MartianRails extends Card {
+public final class MartianRails extends Card implements ActionCard {
     public MartianRails(Game game) {
+        super("blue");
         name = "Martian rails";
         price = 13;
-        tags.put("building", 1);
+        tags.add("building");
         owner_game = game;
     }
 
     @Override
     public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addAction(this);
-        owner_player = player;
+        super.onPlay(player);
     }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (!owner_player.changeEnergy(-1) | action_used) {
             return false;
@@ -33,5 +26,13 @@ public final class MartianRails extends Card {
             action_used = true;
             return true;
         }
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }

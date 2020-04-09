@@ -1,33 +1,22 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class RegolithEaters extends Card {
+public final class RegolithEaters extends ResourceCard implements ActionCard {
     public RegolithEaters(Game game) {
+        super("blue");
         name = "Regolith eaters";
         price = 13;
-        tags.put("science", 1);
-        tags.put("microbe", 1);
+        tags.add("science");
+        tags.add("microbe");
         resource_type = 1;
         owner_game = game;
     }
 
-    @Override
-    public void onPlay(Player player) {
-        player.addAction(this);
-        player.addScienceTag();
-        player.addMicrobeTag();
-        owner_player = player;
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -45,5 +34,13 @@ public final class RegolithEaters extends Card {
             action_used = true;
             return true;
         }
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }

@@ -1,30 +1,19 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class UndergroundDetonation extends Card {
+public final class UndergroundDetonation extends Card implements ActionCard {
     public UndergroundDetonation(Game game) {
+        super("blue");
         name = "Underground detonation";
         price = 6;
-        tags.put("building", 1);
+        tags.add("building");
         owner_game = game;
     }
 
-    @Override
-    public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addAction(this);
-        owner_player = player;
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -38,5 +27,13 @@ public final class UndergroundDetonation extends Card {
             return true;
         }
         return false;
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }

@@ -1,30 +1,19 @@
 package com.example.terraformingmarscompanionapp.cards.basegame;
 
-import com.example.terraformingmarscompanionapp.Card;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.Game;
 import com.example.terraformingmarscompanionapp.Player;
 
-public final class EquatorialMagnetizer extends Card {
+public final class EquatorialMagnetizer extends Card implements ActionCard {
     public EquatorialMagnetizer(Game game) {
+        super("blue");
         name = "Equatorial magnetizer";
         price = 11;
-        tags.put("building", 1);
+        tags.add("building");
         owner_game = game;
     }
 
-    @Override
-    public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addAction(this);
-        owner_player = player;
-    }
-
-    @Override
-    public void cardEffect(Player player) {
-
-    }
-
-    @Override
     public boolean cardAction() {
         if (action_used | owner_player.getEnergyProduction() < 1) {
             return false;
@@ -34,5 +23,13 @@ public final class EquatorialMagnetizer extends Card {
             action_used = true;
             return true;
         }
+    }
+
+    public String getActionName() {
+        return getName();
+    }
+
+    public Boolean getActionUsed() {
+        return action_used;
     }
 }
