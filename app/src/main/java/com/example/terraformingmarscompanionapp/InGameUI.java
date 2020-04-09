@@ -19,6 +19,8 @@ import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 public class InGameUI extends AppCompatActivity {
 
     Game game;
+    GameController gameController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,8 @@ public class InGameUI extends AppCompatActivity {
 
         //pelin nouto intentistä
         game = (Game) getIntent().getSerializableExtra("game");
+
+        gameController = new GameController(game);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
