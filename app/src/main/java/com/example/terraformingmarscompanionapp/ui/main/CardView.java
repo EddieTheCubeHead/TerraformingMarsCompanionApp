@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 /**
  * Kortin visuaaliset tiedot sisältävä luokka.
+ * note: LEGACY, ominaisuudet on sisällytetty Card -luokkaan.
  */
-//TODO luokan sisällyttäminen cardiin kun tiedetään että toimii.
+//TODO luokan sisällyttäminen cardiin kun tiedetään että ui toimii.
 public class CardView {
     private String card_name = null;
     private Integer requirement_image_resource = null;

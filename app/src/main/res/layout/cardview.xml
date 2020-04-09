@@ -11,7 +11,7 @@
     app:cardBackgroundColor="@color/colorWindow">
 
     <RelativeLayout
-        android:id="@+id/card_layout"
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp">

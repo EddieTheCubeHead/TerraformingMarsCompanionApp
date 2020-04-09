@@ -3,21 +3,20 @@ package com.example.terraformingmarscompanionapp.ui.main;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.terraformingmarscompanionapp.Card;
 import com.example.terraformingmarscompanionapp.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Adapteri joka hakusuodattaa ja pitää cardviewn tietoja.
@@ -31,8 +30,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<CardView> card_view_list;
     private ArrayList<CardView> card_view_list_full;
 
-    public static class CardViewHolder extends RecyclerView.ViewHolder
+    private OnCardListener on_card_listener;
+    private OnCardLongListener on_card_long_listener;
+
+    public static class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
+        OnCardListener onCardListener;
+        OnCardLongListener onCardLongListener;
+
+        //layout ei käytössä ehkä
         public TextView card_name_view;
         public ImageView requirement_view;
         public ImageView tag1_view;
@@ -40,32 +46,61 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ImageView tag3_view;
         public ImageView tag4_view;
 
-
         //constructorissa tehdään kortille viittaukset
-        public CardViewHolder(@NonNull View card_view)
+        public CardViewHolder(@NonNull View card_inflated, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
         {
-            super(card_view);
-            card_name_view = card_view.findViewById(R.id.card_name);
-            requirement_view = card_view.findViewById(R.id.requirement);
-            tag1_view = card_view.findViewById(R.id.tag1);
-            tag2_view = card_view.findViewById(R.id.tag2);
-            tag3_view = card_view.findViewById(R.id.tag3);
-            tag4_view = card_view.findViewById(R.id.tag4);
+            super(card_inflated);
+            card_name_view = card_inflated.findViewById(R.id.card_name);
+            requirement_view = card_inflated.findViewById(R.id.requirement);
+            tag1_view = card_inflated.findViewById(R.id.tag1);
+            tag2_view = card_inflated.findViewById(R.id.tag2);
+            tag3_view = card_inflated.findViewById(R.id.tag3);
+            tag4_view = card_inflated.findViewById(R.id.tag4);
+
+            //klikkiominaisuus
+            card_inflated.setOnClickListener(this);
+            this.onCardListener = onCardListener;
+            //pitkä klikki
+            card_inflated.setOnLongClickListener(this);
+            this.onCardLongListener = onCardLongListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            onCardListener.onCardClick(getAdapterPosition());
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return onCardLongListener.onCardLongClick(getAdapterPosition());
         }
     }
 
-    public RecyclerViewAdapter(ArrayList<CardView> card_view_list)
+    public interface OnCardListener
+    {
+        void onCardClick(int position);
+    }
+
+    public interface OnCardLongListener
+    {
+        boolean onCardLongClick(int position);
+    }
+
+    public RecyclerViewAdapter(ArrayList<CardView> card_view_list, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
     {
         this.card_view_list = card_view_list;
         card_view_list_full = new ArrayList<>(card_view_list);
+
+        this.on_card_listener = onCardListener;
+        this.on_card_long_listener = onCardLongListener;
     }
 
     @NonNull
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
-        CardViewHolder card_view_holder = new CardViewHolder(view);
+        View card_inflated = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
+        CardViewHolder card_view_holder = new CardViewHolder(card_inflated, on_card_listener, on_card_long_listener);
         return card_view_holder;
     }
 
@@ -138,6 +173,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() { return card_view_list.size(); }
-    @Override
+
+
     public Filter getFilter() { return filter; }
+
 }

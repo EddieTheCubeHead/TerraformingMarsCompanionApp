@@ -18,34 +18,41 @@ import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 
 public class InGameUI extends AppCompatActivity {
 
+    Game game;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_game_u_i);
 
-
+        //default ui-juttuja
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
+
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-        FloatingActionButton fab = findViewById(R.id.fab);
 
+        //pelin nouto intentistä
+        game = (Game) getIntent().getSerializableExtra("game");
+
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startTestingActivity();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            @Override public void onClick(View view) {
+                Snackbar.make(view, "Testausaktiviteetti aloitetaan.", Snackbar.LENGTH_LONG).show();
+                startSearchActivity();
             }
         });
     }
 
-    //toiminnallisuuden voi kopioida muihinkin activiteihin.
-    //tästä voi vaihtaa myös aktiviteettia johon fab vie.
-    private void startTestingActivity()
+    //tästä voi vaihtaa aktiviteettia johon fab vie.
+    private void startSearchActivity()
     {
         Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra("game", game);
         startActivity(intent);
     }
+
+    //TODO back nappiin päänäkymän aloittaminen
+    @Override public void onBackPressed() {} //back -nappi ei tee nyt mitään.
 }

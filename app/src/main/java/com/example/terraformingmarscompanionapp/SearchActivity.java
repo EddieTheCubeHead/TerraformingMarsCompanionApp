@@ -3,16 +3,12 @@ package com.example.terraformingmarscompanionapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import android.widget.SearchView;
-
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,29 +25,23 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        //TODO tähän passataan deck intentillä.
+        searchview = findViewById(R.id.searchview);
+
+        //TODO tähän deckki
 
         //korttilistan luominen
         card_list = new ArrayList<>();
-        /*
-        for (Map.Entry<String, Card> card : deck.entrySet())
-            card_list.add(new CardView((Card) card));
-            */
 
         RecyclerView recyclerview = findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true); //TODO testausta recyclerview sethasfixedsize kanssa(ilmeisesti parempi performanssi)
 
-        adapter = new RecyclerAdapter(card_list, this, this); //this viittaa implementoituun
+        adapter = new RecyclerAdapter(card_list, this, this); //this koska tämä luokka implementoi metodit
         recyclerview.setAdapter(adapter);
 
         RecyclerView.LayoutManager layout_manager = new LinearLayoutManager(this);
         recyclerview.setLayoutManager(layout_manager);
 
-        searchview = (SearchView) findViewById(R.id.searchview);
-
         recyclerview.setAdapter(adapter);
-
-
     }
 
     @Override

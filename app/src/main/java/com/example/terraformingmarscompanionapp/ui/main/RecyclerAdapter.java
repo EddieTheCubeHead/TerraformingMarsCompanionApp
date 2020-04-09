@@ -29,13 +29,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private ArrayList<Card> card_list;
     private ArrayList<Card> card_list_full;
 
-    private OnCardListener on_card_listener;
-    private OnCardLongListener on_card_long_listener;
+    private OnCardListener onCardListener;
+    private OnCardLongListener onCardLongListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
-        OnCardListener onCardListener;
-        OnCardLongListener onCardLongListener;
+        OnCardListener on_card_listener;
+        OnCardLongListener on_card_long_listener;
 
         //layout ei käytössä ehkä
         public TextView card_name_view;
@@ -58,23 +58,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             //klikkiominaisuus
             card_inflated.setOnClickListener(this);
-            this.onCardListener = onCardListener;
+            this.on_card_listener = onCardListener;
             //pitkä klikki
             card_inflated.setOnLongClickListener(this);
-            this.onCardLongListener = onCardLongListener;
+            this.on_card_long_listener = onCardLongListener;
         }
 
         @Override
         public void onClick(View v) {
-            onCardListener.onCardClick(getAdapterPosition());
+            on_card_listener.onCardClick(getAdapterPosition());
         }
 
         @Override
         public boolean onLongClick(View v) {
-            return onCardLongListener.onCardLongClick(getAdapterPosition());
+            return on_card_long_listener.onCardLongClick(getAdapterPosition());
         }
     }
-
 
     public interface OnCardListener
     {
@@ -91,8 +90,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.card_list = card_list;
         card_list_full = new ArrayList<>(card_list);
 
-        this.on_card_listener = onCardListener;
-        this.on_card_long_listener = onCardLongListener;
+        this.onCardListener = onCardListener;
+        this.onCardLongListener = onCardLongListener;
     }
 
     @NonNull
@@ -100,7 +99,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         View card_inflated = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
-        ViewHolder card_view_holder = new ViewHolder(card_inflated, on_card_listener, on_card_long_listener);
+        ViewHolder card_view_holder = new ViewHolder(card_inflated, onCardListener, onCardLongListener);
         return card_view_holder;
     }
 
