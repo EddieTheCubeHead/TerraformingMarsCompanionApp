@@ -11,6 +11,5 @@ public class GameController
     pelaajajärjestys
     vuorojen hallinta
     */
-
     //hotseat -> serveri muutos myöhemmin
 }
