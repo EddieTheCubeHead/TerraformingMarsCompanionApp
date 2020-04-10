@@ -80,7 +80,7 @@ public class GameCreationActivity extends AppCompatActivity
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 String name = edittext_name.getText().toString();
-                player_names.add(name);
+                player_names.add(name.trim());
                 textview_names.append(name+"\n");
                 edittext_name.setText("");
             }
