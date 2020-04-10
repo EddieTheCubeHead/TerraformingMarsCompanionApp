@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
         searchview = findViewById(R.id.searchview);
 
+
         //TODO tähän deckki
 
         //korttilistan luominen
@@ -43,15 +45,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         recyclerview.setLayoutManager(layout_manager);
 
         recyclerview.setAdapter(adapter);
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.test, menu);
-
-        MenuItem search_item = menu.findItem(R.id.action_search);
-        SearchView searchview = (SearchView) search_item.getActionView();
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) { return false; }
             @Override public boolean onQueryTextChange(String search_string) {
@@ -59,7 +53,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
                 return false;
             }
         });
-        return true;
+
     }
 
     @Override public void onCardClick(int position) { }
