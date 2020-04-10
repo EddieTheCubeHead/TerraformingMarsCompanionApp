@@ -24,6 +24,7 @@
             android:src="@drawable/ic_credit"
             android:scaleX="1.5"
             android:scaleY="1.5" />
+
         <TextView
             android:id="@+id/credit_text"
             android:layout_width="50dp"
@@ -32,6 +33,7 @@
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="@color/colorWindowText" />
+
         <ImageView
             android:id="@+id/requirement"
             android:layout_width="@dimen/requirement_width"
@@ -59,23 +61,27 @@
             android:layout_height="@dimen/tag_icon_xy"
             android:padding="2dp"
             android:layout_alignParentRight="true" />
+
         <ImageView
             android:id="@+id/tag2"
             android:layout_width="@dimen/tag_icon_xy"
             android:layout_height="@dimen/tag_icon_xy"
             android:padding="2dp"
             android:layout_toLeftOf="@id/tag1" />
+
         <ImageView
             android:id="@+id/tag3"
             android:layout_width="@dimen/tag_icon_xy"
             android:layout_height="@dimen/tag_icon_xy"
             android:padding="2dp"
             android:layout_toLeftOf="@id/tag2" />
+
         <ImageView
             android:id="@+id/tag4"
             android:layout_width="@dimen/tag_icon_xy"
             android:layout_height="@dimen/tag_icon_xy"
             android:padding="2dp"
             android:layout_toLeftOf="@id/tag3" />
+
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
