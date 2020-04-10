@@ -18,9 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapteri joka hakusuodattaa ja pitää card tietoja.
+ * Adapteri joka hakusuodattaa RecyclerViewn SearchActivity.javassa
  */
 
+//listener on SearchActivity joka implementoi oncardlistenerit.
 //debug: uses unchecked or unsafe operations
 //Note: Recompile with -Xlint:unchecked for details
 //TODO mieti jos cardviewn voi korjata vaan cardilla ja onko performanssimaksua
@@ -84,6 +85,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     {
         boolean onCardLongClick(int position);
     }
+
 
     public RecyclerAdapter(ArrayList<Card> card_list, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
     {
