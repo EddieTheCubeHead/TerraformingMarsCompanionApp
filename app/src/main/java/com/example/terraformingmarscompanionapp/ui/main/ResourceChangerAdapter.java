@@ -13,7 +13,6 @@ import com.example.terraformingmarscompanionapp.GameController;
 
 public class ResourceChangerAdapter extends RecyclerView.Adapter<ResourceChangerAdapter.ViewHolder>
 {
-    private Card card;
     private GameController gameController;
 
     public static class ViewHolder extends RecyclerView.ViewHolder
@@ -27,14 +26,10 @@ public class ResourceChangerAdapter extends RecyclerView.Adapter<ResourceChanger
     }
 
 
-
-    public ResourceChangerAdapter(Card, GameController gameController){
+    public ResourceChangerAdapter(GameController gameController){
         this.gameController = gameController;
-        this.card = card;
-
     }
 
-    //implementoidut
     @NonNull
     @Override
     public ResourceChangerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -42,7 +37,7 @@ public class ResourceChangerAdapter extends RecyclerView.Adapter<ResourceChanger
                 .inflate(R.layout.layout_button_array, parent, false);
         ResourceChangerAdapter.ViewHolder button_array_holder = new ResourceChangerAdapter.ViewHolder(button_array);
 
-        //toiminnallisuuksien lisääminen
+
         button_array.findViewById(R.id.button_minus5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +51,6 @@ public class ResourceChangerAdapter extends RecyclerView.Adapter<ResourceChanger
 
     @Override
     public void onBindViewHolder(@NonNull ResourceChangerAdapter.ViewHolder holder, int position) {
-
     }
 
     @Override
