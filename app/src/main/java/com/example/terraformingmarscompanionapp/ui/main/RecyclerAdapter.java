@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,12 +8,11 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import com.example.terraformingmarscompanionapp.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,12 +50,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ViewHolder(@NonNull View card_inflated, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
         {
             super(card_inflated);
+
+            //card_inflated.findViewById(R.);
             card_name_view = card_inflated.findViewById(R.id.card_name);
             requirement_view = card_inflated.findViewById(R.id.requirement);
             tag1_view = card_inflated.findViewById(R.id.tag1);
             tag2_view = card_inflated.findViewById(R.id.tag2);
             tag3_view = card_inflated.findViewById(R.id.tag3);
             tag4_view = card_inflated.findViewById(R.id.tag4);
+
 
             //klikkiominaisuus
             card_inflated.setOnClickListener(this);
