@@ -32,8 +32,8 @@
     <LinearLayout
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:background="@color/colorWindow" >
         <ImageView
             android:id="@+id/item_1"
             android:layout_gravity="center_vertical"
@@ -70,8 +70,6 @@
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_menu_send"
             tools:ignore="VectorDrawableCompat" />
-
-
     </LinearLayout>
 
 
