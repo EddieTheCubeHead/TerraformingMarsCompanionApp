@@ -18,9 +18,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="right">
+        android:layout_height="wrap_content">
 
+        <!--
         <TextView
             android:id="@+id/popup_title"
             android:layout_width="wrap_content"
@@ -30,43 +30,33 @@
             android:layout_margin="10dp"
             android:text="Choose resources"
             android:textStyle="bold" />
+        -->
 
         <ImageView
-            android:alpha="1"
             android:id="@+id/popup_exit_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/popup_title"
-            android:layout_alignBottom="@+id/popup_title"
-            android:layout_margin="8dp"
-            android:layout_toEndOf="@+id/popup_title"
-            android:layout_toRightOf="@+id/popup_title"
-            app:layout_constraintBottom_toBottomOf="@+id/popup_title"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/popup_title"
+            app:layout_constraintRight_toRightOf="@id/popup_recyclerview"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_close_black_24dp"
             tools:ignore="VectorDrawableCompat" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/resource_confirm_button"
             android:layout_width="70dp"
             android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:text="confirm"
             android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/popup_title"
-            app:layout_constraintStart_toEndOf="@+id/popup_title"
-            app:layout_constraintTop_toTopOf="@+id/popup_title" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/resource_picker_recycler"
-            android:layout_width="250dp"
+            android:id="@+id/popup_recyclerview"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/popup_title"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:layout_editor_absoluteX="0dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resource_confirm_button" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
