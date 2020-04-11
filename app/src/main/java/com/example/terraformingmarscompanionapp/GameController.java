@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public class GameController
 {
     //dequessa vuorojärjestys. ensimmäinen jäsen on aina nykyinen
-    //queue_full poistetaan foldaajat
+    //queue sisältää kaikki jotka eivät ole foldannu
     private Game game;
     private Deque<Player> queue_full = new LinkedList<>(); //double ended queue
     private Deque<Player> queue = new LinkedList<>();
