@@ -2,24 +2,29 @@ package com.example.terraformingmarscompanionapp;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 
 /**
- * Kommunikoi gamen kanssa. UI-luokkien kutsuma siihen vaikuttava luokka.
- * Hallinnoi myös aktiivista pelaajaa.
+ * Olio jonka pitäisi sisältää kaikki UI-luokkien kutsuma joka liittyy pelilogiikkaan.
+ * -Hallinnoi vuoroja, sukupolvia.
  */
 
 
 public class GameController
 {
     //dequessa vuorojärjestys. ensimmäinen jäsen on aina nykyinen
-    private Deque<Player> queue; //double-ended queue
+    //queue_full poistetaan foldaajat
+    private Game game;
+    private Deque<Player> queue_full = new LinkedList<>(); //double ended queue
+    private Deque<Player> queue = new LinkedList<>();
     private Player current_player;
     private Player current_starter;
 
+    public Game getGame() { return game; }
+    public Player getCurrentPlayer()  { return current_player; }
+    public Player getCurrentStarter() { return current_starter; }
+
     //Player player = new Player(game, "Testipelaaja");
 
-    private Game game;
     GameController(Game game){
         this.game = game;
 
@@ -27,21 +32,37 @@ public class GameController
         if (players == null || players.size() == 0)
             new Exception().printStackTrace();
 
-        queue = new LinkedList<>();
-        queue.addAll(players);
+        queue_full.addAll(players);
+        queue.addAll(queue_full);
 
         current_player = queue.getFirst();
         current_starter = current_player;
-        //oletuksena se, että ensimmäisen sukupolven aloittaja on laittanut nimensä ekana.
+        //oletuksena:
+        // ensimmäisen sukupolven aloittaja on laittanut nimensä ekana.
+        // tästä jatketaan nimien laittamisjärjestyksessä.
         //voi muuttaa vapaasti.
     }
+
+    //vuorojen hallitseminen
+    private Boolean folding = false;
+    public void setPlayerIsFolding(Boolean currentIsFolding) { folding = currentIsFolding; }
+    public void foldOnTurnEnd() { folding = true; }
 
     public void endTurn()
     {
         beforeTurnEnd();
 
         //vuoron vaihto
-        queue.addLast(queue.removeFirst());
+        if (folding)
+            queue.removeFirst();
+        else
+            queue.addLast(queue.removeFirst());
+        setPlayerIsFolding(false);
+
+        //kun kaikki on foldannu
+        if (queue.size() == 0)
+            endGeneration();
+
         current_player = queue.getFirst();
 
         atTurnStart();
@@ -57,18 +78,26 @@ public class GameController
         //TODO kaikki vuoron alussa vuoron aloittavalle current_playerille tapahtuva
     }
 
-    public void endGeneration()
+    private void endGeneration()
     {
         game.onGenerationEnd();
 
+        //epäfoldaus
+        queue.clear();
+        queue.addAll(queue_full);
+
+        //seuraavaan aloittajaan vaihto
         while(current_starter != queue.getFirst())
             queue.addLast(queue.removeFirst());
-
         queue.addLast(queue.removeFirst());
+
         current_starter = queue.getFirst();
     }
 
-    public Player getCurrentPlayer()  { return current_player; }
-    public Player getCurrentStarter() { return current_starter; }
+    //TODO tokenien sijoittaminen
 
+    private void doStuff()
+    {
+
+    }
 }
