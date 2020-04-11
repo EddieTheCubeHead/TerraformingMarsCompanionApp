@@ -6,8 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.GameController;
 
 
@@ -37,13 +36,14 @@ public class ResourceChangerAdapter extends RecyclerView.Adapter<ResourceChanger
                 .inflate(R.layout.layout_button_array, parent, false);
         ResourceChangerAdapter.ViewHolder button_array_holder = new ResourceChangerAdapter.ViewHolder(button_array);
 
-
+        //tässä voi asettaa
         button_array.findViewById(R.id.button_minus5).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
+
 
         return button_array_holder;
     }
