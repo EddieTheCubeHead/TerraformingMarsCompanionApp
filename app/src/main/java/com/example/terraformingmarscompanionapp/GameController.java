@@ -13,9 +13,9 @@ import java.util.Queue;
 public class GameController
 {
     //dequessa vuorojärjestys. ensimmäinen jäsen on aina nykyinen
-    Deque<Player> queue; //double-ended queue
-    Player current_player;
-    Player current_starter;
+    private Deque<Player> queue; //double-ended queue
+    private Player current_player;
+    private Player current_starter;
 
     //Player player = new Player(game, "Testipelaaja");
 
@@ -68,9 +68,7 @@ public class GameController
         current_starter = queue.getFirst();
     }
 
-    public Player getCurrentPlayer()
-    {
-        return current_player;
-    }
+    public Player getCurrentPlayer()  { return current_player; }
+    public Player getCurrentStarter() { return current_starter; }
 
 }
