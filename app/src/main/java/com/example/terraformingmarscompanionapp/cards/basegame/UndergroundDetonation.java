@@ -14,11 +14,12 @@ public final class UndergroundDetonation extends Card implements ActionCard {
         owner_game = game;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
         } else if (owner_player != null) {
-            if (owner_player.getMoney() > 10) {
+            if (owner_player.getMoney() < 10) {
                 return false;
             }
             owner_player.changeMoney(-10);
@@ -29,10 +30,12 @@ public final class UndergroundDetonation extends Card implements ActionCard {
         return false;
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

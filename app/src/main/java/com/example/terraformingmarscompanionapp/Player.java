@@ -31,11 +31,20 @@ public class Player {
     public Integer getCities() {return cities;}
     public Integer getGreeneries() {return greeneries;}
     public Integer getColonies() {return colonies;}
+    public Integer getHandSize() {return hand_size;}
     public ArrayList<Card> getGreens() {return green_cards;}
     public ArrayList<Card> getReds() {return red_cards;}
     public ArrayList<ActionCard> getActions() {return action_cards;}
     public ArrayList<Card> getEffects() {return blue_cards;}
     public ArrayList<ResourceCard> getResourceHolders() {return resource_holders;}
+
+    public Boolean changeHandSize(Integer change_amount) {
+        if (hand_size + change_amount < 0) {
+            return false;
+        }
+        hand_size += change_amount;
+        return true;
+    }
 
     /***********************************************************************************
      Resurssit

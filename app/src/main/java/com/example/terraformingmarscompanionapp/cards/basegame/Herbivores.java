@@ -24,6 +24,7 @@ public final class Herbivores extends ResourceCard implements EffectCard {
         super.onPlay(player);
     }
 
+    @Override
     public void cardEffect(Player player) {
         if (owner_player == null) {
             return;

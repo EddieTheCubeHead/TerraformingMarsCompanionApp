@@ -15,6 +15,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
         owner_game = game;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -31,10 +32,12 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

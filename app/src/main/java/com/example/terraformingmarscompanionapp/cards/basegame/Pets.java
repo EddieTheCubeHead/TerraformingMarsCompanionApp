@@ -23,12 +23,14 @@ public final class Pets extends ResourceCard implements EffectCard {
         super.onPlay(player);
     }
 
+    @Override
     public void cardEffect(Player player) {
         if (owner_player == null) {
             return;
         }
         resource_amount++;
     }
+
     @Override
     public void onGameEnd() {
         owner_player.changeVictoryPoints(resource_amount/2);

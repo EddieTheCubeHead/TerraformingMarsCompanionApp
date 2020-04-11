@@ -22,7 +22,7 @@ public class Game implements Serializable {
     public final TileHandler tile_handler;
 
     public ArrayList<Player> getPlayers() {return  players;}
-    HashMap<String, Card> getDeck() {return deck;}
+    public HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return  corporations;}
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
@@ -234,75 +234,110 @@ public class Game implements Serializable {
             min_venus_value = entry.getValue() - player.getVenusTrRequirementDiscount();
             max_venus_value = entry.getValue() + player.getVenusTrRequirementDiscount();
 
+            Integer unused_jokers = player.getJokerTags();
+
             switch (entry.getKey()) {
                 case "min_oceans":
                     if (oceans_placed < min_tr_value) {
                         return false;
                     } break;
+
                 case "min_plants":
                     if (player.getPlants() < value) {
                         return false;
                     } break;
+
                 case "min_energy_production":
                     if (player.getEnergyProduction() < value) {
                         return false;
                     } break;
+
                 case "min_oxygen":
                     if (global_oxygen < min_tr_value) {
                         return false;
                     } break;
+
                 case "min_science_tags":
+                    if (player.getScienceTags() + unused_jokers < value) {
+                        return false;
+                    }
                     if (player.getScienceTags() < value) {
-                        return false;
+                        unused_jokers -= (value - player.getScienceTags());
                     } break;
+
                 case "min_jovian_tags":
-                    if (player.getJovianTags() < value) {
+                    if (player.getJovianTags() + unused_jokers < value) {
                         return false;
+                    }
+                    if (player.getJovianTags() < value) {
+                        unused_jokers -= (value - player.getJovianTags());
                     } break;
+
                 case "min_steel_production":
                     if (player.getSteelProduction() < value) {
                         return false;
                     } break;
+
                 case "min_global_cities":
                     if ((cities_in_space + cities_on_mars) < value) {
                         return false;
                     } break;
+
                 case "min_personal_cities":
                     if (player.getCities() < value) {
                         return false;
                     } break;
+
                 case "min_venus_tr":
                     if (venus_terraform < min_venus_value) {
                         return false;
                     } break;
+
                 case "min_temperature":
                     if (global_temperature < min_tr_value) {
                         return false;
                     } break;
+
                 case "min_plant_production":
                     if (player.getPlantsProduction() < value) {
                         return false;
                     } break;
+
                 case "min_plant_tags":
-                    if (player.getPlantTags() < value) {
+                    if (player.getPlantTags() + unused_jokers < value) {
                         return false;
+                    } if (player.getPlantTags() < value) {
+                    unused_jokers -= (value - player.getPlantTags());
                     } break;
+
                 case "min_microbe_tags":
-                    if (player.getMicrobeTags() < value) {
+                    if (player.getMicrobeTags() + unused_jokers < value) {
                         return false;
+                    } if (player.getMicrobeTags() < value) {
+                    unused_jokers -= (value - player.getMicrobeTags());
                     } break;
+
                 case "min_animal_tags":
-                    if (player.getAnimalTags() < value) {
+                    if (player.getAnimalTags() + unused_jokers < value) {
                         return false;
+                    } if (player.getAnimalTags() < value) {
+                    unused_jokers -= (value - player.getAnimalTags());
                     } break;
+
                 case "min_earth_tags":
-                    if (player.getEarthTags() < value) {
+                    if (player.getEarthTags() + unused_jokers < value) {
                         return false;
+                    } if (player.getEarthTags()  < value) {
+                    unused_jokers -= (value - player.getEarthTags());
                     } break;
+
                 case "min_energy_tags":
-                    if (player.getEnergyTags() < value) {
+                    if (player.getEnergyTags() + unused_jokers < value) {
                         return false;
+                    } if (player.getEnergyTags() < value) {
+                    unused_jokers -= (value - player.getEnergyTags());
                     } break;
+
                 case "min_floaters":
                     int floaters = 0;
                     for (ResourceCard resource_card : player.getResourceHolders()) {
@@ -313,43 +348,54 @@ public class Game implements Serializable {
                     if (floaters < value) {
                         return false;
                     } break;
+
                 case "min_personal_colonies":
                     if (player.getColonies() < value) {
                         return false;
                     } break;
+
                 case "min_titanium_production":
                     if (player.getTitaniumProduction() < value) {
                         return false;
                     } break;
+
                 case "min_personal_greeneries":
                     if (player.getGreeneries() < value) {
                         return false;
                     } break;
+
                 case "min_heat_production":
                     if (player.getHeatProduction() < value) {
                         return false;
                     } break;
+
                 case "min_tr":
                     if (player.getTerraformingRating() < value) {
                         return false;
                     } break;
+
                 case "min_venus_tags":
-                    if (player.getVenusTags() < value) {
+                    if (player.getVenusTags() + unused_jokers < value) {
                         return false;
-                    } break;
+                    } if (player.getVenusTags() < value) {
+                    unused_jokers -= (value - player.getVenusTags());
+                    }  break;
 
                 case "max_temperature":
                     if (global_temperature > max_tr_value) {
                         return false;
                     } break;
+
                 case "max_oceans":
                     if (oceans_placed > max_tr_value) {
                         return false;
                     } break;
+
                 case "max_personal_colonies":
                     if (player.getColonies() > value) {
                         return false;
                     } break;
+
                 case "max_venus_tr":
                     if (venus_terraform > max_venus_value) {
                         return false;

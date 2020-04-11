@@ -31,9 +31,11 @@ public final class UpdateManager {
     void onCityPlaced(Player player, Boolean onMars) {
         if (onMars) {
             owner_game.addCityOnMars();
+            effect_cards.get("Tharsis republic ghost").cardEffect(player);
         } else {
             owner_game.addCityInSpace();
         }
+        effect_cards.get("Tharsis republic").cardEffect(player);
         effect_cards.get("Immigrant city").cardEffect(player);
         effect_cards.get("Rover construction").cardEffect(player);
     }
@@ -99,7 +101,7 @@ public final class UpdateManager {
     }
 
     void onBaseCost20(Player player, Boolean standard_project) {
-
+        effect_cards.get("Credicor").cardEffect(player);
     }
 
     void onPlacementBonus(Player player) {

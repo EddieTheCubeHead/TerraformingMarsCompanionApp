@@ -23,6 +23,7 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
         super.onPlay(player);
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -39,16 +40,19 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
         }
     }
 
+    @Override
     public void onGameEnd() {
         if (resource_amount < 0) {
             owner_player.changeVictoryPoints(3);
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

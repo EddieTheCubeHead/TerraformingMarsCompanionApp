@@ -21,6 +21,7 @@ public final class AquiferPumping extends Card implements ActionCard {
         owner_player = player;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -39,10 +40,12 @@ public final class AquiferPumping extends Card implements ActionCard {
         return false;
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

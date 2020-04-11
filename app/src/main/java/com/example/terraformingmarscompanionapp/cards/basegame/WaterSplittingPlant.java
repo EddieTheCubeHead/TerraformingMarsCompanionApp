@@ -22,6 +22,7 @@ public final class WaterSplittingPlant extends Card implements ActionCard {
         owner_player = player;
     }
 
+    @Override
     public boolean cardAction() {
         if ((owner_player.getEnergy() < 3) | action_used) {
             return false;
@@ -33,10 +34,12 @@ public final class WaterSplittingPlant extends Card implements ActionCard {
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }
