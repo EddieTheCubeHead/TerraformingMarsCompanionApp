@@ -3,17 +3,11 @@ package com.example.terraformingmarscompanionapp;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
-
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.Toast;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 
 public class InGameUI extends AppCompatActivity {
@@ -40,16 +34,38 @@ public class InGameUI extends AppCompatActivity {
 
         gameController = new GameController(game);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //aika lailla placeholder
+        findViewById(R.id.item_1).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Snackbar.make(view, "Testausaktiviteetti aloitetaan.", Snackbar.LENGTH_LONG).show();
+                //tähän toiminnallisuus
+                Toast.makeText(getApplicationContext(), "Lisää toiminnallisuus InGameUI -luokassa", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //aika lailla placeholder
+        findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                //tähän toiminnallisuus
+                Toast.makeText(getApplicationContext(), "Lisää toiminnallisuus InGameUI -luokassa", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //aika lailla placeholder
+        findViewById(R.id.item_3).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Testausaktiviteetti aloitetaan.", Toast.LENGTH_LONG).show();
                 startSearchActivity();
             }
         });
+
+        findViewById(R.id.item_4).setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                gameController.endTurn();
+            }
+        });
+
     }
 
-    //tästä voi vaihtaa aktiviteettia johon fab vie.
     private void startSearchActivity()
     {
         Intent intent = new Intent(this, SearchActivity.class);
@@ -57,6 +73,6 @@ public class InGameUI extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //TODO back nappiin päänäkymän aloittaminen
+    //TODO back nappiin toiminnallisuus, vaikkapa ylös scrollaus
     @Override public void onBackPressed() {} //back -nappi ei tee nyt mitään.
 }
