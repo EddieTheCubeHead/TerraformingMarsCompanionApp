@@ -14,6 +14,7 @@ public final class Ironworks extends Card implements ActionCard {
         owner_game = game;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used | owner_player.getEnergy() < 4) {
             return false;
@@ -25,10 +26,13 @@ public final class Ironworks extends Card implements ActionCard {
             return true;
         }
     }
+
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

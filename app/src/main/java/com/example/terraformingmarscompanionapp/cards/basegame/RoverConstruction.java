@@ -21,6 +21,7 @@ public final class RoverConstruction extends Card implements EffectCard {
         super.onPlay(player);
     }
 
+    @Override
     public void cardEffect(Player player) {
         if (owner_player != null) {
             owner_player.changeMoney(2);

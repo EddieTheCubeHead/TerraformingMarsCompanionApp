@@ -24,6 +24,7 @@ public final class MiningGuild extends Card implements EffectCard {
         owner_player = player;
     }
 
+    @Override
     public void cardEffect(Player player) {
         if (owner_player == null | owner_player != player) {
             return;

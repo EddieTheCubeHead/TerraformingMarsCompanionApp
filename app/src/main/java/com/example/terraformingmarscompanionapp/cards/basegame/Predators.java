@@ -38,10 +38,12 @@ public final class Predators extends ResourceCard implements ActionCard {
         owner_player.changeVictoryPoints(resource_amount);
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

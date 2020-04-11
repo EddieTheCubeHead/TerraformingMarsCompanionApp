@@ -23,6 +23,7 @@ public final class Decomposers extends ResourceCard implements EffectCard {
         super.onPlay(player);
     }
 
+    @Override
     public void cardEffect(Player player) {
         if (owner_player == null) {
             return;

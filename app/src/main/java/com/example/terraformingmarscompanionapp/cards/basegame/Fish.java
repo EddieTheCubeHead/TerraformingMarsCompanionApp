@@ -24,6 +24,7 @@ public final class Fish extends ResourceCard implements ActionCard {
         super.onPlay(player);
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -34,6 +35,7 @@ public final class Fish extends ResourceCard implements ActionCard {
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
@@ -43,6 +45,7 @@ public final class Fish extends ResourceCard implements ActionCard {
         owner_player.changeVictoryPoints(resource_amount);
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

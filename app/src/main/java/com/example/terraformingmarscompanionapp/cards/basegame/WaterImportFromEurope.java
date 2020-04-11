@@ -15,6 +15,7 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
         owner_game = game;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -37,10 +38,12 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
         owner_player.changeVictoryPoints(owner_player.getJovianTags());
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

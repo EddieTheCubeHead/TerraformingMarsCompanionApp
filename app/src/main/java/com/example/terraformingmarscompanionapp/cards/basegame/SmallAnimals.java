@@ -25,6 +25,7 @@ public final class SmallAnimals extends ResourceCard implements ActionCard {
         super.onPlay(player);
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -40,10 +41,12 @@ public final class SmallAnimals extends ResourceCard implements ActionCard {
         owner_player.changeVictoryPoints(resource_amount/2);
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

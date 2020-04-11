@@ -26,6 +26,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
         owner_player = player;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -44,10 +45,12 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

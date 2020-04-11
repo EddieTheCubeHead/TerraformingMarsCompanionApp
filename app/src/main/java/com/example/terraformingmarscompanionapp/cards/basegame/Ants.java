@@ -22,6 +22,7 @@ public final class Ants extends ResourceCard implements ActionCard {
         owner_game.update_manager.onVpCardPlayed(player);
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -32,6 +33,7 @@ public final class Ants extends ResourceCard implements ActionCard {
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
@@ -41,6 +43,7 @@ public final class Ants extends ResourceCard implements ActionCard {
         owner_player.changeVictoryPoints(resource_amount/2);
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

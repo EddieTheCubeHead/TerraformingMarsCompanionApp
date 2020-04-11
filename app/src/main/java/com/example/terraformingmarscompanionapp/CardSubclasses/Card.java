@@ -12,7 +12,7 @@ public abstract class Card {
     protected String name = "ABSTRACT_BASE_CARD";
     protected Integer price = 0;
     protected Integer victory_points = 0;
-    protected String type; //green, red, blue, corporation, prelude. Käytetään super.onPlayssa
+    private String type; //green, red, blue, corporation, prelude, ghost ja standard. Käytetään super.onPlayssa
     protected Boolean action_used = false;
     protected Player owner_player = null; //Omistava pelaaja, null jos pelaamaton
     protected ArrayList<String> tags;
@@ -114,25 +114,38 @@ public abstract class Card {
                 case "event":
                     player.addEventTag();
                     owner_game.update_manager.onEventPlayed(player);
+                    break;
+                default:
+                    System.out.println("Tag typo in card " + getName());
             }
         }
 
 
-        if (tags.size() == 0) {
+        if (tags.size() == 0 && !type.equals("ghost")) {
             player.addNullTag();
         }
 
         switch (type) {
             case "green":
                 player.addGreen(this);
+                break;
             case "red":
                 player.addRed(this);
+                break;
             case "blue":
                 player.addBlue(this);
+                break;
             case "corporation":
                 player.setCorporation(this);
+                break;
             case "prelude":
                 player.addPrelude(this);
+                break;
+            case "ghost":
+            case "standard":
+                break;
+            default:
+                System.out.println("Type typo in card " + getName());
         }
 
         if (this instanceof ActionCard) {

@@ -14,6 +14,7 @@ public final class OptimalAerobraking extends Card implements EffectCard {
         owner_game = game;
     }
 
+    @Override
     public void cardEffect(Player player) {
         if (owner_player == null) {
             return;

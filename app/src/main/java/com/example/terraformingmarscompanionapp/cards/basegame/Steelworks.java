@@ -21,6 +21,7 @@ public final class Steelworks extends Card implements ActionCard {
         owner_player = player;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used | owner_player.getEnergy() > 4) {
             return false;
@@ -33,10 +34,12 @@ public final class Steelworks extends Card implements ActionCard {
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

@@ -25,6 +25,7 @@ public final class Livestock extends ResourceCard implements ActionCard {
         super.onPlay(player);
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -35,10 +36,12 @@ public final class Livestock extends ResourceCard implements ActionCard {
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

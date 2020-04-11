@@ -14,6 +14,7 @@ public final class EquatorialMagnetizer extends Card implements ActionCard {
         owner_game = game;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used | owner_player.getEnergyProduction() < 1) {
             return false;
@@ -25,10 +26,12 @@ public final class EquatorialMagnetizer extends Card implements ActionCard {
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

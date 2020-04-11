@@ -21,15 +21,18 @@ public final class SymbioticFungus extends Card implements ActionCard {
         owner_player = player;
     }
 
+    @Override
     public boolean cardAction() {
         //TODO lisää toiminto jahka korttiresurssijärjestelmä implementoitu
         return true;
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }

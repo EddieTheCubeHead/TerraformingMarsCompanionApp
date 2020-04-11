@@ -16,6 +16,7 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
         owner_game = game;
     }
 
+    @Override
     public boolean cardAction() {
         if (action_used) {
             return false;
@@ -34,10 +35,12 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
         }
     }
 
+    @Override
     public String getActionName() {
         return getName();
     }
 
+    @Override
     public Boolean getActionUsed() {
         return action_used;
     }
