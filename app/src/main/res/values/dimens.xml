@@ -8,4 +8,5 @@
     <dimen name="requirement_width">50dp</dimen>
     <dimen name="tag_icon_xy">40dp</dimen>
     <dimen name="button_array_height">60dp</dimen>
+    <dimen name="button_margin">0dp</dimen>
 </resources>
