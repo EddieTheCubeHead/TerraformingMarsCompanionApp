@@ -1,3 +1,10 @@
 Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi varata itselleen laittamalla nimen kohdan viereen.
 
-TODO: jokin tapa saada deck (Voin tehdä jos selitetään tarkemmin, -Eetu)
+TODO: chekkaa jollain tapaa, että ei oo duplicate id:itä xml-tiedostoissa.
+-ei kannata tehdä manuaalisesti, mutta jos löytyy joku automaattinen skannaus niin saa tehdä.
+-kannattaa korjata prefiksaamalla sijainti siihen. esim resource_popup_textView.
+
+TEHTY: jokin tapa saada deck (Voin tehdä jos selitetään tarkemmin, -Eetu)
+-gameController.getGame().getDeck()
+    -GameControllerin idea on passata sitä intenteissä ja muissa.
+        -Alex
