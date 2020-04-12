@@ -26,7 +26,7 @@ public class GameController
 
     //Player player = new Player(game, "Testipelaaja");
 
-    GameController(Game game){
+    public GameController(Game game){
         this.game = game;
 
         ArrayList<Player> players = game.getPlayers();

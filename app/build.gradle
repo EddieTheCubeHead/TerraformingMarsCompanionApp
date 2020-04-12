@@ -43,4 +43,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'org.jetbrains:annotations-java5:15.0'
+
+    //WebSocket -kirjasto
+    implementation 'tech.gusavila92:java-android-websocket-client:1.2.2'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

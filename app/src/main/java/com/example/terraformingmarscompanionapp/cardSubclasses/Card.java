@@ -155,6 +155,7 @@ public abstract class Card {
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}
     public final String getName() {return name;}
+    public final Player getOwenr() {return owner_player;}
     public final Integer getPrice() {return price;}
     public final ArrayList<String> getTags() {return tags;}
     public final HashMap<String, Integer> getRequirements() {return requirements;}

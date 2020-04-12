@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
 
 import java.util.ArrayList;
 
@@ -30,8 +31,12 @@ public class GameCreationActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_creation);
+
+        //WebSocketin implementaation testit on tässä. Pitäisi olla poistettu mergeen mennessä, mutta tiedä häntä.
+        WebSocketHandler.createWebSocketClient();
 
         //textview
         final TextView textview_names = findViewById(R.id.textView);
