@@ -114,8 +114,8 @@ public class Game implements Serializable {
         return true;
     }
 
-    private HashMap<String, Integer> checkCardCost(Card card, Player player) {
-        HashMap<String, Integer> required_resources = new HashMap<>();
+    private CardCost checkCardCost(Card card, Player player) {
+
         Integer actual_price = card.getPrice();
         Integer money_amount;
         Integer steel_amount = 0;
@@ -169,9 +169,7 @@ public class Game implements Serializable {
                 if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money) {
                     titanium_amount = needed_money / (3 + player.getTitaniumValueModifier());
                     money_amount = actual_price - titanium_amount * (3 + player.getTitaniumValueModifier());
-                    required_resources.put("money", money_amount);
-                    required_resources.put("titanium", titanium_amount);
-                    return required_resources;
+                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     titanium_amount = player.getTitanium();
                     needed_money -= titanium_amount * (3 + player.getTitaniumValueModifier());
@@ -183,10 +181,7 @@ public class Game implements Serializable {
                     steel_amount = needed_money / (2 + player.getSteelValueModifier());
                     money_amount = actual_price - (steel_amount * (2 + player.getSteelValueModifier()
                                                    + titanium_amount * (3 + player.getTitaniumValueModifier())));
-                    required_resources.put("money", money_amount);
-                    required_resources.put("titanium", titanium_amount);
-                    required_resources.put("steel", steel_amount);
-                    return required_resources;
+                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     steel_amount = player.getTitanium();
                     needed_money -= steel_amount * (2 + player.getSteelValueModifier());
@@ -199,21 +194,16 @@ public class Game implements Serializable {
 
             if (player.getHeatIsMoney()) {
                 if (player.getHeat() >= needed_money) {
-                    required_resources.put("money", money_amount);
-                    required_resources.put("titanium", titanium_amount);
-                    required_resources.put("steel", steel_amount);
-                    required_resources.put("heat", heat_amount);
-                    return required_resources;
+                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     return null;
                 }
             }
-
+            return null;
 
         } else {
-            required_resources.put("money", actual_price);
+            return new CardCost(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
-        return required_resources;
     }
 
     private Boolean checkCardRequirements(Card card, Player player) {
@@ -406,25 +396,19 @@ public class Game implements Serializable {
 
 
     public void playCard(Card card, Player player) {
-        HashMap<String, Integer> resources_to_use = checkCardCost(card, player);
+        CardCost resources_to_use = checkCardCost(card, player);
         if (resources_to_use == null | !checkCardRequirements(card, player)) {
             return;
         }
 
         //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
 
-        for (Map.Entry<String, Integer> entry : resources_to_use.entrySet()) {
-            switch (entry.getKey()) {
-                case "money":
-                    player.changeMoney(-entry.getValue());
-                case "steel":
-                    player.changeSteel(-entry.getValue());
-                case "titanium":
-                    player.changeTitanium(-entry.getValue());
-                case "heat":
-                    player.changeHeat(-entry.getValue());
-            }
-        }
+        player.changeMoney(resources_to_use.getMoney());
+        player.changeSteel(resources_to_use.getSteel());
+        player.changeTitanium(resources_to_use.getTitanium());
+        player.changeHeat(resources_to_use.getHeat());
+
+        //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
 
         card.onPlay(player);
     }
@@ -448,5 +432,36 @@ public class Game implements Serializable {
 
     private void endGame() {
 
+    }
+}
+
+class CardCost {
+    private Integer money;
+    private Integer steel;
+    private Integer titanium;
+    private Integer heat;
+    private Integer plant_resources;
+    private Integer floater_resources;
+
+    Integer getMoney() {return money;}
+    Integer getSteel() {return steel;}
+    Integer getTitanium() {return titanium;}
+    Integer getHeat() {return heat;}
+    Integer getPlantResources() {return plant_resources;}
+    Integer getFloaterResources() {return floater_resources;}
+
+    CardCost(Integer money,
+             Integer steel,
+             Integer titanium,
+             Integer heat,
+             Integer plant_resources,
+             Integer floater_resources)
+    {
+        this.money = money;
+        this.steel = steel;
+        this.titanium = titanium;
+        this.heat = heat;
+        this.plant_resources = plant_resources;
+        this.floater_resources = floater_resources;
     }
 }

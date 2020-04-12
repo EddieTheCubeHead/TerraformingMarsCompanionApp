@@ -92,7 +92,7 @@ public final class WebSocketHandler {
     }
 
     //Kutsutaan GameActions- ja UserActions -luokista.
-    public static void sendMessage(String message) {
+    static void sendMessage(String message) {
         webSocketClient.send(message);
     }
 }
