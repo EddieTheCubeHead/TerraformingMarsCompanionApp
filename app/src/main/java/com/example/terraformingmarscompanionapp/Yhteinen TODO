@@ -1,1 +1,5 @@
 Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi varata itselleen laittamalla nimen kohdan viereen.
+
+TODO: Game.checkCardCost rewrite palauttamaan yksityisen datapakettiolion -Eetu
+TODO: Card.requirements rewrite käyttämään erillistä requirements-oliota.
+TODO: Kortteja kehiin, -Aapo
