@@ -3,6 +3,8 @@ package com.example.terraformingmarscompanionapp;
 import android.content.Intent;
 import android.os.Bundle;
 
+
+
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,16 +31,11 @@ public class InGameUI extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        //pelin nouto intentistä
-        game = (Game) getIntent().getSerializableExtra("game");
-
-        gameController = new GameController(game);
-
         //aika lailla placeholder
         findViewById(R.id.item_1).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                //tähän toiminnallisuus
                 Toast.makeText(getApplicationContext(), "Lisää toiminnallisuus InGameUI -luokassa", Toast.LENGTH_LONG).show();
+                showPopup();
             }
         });
 
@@ -69,8 +66,13 @@ public class InGameUI extends AppCompatActivity {
     private void startSearchActivity()
     {
         Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra("game", game);
         startActivity(intent);
+    }
+
+    private void showPopup()
+    {
+        Intent intent = new Intent(this, SearchActivity.class);
+        startActivityForResult(intent, 1);
     }
 
     //TODO back nappiin toiminnallisuus, vaikkapa ylös scrollaus
