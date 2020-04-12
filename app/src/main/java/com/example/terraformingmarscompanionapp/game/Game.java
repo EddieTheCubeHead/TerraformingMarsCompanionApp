@@ -403,10 +403,10 @@ public class Game implements Serializable {
 
         //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
 
-        player.changeMoney(resources_to_use.getMoney());
-        player.changeSteel(resources_to_use.getSteel());
-        player.changeTitanium(resources_to_use.getTitanium());
-        player.changeHeat(resources_to_use.getHeat());
+        player.changeMoney(-resources_to_use.getMoney());
+        player.changeSteel(-resources_to_use.getSteel());
+        player.changeTitanium(-resources_to_use.getTitanium());
+        player.changeHeat(-resources_to_use.getHeat());
 
         //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
 
