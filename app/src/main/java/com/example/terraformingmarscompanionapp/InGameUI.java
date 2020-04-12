@@ -2,13 +2,15 @@ package com.example.terraformingmarscompanionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.terraformingmarscompanionapp.gameElements.Game;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 public class InGameUI extends AppCompatActivity {
 

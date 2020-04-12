@@ -8,11 +8,12 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.terraformingmarscompanionapp.R;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 
 import java.util.ArrayList;
 import java.util.List;
