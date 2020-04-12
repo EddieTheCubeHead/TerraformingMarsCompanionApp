@@ -1,8 +1,8 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.gameElements.Game;
-import com.example.terraformingmarscompanionapp.gameElements.Player;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.Game;
+import com.example.terraformingmarscompanionapp.Player;
 
 public final class PhoboLog extends Card {
     public PhoboLog(Game game) {

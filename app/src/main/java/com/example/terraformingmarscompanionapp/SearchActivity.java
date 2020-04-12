@@ -1,16 +1,16 @@
 package com.example.terraformingmarscompanionapp;
-
-import android.os.Bundle;
-import android.widget.SearchView;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.gameElements.Game;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

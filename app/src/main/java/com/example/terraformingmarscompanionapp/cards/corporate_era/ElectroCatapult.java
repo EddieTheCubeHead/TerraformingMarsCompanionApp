@@ -1,9 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.gameElements.Game;
-import com.example.terraformingmarscompanionapp.gameElements.Player;
+import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.Game;
+import com.example.terraformingmarscompanionapp.Player;
 
 public final class ElectroCatapult extends Card implements ActionCard {
     public ElectroCatapult(Game game) {
