@@ -29,9 +29,8 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
         searchview = findViewById(R.id.searchview);
 
-        Game game = (Game) getIntent().getExtras().get("game");
-
-        deck = game.getDeck();
+        GameController gameController = GameController.getInstance();
+        deck = gameController.getGame().getDeck();
 
         //korttilistan luominen
         card_list = new ArrayList<>();

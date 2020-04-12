@@ -108,8 +108,9 @@ public class GameCreationActivity extends AppCompatActivity
                 hellas_elysium, corporate_era, prelude, colonies, venus, turmoil, extra_corporations,
                 map);
 
+        GameController gameController = GameController.makeInstance(game);
+
         Intent intent = new Intent(this, InGameUI.class);
-        intent.putExtra("game", game);
         startActivity(intent);
     }
 

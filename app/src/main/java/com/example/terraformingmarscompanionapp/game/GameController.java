@@ -14,6 +14,8 @@ public class GameController
 {
     //dequessa vuorojärjestys. ensimmäinen jäsen on aina nykyinen
     //queue sisältää kaikki jotka eivät ole foldannu
+    static GameController instance = null;
+
     private Game game;
     private Deque<Player> queue_full = new LinkedList<>(); //double ended queue
     private Deque<Player> queue = new LinkedList<>();
@@ -26,7 +28,7 @@ public class GameController
 
     //Player player = new Player(game, "Testipelaaja");
 
-    public GameController(Game game){
+    private GameController(Game game){
         this.game = game;
 
         ArrayList<Player> players = game.getPlayers();
@@ -42,6 +44,29 @@ public class GameController
         // ensimmäisen sukupolven aloittaja on laittanut nimensä ekana.
         // tästä jatketaan nimien laittamisjärjestyksessä.
         //voi muuttaa vapaasti.
+    }
+
+    public static GameController makeInstance(Game game)
+    {
+        if (instance != null)
+        {
+            System.out.println("GAMECONTROLLER ALREADY INSTANCIATED BEFORE");
+            new Exception().printStackTrace();
+            System.exit(-1);
+        }
+        instance = new GameController(game);
+        return instance;
+    }
+
+    public static GameController getInstance()
+    {
+        if (instance == null)
+        {
+            System.out.println("GAMECONTROLLER NOT INSTANTIATED AT GETINSTANCE");
+            new Exception().printStackTrace();
+            System.exit(-1);
+        }
+            return instance;
     }
 
     //vuorojen hallitseminen
