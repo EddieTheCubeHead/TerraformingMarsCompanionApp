@@ -1,8 +1,8 @@
 package com.example.terraformingmarscompanionapp.cards.prelude.preludes;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.gameElements.Game;
-import com.example.terraformingmarscompanionapp.gameElements.Player;
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.Game;
+import com.example.terraformingmarscompanionapp.Player;
 
 public final class Loan extends Card {
     public Loan(Game game) {

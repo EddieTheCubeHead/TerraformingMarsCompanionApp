@@ -1,7 +1,6 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-
+import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
 import java.util.ArrayList;
 
 

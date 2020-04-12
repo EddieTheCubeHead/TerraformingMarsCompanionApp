@@ -1,7 +1,4 @@
 package com.example.terraformingmarscompanionapp;
-import com.example.terraformingmarscompanionapp.gameElements.Game;
-import com.example.terraformingmarscompanionapp.gameElements.Player;
-
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
