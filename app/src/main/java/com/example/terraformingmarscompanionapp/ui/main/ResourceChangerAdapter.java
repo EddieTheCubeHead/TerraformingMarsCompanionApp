@@ -6,8 +6,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.GameController;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 
 public class ResourceChangerAdapter extends RecyclerView.Adapter<ResourceChangerAdapter.ViewHolder>

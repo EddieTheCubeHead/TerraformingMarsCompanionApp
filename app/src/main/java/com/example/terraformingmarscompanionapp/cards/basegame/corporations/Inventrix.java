@@ -1,8 +1,8 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
-import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.Game;
-import com.example.terraformingmarscompanionapp.Player;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Inventrix extends Card {
     public Inventrix(Game game) {

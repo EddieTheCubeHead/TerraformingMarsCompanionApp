@@ -1,8 +1,8 @@
 package com.example.terraformingmarscompanionapp.cards.colonies;
 
-import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.Game;
-import com.example.terraformingmarscompanionapp.Player;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SolarReflectors extends Card {
     public SolarReflectors(Game game) {

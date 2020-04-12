@@ -1,9 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
-import com.example.terraformingmarscompanionapp.CardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.Game;
-import com.example.terraformingmarscompanionapp.Player;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class UnitedNationsMarsInitiative extends Card implements ActionCard {
     public UnitedNationsMarsInitiative(Game game) {
