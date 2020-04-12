@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.terraformingmarscompanionapp.game.Game;
+
 import java.util.ArrayList;
 
 public class GameCreationActivity extends AppCompatActivity

@@ -1,8 +1,8 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.standard_projects;
 
-import com.example.terraformingmarscompanionapp.CardSubclasses.StandardProject;
-import com.example.terraformingmarscompanionapp.Game;
-import com.example.terraformingmarscompanionapp.Player;
+import com.example.terraformingmarscompanionapp.cardSubclasses.StandardProject;
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class StandardAsteroid extends StandardProject {
     public StandardAsteroid(Game game) {
