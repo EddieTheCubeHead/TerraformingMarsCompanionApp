@@ -1,8 +1,8 @@
 package com.example.terraformingmarscompanionapp.cards.prelude;
 
-import com.example.terraformingmarscompanionapp.CardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.Game;
-import com.example.terraformingmarscompanionapp.Player;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.gameElements.Game;
+import com.example.terraformingmarscompanionapp.gameElements.Player;
 
 public final class HousePrinting extends Card {
     public HousePrinting(Game game) {
