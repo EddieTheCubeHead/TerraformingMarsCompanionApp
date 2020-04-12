@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
+    android:theme="@style/Theme.AppCompat.DayNight.Dialog"
+
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 
@@ -11,9 +13,8 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
 
-    android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
     app:cardBackgroundColor="@color/colorWindow"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="@dimen/round_corner_radius"
     app:cardUseCompatPadding="false">
 
     <androidx.constraintlayout.widget.ConstraintLayout
