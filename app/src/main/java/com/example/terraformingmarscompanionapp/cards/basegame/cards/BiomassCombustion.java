@@ -11,7 +11,7 @@ public final class BiomassCombustion extends Card {
         price = 4;
         tags.add("energy");
         tags.add("building");
-        requirements.put("min_oxygen", 6);
+        requirements.setMinOxygen(6);
         victory_points = -1;
         owner_game = game;
     }

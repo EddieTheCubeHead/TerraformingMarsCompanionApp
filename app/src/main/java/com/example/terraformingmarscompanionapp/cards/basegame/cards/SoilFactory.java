@@ -10,7 +10,7 @@ public final class SoilFactory extends Card {
         name = "Soil factory";
         price = 9;
         tags.add("building");
-        requirements.put("min_energy_production", 1);
+        requirements.setMinEnergyProduction(1);
         victory_points = 1;
         owner_game = game;
     }

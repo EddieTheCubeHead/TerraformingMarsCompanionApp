@@ -11,7 +11,7 @@ public final class Decomposers extends ResourceCard implements EffectCard {
         name = "Decomposers";
         price = 5;
         tags.add("microbe");
-        requirements.put("min_oxygen", 3);
+        requirements.setMinOxygen(3);
         resource_type = 1;
         owner_game = game;
     }

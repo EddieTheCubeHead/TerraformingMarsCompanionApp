@@ -9,7 +9,7 @@ public final class DustSeals extends Card {
         super("green");
         name = "Dust seals";
         price = 2;
-        requirements.put("max_oceans", 3);
+        requirements.setMaxOxygen(3);
         victory_points = 1;
         owner_game = game;
     }

@@ -11,8 +11,8 @@ public final class Moss extends Card {
         name = "Moss";
         price = 4;
         tags.add("plant");
-        requirements.put("min_oceans", 3);
-        requirements.put("min_plants", 1);
+        requirements.setMinOceans(3);
+        requirements.setMinPlants(1);
         owner_game = game;
     }
 

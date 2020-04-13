@@ -10,7 +10,7 @@ public final class Grass extends Card {
         name = "Grass";
         price = 11;
         tags.add("plant");
-        requirements.put("min_temperature", -16);
+        requirements.setMinTemperature(-16);
         owner_game = game;
     }
 

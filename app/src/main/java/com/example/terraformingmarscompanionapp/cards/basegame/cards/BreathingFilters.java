@@ -10,7 +10,7 @@ public final class BreathingFilters extends Card {
         name = "Breathing filters";
         price = 11;
         tags.add("science");
-        requirements.put("min_oxygen", 7);
+        requirements.setMinOxygen(7);
         victory_points = 2;
         owner_game = game;
     }

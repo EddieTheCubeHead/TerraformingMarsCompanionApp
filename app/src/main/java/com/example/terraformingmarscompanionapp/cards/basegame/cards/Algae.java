@@ -10,7 +10,7 @@ public final class Algae extends Card {
         name = "Algae";
         price = 10;
         tags.add("plant");
-        requirements.put("min_oceans", 5);
+        requirements.setMinOceans(5);
         owner_game = game;
     }
 

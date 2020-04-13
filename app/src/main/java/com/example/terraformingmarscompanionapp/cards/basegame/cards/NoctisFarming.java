@@ -11,7 +11,7 @@ public final class NoctisFarming extends Card {
         price = 10;
         tags.add("plant");
         tags.add("building");
-        requirements.put("min_temperature", -20);
+        requirements.setMinTemperature(-20);
         victory_points = 1;
         owner_game = game;
     }

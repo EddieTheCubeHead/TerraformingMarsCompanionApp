@@ -11,8 +11,8 @@ public final class CupolaCity extends Card {
         price = 16;
         tags.add("city");
         tags.add("building");
-        requirements.put("max_oxygen", 9);
-        requirements.put("min_energy", 1);
+        requirements.setMaxOxygen(9);
+        requirements.setMinEnergyProduction(1);
         owner_game = game;
     }
 

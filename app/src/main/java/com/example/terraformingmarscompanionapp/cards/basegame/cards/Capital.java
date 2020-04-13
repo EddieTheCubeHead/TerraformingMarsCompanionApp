@@ -11,8 +11,8 @@ public final class Capital extends Card {
         price = 26;
         tags.add("building");
         tags.add("city");
-        requirements.put("min_oceans", 4);
-        requirements.put("min_energy_production", 2);
+        requirements.setMinOceans(4);
+        requirements.setMinEnergyProduction(2);
         owner_game = game;
     }
 

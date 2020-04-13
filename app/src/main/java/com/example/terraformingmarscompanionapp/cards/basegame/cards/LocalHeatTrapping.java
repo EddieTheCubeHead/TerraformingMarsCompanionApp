@@ -10,7 +10,7 @@ public final class LocalHeatTrapping extends Card {
         name = "Local heat trapping";
         price = 1;
         tags.add("event");
-        requirements.put("min_heat", 5);
+        requirements.setMinHeat(5);
         owner_game = game;
     }
 

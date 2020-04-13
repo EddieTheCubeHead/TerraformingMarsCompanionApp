@@ -3,7 +3,6 @@ package com.example.terraformingmarscompanionapp.game;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -208,190 +207,13 @@ public class Game implements Serializable {
 
     private Boolean checkCardRequirements(Card card, Player player) {
         //Erittäin tylsä switch-case hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
+        CardRequirements requirements = card.getRequirements();
 
-        Integer value;
-        Integer min_tr_value;
-        Integer max_tr_value;
-        Integer min_venus_value;
-        Integer max_venus_value;
-        for (Map.Entry<String, Integer> entry : card.getRequirements().entrySet()) {
+        Integer base_discount = player.getBaseTrRequirementDiscount();
+        Integer venus_discount = player.getVenusTrRequirementDiscount();
 
-            //Voi olla muutoksia korteista, tämä hoitaa nämä
-            value = entry.getValue();
-            min_tr_value = entry.getValue() - player.getBaseTrRequirementDiscount();
-            max_tr_value = entry.getValue() + player.getBaseTrRequirementDiscount();
-            min_venus_value = entry.getValue() - player.getVenusTrRequirementDiscount();
-            max_venus_value = entry.getValue() + player.getVenusTrRequirementDiscount();
-
-            Integer unused_jokers = player.getJokerTags();
-
-            switch (entry.getKey()) {
-                case "min_oceans":
-                    if (oceans_placed < min_tr_value) {
-                        return false;
-                    } break;
-
-                case "min_plants":
-                    if (player.getPlants() < value) {
-                        return false;
-                    } break;
-
-                case "min_energy_production":
-                    if (player.getEnergyProduction() < value) {
-                        return false;
-                    } break;
-
-                case "min_oxygen":
-                    if (global_oxygen < min_tr_value) {
-                        return false;
-                    } break;
-
-                case "min_science_tags":
-                    if (player.getScienceTags() + unused_jokers < value) {
-                        return false;
-                    }
-                    if (player.getScienceTags() < value) {
-                        unused_jokers -= (value - player.getScienceTags());
-                    } break;
-
-                case "min_jovian_tags":
-                    if (player.getJovianTags() + unused_jokers < value) {
-                        return false;
-                    }
-                    if (player.getJovianTags() < value) {
-                        unused_jokers -= (value - player.getJovianTags());
-                    } break;
-
-                case "min_steel_production":
-                    if (player.getSteelProduction() < value) {
-                        return false;
-                    } break;
-
-                case "min_global_cities":
-                    if ((cities_in_space + cities_on_mars) < value) {
-                        return false;
-                    } break;
-
-                case "min_personal_cities":
-                    if (player.getCities() < value) {
-                        return false;
-                    } break;
-
-                case "min_venus_tr":
-                    if (venus_terraform < min_venus_value) {
-                        return false;
-                    } break;
-
-                case "min_temperature":
-                    if (global_temperature < min_tr_value) {
-                        return false;
-                    } break;
-
-                case "min_plant_production":
-                    if (player.getPlantsProduction() < value) {
-                        return false;
-                    } break;
-
-                case "min_plant_tags":
-                    if (player.getPlantTags() + unused_jokers < value) {
-                        return false;
-                    } if (player.getPlantTags() < value) {
-                    unused_jokers -= (value - player.getPlantTags());
-                    } break;
-
-                case "min_microbe_tags":
-                    if (player.getMicrobeTags() + unused_jokers < value) {
-                        return false;
-                    } if (player.getMicrobeTags() < value) {
-                    unused_jokers -= (value - player.getMicrobeTags());
-                    } break;
-
-                case "min_animal_tags":
-                    if (player.getAnimalTags() + unused_jokers < value) {
-                        return false;
-                    } if (player.getAnimalTags() < value) {
-                    unused_jokers -= (value - player.getAnimalTags());
-                    } break;
-
-                case "min_earth_tags":
-                    if (player.getEarthTags() + unused_jokers < value) {
-                        return false;
-                    } if (player.getEarthTags()  < value) {
-                    unused_jokers -= (value - player.getEarthTags());
-                    } break;
-
-                case "min_energy_tags":
-                    if (player.getEnergyTags() + unused_jokers < value) {
-                        return false;
-                    } if (player.getEnergyTags() < value) {
-                    unused_jokers -= (value - player.getEnergyTags());
-                    } break;
-
-                case "min_floaters":
-                    int floaters = 0;
-                    for (ResourceCard resource_card : player.getResourceHolders()) {
-                        if (resource_card.getResourceType() == 4) {
-                            floaters += resource_card.getResourceAmount();
-                        }
-                    }
-                    if (floaters < value) {
-                        return false;
-                    } break;
-
-                case "min_personal_colonies":
-                    if (player.getColonies() < value) {
-                        return false;
-                    } break;
-
-                case "min_titanium_production":
-                    if (player.getTitaniumProduction() < value) {
-                        return false;
-                    } break;
-
-                case "min_personal_greeneries":
-                    if (player.getGreeneries() < value) {
-                        return false;
-                    } break;
-
-                case "min_heat_production":
-                    if (player.getHeatProduction() < value) {
-                        return false;
-                    } break;
-
-                case "min_tr":
-                    if (player.getTerraformingRating() < value) {
-                        return false;
-                    } break;
-
-                case "min_venus_tags":
-                    if (player.getVenusTags() + unused_jokers < value) {
-                        return false;
-                    } if (player.getVenusTags() < value) {
-                    unused_jokers -= (value - player.getVenusTags());
-                    }  break;
-
-                case "max_temperature":
-                    if (global_temperature > max_tr_value) {
-                        return false;
-                    } break;
-
-                case "max_oceans":
-                    if (oceans_placed > max_tr_value) {
-                        return false;
-                    } break;
-
-                case "max_personal_colonies":
-                    if (player.getColonies() > value) {
-                        return false;
-                    } break;
-
-                case "max_venus_tr":
-                    if (venus_terraform > max_venus_value) {
-                        return false;
-                    } break;
-            }
-        }
-        return true;
+        //Erillisinä portteina, jotta mahdollisuus kirjoittaa myöhemmin tarkempi palautteen anto
+        return oceans_placed >= requirements.getMinOceans() - base_discount;
     }
 
 
@@ -432,36 +254,5 @@ public class Game implements Serializable {
 
     private void endGame() {
 
-    }
-}
-
-class CardCost {
-    private Integer money;
-    private Integer steel;
-    private Integer titanium;
-    private Integer heat;
-    private Integer plant_resources;
-    private Integer floater_resources;
-
-    Integer getMoney() {return money;}
-    Integer getSteel() {return steel;}
-    Integer getTitanium() {return titanium;}
-    Integer getHeat() {return heat;}
-    Integer getPlantResources() {return plant_resources;}
-    Integer getFloaterResources() {return floater_resources;}
-
-    CardCost(Integer money,
-             Integer steel,
-             Integer titanium,
-             Integer heat,
-             Integer plant_resources,
-             Integer floater_resources)
-    {
-        this.money = money;
-        this.steel = steel;
-        this.titanium = titanium;
-        this.heat = heat;
-        this.plant_resources = plant_resources;
-        this.floater_resources = floater_resources;
     }
 }

@@ -10,7 +10,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
         name = "Extreme-cold fungus";
         price = 13;
         tags.add("microbe");
-        requirements.put("max_temperature", -10);
+        requirements.setMaxTemperature(-10);
         owner_game = game;
     }
 

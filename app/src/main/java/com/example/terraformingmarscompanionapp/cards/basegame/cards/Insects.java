@@ -10,7 +10,7 @@ public final class Insects extends Card {
         name = "Insects";
         price = 9;
         tags.add("microbe");
-        requirements.put("min_oxygen", 6);
+        requirements.setMinOxygen(6);
         owner_game = game;
     }
 

@@ -11,7 +11,7 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
         name = "Search for life";
         price = 3;
         tags.add("science");
-        requirements.put("max_oxygen", 6);
+        requirements.setMaxOxygen(6);
         resource_type = 1;
         owner_game = game;
     }

@@ -11,7 +11,7 @@ public final class TectonicStressPower extends Card {
         price = 18;
         tags.add("energy");
         tags.add("building");
-        requirements.put("min_science_tags", 2);
+        requirements.setMinScienceTags(2);
         victory_points = 1;
         owner_game = game;
     }

@@ -10,7 +10,7 @@ public final class CarbonateProcessing extends Card {
         name = "Carbonate processing";
         price = 6;
         tags.add("building");
-        requirements.put("min_energy_production", 1);
+        requirements.setMinEnergyProduction(1);
         owner_game = game;
     }
 

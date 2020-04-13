@@ -11,7 +11,7 @@ public final class EonChasmaNationalPark extends Card {
         price = 16;
         tags.add("plant");
         tags.add("building");
-        requirements.put("min_temperature", -12);
+        requirements.setMinTemperature(-12);
         victory_points = 1;
         owner_game = game;
     }

@@ -11,7 +11,7 @@ public final class NaturalPreserve extends Card {
         price = 9;
         tags.add("science");
         tags.add("building");
-        requirements.put("max_oxygen", 4);
+        requirements.setMaxOxygen(4);
         victory_points = 1;
         owner_game = game;
     }

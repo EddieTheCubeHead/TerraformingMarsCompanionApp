@@ -12,7 +12,7 @@ public final class FusionPower extends Card {
         tags.add("science");
         tags.add("energy");
         tags.add("building");
-        requirements.put("min_energy_tags", 2);
+        requirements.setMinEnergyTags(2);
         owner_game = game;
     }
 

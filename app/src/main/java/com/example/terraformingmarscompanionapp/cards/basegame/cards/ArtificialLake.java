@@ -10,7 +10,7 @@ public final class ArtificialLake extends Card {
         name = "Artificial lake";
         price = 15;
         tags.add("building");
-        requirements.put("min_temperature", -6);
+        requirements.setMinTemperature(-6);
         victory_points = 1;
         owner_game = game;
     }

@@ -10,7 +10,7 @@ public final class FoodFactory extends Card {
         name = "Food factory";
         price = 12;
         tags.add("buildilng");
-        requirements.put("min_plant_production", 1);
+        requirements.setMinPlantProduction(1);
         victory_points = 1;
         owner_game = game;
     }

@@ -10,7 +10,7 @@ public final class PermafrostExtraction extends Card {
         name = "Permafrost extraction";
         price = 8;
         tags.add("event");
-        requirements.put("min_temperature", -8);
+        requirements.setMinTemperature(-8);
         owner_game = game;
     }
 

@@ -12,7 +12,7 @@ public final class BeamFromAThoriumAsteroid extends Card {
         tags.add("jovian");
         tags.add("space");
         tags.add("energy");
-        requirements.put("min_jovian_tags", 1);
+        requirements.setMinJovianTags(1);
         victory_points = 1;
         owner_game = game;
     }

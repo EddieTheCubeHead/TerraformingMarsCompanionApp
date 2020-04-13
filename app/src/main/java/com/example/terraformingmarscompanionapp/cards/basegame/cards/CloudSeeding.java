@@ -9,7 +9,7 @@ public final class CloudSeeding extends Card {
         super("green");
         name = "Cloud seeding";
         price = 11;
-        requirements.put("min_oceans", 3);
+        requirements.setMinOceans(3);
         owner_game = game;
     }
 

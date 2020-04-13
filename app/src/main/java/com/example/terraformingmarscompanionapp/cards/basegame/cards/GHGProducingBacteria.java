@@ -12,7 +12,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
         price = 8;
         tags.add("science");
         tags.add("microbe");
-        requirements.put("min_oxygen", 4);
+        requirements.setMinOxygen(4);
         resource_type = 1;
         owner_game = game;
     }
