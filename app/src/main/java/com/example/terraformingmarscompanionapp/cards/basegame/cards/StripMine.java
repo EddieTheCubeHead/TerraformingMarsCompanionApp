@@ -10,7 +10,7 @@ public final class StripMine extends Card {
         name = "Strip mine";
         price = 25;
         tags.add("buiding");
-        requirements.put("min_energy", 2);
+        requirements.setMinEnergyProduction(2);
         owner_game = game;
     }
 

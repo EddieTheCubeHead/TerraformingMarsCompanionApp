@@ -20,6 +20,7 @@ public final class PhobosSpaceHaven extends Card {
         player.changeTitaniumProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
         owner_game.tile_handler.placePhobos(player);
+        player.addCity();
         super.onPlay(player);
     }
 }

@@ -12,7 +12,7 @@ public final class ImmigrantCity extends Card implements EffectCard {
         price = 13;
         tags.add("city");
         tags.add("building");
-        requirements.put("min_energy_production", 1);
+        requirements.setMinEnergyProduction(1);
         owner_game = game;
     }
 
@@ -27,7 +27,7 @@ public final class ImmigrantCity extends Card implements EffectCard {
         }
         player.changeMoneyProduction(-2);
         player.changeEnergyProduction(-1);
-
+        player.addCity();
         super.onPlay(player);
     }
 

@@ -11,7 +11,7 @@ public final class Ants extends ResourceCard implements ActionCard {
         name = "Ants";
         price = 9;
         tags.add("microbe");
-        requirements.put("min_oxygen", 4);
+        requirements.setMinOxygen(4);
         resource_type = 1;
         owner_game = game;
     }

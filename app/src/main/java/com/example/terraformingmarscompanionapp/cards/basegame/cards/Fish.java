@@ -11,7 +11,8 @@ public final class Fish extends ResourceCard implements ActionCard {
         name = "Fish";
         price = 9;
         tags.add("animal");
-        requirements.put("min_temperature", 2);
+
+        requirements.setMinTemperature(2);
         resource_type = 2;
         owner_game = game;
     }

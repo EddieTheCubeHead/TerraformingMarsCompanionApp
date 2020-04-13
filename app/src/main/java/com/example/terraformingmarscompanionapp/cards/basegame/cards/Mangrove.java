@@ -10,7 +10,7 @@ public final class Mangrove extends Card {
         name = "Mangrove";
         price = 12;
         tags.add("plant");
-        requirements.put("min_temperature", 4);
+        requirements.setMinTemperature(4);
         victory_points = 1;
         owner_game = game;
     }
@@ -25,6 +25,7 @@ public final class Mangrove extends Card {
             }
         }
         owner_game.update_manager.onVpCardPlayed(player);
+        player.addGreenery();
         super.onPlay(player);
     }
 }

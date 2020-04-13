@@ -10,7 +10,7 @@ public final class Farming extends Card {
         name = "Farming";
         price = 16;
         tags.add("plant");
-        requirements.put("min_temperature", 4);
+        requirements.setMinTemperature(4);
         victory_points = 2;
         owner_game = game;
     }

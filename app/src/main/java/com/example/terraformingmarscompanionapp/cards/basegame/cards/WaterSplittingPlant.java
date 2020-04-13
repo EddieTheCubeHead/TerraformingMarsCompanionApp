@@ -11,7 +11,7 @@ public final class WaterSplittingPlant extends Card implements ActionCard {
         name = "Water splitting plant";
         price = 12;
         tags.add("building");
-        requirements.put("min_oceans", 2);
+        requirements.setMinOceans(2);
         owner_game = game;
     }
 

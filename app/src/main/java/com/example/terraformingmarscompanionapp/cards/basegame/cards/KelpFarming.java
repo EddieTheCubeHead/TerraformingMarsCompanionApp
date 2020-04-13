@@ -10,7 +10,7 @@ public final class KelpFarming extends Card {
         name = "Kelp farming";
         price = 17;
         tags.add("plant");
-        requirements.put("min_oceans", 6);
+        requirements.setMinOceans(6);
         victory_points = 1;
         owner_game = game;
     }

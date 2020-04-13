@@ -10,7 +10,7 @@ public final class GHGFactories extends Card {
         name = "GHG factories";
         price = 11;
         tags.add("building");
-        requirements.put("min_energy_production", 1);
+        requirements.setMinEnergyProduction(1);
         owner_game = game;
     }
 

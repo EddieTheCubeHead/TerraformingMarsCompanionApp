@@ -1,19 +1,18 @@
-package com.example.terraformingmarscompanionapp.cards.basegame.cards;
+package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-public final class Predators extends ResourceCard implements ActionCard {
-    public Predators(Game game) {
+public final class SecurityFleet extends ResourceCard implements ActionCard {
+    public SecurityFleet(Game game) {
         super("blue");
-        name = "Predators";
-        price = 14;
-        tags.add("animal");
-        requirements.setMinOxygen(11);
-        resource_type = 2;
+        name = "Security fleet";
+        price = 12;
+        tags.add("space");
         owner_game = game;
+        resource_type = 5;
     }
 
     @Override
@@ -22,19 +21,24 @@ public final class Predators extends ResourceCard implements ActionCard {
         super.onPlay(player);
     }
 
-    public boolean cardAction() {
-        if (action_used) {
-            return false;
-        } else {
-            //TODO poista toiselta eläin
-            resource_amount++;
-            return true;
+    @Override
+    public void onGameEnd() {
+        if (owner_player == null) {
+            return;
         }
+        owner_player.changeVictoryPoints(resource_amount);
     }
 
     @Override
-    public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount);
+    public boolean cardAction() {
+        if (action_used | owner_player.getTitanium() < 1) {
+            return false;
+        } else {
+            owner_player.changeTitanium(-1);
+            resource_amount++;
+            action_used = true;
+            return true;
+        }
     }
 
     @Override

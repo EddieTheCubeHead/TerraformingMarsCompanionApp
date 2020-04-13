@@ -1,11 +1,11 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public abstract class Card {
     protected Game owner_game;
@@ -15,8 +15,8 @@ public abstract class Card {
     private String type; //green, red, blue, corporation, prelude, ghost ja standard. Käytetään super.onPlayssa
     protected Boolean action_used = false;
     protected Player owner_player = null; //Omistava pelaaja, null jos pelaamaton
-    protected ArrayList<String> tags;
-    protected HashMap<String, Integer> requirements;
+    protected ArrayList<String> tags = new ArrayList<>();
+    protected CardRequirements requirements = new CardRequirements();
 
     public Card(String card_type) {
         type = card_type;
@@ -158,7 +158,7 @@ public abstract class Card {
     public final Player getOwenr() {return owner_player;}
     public final Integer getPrice() {return price;}
     public final ArrayList<String> getTags() {return tags;}
-    public final HashMap<String, Integer> getRequirements() {return requirements;}
+    public final CardRequirements getRequirements() {return requirements;}
     public final void resetActionUsed() {action_used = false;}
 
     public final ArrayList<Integer> getTagIntegers() {

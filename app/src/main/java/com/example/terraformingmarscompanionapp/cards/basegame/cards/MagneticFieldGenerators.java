@@ -10,7 +10,7 @@ public final class MagneticFieldGenerators extends Card {
         name = "Magnetic field generators";
         price = 20;
         tags.add("building");
-        requirements.put("min_energy_production", 4);
+        requirements.setMinEnergyProduction(4);
         owner_game = game;
     }
 

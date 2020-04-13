@@ -11,8 +11,8 @@ public final class DomedCrater extends Card {
         price = 24;
         tags.add("building");
         tags.add("city");
-        requirements.put("max_oxygen", 7);
-        requirements.put("min_energy_production", 1);
+        requirements.setMaxOxygen(7);
+        requirements.setMinEnergyProduction(1);
         victory_points = 1;
         owner_game = game;
     }
@@ -31,7 +31,7 @@ public final class DomedCrater extends Card {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
         owner_game.update_manager.onVpCardPlayed(player);
-
+        player.addCity();
         super.onPlay(player);
     }
 }

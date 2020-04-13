@@ -38,6 +38,7 @@ public final class UpdateManager {
         effect_cards.get("Tharsis republic").cardEffect(player);
         effect_cards.get("Immigrant city").cardEffect(player);
         effect_cards.get("Rover construction").cardEffect(player);
+        effect_cards.get("Pets").cardEffect(player);
     }
 
     void onNewUniqueTag(Player player) {

@@ -9,7 +9,7 @@ public final class Zeppelins extends Card {
         super("green");
         name = "Zeppelins";
         price = 13;
-        requirements.put("min_oxygen", 5);
+        requirements.setMinOxygen(5);
         victory_points = 1;
     }
 

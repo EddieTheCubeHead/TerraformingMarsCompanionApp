@@ -11,7 +11,7 @@ public final class UrbanizedArea extends Card {
         price = 10;
         tags.add("city");
         tags.add("building");
-        requirements.put("min_energy_production", 1);
+        requirements.setMinEnergyProduction(1);
         owner_game = game;
     }
 
@@ -26,6 +26,7 @@ public final class UrbanizedArea extends Card {
         }
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(2);
+        player.addCity();
         super.onPlay(player);
     }
 }

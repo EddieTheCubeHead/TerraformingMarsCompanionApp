@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cards.corporate_era;
+package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -11,8 +11,8 @@ public final class ElectroCatapult extends Card implements ActionCard {
         name = "Electro catapult";
         price = 17;
         tags.add("building");
-        requirements.put("max_oxygen", 8);
-        requirements.put("min_energy_production", 1);
+        requirements.setMaxOxygen(8);
+        requirements.setMinEnergyProduction(1);
         victory_points = 1;
         owner_game = game;
     }

@@ -10,8 +10,8 @@ public final class Shuttles extends Card {
         name = "Shuttles";
         price = 10;
         tags.add("space");
-        requirements.put("min_oxygen", 5);
-        requirements.put("min_energy_production", 1);
+        requirements.setMinOxygen(5);
+        requirements.setMinEnergyProduction(1);
         victory_points = 0;
         owner_game = game;
     }

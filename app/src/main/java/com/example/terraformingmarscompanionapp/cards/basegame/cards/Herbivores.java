@@ -11,7 +11,7 @@ public final class Herbivores extends ResourceCard implements EffectCard {
         name = "Herbivores";
         price = 12;
         tags.add("animal");
-        requirements.put("min_oxygen", 8);
+        requirements.setMinOxygen(8);
         resource_type = 2;
         owner_game = game;
     }

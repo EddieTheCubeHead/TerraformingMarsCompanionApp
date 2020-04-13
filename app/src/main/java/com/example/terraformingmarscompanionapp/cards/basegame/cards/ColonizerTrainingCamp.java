@@ -11,7 +11,7 @@ public final class ColonizerTrainingCamp extends Card {
         price = 8;
         tags.add("jovian");
         tags.add("building");
-        requirements.put("max_oxygen", 5);
+        requirements.setMaxOxygen(5);
         victory_points = 2;
         owner_game = game;
     }

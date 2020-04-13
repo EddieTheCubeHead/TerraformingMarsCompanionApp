@@ -10,7 +10,7 @@ public final class Plantation extends Card {
         name = "Plantation";
         price = 15;
         tags.add("plant");
-        requirements.put("min_science_tags", 2);
+        requirements.setMinScienceTags(2);
         owner_game = game;
     }
 
@@ -23,6 +23,7 @@ public final class Plantation extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua
             }
         }
+        player.addGreenery();
         super.onPlay(player);
     }
 }

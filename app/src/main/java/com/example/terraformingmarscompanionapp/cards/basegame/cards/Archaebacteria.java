@@ -10,7 +10,7 @@ public final class Archaebacteria extends Card {
         name = "Archaebacteria";
         price = 6;
         tags.add("microbe");
-        requirements.put("max_temperature", -18);
+        requirements.setMaxTemperature(-18);
         owner_game = game;
     }
 

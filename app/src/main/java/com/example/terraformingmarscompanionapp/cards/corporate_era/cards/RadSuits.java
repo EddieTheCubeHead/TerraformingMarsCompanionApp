@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cards.corporate_era;
+package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -9,7 +9,7 @@ public final class RadSuits extends Card {
         super("green");
         name = "Rad-suits";
         price = 6;
-        requirements.put("min_personal_cities", 2);
+        requirements.setMinGlobalCities(2);
         victory_points = 1;
         owner_game = game;
     }

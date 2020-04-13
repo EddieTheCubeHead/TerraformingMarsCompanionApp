@@ -24,7 +24,7 @@ public final class ProtectedValley extends Card {
             }
         }
         player.changeMoneyProduction(2);
-
+        player.addGreenery();
         super.onPlay(player);
     }
 }

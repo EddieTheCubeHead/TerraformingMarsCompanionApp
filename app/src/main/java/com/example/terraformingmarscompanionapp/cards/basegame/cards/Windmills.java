@@ -11,7 +11,7 @@ public final class Windmills extends Card {
         price = 6;
         tags.add("energy");
         tags.add("building");
-        requirements.put("min_oxygen", 1);
+        requirements.setMinOxygen(1);
         victory_points = 1;
         owner_game = game;
     }

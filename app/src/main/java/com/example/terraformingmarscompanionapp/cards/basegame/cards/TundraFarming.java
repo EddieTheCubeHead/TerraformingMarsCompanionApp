@@ -10,7 +10,7 @@ public final class TundraFarming extends Card {
         name = "Tundra farming";
         price = 16;
         tags.add("plant");
-        requirements.put("min_temperature", -6);
+        requirements.setMinTemperature(-6);
         victory_points = 2;
         owner_game = game;
     }

@@ -11,7 +11,7 @@ public final class GreatDam extends Card {
         price = 12;
         tags.add("energy");
         tags.add("building");
-        requirements.put("min_oceans", 4);
+        requirements.setMinOceans(4);
         victory_points = 1;
         owner_game = game;
     }
