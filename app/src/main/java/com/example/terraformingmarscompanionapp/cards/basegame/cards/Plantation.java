@@ -23,6 +23,7 @@ public final class Plantation extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua
             }
         }
+        player.addGreenery();
         super.onPlay(player);
     }
 }

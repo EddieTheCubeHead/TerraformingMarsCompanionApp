@@ -31,7 +31,7 @@ public final class DomedCrater extends Card {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
         owner_game.update_manager.onVpCardPlayed(player);
-
+        player.addCity();
         super.onPlay(player);
     }
 }

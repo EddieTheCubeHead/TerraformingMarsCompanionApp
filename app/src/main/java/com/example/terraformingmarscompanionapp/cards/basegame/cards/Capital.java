@@ -29,7 +29,7 @@ public final class Capital extends Card {
         player.changeEnergyProduction(-2);
         player.changeMoneyProduction(5);
         owner_game.update_manager.onVpCardPlayed(player);
-
+        player.addCity();
         super.onPlay(player);
     }
 }

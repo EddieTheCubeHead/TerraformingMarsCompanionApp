@@ -31,5 +31,6 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
     @Override
     public void firstAction() {
         owner_game.tile_handler.placeCity(owner_player);
+        owner_player.addCity();
     }
 }
