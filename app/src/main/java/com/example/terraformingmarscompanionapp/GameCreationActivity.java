@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
 
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class GameCreationActivity extends AppCompatActivity
             @Override public void onClick(View v) {
                 String name = edittext_name.getText().toString();
                 player_names.add(name.trim());
-                textview_names.append(name+"\n");
+                textview_names.append("\n"+name);
                 edittext_name.setText("");
             }
         });
@@ -97,7 +98,6 @@ public class GameCreationActivity extends AppCompatActivity
                 startInGameUI();
             }
         });
-
 
     }
 

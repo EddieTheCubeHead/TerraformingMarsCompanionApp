@@ -22,10 +22,6 @@ import java.util.List;
  * Adapteri joka hakusuodattaa RecyclerViewn SearchActivity.javassa
  */
 
-//listener on SearchActivity joka implementoi oncardlistenerit.
-//debug: uses unchecked or unsafe operations
-//Note: Recompile with -Xlint:unchecked for details
-//TODO mieti jos cardviewn voi korjata vaan cardilla ja onko performanssimaksua
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable
 {
     private ArrayList<Card> card_list;
@@ -34,6 +30,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private OnCardListener onCardListener;
     private OnCardLongListener onCardLongListener;
 
+    //listener on SearchActivity joka implementoi molemmat oncardlistenerit.
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         OnCardListener on_card_listener;
@@ -124,7 +121,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.tag2_view.setImageResource(tags.get(1));
             holder.tag3_view.setImageResource(tags.get(2));
             holder.tag4_view.setImageResource(tags.get(3));
-
         } catch (IndexOutOfBoundsException e) {}
 
         holder.card_name_view.setText(card_name);

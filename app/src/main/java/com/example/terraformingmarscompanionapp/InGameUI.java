@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
-
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.ui.main.ResourceDialogActivity;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +33,7 @@ public class InGameUI extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        //aika lailla placeholder
+        //KAIKKI LISTENERIT PLACEHOLDEREITA ATM
         findViewById(R.id.item_1).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Lisää toiminnallisuus InGameUI -luokassa", Toast.LENGTH_LONG).show();
@@ -39,7 +41,6 @@ public class InGameUI extends AppCompatActivity {
             }
         });
 
-        //aika lailla placeholder
         findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 //tähän toiminnallisuus
@@ -47,7 +48,6 @@ public class InGameUI extends AppCompatActivity {
             }
         });
 
-        //aika lailla placeholder
         findViewById(R.id.item_3).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 Toast.makeText(getApplicationContext(), "Testausaktiviteetti aloitetaan.", Toast.LENGTH_LONG).show();
@@ -71,7 +71,7 @@ public class InGameUI extends AppCompatActivity {
 
     private void showPopup()
     {
-        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent = new Intent(this, ResourceDialogActivity.class);
         startActivityForResult(intent, 1);
     }
 

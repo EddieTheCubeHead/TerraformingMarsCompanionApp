@@ -8,11 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener
 {
@@ -32,8 +33,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         GameController gameController = GameController.getInstance();
         deck = gameController.getGame().getDeck();
 
-        //korttilistan luominen
-        card_list = new ArrayList<>();
+        //korttien haku
+        for (Map.Entry<String, Card> entry : deck.entrySet())
+            card_list.add(entry.getValue());
 
         RecyclerView recyclerview = findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true); //TODO testausta recyclerview sethasfixedsize kanssa(ilmeisesti parempi performanssi)

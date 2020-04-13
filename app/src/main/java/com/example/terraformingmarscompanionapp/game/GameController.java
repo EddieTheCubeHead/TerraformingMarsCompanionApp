@@ -66,7 +66,7 @@ public class GameController
             new Exception().printStackTrace();
             System.exit(-1);
         }
-            return instance;
+        return instance;
     }
 
     //vuorojen hallitseminen

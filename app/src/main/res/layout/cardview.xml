@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="@dimen/round_corner_radius"
     android:background="@color/colorBackground"
     app:cardUseCompatPadding="false"
     app:cardBackgroundColor="@color/colorWindow">
@@ -17,7 +17,7 @@
         android:layout_margin="0dp">
 
         <ImageView
-            android:id="@+id/credit"
+            android:id="@+id/card_credit_imageview"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:padding="0dp"
@@ -40,8 +40,8 @@
             android:layout_height="20dp"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/credit"
-            android:layout_toRightOf="@+id/credit"
+            android:layout_toEndOf="@+id/card_credit_imageview"
+            android:layout_toRightOf="@+id/card_credit_imageview"
             android:layout_below="@id/card_name"/>
         <TextView
             android:id="@+id/card_name"
@@ -52,8 +52,8 @@
             android:textColor="@color/colorWindowText"
             android:textStyle="bold"
             android:layout_marginLeft="5dp"
-            android:layout_toEndOf="@+id/credit"
-            android:layout_toRightOf="@+id/credit"/>
+            android:layout_toEndOf="@+id/card_credit_imageview"
+            android:layout_toRightOf="@+id/card_credit_imageview"/>
 
         <ImageView
             android:id="@+id/tag1"
