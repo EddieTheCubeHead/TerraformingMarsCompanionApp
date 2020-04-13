@@ -12,9 +12,9 @@ public final class AdvancedEcosystems extends Card {
         tags.add("plant");
         tags.add("microbe");
         tags.add("animal");
-        requirements.put("min_plant_tags", 1);
-        requirements.put("min_microbe_tags", 1);
-        requirements.put("min_animal_tags", 1);
+        requirements.setMinPlantTags(1);
+        requirements.setMinMicrobeTags(1);
+        requirements.setMinAnimalTags(1);
         victory_points = 3;
         owner_game = game;
     }

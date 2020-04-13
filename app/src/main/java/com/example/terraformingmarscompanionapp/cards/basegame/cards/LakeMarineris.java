@@ -9,7 +9,7 @@ public final class LakeMarineris extends Card {
         super("green");
         name = "Lake marineris";
         price = 18;
-        requirements.put("min_temperature", 0);
+        requirements.setMinTemperature(0);
         victory_points = 2;
         owner_game = game;
     }

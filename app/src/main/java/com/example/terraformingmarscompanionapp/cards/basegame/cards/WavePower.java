@@ -10,7 +10,7 @@ public final class WavePower extends Card {
         name = "Wave power";
         price = 8;
         tags.add("energy");
-        requirements.put("min_oceans", 3);
+        requirements.setMinOceans(3);
         victory_points = 1;
         owner_game = game;
     }

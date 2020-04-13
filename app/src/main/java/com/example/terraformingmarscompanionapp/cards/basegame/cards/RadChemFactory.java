@@ -10,7 +10,7 @@ public final class RadChemFactory extends Card {
         name = "Rad-chem factory";
         price = 8;
         tags.add("building");
-        requirements.put("min_energy_production", 1);
+        requirements.setMinEnergyProduction(1);
         owner_game = game;
     }
 

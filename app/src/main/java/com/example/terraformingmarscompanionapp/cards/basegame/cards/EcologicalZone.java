@@ -12,7 +12,7 @@ public final class EcologicalZone extends ResourceCard implements EffectCard {
         price = 12;
         tags.add("animal");
         tags.add("plant");
-        requirements.put("min_personal_forests", 1);
+        requirements.setMinPersonalGreeneries(1);
         resource_type = 2;
         owner_game = game;
     }

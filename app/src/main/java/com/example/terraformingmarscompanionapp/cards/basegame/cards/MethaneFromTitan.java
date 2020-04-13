@@ -11,7 +11,7 @@ public final class MethaneFromTitan extends Card {
         price = 10;
         tags.add("jovian");
         tags.add("space");
-        requirements.put("min_oxygen", 2);
+        requirements.setMinOxygen(2);
         victory_points = 2;
         owner_game = game;
     }

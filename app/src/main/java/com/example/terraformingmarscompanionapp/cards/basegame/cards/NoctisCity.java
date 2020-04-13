@@ -11,7 +11,7 @@ public final class NoctisCity extends Card {
         price = 18;
         tags.add("city");
         tags.add("building");
-        requirements.put("min_energy_production", 1);
+        requirements.setMinEnergyProduction(1);
         owner_game = game;
     }
 

@@ -11,7 +11,7 @@ public final class SmallAnimals extends ResourceCard implements ActionCard {
         name = "Small animals";
         price = 6;
         tags.add("animal");
-        requirements.put("min_oxygen", 6);
+        requirements.setMinOxygen(6);
         resource_type = 2;
         owner_game = game;
     }

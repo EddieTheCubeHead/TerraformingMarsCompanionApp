@@ -11,7 +11,7 @@ public final class Birds extends ResourceCard implements ActionCard {
         name = "Birds";
         price = 10;
         tags.add("animal");
-        requirements.put("min_oxygen", 13);
+        requirements.setMinOxygen(13);
         resource_type = 2;
         owner_game = game;
     }

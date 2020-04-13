@@ -11,7 +11,7 @@ public final class ArcticAlgae extends Card implements EffectCard {
         name = "Arctic algae";
         price = 12;
         tags.add("plant");
-        requirements.put("max_temperature", -12);
+        requirements.setMaxTemperature(-12);
         owner_game = game;
     }
 

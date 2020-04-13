@@ -11,8 +11,8 @@ public final class Livestock extends ResourceCard implements ActionCard {
         name = "Livestock";
         price = 13;
         tags.add("animal");
-        requirements.put("min_oxygen", 9);
-        requirements.put("min_plant_production", 1);
+        requirements.setMinOxygen(9);
+        requirements.setMinPlantProduction(1);
         resource_type = 2;
         owner_game = game;
     }

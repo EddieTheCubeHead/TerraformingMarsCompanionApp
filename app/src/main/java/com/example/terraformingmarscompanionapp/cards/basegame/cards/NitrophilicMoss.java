@@ -10,8 +10,8 @@ public final class NitrophilicMoss extends Card {
         name = "Nitrophilic moss";
         price = 8;
         tags.add("plant");
-        requirements.put("min_oceans", 3);
-        requirements.put("min_plants", 2);
+        requirements.setMinOceans(3);
+        requirements.setMinPlants(2);
         owner_game = game;
     }
 

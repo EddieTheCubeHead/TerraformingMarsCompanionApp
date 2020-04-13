@@ -11,7 +11,7 @@ public final class DesignedMicroorganisms extends Card {
         price = 16;
         tags.add("science");
         tags.add("microbe");
-        requirements.put("max_temperature", -14);
+        requirements.setMaxTemperature(-14);
         owner_game = game;
     }
 

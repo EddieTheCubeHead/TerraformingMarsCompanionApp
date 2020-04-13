@@ -10,7 +10,7 @@ public final class IceCapMelting extends Card {
         name = "Ice cap melting";
         price = 5;
         tags.add("event");
-        requirements.put("min_temperature", 2);
+        requirements.setMinTemperature(2);
         owner_game = game;
     }
 

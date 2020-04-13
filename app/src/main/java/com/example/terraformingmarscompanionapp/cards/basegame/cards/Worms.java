@@ -10,7 +10,7 @@ public final class Worms extends Card {
         name = "Worms";
         price = 8;
         tags.add("microbe");
-        requirements.put("min_oxygen", 1);
+        requirements.setMinOxygen(1);
         owner_game = game;
     }
 

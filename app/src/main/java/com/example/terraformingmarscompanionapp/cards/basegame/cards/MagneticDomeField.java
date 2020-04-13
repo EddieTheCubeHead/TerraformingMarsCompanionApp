@@ -10,7 +10,7 @@ public final class MagneticDomeField extends Card {
         name = "Magnetic dome field";
         price = 5;
         tags.add("building");
-        requirements.put("min_energy_production", 2);
+        requirements.setMinEnergyProduction(2);
         owner_game = game;
     }
 

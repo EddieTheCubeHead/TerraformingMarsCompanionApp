@@ -11,7 +11,7 @@ public final class SymbioticFungus extends Card implements ActionCard {
         name = "Symbiotic fungus";
         price = 4;
         tags.add("microbe");
-        requirements.put("min_temperature", -14);
+        requirements.setMinTemperature(-14);
     }
 
     @Override

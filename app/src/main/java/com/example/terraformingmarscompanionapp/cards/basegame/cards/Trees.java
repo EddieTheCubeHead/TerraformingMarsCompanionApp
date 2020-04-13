@@ -10,7 +10,7 @@ public final class Trees extends Card {
         name = "Trees";
         price = 13;
         tags.add("plant");
-        requirements.put("min_temperature", -4);
+        requirements.setMinTemperature(-4);
         victory_points = 1;
         owner_game = game;
     }

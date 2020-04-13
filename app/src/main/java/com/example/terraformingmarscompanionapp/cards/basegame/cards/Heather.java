@@ -10,7 +10,7 @@ public final class Heather extends Card {
         name = "Heather";
         price = 6;
         tags.add("plant");
-        requirements.put("min_temperature", -14);
+        requirements.setMinTemperature(-14);
         owner_game = game;
     }
 

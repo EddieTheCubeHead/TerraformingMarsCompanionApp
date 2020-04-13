@@ -11,7 +11,7 @@ public final class UndergroundCity extends Card {
         price = 18;
         tags.add("city");
         tags.add("building");
-        requirements.put("min_energy_production", 2);
+        requirements.setMinEnergyProduction(2);
         owner_game = game;
     }
 

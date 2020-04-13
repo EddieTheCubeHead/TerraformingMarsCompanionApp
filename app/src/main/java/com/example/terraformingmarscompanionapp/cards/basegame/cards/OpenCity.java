@@ -11,8 +11,8 @@ public final class OpenCity extends Card {
         price = 23;
         tags.add("building");
         tags.add("city");
-        requirements.put("min_oxygen", 12);
-        requirements.put("min_energy_production", 1);
+        requirements.setMinOxygen(12);
+        requirements.setMinEnergyProduction(1);
         victory_points = 1;
         owner_game = game;
     }

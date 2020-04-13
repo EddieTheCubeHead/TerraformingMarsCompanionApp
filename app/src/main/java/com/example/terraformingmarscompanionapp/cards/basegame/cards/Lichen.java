@@ -10,7 +10,7 @@ public final class Lichen extends Card {
         name = "Lichen";
         price = 7;
         tags.add("plant");
-        requirements.put("min_temperature", -24);
+        requirements.setMinTemperature(-24);
         owner_game = game;
     }
 
