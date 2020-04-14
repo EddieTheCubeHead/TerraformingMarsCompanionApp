@@ -1,6 +1,5 @@
 package com.example.terraformingmarscompanionapp.game;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
@@ -28,7 +27,7 @@ public class Game implements Serializable {
     HashMap<String, EffectCard> getEffectCards() {
         HashMap<String, EffectCard> effect_cards = new HashMap<>();
         for (Map.Entry<String, Card> entry : deck.entrySet()) {
-            if (entry.getValue() instanceof ActionCard) {
+            if (entry.getValue() instanceof EffectCard) {
                 effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
             }
         }

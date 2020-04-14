@@ -9,4 +9,5 @@
     <dimen name="tag_icon_xy">40dp</dimen>
     <dimen name="button_array_height">60dp</dimen>
     <dimen name="button_margin">0dp</dimen>
+    <dimen name="round_corner_radius">5dp</dimen>
 </resources>

@@ -27,4 +27,15 @@ public final class ImportedHydrogen extends Card {
         //TODO kasvin, mikrobin tai eläimen lisäys
         super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        //TODO hookki tile-event pakettiin
+        if (data == 0) {
+            player.changePlants(3);
+        } else {
+            //TODO hookki resourcepakettiin
+        }
+        super.onPlay(player);
+    }
 }
