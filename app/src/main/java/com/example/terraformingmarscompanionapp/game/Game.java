@@ -364,6 +364,18 @@ public class Game implements Serializable {
         card.onPlay(player);
     }
 
+    //Tätä tarvitaan erityisesti serveripohjaisessa moninpelissä, mutta myös parissa erityistapauksessa
+    //paikallisissa peleissä.
+    public void changeCardResources(Card card, Integer amount) {
+
+        if (!(card instanceof ResourceCard)) {
+            return;
+        }
+        ResourceCard resource_holder = (ResourceCard)card;
+
+        resource_holder.changeResourceAmount(amount);
+    }
+
     public void onGenerationEnd() {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
             endGame();
