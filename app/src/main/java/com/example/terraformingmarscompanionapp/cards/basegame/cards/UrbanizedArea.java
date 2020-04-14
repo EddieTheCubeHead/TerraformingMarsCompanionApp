@@ -26,6 +26,7 @@ public final class UrbanizedArea extends Card {
         }
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(2);
+        player.addCity();
         super.onPlay(player);
     }
 }

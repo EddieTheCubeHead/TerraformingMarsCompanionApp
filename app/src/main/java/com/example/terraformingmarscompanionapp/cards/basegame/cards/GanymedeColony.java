@@ -19,6 +19,7 @@ public final class GanymedeColony extends Card {
     public void onPlay(Player player) {
         owner_game.update_manager.onVpCardPlayed(player);
         owner_game.tile_handler.placeGanymede(player);
+        player.addCity();
         super.onPlay(player);
     }
 

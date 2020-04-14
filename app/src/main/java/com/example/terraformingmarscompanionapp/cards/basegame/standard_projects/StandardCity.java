@@ -15,6 +15,7 @@ public final class StandardCity extends StandardProject {
     public void onPlay(Player player) {
         owner_game.tile_handler.placeCity(player);
         player.changeMoneyProduction(1);
+        player.addCity();
         super.onPlay(player);
     }
 }

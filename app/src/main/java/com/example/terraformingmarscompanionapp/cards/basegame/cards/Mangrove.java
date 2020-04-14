@@ -25,6 +25,7 @@ public final class Mangrove extends Card {
             }
         }
         owner_game.update_manager.onVpCardPlayed(player);
+        player.addGreenery();
         super.onPlay(player);
     }
 }

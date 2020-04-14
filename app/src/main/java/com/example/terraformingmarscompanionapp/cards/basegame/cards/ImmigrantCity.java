@@ -27,7 +27,7 @@ public final class ImmigrantCity extends Card implements EffectCard {
         }
         player.changeMoneyProduction(-2);
         player.changeEnergyProduction(-1);
-
+        player.addCity();
         super.onPlay(player);
     }
 

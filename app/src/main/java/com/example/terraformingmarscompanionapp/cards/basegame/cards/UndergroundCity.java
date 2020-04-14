@@ -26,6 +26,7 @@ public final class UndergroundCity extends Card {
         }
         player.changeEnergyProduction(-2);
         player.changeSteelProduction(2);
+        player.addCity();
         super.onPlay(player);
     }
 }

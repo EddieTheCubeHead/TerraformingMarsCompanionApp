@@ -9,9 +9,9 @@ public class Player {
     private final Game game;
     private Card corporation;
     private final String name;
-    private final Integer cities = 0;
-    private final Integer greeneries = 0;
-    private final Integer colonies = 0;
+    private Integer cities = 0;
+    private Integer greeneries = 0;
+    private Integer colonies = 0;
     private Integer hand_size = 0; //Vaikka ei pidetä tietoa, mitä kortteja kädessä, korttien määrä on helppo pitää ylhäällä milestoneja varten
     private final ArrayList<Card> green_cards = new ArrayList<>();
     private final ArrayList<Card> red_cards = new ArrayList<>();
@@ -26,6 +26,9 @@ public class Player {
     public void addBlue(Card card) {blue_cards.add(card);}
     public void addPrelude(Card card) {preludes.add(card);}
     public void addResourceHolder(ResourceCard card) {resource_holders.add(card);}
+    public void addCity() {cities++;}
+    public void addGreenery() {greeneries++;}
+    public void addColony() {colonies++;}
     public String getName() {return name;}
     public Card getCorporation() {return corporation;}
     public Integer getCities() {return cities;}

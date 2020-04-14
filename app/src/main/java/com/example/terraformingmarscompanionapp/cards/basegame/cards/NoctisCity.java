@@ -26,6 +26,7 @@ public final class NoctisCity extends Card {
         }
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
+        player.addCity();
         super.onPlay(player);
     }
 }

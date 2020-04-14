@@ -14,6 +14,7 @@ public final class StandardGreenery extends StandardProject {
     @Override
     public void onPlay(Player player) {
         owner_game.tile_handler.placeGreenery(player);
+        player.addGreenery();
         super.onPlay(player);
     }
 }

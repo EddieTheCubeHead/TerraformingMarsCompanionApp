@@ -30,6 +30,7 @@ public final class OpenCity extends Card {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(4);
         player.changePlants(2);
+        player.addCity();
         super.onPlay(player);
     }
 }

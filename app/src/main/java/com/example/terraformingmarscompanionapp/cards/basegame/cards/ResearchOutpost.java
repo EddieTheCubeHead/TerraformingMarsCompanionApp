@@ -25,6 +25,7 @@ public final class ResearchOutpost extends Card {
             }
         }
         player.changeCardDiscount(1);
+        player.addCity();
         super.onPlay(player);
     }
 }
