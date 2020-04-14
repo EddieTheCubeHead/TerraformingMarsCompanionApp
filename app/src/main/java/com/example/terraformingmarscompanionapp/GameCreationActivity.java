@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
 
 import java.util.ArrayList;

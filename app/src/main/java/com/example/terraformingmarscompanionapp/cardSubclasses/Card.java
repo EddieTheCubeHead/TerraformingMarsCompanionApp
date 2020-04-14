@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
+import android.util.Log;
+
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -145,12 +147,22 @@ public abstract class Card {
             case "standard":
                 break;
             default:
-                System.out.println("Type typo in card " + getName());
+                Log.i("Card","Type typo in card " + getName());
         }
 
         if (this instanceof ActionCard) {
             player.addAction((ActionCard)this);
         }
+    }
+
+    /* Serveri-implementaatiossa on siirrettävä jotenkin kortin pelaamiseen liittyvät päätökset.
+     * Onneksi kaikki nämä päätökset ovat kuvattavissa yhdellä kokonaisluvulla. Tarvittaessa
+     * kortti void override:aa tämän funktion, jotta sen pelaaminen muilla pelissä olevilla onnistuu
+     * ilman kortin sisällä tehtävää päätöstä.
+     */
+    public void playWithMetadata(Player player, Integer data) {
+        Log.i("Card", "Play with metadata called from unsupported card: " + this.name);
+        onPlay(player);
     }
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}

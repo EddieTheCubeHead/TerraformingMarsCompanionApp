@@ -3,3 +3,7 @@ Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi 
 TODO: Game.checkCardCost rewrite palauttamaan yksityisen datapakettiolion -Eetu
 TODO: Card.requirements rewrite käyttämään erillistä requirements-oliota.
 TODO: Kortteja kehiin, -Aapo
+
+Harkkatyön palautuksen jälkeiset:
+
+TODO: Tekstit (flavor ja kuvaus)

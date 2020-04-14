@@ -26,4 +26,14 @@ public final class LocalHeatTrapping extends Card {
         }
         super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeHeat(-5);
+        if (data == 0) {
+            player.changePlants(4);
+        } else {
+            //TODO hookki resourcepakettiin
+        }
+    }
 }

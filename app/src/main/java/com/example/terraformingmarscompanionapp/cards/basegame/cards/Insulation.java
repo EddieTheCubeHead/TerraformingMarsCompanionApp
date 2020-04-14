@@ -20,4 +20,11 @@ public final class Insulation extends Card {
         player.changeMoneyProduction(heat_reduction_amount);
         super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeHeatProduction(-data);
+        player.changeMoneyProduction(data);
+        super.onPlay(player);
+    }
 }
