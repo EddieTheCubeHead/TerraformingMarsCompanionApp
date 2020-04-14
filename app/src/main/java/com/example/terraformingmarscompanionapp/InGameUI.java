@@ -33,6 +33,8 @@ public class InGameUI extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+        gameController = GameController.getInstance();
+
         //KAIKKI LISTENERIT PLACEHOLDEREITA ATM
         findViewById(R.id.item_1).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
