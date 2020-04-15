@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/AppTheme.NoActionBar"
     app:cardCornerRadius="@dimen/round_corner_radius"
     android:background="@color/colorBackground"
     app:cardUseCompatPadding="true"
+    android:fadingEdge="vertical"
+    app:contentPadding="5dp"
     app:cardBackgroundColor="@color/colorWindow">
 
     <RelativeLayout
@@ -59,28 +62,24 @@
             android:id="@+id/tag1"
             android:layout_width="@dimen/tag_icon_xy"
             android:layout_height="@dimen/tag_icon_xy"
-            android:padding="2dp"
             android:layout_alignParentRight="true" />
 
         <ImageView
             android:id="@+id/tag2"
             android:layout_width="@dimen/tag_icon_xy"
             android:layout_height="@dimen/tag_icon_xy"
-            android:padding="2dp"
             android:layout_toLeftOf="@id/tag1" />
 
         <ImageView
             android:id="@+id/tag3"
             android:layout_width="@dimen/tag_icon_xy"
             android:layout_height="@dimen/tag_icon_xy"
-            android:padding="2dp"
             android:layout_toLeftOf="@id/tag2" />
 
         <ImageView
             android:id="@+id/tag4"
             android:layout_width="@dimen/tag_icon_xy"
             android:layout_height="@dimen/tag_icon_xy"
-            android:padding="2dp"
             android:layout_toLeftOf="@id/tag3" />
 
     </RelativeLayout>
