@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="@dimen/round_corner_radius"
     android:background="@color/colorBackground"
-    app:cardUseCompatPadding="false"
+    app:cardUseCompatPadding="true"
     app:cardBackgroundColor="@color/colorWindow">
 
     <RelativeLayout
@@ -26,7 +26,7 @@
             android:scaleY="1.5" />
 
         <TextView
-            android:id="@+id/credit_text"
+            android:id="@+id/card_credit_text"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="42"

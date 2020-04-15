@@ -62,7 +62,6 @@ public class InGameUI extends AppCompatActivity {
                 gameController.endTurn();
             }
         });
-
     }
 
     private void startSearchActivity()
@@ -74,7 +73,7 @@ public class InGameUI extends AppCompatActivity {
     private void showPopup()
     {
         Intent intent = new Intent(this, ResourceDialogActivity.class);
-        startActivityForResult(intent, 1);
+        startActivity(intent);
     }
 
     //TODO back nappiin toiminnallisuus, vaikkapa ylös scrollaus

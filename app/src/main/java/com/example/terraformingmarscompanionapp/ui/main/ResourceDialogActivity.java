@@ -25,10 +25,10 @@ public class ResourceDialogActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 System.out.println("Button clicked.");
+                finish();
             }
         });
 
         recycler_view = findViewById(R.id.popup_recyclerview);
-
     }
 }

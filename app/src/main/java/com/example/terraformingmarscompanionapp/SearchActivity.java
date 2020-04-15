@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp;
 
 import android.os.Bundle;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +20,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 {
     SearchView searchview;
     HashMap<String, Card> deck;
-    ArrayList<Card> card_list;
+    ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
 
     @Override
@@ -58,7 +59,17 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
     }
 
-    @Override public void onCardClick(int position) { }
-    @Override public boolean onCardLongClick(int position) { return false; }
+    //TODO laita tähän kortin pelaaminen, ehkä klikkausääni jotenkin.
+    /*pitää jotenkin selvittää että mitä ikkunoita avautuu pelaamisesta tai hinnasta.*/
+
+    @Override public void onCardClick(int position) {
+        Toast.makeText(getApplicationContext(),
+                card_list.get(position).getName() + " would be played" , Toast.LENGTH_SHORT).show();
+    }
+    @Override public boolean onCardLongClick(int position) {
+        Toast.makeText(getApplicationContext(), "card buy menu for: " +
+                card_list.get(position).getName() , Toast.LENGTH_SHORT).show();
+        return false;
+    }
 }
 

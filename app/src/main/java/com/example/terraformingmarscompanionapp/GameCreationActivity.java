@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -101,9 +102,14 @@ public class GameCreationActivity extends AppCompatActivity
 
     }
 
-
     public void startInGameUI()
     {
+        if (player_names.size() == 0)
+        {
+            Toast.makeText(getApplicationContext(), "Enter names first!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Game game = new Game(player_names,
                 hellas_elysium, corporate_era, prelude, colonies, venus, turmoil, extra_corporations,
                 map);

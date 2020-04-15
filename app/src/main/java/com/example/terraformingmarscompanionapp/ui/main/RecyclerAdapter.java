@@ -37,6 +37,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         OnCardLongListener on_card_long_listener;
 
         //layout ei käytössä ehkä
+
+        public TextView card_credit_view;
         public TextView card_name_view;
         public ImageView requirement_view;
         public ImageView tag1_view;
@@ -50,13 +52,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(card_inflated);
 
             //card_inflated.findViewById(R.);
+
+            card_credit_view = card_inflated.findViewById(R.id.card_credit_text);
             card_name_view = card_inflated.findViewById(R.id.card_name);
             requirement_view = card_inflated.findViewById(R.id.requirement);
             tag1_view = card_inflated.findViewById(R.id.tag1);
             tag2_view = card_inflated.findViewById(R.id.tag2);
             tag3_view = card_inflated.findViewById(R.id.tag3);
             tag4_view = card_inflated.findViewById(R.id.tag4);
-
 
             //klikkiominaisuus
             card_inflated.setOnClickListener(this);
@@ -114,6 +117,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String card_name = card.getName();
         Integer requirement = card.getRequirementInt();
 
+        //kortin ulkonäön asettaminen
         Integer tag1, tag2, tag3, tag4;
         ArrayList<Integer> tags = card.getTagIntegers();
         try {
@@ -124,6 +128,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         } catch (IndexOutOfBoundsException e) {}
 
         holder.card_name_view.setText(card_name);
+        holder.card_credit_view.setText(card.getPrice().toString());
         holder.requirement_view.setImageResource(requirement);
     }
 
