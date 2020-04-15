@@ -7,13 +7,13 @@ mistakes caused by lack of attention.
 
 The app aims to deliver four levels of assistance depending on player preference:
 
-The lowest level has only the resource listing and an opportunity to update resource amounts and production amounts as well as a button
+- The lowest level has only the resource listing and an opportunity to update resource amounts and production amounts as well as a button
 to gain productions after a generation.
 
-The second lowest level is an automated single user mode, where manual resource management is still needed for interaction with other
+- The second lowest level is an automated single user mode, where manual resource management is still needed for interaction with other
 players and managing resources on cards, but the player can play cards via a search field and the card benefits are applied automatically.
 
-The two highest levels offer identical amounts of assistance, but different amounts of convinience. The first of them is a hot-seat mode
+- The two highest levels offer identical amounts of assistance, but different amounts of convinience. The first of them is a hot-seat mode
 where players pass the phone around the table and basically all resource management, including player interaction, is automated while the
 highest level is up to five players connecting to a shared game via a server and getting the aforementioned benefits.
 
