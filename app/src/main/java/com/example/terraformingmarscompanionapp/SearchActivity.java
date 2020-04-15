@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -57,6 +58,15 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             }
         });
 
+        //aloittaa kirjoittamisen aina kun klikataan eikä vain suurennuslasista.
+        searchview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchview.setIconified(false);
+            }
+        });
+
+
     }
 
     //TODO laita tähän kortin pelaaminen, ehkä klikkausääni jotenkin.
@@ -69,7 +79,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     @Override public boolean onCardLongClick(int position) {
         Toast.makeText(getApplicationContext(), "card buy menu for: " +
                 card_list.get(position).getName() , Toast.LENGTH_SHORT).show();
-        return false;
+        return true;
     }
 }
 
