@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
 
@@ -19,10 +20,14 @@ import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener
 {
-    SearchView searchview;
-    HashMap<String, Card> deck;
-    ArrayList<Card> card_list = new ArrayList<>();
+    private SearchView searchview;
+    private GameController controller;
+    private Game game;
+    private HashMap<String, Card> deck;
+    private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,8 +37,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
         searchview = findViewById(R.id.searchview);
 
-        GameController gameController = GameController.getInstance();
-        deck = gameController.getGame().getDeck();
+        controller = GameController.getInstance();
+        game = controller.getGame();
+        deck = game.getDeck();
 
         //korttien haku
         for (Map.Entry<String, Card> entry : deck.entrySet())
@@ -73,8 +79,12 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     /*pitää jotenkin selvittää että mitä ikkunoita avautuu pelaamisesta tai hinnasta.*/
 
     @Override public void onCardClick(int position) {
+        Card card = card_list.get(position);
+
+        controller.playCard(card);
+
         Toast.makeText(getApplicationContext(),
-                card_list.get(position).getName() + " would be played" , Toast.LENGTH_SHORT).show();
+                card.getName() + " was played" , Toast.LENGTH_SHORT).show();
     }
     @Override public boolean onCardLongClick(int position) {
         Toast.makeText(getApplicationContext(), "card buy menu for: " +
