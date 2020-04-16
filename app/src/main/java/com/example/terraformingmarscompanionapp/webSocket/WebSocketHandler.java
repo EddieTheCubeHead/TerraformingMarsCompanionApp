@@ -48,11 +48,24 @@ public final class WebSocketHandler {
                             UserActions.handleLogin(s);
                             break;
 
+                        //Pelin luominen
+                        case "game_created":
+                            Log.i("WebSocket", "Game created with code " + contents[1]);
+                            GameActions.handleGameCreated(s);
+                            break;
+                        //Pelin tapahtumat
+                        case "game_event":
+                            Log.i("WebSocket", "Game event recieved: " + s);
+                            GameActions.handleGameEvent(s);
+                            break;
+
                         //Exceptioneiden käsittely
                         case "username_exception":
                             Log.i("WebSocketException", "Invalid username: " + contents[1]);
+                            break;
                         case "password_exception":
                             Log.i("WebSocketException", "Invalid password: " + contents[1]);
+                            break;
 
                         //Tunnistamattomien viestien loggaaminen
                         default:
