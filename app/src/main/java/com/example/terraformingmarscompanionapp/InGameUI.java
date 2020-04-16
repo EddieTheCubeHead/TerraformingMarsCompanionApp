@@ -45,20 +45,20 @@ public class InGameUI extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(),
                         current_player.getName() + ": " + current_player.getMoney() + "c",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
         findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "pitäisi avata resurssienvaihtopopup", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "pitäisi avata resurssienvaihtopopup", Toast.LENGTH_SHORT).show();
                 showPopup();
             }
         });
 
         findViewById(R.id.item_3).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Testausaktiviteetti aloitetaan.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Testausaktiviteetti aloitetaan.", Toast.LENGTH_SHORT).show();
                 startSearchActivity();
             }
         });
