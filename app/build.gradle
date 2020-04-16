@@ -10,8 +10,8 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        vectorDrawables.useSupportLibrary = true // lisätty jotta vektorigrafiikoita kannatetaan oikein
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true // lisätty jotta vektorigrafiikoita kannatetaan oikein -alex
     }
 
     buildTypes {
