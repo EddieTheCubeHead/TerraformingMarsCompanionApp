@@ -41,10 +41,10 @@ public class GameCreationActivity extends AppCompatActivity
         WebSocketHandler.createWebSocketClient();
 
         //textview
-        final TextView textview_names = findViewById(R.id.textView);
+        final TextView textview_names = findViewById(R.id.name_textview);
 
         //EditText
-        final EditText edittext_name = findViewById(R.id.editText);
+        final EditText edittext_name = findViewById(R.id.name_edittext);
 
         //Switchit
         Switch switch_hellas_elysiym = findViewById(R.id.switch_elysium);
@@ -99,7 +99,6 @@ public class GameCreationActivity extends AppCompatActivity
                 startInGameUI();
             }
         });
-
     }
 
     public void startInGameUI()
