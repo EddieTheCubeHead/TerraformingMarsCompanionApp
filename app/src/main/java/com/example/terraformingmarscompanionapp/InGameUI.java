@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.ResourceDialogActivity;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
@@ -38,15 +39,20 @@ public class InGameUI extends AppCompatActivity {
         //KAIKKI LISTENERIT PLACEHOLDEREITA ATM
         findViewById(R.id.item_1).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Lisää toiminnallisuus InGameUI -luokassa", Toast.LENGTH_LONG).show();
-                showPopup();
+                Player current_player = gameController.getCurrentPlayer();
+
+                current_player.changeMoney(10);
+
+                Toast.makeText(getApplicationContext(),
+                        current_player.getName() + ": " + current_player.getMoney() + "c",
+                        Toast.LENGTH_LONG).show();
             }
         });
 
         findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                //tähän toiminnallisuus
-                Toast.makeText(getApplicationContext(), "Lisää toiminnallisuus InGameUI -luokassa", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "pitäisi avata resurssienvaihtopopup", Toast.LENGTH_LONG).show();
+                showPopup();
             }
         });
 
