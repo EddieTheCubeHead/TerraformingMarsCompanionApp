@@ -22,10 +22,6 @@ import java.util.List;
  * Adapteri joka hakusuodattaa RecyclerViewn SearchActivity.javassa
  */
 
-//listener on SearchActivity joka implementoi oncardlistenerit.
-//debug: uses unchecked or unsafe operations
-//Note: Recompile with -Xlint:unchecked for details
-//TODO mieti jos cardviewn voi korjata vaan cardilla ja onko performanssimaksua
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable
 {
     private ArrayList<Card> card_list;
@@ -34,12 +30,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private OnCardListener onCardListener;
     private OnCardLongListener onCardLongListener;
 
+    //listener on SearchActivity joka implementoi molemmat oncardlistenerit.
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         OnCardListener on_card_listener;
         OnCardLongListener on_card_long_listener;
 
         //layout ei käytössä ehkä
+
+        public TextView card_credit_view;
         public TextView card_name_view;
         public ImageView requirement_view;
         public ImageView tag1_view;
@@ -53,13 +52,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(card_inflated);
 
             //card_inflated.findViewById(R.);
+
+            card_credit_view = card_inflated.findViewById(R.id.card_credit_text);
             card_name_view = card_inflated.findViewById(R.id.card_name);
             requirement_view = card_inflated.findViewById(R.id.requirement);
             tag1_view = card_inflated.findViewById(R.id.tag1);
             tag2_view = card_inflated.findViewById(R.id.tag2);
             tag3_view = card_inflated.findViewById(R.id.tag3);
             tag4_view = card_inflated.findViewById(R.id.tag4);
-
 
             //klikkiominaisuus
             card_inflated.setOnClickListener(this);
@@ -117,6 +117,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String card_name = card.getName();
         Integer requirement = card.getRequirementInt();
 
+        //kortin ulkonäön asettaminen
         Integer tag1, tag2, tag3, tag4;
         ArrayList<Integer> tags = card.getTagIntegers();
         try {
@@ -124,10 +125,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.tag2_view.setImageResource(tags.get(1));
             holder.tag3_view.setImageResource(tags.get(2));
             holder.tag4_view.setImageResource(tags.get(3));
-
         } catch (IndexOutOfBoundsException e) {}
 
         holder.card_name_view.setText(card_name);
+        holder.card_credit_view.setText(card.getPrice().toString());
         holder.requirement_view.setImageResource(requirement);
     }
 

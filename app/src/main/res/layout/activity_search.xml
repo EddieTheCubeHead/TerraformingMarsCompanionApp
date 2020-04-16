@@ -4,25 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".SearchActivity">
+
     <SearchView
         android:id="@+id/searchview"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="55dp"
+        app:queryBackground="@color/colorBackground"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/result_recyclerview"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="10dp"
+        android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="48dp"
-        android:background="@color/cardview_light_background"
-        android:padding="10dp"
-        android:paddingHorizontal="10dp"
+        android:layout_marginTop="55dp"
+        android:background="@color/colorBackground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchview" />
 

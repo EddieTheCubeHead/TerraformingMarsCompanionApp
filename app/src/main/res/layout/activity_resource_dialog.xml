@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="@id/popup_recyclerview"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_close_black_24dp"
+            app:srcCompat="@drawable/ic_close_custom"
             tools:ignore="VectorDrawableCompat" />
 
         <Button
