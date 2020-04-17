@@ -6,6 +6,7 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,15 @@ public abstract class Card {
     protected Player owner_player = null; //Omistava pelaaja, null jos pelaamaton
     protected ArrayList<String> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
+
+    //Käytetään serverin kanssa pelatessa ilmoittamaan serverille tarvittavat lisätiedot yhdessä
+    //sendWaitInformation(Boolean action) -funktion kanssa
+    protected Integer wait_tile_event = 0;
+    protected Integer wait_metadata = 0;
+    protected Integer wait_resource_event = 0;
+    protected Integer wait_action_tile_event = 0;
+    protected Integer wait_action_metadata = 0;
+    protected Integer wait_action_resource_event = 0;
 
     public Card(String card_type) {
         type = card_type;
@@ -164,6 +174,19 @@ public abstract class Card {
     public void playWithMetadata(Player player, Integer data) {
         Log.i("Card", "Play with metadata called from unsupported card: " + this.name);
         onPlay(player);
+    }
+
+    //Lähettää serverille ilmoituksen, että serverin täytyy odottaa lisää paketteja
+    public void updateWaitInformation(CardEventPacket event) {
+        if (event.getIsAction()) {
+            event.setMetadata(wait_action_metadata);
+            event.setResourceEvents(wait_action_resource_event);
+            event.setTileEvents(wait_action_tile_event);
+        } else {
+            event.setMetadata(wait_metadata);
+            event.setResourceEvents(wait_resource_event);
+            event.setTileEvents(wait_tile_event);
+        }
     }
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}

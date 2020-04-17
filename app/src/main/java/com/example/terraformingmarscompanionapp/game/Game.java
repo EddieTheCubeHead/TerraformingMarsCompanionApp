@@ -3,11 +3,18 @@ package com.example.terraformingmarscompanionapp.game;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game implements Serializable {
 
@@ -25,6 +32,17 @@ public class Game implements Serializable {
 
     //Pelataanko peli serverin välityksellä vai ei
     private Boolean server_multiplayer = false;
+    public Boolean getServerMultiplayer() {return server_multiplayer;}
+
+    /* Serveripelissä siirrosta lähetetään serverille aina vähintään CardEventPacketin (voi kuvata myös toimintaa)
+     * lisäksi packet kertoo mitä kaikkea muuta lähetetään perässä. Nämä mahdolliset perässälähetettävät toiminnot
+     * säilytetään vuoron ajan listoissa. CardEventPacket ja ResourceEventPacket luodaan tarvittaessa erikseen.
+     */
+    private ArrayList<ResourceEventPacket> resource_events = new ArrayList<>();
+    private ArrayList<TileEventPacket> tile_events = new ArrayList<>();
+
+    public void addResourceEvent(ResourceEventPacket event) {resource_events.add(event);}
+    public void addTileEvent(TileEventPacket event) {tile_events.add(event);}
 
     //Getterit pelaajille ja pakoille, plus pakalle listana
     public ArrayList<Player> getPlayers() {return  players;}
@@ -80,6 +98,7 @@ public class Game implements Serializable {
                     boolean venus,
                     boolean turmoil,
                     boolean extra_corporations,
+                    boolean server_multiplayer,
                     Integer map
                 )
     {
@@ -94,6 +113,8 @@ public class Game implements Serializable {
         if (prelude) {
             preludes = constructor.createPreludes();
         }
+
+        this.server_multiplayer = server_multiplayer;
 
         tile_handler = new TileHandler(this, map, venus);
         update_manager =  new UpdateManager(this, corporate_era, prelude, colonies, venus, turmoil);
@@ -139,7 +160,7 @@ public class Game implements Serializable {
 
     //Koko kortin pelaaminen yhdessä funktiossa. Ottaa Card- ja Player -oliot
     public void playCard(Card card, Player player) {
-        CardCost resources_to_use = checkCardCost(card, player);
+        CardCostPacket resources_to_use = checkCardCost(card, player);
         if (resources_to_use == null | !checkCardRequirements(card, player)) {
             return;
         }
@@ -153,11 +174,41 @@ public class Game implements Serializable {
 
         //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
 
+        if (server_multiplayer) {
+            CardEventPacket card_event = new CardEventPacket(card.getName(), player.getName(), false);
+
+            Timer timer = new Timer();
+
+            //Timer tarkistaa onko kaikki kortin määrittämät tapahtumat tallennettu ja lähettää paketit jos näin on
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (card_event.getResourceEventAmount() == resource_events.size() &&
+                        card_event.getTileEventAmount() == tile_events.size()) {
+                        GameActions.sendCardEvent(card_event);
+                        GameActions.sendCardCost(resources_to_use);
+                        if (tile_events.size() != 0) {
+                            for (TileEventPacket tile_event : tile_events) {
+                                GameActions.sendTileEvent(tile_event);
+                            }
+                            tile_events.clear();
+                        }
+                        if (resource_events.size() != 0) {
+                            for (ResourceEventPacket resource_event : resource_events) {
+                                GameActions.sendResourceEvent(resource_event);
+                            }
+                        }
+                        timer.cancel();
+                    }
+                }
+            }, 0, 1000);
+        }
+
         card.onPlay(player);
     }
 
     //Kortin pelaamisen ensimmäinen vaihe. Palautta hinnan CardCost -oliona
-    private CardCost checkCardCost(Card card, Player player) {
+    private CardCostPacket checkCardCost(Card card, Player player) {
         //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
 
         Integer actual_price = card.getPrice();
@@ -213,7 +264,7 @@ public class Game implements Serializable {
                 if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money) {
                     titanium_amount = needed_money / (3 + player.getTitaniumValueModifier());
                     money_amount = actual_price - titanium_amount * (3 + player.getTitaniumValueModifier());
-                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     titanium_amount = player.getTitanium();
                     needed_money -= titanium_amount * (3 + player.getTitaniumValueModifier());
@@ -225,7 +276,7 @@ public class Game implements Serializable {
                     steel_amount = needed_money / (2 + player.getSteelValueModifier());
                     money_amount = actual_price - (steel_amount * (2 + player.getSteelValueModifier()
                                                    + titanium_amount * (3 + player.getTitaniumValueModifier())));
-                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     steel_amount = player.getTitanium();
                     needed_money -= steel_amount * (2 + player.getSteelValueModifier());
@@ -238,7 +289,7 @@ public class Game implements Serializable {
 
             if (player.getHeatIsMoney()) {
                 if (player.getHeat() >= needed_money) {
-                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     return null;
                 }
@@ -246,7 +297,7 @@ public class Game implements Serializable {
             return null;
 
         } else {
-            return new CardCost(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+            return new CardCostPacket(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
     }
 
