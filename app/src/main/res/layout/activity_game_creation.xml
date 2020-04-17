@@ -1,162 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-
-        android:textColor="@color/colorWindowText"
-        android:textSize="20sp"
-        android:textStyle="bold"
-
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="10dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toStartOf="@+id/switch_elysium"
-        app:layout_constraintStart_toStartOf="parent" />
+    android:layout_height="match_parent"
+    android:baselineAligned="false">
 
     <LinearLayout
-        android:layout_marginHorizontal="10dp"
-        android:id="@+id/linearLayout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        >
 
-
-        <EditText
-            android:inputType="textPersonName"
-            android:id="@+id/editText"
+        <TextView
+            android:id="@+id/name_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="moi moi"
-            android:hint="name here..."
-            android:textSize="20sp"
-            android:layout_weight="1"
-            android:textStyle="bold" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/editText"
-            app:srcCompat="@drawable/ic_add_custom"
-            tools:ignore="VectorDrawableCompat" />
+        <EditText
+            android:id="@+id/name_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_start"
-        android:layout_width="120dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:padding="0dp"
-        android:text="Start game"
-        app:layout_constraintEnd_toEndOf="@+id/switch_elysium"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <Switch
-        android:id="@+id/switch_elysium"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:switchPadding="10dp"
-        android:text="hellas elysium"
-        android:textStyle="bold"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Switch
-        android:id="@+id/switch_corporate_era"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="corporate era"
-        android:textStyle="bold"
-        android:switchPadding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/switch_elysium"
-        app:layout_constraintTop_toBottomOf="@id/switch_elysium" />
+        <Switch
+            android:id="@+id/switch_elysium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="8dp"
+            android:switchPadding="10dp"
+            android:text="hellas elysium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Switch
-        android:id="@+id/switch_prelude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="preludes"
-        android:textStyle="bold"
-        android:switchPadding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/switch_elysium"
-        app:layout_constraintTop_toBottomOf="@id/switch_corporate_era" />
+        <Switch
+            android:id="@+id/switch_corporate_era"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:switchPadding="10dp"
+            android:text="corporate era"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/switch_elysium"
+            app:layout_constraintTop_toBottomOf="@id/switch_elysium" />
 
-    <Switch
-        android:id="@+id/switch_colonies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="colonies"
-        android:textStyle="bold"
-        android:switchPadding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/switch_prelude"
-        app:layout_constraintTop_toBottomOf="@id/switch_prelude" />
+        <Switch
+            android:id="@+id/switch_prelude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:switchPadding="10dp"
+            android:text="preludes"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/switch_elysium"
+            app:layout_constraintTop_toBottomOf="@id/switch_corporate_era" />
 
-    <Switch
-        android:id="@+id/switch_venus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="venus"
-        android:textStyle="bold"
-        android:switchPadding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/switch_elysium"
-        app:layout_constraintTop_toBottomOf="@id/switch_colonies" />
+        <Switch
+            android:id="@+id/switch_colonies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:switchPadding="10dp"
+            android:text="colonies"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/switch_prelude"
+            app:layout_constraintTop_toBottomOf="@id/switch_prelude" />
 
-    <Switch
-        android:id="@+id/switch_turmoil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="turmoil"
-        android:textStyle="bold"
-        android:switchPadding="10dp"
-        app:layout_constraintEnd_toEndOf="@id/switch_elysium"
-        app:layout_constraintTop_toBottomOf="@id/switch_venus" />
+        <Switch
+            android:id="@+id/switch_venus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:switchPadding="10dp"
+            android:text="venus"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/switch_elysium"
+            app:layout_constraintTop_toBottomOf="@id/switch_colonies" />
 
-    <Switch
-        android:id="@+id/switch_extra_corporations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:switchPadding="10dp"
-        android:text="extra corps"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@id/switch_elysium"
-        app:layout_constraintTop_toBottomOf="@id/switch_turmoil" />
+        <Switch
+            android:id="@+id/switch_turmoil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:switchPadding="10dp"
+            android:text="turmoil"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/switch_elysium"
+            app:layout_constraintTop_toBottomOf="@id/switch_venus" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:text="house rule"
-        android:layout_marginRight="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/switch_extra_corporations"
-        app:layout_constraintTop_toBottomOf="@+id/switch_extra_corporations"
-        android:layout_marginEnd="5dp" />
+        <Switch
+            android:id="@+id/switch_extra_corporations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:switchPadding="10dp"
+            android:text="extra corps"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/switch_elysium"
+            app:layout_constraintTop_toBottomOf="@id/switch_turmoil" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:text="house rule"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/switch_extra_corporations"
+            app:layout_constraintTop_toBottomOf="@+id/switch_extra_corporations" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="bottom"
+            android:paddingRight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+            <Button
+                android:id="@+id/button_start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Start game"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
