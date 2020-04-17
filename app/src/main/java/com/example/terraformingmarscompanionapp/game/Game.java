@@ -34,6 +34,15 @@ public class Game implements Serializable {
         return effect_cards;
     }
 
+    public Player getPlayer(String player_name) {
+        for (Player player : players) {
+            if (player.getName().equals(player_name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
     private Integer global_oxygen;

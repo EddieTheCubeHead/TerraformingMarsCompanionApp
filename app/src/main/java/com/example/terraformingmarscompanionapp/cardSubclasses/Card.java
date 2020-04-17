@@ -14,7 +14,7 @@ public abstract class Card {
     protected String name = "ABSTRACT_BASE_CARD";
     protected Integer price = 0;
     protected Integer victory_points = 0;
-    private String type; //green, red, blue, corporation, prelude, ghost ja standard. Käytetään super.onPlayssa
+    private String type; //green, red, blue, corporation, prelude, standard, other ja ghost. Käytetään super.onPlayssa
     protected Boolean action_used = false;
     protected Player owner_player = null; //Omistava pelaaja, null jos pelaamaton
     protected ArrayList<String> tags = new ArrayList<>();
@@ -145,6 +145,7 @@ public abstract class Card {
                 break;
             case "ghost":
             case "standard":
+            case "other":
                 break;
             default:
                 Log.i("Card","Type typo in card " + getName());
@@ -157,7 +158,7 @@ public abstract class Card {
 
     /* Serveri-implementaatiossa on siirrettävä jotenkin kortin pelaamiseen liittyvät päätökset.
      * Onneksi kaikki nämä päätökset ovat kuvattavissa yhdellä kokonaisluvulla. Tarvittaessa
-     * kortti void override:aa tämän funktion, jotta sen pelaaminen muilla pelissä olevilla onnistuu
+     * kortti voi override:aa tämän funktion, jotta sen pelaaminen muilla pelissä olevilla onnistuu
      * ilman kortin sisällä tehtävää päätöstä.
      */
     public void playWithMetadata(Player player, Integer data) {
