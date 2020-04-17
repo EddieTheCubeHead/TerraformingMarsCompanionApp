@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.game;
 
+//Luokka kortin pelaamisen vaatimien resurssien listaamiseen kompaktisti.
 public class CardCost {
     private Integer money;
     private Integer steel;

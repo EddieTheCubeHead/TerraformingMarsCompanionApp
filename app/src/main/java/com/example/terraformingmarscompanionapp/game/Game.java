@@ -11,19 +11,29 @@ import java.util.Map;
 
 public class Game implements Serializable {
 
+    //Suuremmat logiikkaa ohjaavat luokat
     public final UpdateManager update_manager;
-    private final ArrayList<Player> players = new ArrayList<>();
-    private final HashMap<String, Card> deck;
-
-    private HashMap<String, Card> preludes = new HashMap<>();
-    private final HashMap<String, Card> corporations = new HashMap<>();
     public final TileHandler tile_handler;
 
+    //Erityyppiset pakat
+    private final HashMap<String, Card> deck;
+    private HashMap<String, Card> preludes = new HashMap<>();
+    private final HashMap<String, Card> corporations = new HashMap<>();
+
+    //Simppeli ArrayList pelaajia. Pelaajien tarkempi hallinta ylempänä GameController -luokassa
+    private final ArrayList<Player> players = new ArrayList<>();
+
+    //Pelataanko peli serverin välityksellä vai ei
+    private Boolean server_multiplayer = false;
+
+    //Getterit pelaajille ja pakoille, plus pakalle listana
     public ArrayList<Player> getPlayers() {return  players;}
     public HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return  corporations;}
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
+
+    //EffectCard -rajapinnan korttien haku pakasta UpdateManageria varten
     HashMap<String, EffectCard> getEffectCards() {
         HashMap<String, EffectCard> effect_cards = new HashMap<>();
         for (Map.Entry<String, Card> entry : deck.entrySet()) {
@@ -34,6 +44,7 @@ public class Game implements Serializable {
         return effect_cards;
     }
 
+    //Getteri pelaajalle nimen perusteella
     public Player getPlayer(String player_name) {
         for (Player player : players) {
             if (player.getName().equals(player_name)) {
@@ -43,6 +54,7 @@ public class Game implements Serializable {
         return null;
     }
 
+    //Pelin tilan parametrit, getterit ja setterit
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
     private Integer global_oxygen;
@@ -58,6 +70,7 @@ public class Game implements Serializable {
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
 
+    //Rakentaja
     public Game(
                     ArrayList<String> player_names,
                     boolean hellas_elysium,
@@ -95,6 +108,7 @@ public class Game implements Serializable {
         //TODO viimeistele constructor
     }
 
+    //Terraformaus-sliderien manipulaatio
     public boolean raiseTemperature(Player raising_player) {
         if (global_temperature >= 8) {
             return false;
@@ -122,7 +136,29 @@ public class Game implements Serializable {
         return true;
     }
 
+
+    //Koko kortin pelaaminen yhdessä funktiossa. Ottaa Card- ja Player -oliot
+    public void playCard(Card card, Player player) {
+        CardCost resources_to_use = checkCardCost(card, player);
+        if (resources_to_use == null | !checkCardRequirements(card, player)) {
+            return;
+        }
+
+        //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
+
+        player.changeMoney(-resources_to_use.getMoney());
+        player.changeSteel(-resources_to_use.getSteel());
+        player.changeTitanium(-resources_to_use.getTitanium());
+        player.changeHeat(-resources_to_use.getHeat());
+
+        //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
+
+        card.onPlay(player);
+    }
+
+    //Kortin pelaamisen ensimmäinen vaihe. Palautta hinnan CardCost -oliona
     private CardCost checkCardCost(Card card, Player player) {
+        //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
 
         Integer actual_price = card.getPrice();
         Integer money_amount;
@@ -214,8 +250,10 @@ public class Game implements Serializable {
         }
     }
 
+    //Kortin pelaamisen toinen vaihe. Palauttaa totuusarvon, täyttääkö pelaajan nykytilanne kortin vaatimukset.
     private Boolean checkCardRequirements(Card card, Player player) {
-        //Erittäin tylsä switch-case hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
+        //Erittäin tylsä if-hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
+        //Suosittelen lämpimästi minimoimaan tämän.
         CardRequirements requirements = card.getRequirements();
 
         Integer base_discount = player.getBaseTrRequirementDiscount();
@@ -354,24 +392,6 @@ public class Game implements Serializable {
 
         return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
     }
-    
-    public void playCard(Card card, Player player) {
-        CardCost resources_to_use = checkCardCost(card, player);
-        if (resources_to_use == null | !checkCardRequirements(card, player)) {
-            return;
-        }
-
-        //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
-
-        player.changeMoney(-resources_to_use.getMoney());
-        player.changeSteel(-resources_to_use.getSteel());
-        player.changeTitanium(-resources_to_use.getTitanium());
-        player.changeHeat(-resources_to_use.getHeat());
-
-        //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
-
-        card.onPlay(player);
-    }
 
     //Tätä tarvitaan erityisesti serveripohjaisessa moninpelissä, mutta myös parissa erityistapauksessa
     //paikallisissa peleissä.
@@ -385,6 +405,7 @@ public class Game implements Serializable {
         resource_holder.changeResourceAmount(amount);
     }
 
+    //Sukupolven päättäminen
     public void onGenerationEnd() {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
             endGame();
@@ -398,6 +419,8 @@ public class Game implements Serializable {
             player.changeEnergy(-player.getEnergy());
             player.changeEnergy(player.getEnergyProduction());
             player.changeHeat(player.getHeatProduction());
+            player.setRaisedTrThisGeneration(false);
+            player.resetActions();
         }
         //TODO turmoil-hommat tähän
     }

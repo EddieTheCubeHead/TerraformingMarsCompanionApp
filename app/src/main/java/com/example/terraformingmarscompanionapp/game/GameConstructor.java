@@ -5,6 +5,7 @@ import com.example.terraformingmarscompanionapp.cards.basegame.cards.*;
 
 import java.util.HashMap;
 
+//Luokka pelin pakkojen rakentamiseen. Koodi on tuotettu python-skriptillä kortit sisältävästä kansiosta.
 class GameConstructor {
     private final HashMap<String, Card> deck;
     private final HashMap<String, Card> preludes;

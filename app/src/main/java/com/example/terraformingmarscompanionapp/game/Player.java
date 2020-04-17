@@ -6,19 +6,27 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import java.util.ArrayList;
 
 public class Player {
+
+    //Pelaajan nimi ja peli
     private final Game game;
-    private Card corporation;
     private final String name;
+
+    //Pelaajan yleistilanteesta tarvittavat tiedot
     private Integer cities = 0;
     private Integer greeneries = 0;
     private Integer colonies = 0;
     private Integer hand_size = 0; //Vaikka ei pidetä tietoa, mitä kortteja kädessä, korttien määrä on helppo pitää ylhäällä milestoneja varten
+
+    //Erityyppisille korteille säilytyspaikkoja
+    private Card corporation;
     private final ArrayList<Card> green_cards = new ArrayList<>();
     private final ArrayList<Card> red_cards = new ArrayList<>();
     private final ArrayList<ActionCard> action_cards = new ArrayList<>();
     private final ArrayList<Card> blue_cards = new ArrayList<>();
     private final ArrayList<Card> preludes = new ArrayList<>();
     private final ArrayList<ResourceCard> resource_holders = new ArrayList<>();
+
+    //Korttien lisääminen vastaavaan säilytyspaikkaan
     public void setCorporation(Card card) {corporation=card;}
     public void addGreen(Card card) {green_cards.add(card);}
     public void addRed(Card card) {red_cards.add(card);}
@@ -26,21 +34,28 @@ public class Player {
     public void addBlue(Card card) {blue_cards.add(card);}
     public void addPrelude(Card card) {preludes.add(card);}
     public void addResourceHolder(ResourceCard card) {resource_holders.add(card);}
+
+    //Parametrien muuttaminen
     public void addCity() {cities++;}
     public void addGreenery() {greeneries++;}
     public void addColony() {colonies++;}
+
+    //Getterit tarvittaville muuttujille
     public String getName() {return name;}
-    public Card getCorporation() {return corporation;}
+
     public Integer getCities() {return cities;}
     public Integer getGreeneries() {return greeneries;}
     public Integer getColonies() {return colonies;}
     public Integer getHandSize() {return hand_size;}
+
+    public Card getCorporation() {return corporation;}
     public ArrayList<Card> getGreens() {return green_cards;}
     public ArrayList<Card> getReds() {return red_cards;}
     public ArrayList<ActionCard> getActions() {return action_cards;}
     public ArrayList<Card> getEffects() {return blue_cards;}
     public ArrayList<ResourceCard> getResourceHolders() {return resource_holders;}
 
+    //Käsikoon asettaminen
     public Boolean changeHandSize(Integer change_amount) {
         if (hand_size + change_amount < 0) {
             return false;
@@ -48,6 +63,19 @@ public class Player {
         hand_size += change_amount;
         return true;
     }
+
+    //Resetoi toimintojen käyttötilanne sukupolven lopuksi
+    void resetActions() {
+        for (Card card : blue_cards) {
+            if (card instanceof ActionCard) {
+                card.resetActionUsed();
+            }
+        }
+    }
+
+    /* Seuraavana luokassa on valtava määrä datan säilömiseen tarvittavia muuttujia, sekä
+     * niiden getterietä ja settereitä. Olen koittanut lajitella muuttujat melko selkeisiin
+     * kategorioihin. */
 
     /***********************************************************************************
      Resurssit
