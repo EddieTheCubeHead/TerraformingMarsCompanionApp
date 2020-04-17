@@ -52,7 +52,6 @@ public class UserActions {
     }
 
     static void handleLogin(String web_socket_message) {
-
         getSessionId(web_socket_message);
     }
 

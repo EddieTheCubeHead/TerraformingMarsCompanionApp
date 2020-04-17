@@ -158,7 +158,7 @@ public abstract class Card {
 
     /* Serveri-implementaatiossa on siirrettävä jotenkin kortin pelaamiseen liittyvät päätökset.
      * Onneksi kaikki nämä päätökset ovat kuvattavissa yhdellä kokonaisluvulla. Tarvittaessa
-     * kortti void override:aa tämän funktion, jotta sen pelaaminen muilla pelissä olevilla onnistuu
+     * kortti voi override:aa tämän funktion, jotta sen pelaaminen muilla pelissä olevilla onnistuu
      * ilman kortin sisällä tehtävää päätöstä.
      */
     public void playWithMetadata(Player player, Integer data) {

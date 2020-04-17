@@ -15,7 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.webSocket.STOMPHandler;
+import com.example.terraformingmarscompanionapp.webSocket.UserActions;
+import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
 
 import java.util.ArrayList;
 
@@ -39,8 +40,17 @@ public class GameCreationActivity extends AppCompatActivity
         setContentView(R.layout.activity_game_creation);
 
         //STOMP testaus
-        STOMPHandler.initStomp();
-        STOMPHandler.testStomp();
+        //STOMPHandler.initStomp();
+        //STOMPHandler.testStomp();
+        WebSocketHandler.createWebSocketClient();
+        UserActions.loginUser("Edd1e", "testi_pass");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //UserActions.createGame(false, false, false, false, false, false, false, 0);
+        UserActions.joinGame("Hpofqt");
 
         //textview
         final TextView textview_names = findViewById(R.id.textView);
