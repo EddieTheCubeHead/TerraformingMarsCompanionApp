@@ -7,7 +7,6 @@ import android.os.Bundle;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.ui.main.ResourceDialogActivity;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,14 +50,13 @@ public class InGameUI extends AppCompatActivity {
 
         findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "pitäisi avata resurssienvaihtopopup", Toast.LENGTH_SHORT).show();
-                showPopup();
+                Toast.makeText(getApplicationContext(),
+                        "lisää toiminnallisuus ingameui-luokassa", Toast.LENGTH_SHORT).show();
             }
         });
 
         findViewById(R.id.item_3).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Testausaktiviteetti aloitetaan.", Toast.LENGTH_SHORT).show();
                 startSearchActivity();
             }
         });
@@ -73,12 +71,6 @@ public class InGameUI extends AppCompatActivity {
     private void startSearchActivity()
     {
         Intent intent = new Intent(this, SearchActivity.class);
-        startActivity(intent);
-    }
-
-    private void showPopup()
-    {
-        Intent intent = new Intent(this, ResourceDialogActivity.class);
         startActivity(intent);
     }
 
