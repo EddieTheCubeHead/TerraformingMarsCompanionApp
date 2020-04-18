@@ -178,6 +178,8 @@ public class Game implements Serializable {
         }
         Log.i("Game", "Requirements and cost checks valid");
 
+        Log.i("Game", String.format("Cost packet aquired, money: %d, steel: %d, titanium: %d heat: %d.", resources_to_use.getMoney(), resources_to_use.getSteel(), resources_to_use.getTitanium(), resources_to_use.getHeat()));
+
         //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
 
         player.changeMoney(-resources_to_use.getMoney());
@@ -276,10 +278,24 @@ public class Game implements Serializable {
             money_amount = player.getMoney();
             needed_money = actual_price - money_amount;
 
-            if (card_tags.contains("Space")) {
+            /* Käytettävän teräksen ja titaanin tarkastus toimii seuraavasti:
+             * Jos kortissa on käyttämiseen oikeuttava tägi, katsotaan onko pelaajan
+             * ko. resurssin määrä tarpeeksi suuri maksamaan kortin, huomioiden mahdolliset korteista
+             * saadut arvomuutokset resurssille. Sitten jakojäännöksen avulla poistetaan käytettyä rahaa
+             * niin että resurssin arvoa ei mene hukkaan.
+             *
+             * Jos pelaajan resurssimäärä ei riitä, lisätään kaikki pelaajalta löytyvät resurssit muistiin
+             * ja siirrytään tarkastamaan näiden kanssa seuraavan resurssin riittävyys. */
+            if (card_tags.contains("space")) {
+                Log.i("Game", "Player titanium amount: " + player.getTitanium());
                 if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money) {
-                    titanium_amount = needed_money / (3 + player.getTitaniumValueModifier());
+                    titanium_amount = (needed_money + needed_money % (3 + player.getTitaniumValueModifier())) / (3 + player.getTitaniumValueModifier());
                     money_amount = actual_price - titanium_amount * (3 + player.getTitaniumValueModifier());
+
+                    if (money_amount < 0) {
+                        money_amount = 0;
+                    }
+
                     return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     titanium_amount = player.getTitanium();
@@ -287,14 +303,19 @@ public class Game implements Serializable {
                 }
             }
 
-            if (card_tags.contains("Building")) {
+            if (card_tags.contains("building")) {
+                Log.i("Game", "Player steel amount: " + player.getSteel());
                 if (player.getSteel() * (2 + player.getSteelValueModifier()) >= needed_money) {
-                    steel_amount = needed_money / (2 + player.getSteelValueModifier());
+                    steel_amount = (needed_money + needed_money % (2 + player.getSteelValueModifier())) / (2 + player.getSteelValueModifier());
                     money_amount = actual_price - (steel_amount * (2 + player.getSteelValueModifier()
                                                    + titanium_amount * (3 + player.getTitaniumValueModifier())));
+                    if (money_amount < 0) {
+                        money_amount = 0;
+                    }
+
                     return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
-                    steel_amount = player.getTitanium();
+                    steel_amount = player.getSteel();
                     needed_money -= steel_amount * (2 + player.getSteelValueModifier());
                 }
             }
@@ -306,6 +327,7 @@ public class Game implements Serializable {
             if (player.getHeatIsMoney()) {
                 if (player.getHeat() >= needed_money) {
                     Log.i("Game", "Cost packet created");
+                    heat_amount = needed_money;
                     return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     Log.i("Game", "Invalid funds");
