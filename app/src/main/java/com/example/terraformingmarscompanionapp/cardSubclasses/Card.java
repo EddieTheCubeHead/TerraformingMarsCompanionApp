@@ -7,6 +7,8 @@ import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
 
 import java.util.ArrayList;
 
@@ -169,9 +171,11 @@ public abstract class Card {
     /* Serveri-implementaatiossa on siirrettävä jotenkin kortin pelaamiseen liittyvät päätökset.
      * Onneksi kaikki nämä päätökset ovat kuvattavissa yhdellä kokonaisluvulla. Tarvittaessa
      * kortti voi override:aa tämän funktion, jotta sen pelaaminen muilla pelissä olevilla onnistuu
-     * ilman kortin sisällä tehtävää päätöstä.
+     * ilman kortin sisällä tehtävää päätöstä. Samoin jos kortissa on manuaalisesti toteutettava
+     * resurssi- tai tiilitapahtuma kyseinen tapahtuma saadaan serveriltä eikä UI:sta. playWithMetadata
+     * ottaa arraylistin TileEventteja ja ResourceEventtejä näiden kuvastamiseen.
      */
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data, ArrayList<TileEventPacket> tile_events, ArrayList<ResourceEventPacket> resource_events) {
         Log.i("Card", "Play with metadata called from unsupported card: " + this.name);
         onPlay(player);
     }

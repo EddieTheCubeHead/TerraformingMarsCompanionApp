@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import android.util.Log;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
@@ -160,10 +162,13 @@ public class Game implements Serializable {
 
     //Koko kortin pelaaminen yhdessä funktiossa. Ottaa Card- ja Player -oliot
     public void playCard(Card card, Player player) {
+        Log.i("Game", "Playing card");
         CardCostPacket resources_to_use = checkCardCost(card, player);
         if (resources_to_use == null | !checkCardRequirements(card, player)) {
+            Log.i("Game", "Requirements or cost check invalid");
             return;
         }
+        Log.i("Game", "Requirements and cost checks valid");
 
         //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
 
@@ -203,12 +208,13 @@ public class Game implements Serializable {
                 }
             }, 0, 1000);
         }
-
+        Log.i("Game", "OnPlay called");
         card.onPlay(player);
     }
 
     //Kortin pelaamisen ensimmäinen vaihe. Palautta hinnan CardCost -oliona
     private CardCostPacket checkCardCost(Card card, Player player) {
+        Log.i("Game", "Checking card cost");
         //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
 
         Integer actual_price = card.getPrice();
@@ -254,9 +260,11 @@ public class Game implements Serializable {
             actual_price = 0;
         }
 
+        Log.i("Game", "Actual price for card '" + card.getName() + "' played by player '" + player.getName() + "': " + actual_price);
+
 
         //Mikäli raaka raha ei riitä, ahne algoritmi tarkistamaan voiko korvata muilla resursseilla
-        if (actual_price < player.getMoney()) {
+        if (actual_price > player.getMoney()) {
             money_amount = player.getMoney();
             needed_money = actual_price - money_amount;
 
@@ -289,20 +297,26 @@ public class Game implements Serializable {
 
             if (player.getHeatIsMoney()) {
                 if (player.getHeat() >= needed_money) {
+                    Log.i("Game", "Cost packet created");
                     return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
+                    Log.i("Game", "Invalid funds");
                     return null;
                 }
             }
+            Log.i("Game", "Invalid funds");
             return null;
 
         } else {
+            Log.i("Game", "Cost packet created");
             return new CardCostPacket(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
     }
 
     //Kortin pelaamisen toinen vaihe. Palauttaa totuusarvon, täyttääkö pelaajan nykytilanne kortin vaatimukset.
     private Boolean checkCardRequirements(Card card, Player player) {
+        Log.i("Game", "Checking card requirements");
+
         //Erittäin tylsä if-hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
         //Suosittelen lämpimästi minimoimaan tämän.
         CardRequirements requirements = card.getRequirements();

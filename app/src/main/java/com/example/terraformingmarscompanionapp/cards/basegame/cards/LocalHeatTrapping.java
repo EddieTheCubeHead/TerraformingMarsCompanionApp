@@ -3,6 +3,10 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
+
+import java.util.ArrayList;
 
 public final class LocalHeatTrapping extends Card {
     public LocalHeatTrapping(Game game) {
@@ -28,7 +32,7 @@ public final class LocalHeatTrapping extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data, ArrayList<TileEventPacket> tile_events, ArrayList<ResourceEventPacket> resource_events) {
         player.changeHeat(-5);
         if (data == 0) {
             player.changePlants(4);
