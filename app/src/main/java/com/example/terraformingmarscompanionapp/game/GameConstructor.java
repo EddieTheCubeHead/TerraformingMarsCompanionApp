@@ -2,6 +2,17 @@ package com.example.terraformingmarscompanionapp.game;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cards.basegame.cards.*;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Credicor;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Ecoline;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Helion;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.InterplanetaryCinematics;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Inventrix;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.MiningGuild;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.PhoboLog;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.TharsisRepublic;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.TharsisRepublicSecondEffect;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Thorgate;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.UnitedNationsMarsInitiative;
 
 import java.util.HashMap;
 
@@ -470,8 +481,72 @@ class GameConstructor {
         return preludes;
     }
 
-    HashMap<String, Card> createCorporations() {
+    HashMap<String, Card> createCorporations(Game game,
+                                             boolean corporate_era,
+                                             boolean prelude,
+                                             boolean colonies,
+                                             boolean venus,
+                                             boolean turmoil) {
+
         HashMap<String, Card> corporations = new HashMap<>();
+
+        Card credicor = new Credicor(game);
+        corporations.put(credicor.getName(), credicor);
+
+        Card ecoline = new Ecoline(game);
+        corporations.put(ecoline.getName(), ecoline);
+
+        Card helion = new Helion(game);
+        corporations.put(helion.getName(), helion);
+
+        Card interplanetary_cinematics = new InterplanetaryCinematics(game);
+        corporations.put(interplanetary_cinematics.getName(), interplanetary_cinematics);
+
+        Card inventrix = new Inventrix(game);
+        corporations.put(inventrix.getName(), inventrix);
+
+        Card mining_guild = new MiningGuild(game);
+        corporations.put(mining_guild.getName(), mining_guild);
+
+        Card phobo_log = new PhoboLog(game);
+        corporations.put(phobo_log.getName(), phobo_log);
+
+        Card tharsis_republic = new TharsisRepublic(game);
+        corporations.put(tharsis_republic.getName(), tharsis_republic);
+
+        Card tharsis_republic_second_effect = new TharsisRepublicSecondEffect(game);
+        corporations.put(tharsis_republic_second_effect.getName(), tharsis_republic_second_effect);
+
+        Card thorgate = new Thorgate(game);
+        corporations.put(thorgate.getName(), thorgate);
+
+        Card united_nations_mars_initiative = new UnitedNationsMarsInitiative(game);
+        corporations.put(united_nations_mars_initiative.getName(), united_nations_mars_initiative);
+
+        //Corporate eran kortit:
+        if (corporate_era) {
+            //TODO lisää Corporate eran kortit tähän
+        }
+
+        //Preludin kortit:
+        if (prelude) {
+            //TODO lisää Preludin kortit (ei preludit) tähän
+        }
+
+        //Colonies kortit:
+        if (colonies) {
+            //TODO Lisää Colonies-kortit tähän
+        }
+
+        //Venus kortit:
+        if (venus) {
+            //TODO Lisää Venus-kortit tähän
+        }
+
+        //Turmoil kortit:
+        if (turmoil) {
+            //TODO Lisää Turmoil-korit tähän
+        }
 
         return corporations;
     }

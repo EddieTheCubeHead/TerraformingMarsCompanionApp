@@ -531,7 +531,7 @@ public class TileHandler {
         }
         for (Tile neighbour : getNeighbours(to_place)) {
             if (neighbour != null) {
-                if (neighbour.getPlacedHex().equals("ocean")) {
+                if (neighbour.getPlacedHex() != null && neighbour.getPlacedHex().equals("ocean")) {
                     player.changeMoney(2 + player.getOceanAdjacencyBonusModifier());
                 }
             }

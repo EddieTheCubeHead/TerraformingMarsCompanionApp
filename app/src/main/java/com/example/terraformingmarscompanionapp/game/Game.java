@@ -27,7 +27,7 @@ public class Game implements Serializable {
     //Erityyppiset pakat
     private final HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
-    private final HashMap<String, Card> corporations = new HashMap<>();
+    private final HashMap<String, Card> corporations;
 
     //Simppeli ArrayList pelaajia. Pelaajien tarkempi hallinta ylempänä GameController -luokassa
     private final ArrayList<Player> players = new ArrayList<>();
@@ -50,7 +50,7 @@ public class Game implements Serializable {
     public ArrayList<Player> getPlayers() {return  players;}
     public HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
-    public HashMap<String, Card> getCorporations() {return  corporations;}
+    public HashMap<String, Card> getCorporations() {return corporations;}
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
 
     //EffectCard -rajapinnan korttien haku pakasta UpdateManageria varten
@@ -61,6 +61,13 @@ public class Game implements Serializable {
                 effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
             }
         }
+
+        for (Map.Entry<String, Card> entry : corporations.entrySet()) {
+            if (entry.getValue() instanceof EffectCard) {
+                effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
+            }
+        }
+
         return effect_cards;
     }
 
@@ -111,6 +118,7 @@ public class Game implements Serializable {
 
         GameConstructor constructor = new GameConstructor();
         deck = constructor.createDeck(this, corporate_era, prelude, colonies, venus, turmoil);
+        corporations = constructor.createCorporations(this, corporate_era, prelude, colonies, venus, turmoil);
 
         if (prelude) {
             preludes = constructor.createPreludes();
