@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Loan extends Card {
     public Loan(Game game) {
-        super("prelude");
+        super(Type.PRELUDE);
         name = "Loan";
         owner_game = game;
     }

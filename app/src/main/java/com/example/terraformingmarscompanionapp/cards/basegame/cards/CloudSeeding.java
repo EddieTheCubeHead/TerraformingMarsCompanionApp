@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class CloudSeeding extends Card {
     public CloudSeeding(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Cloud seeding";
         price = 11;
         requirements.setMinOceans(3);

@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class IceCapMelting extends Card {
     public IceCapMelting(Game game) {
-        super("red");
+        super(Type.RED);
         name = "Ice cap melting";
         price = 5;
-        tags.add("event");
+        tags.add(Tag.EVENT);
         requirements.setMinTemperature(2);
         owner_game = game;
     }

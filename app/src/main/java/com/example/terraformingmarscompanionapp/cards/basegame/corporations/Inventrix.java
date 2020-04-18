@@ -1,14 +1,15 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Inventrix extends Card {
     public Inventrix(Game game) {
-        super("corporation");
+        super(Type.CORPORATION);
         name = "Inventrix";
-        tags.add("science");
+        tags.add(Tag.SCIENCE);
         owner_game = game;
     }
 

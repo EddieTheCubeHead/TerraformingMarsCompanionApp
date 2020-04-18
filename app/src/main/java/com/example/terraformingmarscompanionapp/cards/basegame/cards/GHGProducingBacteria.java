@@ -4,18 +4,19 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class GHGProducingBacteria extends ResourceCard implements MetadataAction {
     public GHGProducingBacteria(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "GHG producing bacteria";
         price = 8;
-        tags.add("science");
-        tags.add("microbe");
+        tags.add(Tag.SCIENCE);
+        tags.add(Tag.MICROBE);
         requirements.setMinOxygen(4);
-        resource_type = 1;
+        resource_type = ResourceType.MICROBE;
         owner_game = game;
     }
 

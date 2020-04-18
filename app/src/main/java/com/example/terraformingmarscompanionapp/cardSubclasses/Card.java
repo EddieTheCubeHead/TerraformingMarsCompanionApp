@@ -24,7 +24,7 @@ public abstract class Card {
     protected CardRequirements requirements = new CardRequirements();
 
     //Enum kortin tyyppiin
-    protected enum Type {
+    public enum Type {
         GREEN,
         RED,
         BLUE,
@@ -209,6 +209,7 @@ public abstract class Card {
     public final String getName() {return name;}
     public final Player getOwenr() {return owner_player;}
     public final Integer getPrice() {return price;}
+    public final Type getType() {return type;}
     public final ArrayList<Tag> getTags() {return tags;}
     public final CardRequirements getRequirements() {return requirements;}
     public final void resetActionUsed() {action_used = false;}

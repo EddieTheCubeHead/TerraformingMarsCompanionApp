@@ -1,16 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class DomedCrater extends Card {
     public DomedCrater(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Domed crater";
         price = 24;
-        tags.add("building");
-        tags.add("city");
+        tags.add(Tag.BUILDING);
+        tags.add(Tag.CITY);
         requirements.setMaxOxygen(7);
         requirements.setMinEnergyProduction(1);
         victory_points = 1;

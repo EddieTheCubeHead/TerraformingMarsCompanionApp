@@ -2,17 +2,18 @@ package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SecurityFleet extends ResourceCard implements ActionCard {
     public SecurityFleet(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Security fleet";
         price = 12;
-        tags.add("space");
+        tags.add(Tag.SPACE);
         owner_game = game;
-        resource_type = 5;
+        resource_type = ResourceType.UNIQUE;
     }
 
     @Override

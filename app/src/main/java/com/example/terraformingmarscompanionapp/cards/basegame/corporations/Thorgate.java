@@ -1,14 +1,15 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Thorgate extends Card {
     public Thorgate(Game game) {
-        super("corporation");
+        super(Type.CORPORATION);
         name = "Thorgate";
-        tags.add("energy");
+        tags.add(Tag.ENERGY);
         owner_game = game;
     }
 

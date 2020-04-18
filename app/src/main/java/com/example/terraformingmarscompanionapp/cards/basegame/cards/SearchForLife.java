@@ -2,17 +2,18 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SearchForLife extends ResourceCard implements MetadataAction {
     public SearchForLife(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Search for life";
         price = 3;
-        tags.add("science");
+        tags.add(Tag.SCIENCE);
         requirements.setMaxOxygen(6);
-        resource_type = 1;
+        resource_type = ResourceType.MICROBE;
         owner_game = game;
     }
 

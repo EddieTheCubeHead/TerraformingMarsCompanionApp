@@ -2,17 +2,18 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Herbivores extends ResourceCard implements EffectCard {
     public Herbivores(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Herbivores";
         price = 12;
-        tags.add("animal");
+        tags.add(Tag.ANIMAL);
         requirements.setMinOxygen(8);
-        resource_type = 2;
+        resource_type = ResourceType.ANIMAL;
         owner_game = game;
     }
 

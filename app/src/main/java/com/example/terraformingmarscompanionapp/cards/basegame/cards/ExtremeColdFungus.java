@@ -2,14 +2,15 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class ExtremeColdFungus extends Card implements MetadataAction {
     public ExtremeColdFungus(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Extreme-cold fungus";
         price = 13;
-        tags.add("microbe");
+        tags.add(Tag.MICROBE);
         requirements.setMaxTemperature(-10);
         owner_game = game;
     }

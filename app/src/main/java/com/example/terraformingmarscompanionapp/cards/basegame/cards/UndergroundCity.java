@@ -1,16 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class UndergroundCity extends Card {
     public UndergroundCity(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Underground city";
         price = 18;
-        tags.add("city");
-        tags.add("building");
+        tags.add(Tag.CITY);
+        tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(2);
         owner_game = game;
     }

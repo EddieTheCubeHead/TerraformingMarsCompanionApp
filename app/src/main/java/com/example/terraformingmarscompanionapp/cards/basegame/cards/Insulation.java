@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public final class Insulation extends Card {
     public Insulation(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Insulation";
         price = 2;
         owner_game = game;

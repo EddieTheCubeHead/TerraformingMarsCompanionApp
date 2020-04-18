@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
@@ -235,34 +236,34 @@ public class Game implements Serializable {
         Integer plants_amount = 0;
         Integer floaters_amount = 0;
         Integer needed_money;
-        ArrayList<String> card_tags = card.getTags();
+        ArrayList<Tag> card_tags = card.getTags();
 
         //If -tarkistukset tagialennuksille
-        if (!card_tags.contains("Standard project")) {
+        if (card.getType() != Card.Type.STANDARD_PROJECT) {
             actual_price -= player.getCardDiscount();
         }
 
-        if (card_tags.contains("Building")) {
+        if (card_tags.contains(Tag.BUILDING)) {
             actual_price -= player.getBuildingTagDiscount();
         }
 
-        if (card_tags.contains("Space")) {
+        if (card_tags.contains(Tag.SPACE)) {
             actual_price -= player.getSpaceTagDiscount();
         }
 
-        if (card_tags.contains("Earth")) {
+        if (card_tags.contains(Tag.EARTH)) {
             actual_price -= player.getEarthTagDiscount();
         }
 
-        if (card_tags.contains("Science")) {
+        if (card_tags.contains(Tag.SCIENCE)) {
             actual_price -= player.getScienceTagDiscount();
         }
 
-        if (card_tags.contains("Energy")) {
+        if (card_tags.contains(Tag.ENERGY)) {
             actual_price -= player.getEnergyTagDiscount();
         }
 
-        if (card_tags.contains("Venus")) {
+        if (card_tags.contains(Tag.VENUS)) {
             actual_price -= player.getVenusTagDiscount();
         }
 
@@ -286,7 +287,7 @@ public class Game implements Serializable {
              *
              * Jos pelaajan resurssimäärä ei riitä, lisätään kaikki pelaajalta löytyvät resurssit muistiin
              * ja siirrytään tarkastamaan näiden kanssa seuraavan resurssin riittävyys. */
-            if (card_tags.contains("space")) {
+            if (card_tags.contains(Tag.SPACE)) {
                 Log.i("Game", "Player titanium amount: " + player.getTitanium());
                 if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money) {
                     titanium_amount = (needed_money + needed_money % (3 + player.getTitaniumValueModifier())) / (3 + player.getTitaniumValueModifier());
@@ -303,7 +304,7 @@ public class Game implements Serializable {
                 }
             }
 
-            if (card_tags.contains("building")) {
+            if (card_tags.contains(Tag.BUILDING)) {
                 Log.i("Game", "Player steel amount: " + player.getSteel());
                 if (player.getSteel() * (2 + player.getSteelValueModifier()) >= needed_money) {
                     steel_amount = (needed_money + needed_money % (2 + player.getSteelValueModifier())) / (2 + player.getSteelValueModifier());
@@ -414,25 +415,41 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMinMicrobeTags() != null && player.getMicrobeTags() < requirements.getMinMicrobeTags()) {
-            return false;
+            if (player.getMicrobeTags() + unused_jokers > requirements.getMinMicrobeTags()) {
+                unused_jokers -= (requirements.getMinMicrobeTags() - player.getMicrobeTags());
+            } else {
+                return false;
+            }
         }
 
         if (requirements.getMinAnimalTags() != null && player.getAnimalTags() < requirements.getMinAnimalTags()) {
-            return false;
+            if (player.getAnimalTags() + unused_jokers > requirements.getMinAnimalTags()) {
+                unused_jokers -= (requirements.getMinAnimalTags() - player.getAnimalTags());
+            } else {
+                return false;
+            }
         }
 
         if (requirements.getMinEarthTags() != null && player.getEarthTags() < requirements.getMinEarthTags()) {
-            return false;
+            if (player.getEarthTags() + unused_jokers > requirements.getMinEarthTags()) {
+                unused_jokers -= (requirements.getMinEarthTags() - player.getEarthTags());
+            } else {
+                return false;
+            }
         }
 
         if (requirements.getMinEnergyTags() != null && player.getEnergyTags() < requirements.getMinEnergyTags()) {
-            return false;
+            if (player.getEnergyTags() + unused_jokers > requirements.getMinEnergyTags()) {
+                unused_jokers -= (requirements.getMinEnergyTags() - player.getEnergyTags());
+            } else {
+                return false;
+            }
         }
 
         if (requirements.getMinFloaters() != null) {
             int floaters = 0;
             for (ResourceCard resource_card : player.getResourceHolders()) {
-                if (resource_card.getResourceType() == 4) {
+                if (resource_card.getResourceType() == ResourceCard.ResourceType.FLOATER) {
                     floaters += resource_card.getResourceAmount();
                 }
             }
@@ -462,7 +479,10 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMinVenusTags() != null && player.getVenusTags() < requirements.getMinVenusTags()) {
-            return false;
+            if (!(player.getVenusTags() + unused_jokers > requirements.getMinVenusTags())) {
+
+                return false;
+            }
         }
 
         if (requirements.getMinHeat() != null && player.getHeat() < requirements.getMinHeat()) {

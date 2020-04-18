@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class DustSeals extends Card {
     public DustSeals(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Dust seals";
         price = 2;
         requirements.setMaxOxygen(3);

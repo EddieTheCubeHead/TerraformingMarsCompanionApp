@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SoilFactory extends Card {
     public SoilFactory(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Soil factory";
         price = 9;
-        tags.add("building");
+        tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
         victory_points = 1;
         owner_game = game;

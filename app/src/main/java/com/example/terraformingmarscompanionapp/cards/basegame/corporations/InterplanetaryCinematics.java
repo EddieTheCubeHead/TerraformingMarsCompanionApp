@@ -2,14 +2,15 @@ package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class InterplanetaryCinematics extends Card implements EffectCard {
     public InterplanetaryCinematics(Game game) {
-        super("corporation");
+        super(Type.CORPORATION);
         name = "Interplanetary cinematics";
-        tags.add("building");
+        tags.add(Tag.BUILDING);
         owner_game = game;
     }
 

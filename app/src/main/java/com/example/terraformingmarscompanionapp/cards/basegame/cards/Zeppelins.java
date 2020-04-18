@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Zeppelins extends Card {
     public Zeppelins(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Zeppelins";
         price = 13;
         requirements.setMinOxygen(5);

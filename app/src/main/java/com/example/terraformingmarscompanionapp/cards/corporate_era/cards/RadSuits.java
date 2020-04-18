@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class RadSuits extends Card {
     public RadSuits(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Rad-suits";
         price = 6;
         requirements.setMinGlobalCities(2);

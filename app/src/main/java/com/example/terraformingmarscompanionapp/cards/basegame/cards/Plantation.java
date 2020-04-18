@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Plantation extends Card {
     public Plantation(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Plantation";
         price = 15;
-        tags.add("plant");
+        tags.add(Tag.PLANT);
         requirements.setMinScienceTags(2);
         owner_game = game;
     }

@@ -2,15 +2,16 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ArcticAlgae extends Card implements EffectCard {
     public ArcticAlgae(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Arctic algae";
         price = 12;
-        tags.add("plant");
+        tags.add(Tag.PLANT);
         requirements.setMaxTemperature(-12);
         owner_game = game;
     }

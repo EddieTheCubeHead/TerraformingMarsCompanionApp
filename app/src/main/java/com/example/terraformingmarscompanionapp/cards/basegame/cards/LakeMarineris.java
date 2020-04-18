@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class LakeMarineris extends Card {
     public LakeMarineris(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Lake marineris";
         price = 18;
         requirements.setMinTemperature(0);

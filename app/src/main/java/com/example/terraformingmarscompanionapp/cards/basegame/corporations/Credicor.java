@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Credicor extends Card implements EffectCard {
     public Credicor(Game game) {
-        super("corporation");
+        super(Type.CORPORATION);
         name = "Credicor";
         owner_game = game;
     }

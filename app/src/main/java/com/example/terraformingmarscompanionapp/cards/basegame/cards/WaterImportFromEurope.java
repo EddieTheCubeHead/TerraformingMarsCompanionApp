@@ -2,15 +2,16 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class WaterImportFromEurope extends Card implements ActionCard {
     public WaterImportFromEurope(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Water import from europe";
         price = 25;
-        tags.add("space");
-        tags.add("jovian");
+        tags.add(Tag.SPACE);
+        tags.add(Tag.JOVIAN);
         owner_game = game;
     }
 

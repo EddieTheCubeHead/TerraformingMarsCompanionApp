@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
@@ -10,12 +11,12 @@ import java.util.ArrayList;
 
 public final class ImportedHydrogen extends Card {
     public ImportedHydrogen(Game game) {
-        super("red");
+        super(Type.RED);
         name = "Imported hydrogen";
         price = 16;
-        tags.add("earth");
-        tags.add("space");
-        tags.add("event");
+        tags.add(Tag.EARTH);
+        tags.add(Tag.SPACE);
+        tags.add(Tag.EVENT);
         owner_game = game;
     }
 

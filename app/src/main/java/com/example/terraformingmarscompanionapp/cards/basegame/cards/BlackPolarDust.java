@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class BlackPolarDust extends Card {
     public BlackPolarDust(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Black polar dust";
         price = 15;
         owner_game = game;

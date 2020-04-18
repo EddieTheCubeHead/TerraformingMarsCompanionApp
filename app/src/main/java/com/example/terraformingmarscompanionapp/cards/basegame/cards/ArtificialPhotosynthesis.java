@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ArtificialPhotosynthesis extends Card {
     public ArtificialPhotosynthesis(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Artificial photosynthesis";
         price = 12;
-        tags.add("science");
+        tags.add(Tag.SCIENCE);
         owner_game = game;
     }
 

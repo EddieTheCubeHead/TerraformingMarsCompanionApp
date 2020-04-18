@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
@@ -11,10 +12,10 @@ import java.util.ArrayList;
 
 public final class RestrictedArea extends Card implements ActionCard {
     public RestrictedArea(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Restricted area";
         price = 11;
-        tags.add("science");
+        tags.add(Tag.SCIENCE);
         owner_game = game;
     }
 

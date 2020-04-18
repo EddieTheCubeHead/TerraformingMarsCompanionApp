@@ -8,7 +8,7 @@ public abstract class ResourceCard extends Card {
     }
 
     //Enum resurssityypin määrittämiseen
-    protected enum ResourceType {
+    public enum ResourceType {
         MICROBE,
         ANIMAL,
         SCIENCE,

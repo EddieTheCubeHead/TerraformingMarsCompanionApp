@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MicroMills extends Card {
     public MicroMills(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Micro-mills";
         price = 3;
         owner_game = game;

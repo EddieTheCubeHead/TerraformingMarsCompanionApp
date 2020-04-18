@@ -2,17 +2,18 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Ants extends ResourceCard implements ActionCard {
     public Ants(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Ants";
         price = 9;
-        tags.add("microbe");
+        tags.add(Tag.MICROBE);
         requirements.setMinOxygen(4);
-        resource_type = 1;
+        resource_type = ResourceType.MICROBE;
         owner_game = game;
     }
 

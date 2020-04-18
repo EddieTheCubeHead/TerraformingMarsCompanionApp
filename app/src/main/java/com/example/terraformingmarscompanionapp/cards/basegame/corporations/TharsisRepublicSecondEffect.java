@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class TharsisRepublicSecondEffect extends Card implements EffectCard {
     public TharsisRepublicSecondEffect(Game game) {
-        super("ghost");
+        super(Type.GHOST);
         name = "Tharsis republic ghost";
         owner_game = game;
     }

@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class RadChemFactory extends Card {
     public RadChemFactory(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Rad-chem factory";
         price = 8;
-        tags.add("building");
+        tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
         owner_game = game;
     }

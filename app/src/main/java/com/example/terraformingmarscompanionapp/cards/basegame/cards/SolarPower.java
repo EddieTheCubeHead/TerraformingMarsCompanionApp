@@ -1,16 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SolarPower extends Card {
     public SolarPower(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Solar power";
         price = 11;
-        tags.add("energy");
-        tags.add("building");
+        tags.add(Tag.ENERGY);
+        tags.add(Tag.BUILDING);
         victory_points = 1;
         owner_game = game;
     }
