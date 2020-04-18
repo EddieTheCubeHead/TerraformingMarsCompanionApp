@@ -3,15 +3,25 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public abstract class ResourceCard extends Card {
-    public ResourceCard(String type) {
+    public ResourceCard(Type type) {
         super(type);
     }
 
-    protected Integer resource_type = 0;
+    //Enum resurssityypin määrittämiseen
+    protected enum ResourceType {
+        MICROBE,
+        ANIMAL,
+        SCIENCE,
+        FLOATER,
+        PET,
+        UNIQUE
+    }
+
+    protected ResourceType resource_type;
     protected Integer resource_amount = 0;
     //0: tyhjä, 1: mikrobi, 2: eläin, 3: tiede, 4: floater, 5: uniikki, 6: lemmikki
 
-    public final Integer getResourceType() {return resource_type;}
+    public final ResourceType getResourceType() {return resource_type;}
     public final Integer getResourceAmount() {return resource_amount;}
 
     public final boolean changeResourceAmount(Integer change_amount) {

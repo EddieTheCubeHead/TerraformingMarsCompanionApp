@@ -17,11 +17,23 @@ public abstract class Card {
     protected String name = "ABSTRACT_BASE_CARD";
     protected Integer price = 0;
     protected Integer victory_points = 0;
-    private String type; //green, red, blue, corporation, prelude, standard, other ja ghost. Käytetään super.onPlayssa
+    private Type type;
     protected Boolean action_used = false;
     protected Player owner_player = null; //Omistava pelaaja, null jos pelaamaton
-    protected ArrayList<String> tags = new ArrayList<>();
+    protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
+
+    //Enum kortin tyyppiin
+    protected enum Type {
+        GREEN,
+        RED,
+        BLUE,
+        CORPORATION,
+        PRELUDE,
+        STANDARD_PROJECT,
+        OTHER,
+        GHOST
+    }
 
     //Käytetään serverin kanssa pelatessa ilmoittamaan serverille tarvittavat lisätiedot yhdessä
     //sendWaitInformation(Boolean action) -funktion kanssa
@@ -32,27 +44,27 @@ public abstract class Card {
     protected Integer wait_action_metadata = 0;
     protected Integer wait_action_resource_event = 0;
 
-    public Card(String card_type) {
+    public Card(Type card_type) {
         type = card_type;
     }
 
     public void onPlay (Player player) {
         owner_player = player;
 
-        boolean is_event = (type.equals("red"));
+        boolean is_event = (type == Type.RED);
 
         //Lisätään pelaajalle tägit ja aktivoidaan sopivat triggerit updateManagerissa
-        for (String tag : tags)
+        for (Tag tag : tags)
         {
             switch (tag)
             {
-                case "building":
+                case BUILDING:
                     if (!is_event) {
                         player.addBuildingTag();
                     }
                     break;
 
-                case "space":
+                case SPACE:
                     if (!is_event) {
                         player.addSpaceTag();
                     } else {
@@ -60,107 +72,107 @@ public abstract class Card {
                     }
                     break;
 
-                case "earth":
+                case EARTH:
                     if (!is_event) {
                         player.addEarthTag();
                     }
                     owner_game.update_manager.onEarthTag(player);
                     break;
 
-                case "city":
+                case CITY:
                     if (!is_event) {
                         player.addCityTag();
                     }
                     break;
 
-                case "plant":
+                case PLANT:
                     if (!is_event) {
                         player.addPlantTag();
                     }
                     owner_game.update_manager.onPlantTag(player);
                     break;
 
-                case "microbe":
+                case MICROBE:
                     if (!is_event) {
                         player.addMicrobeTag();
                     }
                     owner_game.update_manager.onMicrobeTag(player);
                     break;
 
-                case "science":
+                case SCIENCE:
                     if (!is_event) {
                         player.addScienceTag();
                     }
                     owner_game.update_manager.onScienceTag(player);
                     break;
 
-                case "energy":
+                case ENERGY:
                     if (!is_event) {
                         player.addEnergyTag();
                     }
                     break;
 
-                case "jovian":
+                case JOVIAN:
                     if (!is_event) {
                         player.addJovianTag();
                     }
                     owner_game.update_manager.onJovianTag(player);
                     break;
 
-                case "venus":
+                case VENUS:
                     if (!is_event) {
                         player.addVenusTag();
                     }
                     break;
 
-                case "animal":
+                case ANIMAL:
                     if (!is_event) {
                         player.addAnimalTag();
                     }
                     owner_game.update_manager.onAnimalTag(player);
                     break;
 
-                case "joker":
+                case JOKER:
                     //Jokereita ei ole event-korteissa, joten checkin voi jättää pois
                     player.addJokerTag();
                     break;
 
-                case "event":
+                case EVENT:
                     player.addEventTag();
                     owner_game.update_manager.onEventPlayed(player);
                     break;
                 default:
-                    System.out.println("Tag typo in card " + getName());
+                    System.out.println("Tag error in card " + getName());
             }
         }
 
 
-        if (tags.size() == 0 && !type.equals("ghost")) {
+        if (tags.size() == 0 && type != Type.GHOST ) {
             player.addNullTag();
         }
 
         switch (type) {
-            case "green":
+            case GREEN:
                 player.addGreen(this);
                 break;
-            case "red":
+            case RED:
                 player.addRed(this);
                 break;
-            case "blue":
+            case BLUE:
                 player.addBlue(this);
                 break;
-            case "corporation":
+            case CORPORATION:
                 player.setCorporation(this);
                 break;
-            case "prelude":
+            case PRELUDE:
                 player.addPrelude(this);
                 break;
-            case "ghost":
-            case "standard":
-            case "other":
+            case GHOST:
+            case STANDARD_PROJECT:
+            case OTHER:
                 break;
             default:
-                Log.i("Card","Type typo in card " + getName());
+                Log.i("Card","Type error in card " + getName());
         }
 
         if (this instanceof ActionCard) {
@@ -197,33 +209,33 @@ public abstract class Card {
     public final String getName() {return name;}
     public final Player getOwenr() {return owner_player;}
     public final Integer getPrice() {return price;}
-    public final ArrayList<String> getTags() {return tags;}
+    public final ArrayList<Tag> getTags() {return tags;}
     public final CardRequirements getRequirements() {return requirements;}
     public final void resetActionUsed() {action_used = false;}
 
     public final ArrayList<Integer> getTagIntegers() {
         ArrayList<Integer> tag_integers = new ArrayList<>();
 
-        for (String tag : tags)
+        for (Tag tag : tags)
         {
             //TODO Aleksanteri: luvut kuntoon
             //toimii myös R.drawable.joku
             //tällä hetkellä placeholderikoni
             switch (tag)
             {
-            case "building":    tag_integers.add(R.drawable.ic_ph); break;
-            case "space":       tag_integers.add(R.drawable.ic_ph); break;
-            case "earth":       tag_integers.add(R.drawable.ic_ph); break;
-            case "city":        tag_integers.add(R.drawable.ic_ph); break;
-            case "plant":       tag_integers.add(R.drawable.ic_ph); break;
-            case "microbe":     tag_integers.add(R.drawable.ic_ph); break;
-            case "science":     tag_integers.add(R.drawable.ic_ph); break;
-            case "energy":      tag_integers.add(R.drawable.ic_ph); break;
-            case "jovian":      tag_integers.add(R.drawable.ic_ph); break;
-            case "venus":       tag_integers.add(R.drawable.ic_ph); break;
-            case "animal":      tag_integers.add(R.drawable.ic_ph); break;
-            case "event":       tag_integers.add(R.drawable.ic_ph); break;
-            case "joker":       tag_integers.add(R.drawable.ic_ph); break;
+                case BUILDING:    tag_integers.add(R.drawable.ic_ph); break;
+                case SPACE:       tag_integers.add(R.drawable.ic_ph); break;
+                case EARTH:       tag_integers.add(R.drawable.ic_ph); break;
+                case CITY:        tag_integers.add(R.drawable.ic_ph); break;
+                case PLANT:       tag_integers.add(R.drawable.ic_ph); break;
+                case MICROBE:     tag_integers.add(R.drawable.ic_ph); break;
+                case SCIENCE:     tag_integers.add(R.drawable.ic_ph); break;
+                case ENERGY:      tag_integers.add(R.drawable.ic_ph); break;
+                case JOVIAN:      tag_integers.add(R.drawable.ic_ph); break;
+                case VENUS:       tag_integers.add(R.drawable.ic_ph); break;
+                case ANIMAL:      tag_integers.add(R.drawable.ic_ph); break;
+                case EVENT:       tag_integers.add(R.drawable.ic_ph); break;
+                case JOKER:       tag_integers.add(R.drawable.ic_ph); break;
             }
         }
         return tag_integers;
