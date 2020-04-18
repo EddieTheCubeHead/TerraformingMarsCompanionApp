@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cards.prelude;
+package com.example.terraformingmarscompanionapp.cards.prelude.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;

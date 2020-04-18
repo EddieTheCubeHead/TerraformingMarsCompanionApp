@@ -1,5 +1,5 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
-public interface MetadataEvent extends EffectCard {
+public interface MetadataEffect extends EffectCard {
     void effectWithMetadata(Integer data);
 }

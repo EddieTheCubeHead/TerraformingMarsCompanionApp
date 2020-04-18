@@ -181,7 +181,7 @@ public abstract class Card {
     }
 
     //Lähettää serverille ilmoituksen, että serverin täytyy odottaa lisää paketteja
-    public void updateWaitInformation(CardEventPacket event) {
+    public final void updateWaitInformation(CardEventPacket event) {
         if (event.getIsAction()) {
             event.setMetadata(wait_action_metadata);
             event.setResourceEvents(wait_action_resource_event);

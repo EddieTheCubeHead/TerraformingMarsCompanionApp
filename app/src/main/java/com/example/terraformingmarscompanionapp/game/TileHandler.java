@@ -513,6 +513,16 @@ public class TileHandler {
         return placeTile(player, placing_tile, "nuclear_zone");
     }
 
+    public Boolean placeRestrictedArea(Player player) {
+        Tile placing_tile = getCoordinatesFromPlayer("restricted_area");
+
+        if (placing_tile.getIsOcean()) {
+            return false;
+        }
+
+        return placeTile(player, placing_tile, "restricted_area");
+    }
+
     private Boolean placeTile(Player player, Tile to_place, String tile_type) {
 
         //Erikoiskäsittely peruskartan noctis-city -tiilelle
