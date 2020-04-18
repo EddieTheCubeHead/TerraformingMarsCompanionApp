@@ -19,7 +19,6 @@ public abstract class ResourceCard extends Card {
 
     protected ResourceType resource_type;
     protected Integer resource_amount = 0;
-    //0: tyhjä, 1: mikrobi, 2: eläin, 3: tiede, 4: floater, 5: uniikki, 6: lemmikki
 
     public final ResourceType getResourceType() {return resource_type;}
     public final Integer getResourceAmount() {return resource_amount;}
