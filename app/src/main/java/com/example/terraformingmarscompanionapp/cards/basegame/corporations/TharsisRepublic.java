@@ -17,7 +17,7 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
 
     @Override
     public Integer onPlay(Player player) {
-        owner_game.playCard(owner_game.getDeck().get("Tharsis republic ghost"), player);
+        owner_game.initializePlayCard(owner_game.getDeck().get("Tharsis republic ghost"), player);
         player.changeMoney(40);
         return super.onPlay(player);
     }

@@ -71,7 +71,7 @@ public class GameController
 
     public void playCard(com.example.terraformingmarscompanionapp.cardSubclasses.Card card)
     {
-        game.playCard(card, current_player);
+        game.initializePlayCard(card, current_player);
     }
 
     //vuorojen hallitseminen
