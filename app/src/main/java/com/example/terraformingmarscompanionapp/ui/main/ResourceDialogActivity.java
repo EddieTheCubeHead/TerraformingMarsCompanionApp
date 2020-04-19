@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,6 +22,11 @@ public class ResourceDialogActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource_dialog);
+
+        //läpinäkyvä tausta
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        System.out.println("POPUP OPENED");
 
         findViewById(R.id.resource_confirm_button).setOnClickListener(new View.OnClickListener() {
             @Override
