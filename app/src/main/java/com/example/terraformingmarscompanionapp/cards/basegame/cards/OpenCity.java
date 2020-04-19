@@ -19,7 +19,7 @@ public final class OpenCity extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.update_manager.onVpCardPlayed(player);
         while (true) {
             if (owner_game.tile_handler.placeCity(player)) {
@@ -32,6 +32,6 @@ public final class OpenCity extends Card {
         player.changeMoneyProduction(4);
         player.changePlants(2);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

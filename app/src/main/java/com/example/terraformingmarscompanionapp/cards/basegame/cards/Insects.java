@@ -16,8 +16,8 @@ public final class Insects extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changePlantsProduction(player.getPlantTags());
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

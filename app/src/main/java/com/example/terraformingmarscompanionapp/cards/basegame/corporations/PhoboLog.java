@@ -14,10 +14,10 @@ public final class PhoboLog extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeTitaniumValueModifier(1);
         player.changeMoney(23);
         player.changeTitanium(10);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

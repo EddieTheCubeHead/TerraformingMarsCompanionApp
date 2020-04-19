@@ -15,11 +15,9 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
     }
 
     @Override
-    public void onPlay(Player player) {
-        player.addEarthTag();
+    public Integer onPlay(Player player) {
         player.changeMoney(40);
-        player.setCorporation(this);
-        owner_player = player;
+        return super.onPlay(player);
     }
 
     @Override

@@ -18,7 +18,7 @@ public final class CupolaCity extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeCity(player)) {
                 break;
@@ -29,6 +29,6 @@ public final class CupolaCity extends Card {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

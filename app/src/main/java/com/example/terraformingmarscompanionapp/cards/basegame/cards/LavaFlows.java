@@ -15,7 +15,7 @@ public final class LavaFlows extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeLavaFlow(player)) {
                 break;
@@ -25,6 +25,6 @@ public final class LavaFlows extends Card {
         }
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

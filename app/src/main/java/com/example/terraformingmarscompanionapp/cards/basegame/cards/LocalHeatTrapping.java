@@ -20,7 +20,7 @@ public final class LocalHeatTrapping extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeHeat(-5);
         boolean added_animals = true;
         //TODO UI kysy kasvien vai eläinten lisäys, jos eläimet, minne?
@@ -29,7 +29,7 @@ public final class LocalHeatTrapping extends Card {
         } else {
             player.changePlants(4);
         }
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

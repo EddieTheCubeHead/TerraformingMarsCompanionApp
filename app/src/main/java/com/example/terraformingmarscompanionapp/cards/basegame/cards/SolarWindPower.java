@@ -17,9 +17,9 @@ public final class SolarWindPower extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(1);
         player.changeTitanium(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

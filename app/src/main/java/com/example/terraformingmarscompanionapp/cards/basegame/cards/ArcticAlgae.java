@@ -17,9 +17,9 @@ public final class ArcticAlgae extends Card implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changePlants(1);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

@@ -16,7 +16,7 @@ public final class ProtectedValley extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOceanGreenery(player)) {
                 break;
@@ -26,6 +26,6 @@ public final class ProtectedValley extends Card {
         }
         player.changeMoneyProduction(2);
         player.addGreenery();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

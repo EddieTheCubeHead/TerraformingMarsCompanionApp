@@ -15,8 +15,8 @@ public final class PowerGrid extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(player.getEnergyTags());
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

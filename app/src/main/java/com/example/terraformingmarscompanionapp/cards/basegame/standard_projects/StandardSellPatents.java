@@ -11,10 +11,11 @@ public final class StandardSellPatents extends StandardProject {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         Integer cards_sold = 1;
         //TODO UI kysy montako korttia myytiin
         player.changeMoney(cards_sold);
         player.changeHandSize(-cards_sold);
+        return cards_sold;
     }
 }

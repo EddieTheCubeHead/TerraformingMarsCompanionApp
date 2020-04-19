@@ -16,10 +16,10 @@ public final class Asteroid extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.raiseTemperature(player);
         player.changeTitanium(2);
         //TODO poista toiselta 3 kasvia
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class NitriteReducingBacteria extends ResourceCard implements MetadataAction {
     public NitriteReducingBacteria(Game game) {
@@ -13,6 +14,12 @@ public final class NitriteReducingBacteria extends ResourceCard implements Metad
         tags.add(Tag.MICROBE);
         resource_type = ResourceType.MICROBE;
         owner_game = game;
+    }
+
+    @Override
+    public Integer onPlay(Player player) {
+        resource_amount += 3;
+        return super.onPlay(player);
     }
 
     @Override
@@ -26,6 +33,7 @@ public final class NitriteReducingBacteria extends ResourceCard implements Metad
                 resource_amount++;
             } else if (resource_amount < 3) {
                 resource_amount -= 3;
+                owner_player.changeTerraformingRating(1);
             } else {
                 return false;
             }

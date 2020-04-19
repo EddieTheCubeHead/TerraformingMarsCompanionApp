@@ -18,9 +18,9 @@ public final class Ants extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player) {
-        super.onPlay(player);
+    public Integer onPlay(Player player) {
         owner_game.update_manager.onVpCardPlayed(player);
+        return super.onPlay(player);
     }
 
     @Override

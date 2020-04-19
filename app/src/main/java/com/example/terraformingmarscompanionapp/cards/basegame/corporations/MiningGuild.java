@@ -16,14 +16,11 @@ public final class MiningGuild extends Card implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addBuildingTag();
+    public Integer onPlay(Player player) {
         player.changeMoney(30);
         player.changeSteel(5);
         player.changeSteelProduction(1);
-        player.setCorporation(this);
-        owner_player = player;
+        return super.onPlay(player);
     }
 
     @Override

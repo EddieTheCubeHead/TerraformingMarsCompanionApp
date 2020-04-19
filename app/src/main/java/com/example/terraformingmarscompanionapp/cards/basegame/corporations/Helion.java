@@ -14,10 +14,10 @@ public final class Helion extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoney(42);
         player.changeHeatProduction(3);
         player.setHeatIsMoney(true);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

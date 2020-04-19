@@ -19,7 +19,7 @@ public final class EcologicalZone extends ResourceCard implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeEcologicalZone(player)) {
                 break;
@@ -29,7 +29,7 @@ public final class EcologicalZone extends ResourceCard implements EffectCard {
         }
 
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

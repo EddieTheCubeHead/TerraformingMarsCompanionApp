@@ -18,11 +18,11 @@ public final class Shuttles extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeSpaceTagDiscount(2);
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

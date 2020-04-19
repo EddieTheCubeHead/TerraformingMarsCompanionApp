@@ -17,7 +17,7 @@ public final class Mangrove extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOceanGreenery(player)) {
                 break;
@@ -27,6 +27,6 @@ public final class Mangrove extends Card {
         }
         owner_game.update_manager.onVpCardPlayed(player);
         player.addGreenery();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

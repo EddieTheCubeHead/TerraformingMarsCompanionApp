@@ -11,6 +11,7 @@ import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.TurnActionInfoPacket;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class Game implements Serializable {
      * lisäksi packet kertoo mitä kaikkea muuta lähetetään perässä. Nämä mahdolliset perässälähetettävät toiminnot
      * säilytetään vuoron ajan listoissa. CardEventPacket ja ResourceEventPacket luodaan tarvittaessa erikseen.
      */
+    private TurnActionInfoPacket turn_actions;
+    private CardEventPacket card_event;
     private ArrayList<ResourceEventPacket> resource_events = new ArrayList<>();
     private ArrayList<TileEventPacket> tile_events = new ArrayList<>();
 
@@ -190,8 +193,12 @@ public class Game implements Serializable {
 
         //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
 
+        Log.i("Game", "OnPlay called");
+        Integer metadata = card.onPlay(player);
+
         if (server_multiplayer) {
-            CardEventPacket card_event = new CardEventPacket(card.getName(), player.getName(), false);
+            card_event = new CardEventPacket(card.getName(), player.getName(), metadata);
+            turn_actions = card.playWaitInformation();
 
             Timer timer = new Timer();
 
@@ -199,28 +206,23 @@ public class Game implements Serializable {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (card_event.getResourceEventAmount() == resource_events.size() &&
-                        card_event.getTileEventAmount() == tile_events.size()) {
+                    if (turn_actions.getResourceEventCount() == resource_events.size() &&
+                        turn_actions.getTileEventCount() == tile_events.size()) {
+                        GameActions.sendTurnInfo(turn_actions);
                         GameActions.sendCardEvent(card_event);
                         GameActions.sendCardCost(resources_to_use);
-                        if (tile_events.size() != 0) {
-                            for (TileEventPacket tile_event : tile_events) {
-                                GameActions.sendTileEvent(tile_event);
-                            }
-                            tile_events.clear();
+                        for (TileEventPacket tile_event : tile_events) {
+                            GameActions.sendTileEvent(tile_event);
                         }
-                        if (resource_events.size() != 0) {
-                            for (ResourceEventPacket resource_event : resource_events) {
-                                GameActions.sendResourceEvent(resource_event);
-                            }
+                        tile_events.clear();
+                        for (ResourceEventPacket resource_event : resource_events) {
+                            GameActions.sendResourceEvent(resource_event);
                         }
                         timer.cancel();
                     }
                 }
             }, 0, 1000);
         }
-        Log.i("Game", "OnPlay called");
-        card.onPlay(player);
     }
 
     //Kortin pelaamisen ensimmäinen vaihe. Palautta hinnan CardCost -oliona
@@ -274,7 +276,7 @@ public class Game implements Serializable {
         Log.i("Game", "Actual price for card '" + card.getName() + "' played by player '" + player.getName() + "': " + actual_price);
 
 
-        //Mikäli raaka raha ei riitä, ahne algoritmi tarkistamaan voiko korvata muilla resursseilla
+        //Mikäli raaka raha ei riitä, tarkistetaan voiko korvata muilla resursseilla
         if (actual_price > player.getMoney()) {
             money_amount = player.getMoney();
             needed_money = actual_price - money_amount;

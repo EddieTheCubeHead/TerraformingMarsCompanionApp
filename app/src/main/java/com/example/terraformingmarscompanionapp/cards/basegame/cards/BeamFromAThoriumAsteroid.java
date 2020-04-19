@@ -19,10 +19,10 @@ public final class BeamFromAThoriumAsteroid extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.update_manager.onVpCardPlayed(player);
         player.changeHeatProduction(3);
         player.changeEnergyProduction(3);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

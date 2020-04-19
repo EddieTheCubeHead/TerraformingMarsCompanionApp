@@ -16,7 +16,7 @@ public final class ConvoyFromEurope extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -25,7 +25,8 @@ public final class ConvoyFromEurope extends Card {
             }
         }
         //TODO prompti yhden kortin nostoon
+        player.changeHandSize(1);
 
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

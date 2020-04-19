@@ -15,8 +15,8 @@ public final class EnergySaving extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(owner_game.getCitiesOnMars() + owner_game.getCitiesInSpace());
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

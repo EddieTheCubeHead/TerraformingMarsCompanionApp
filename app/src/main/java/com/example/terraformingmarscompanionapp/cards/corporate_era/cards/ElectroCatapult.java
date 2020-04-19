@@ -19,10 +19,10 @@ public final class ElectroCatapult extends Card implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(-1);
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     public boolean cardAction() {

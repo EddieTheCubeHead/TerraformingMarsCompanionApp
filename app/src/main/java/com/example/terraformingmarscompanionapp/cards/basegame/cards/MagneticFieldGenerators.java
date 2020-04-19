@@ -16,10 +16,10 @@ public final class MagneticFieldGenerators extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(-4);
         player.changePlantsProduction(2);
         player.changeTerraformingRating(3);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

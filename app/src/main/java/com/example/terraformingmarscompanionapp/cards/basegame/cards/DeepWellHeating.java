@@ -16,9 +16,9 @@ public final class DeepWellHeating extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(1);
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

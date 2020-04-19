@@ -21,7 +21,7 @@ public final class ImportedHydrogen extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -30,7 +30,7 @@ public final class ImportedHydrogen extends Card {
             }
         }
         //TODO kasvin, mikrobin tai eläimen lisäys
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

@@ -19,7 +19,7 @@ public final class DomedCrater extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeCity(player)) {
                 break;
@@ -33,6 +33,6 @@ public final class DomedCrater extends Card {
         player.changeMoneyProduction(3);
         owner_game.update_manager.onVpCardPlayed(player);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

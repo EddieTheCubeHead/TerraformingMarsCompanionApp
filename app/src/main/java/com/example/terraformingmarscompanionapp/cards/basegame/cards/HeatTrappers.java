@@ -17,9 +17,9 @@ public final class HeatTrappers extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         //TODO poista toiselta kaksi lämpöä
         player.changeEnergyProduction(1);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

@@ -15,7 +15,7 @@ public final class MoholeArea extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeMohole(player)) {
                 break;
@@ -24,6 +24,6 @@ public final class MoholeArea extends Card {
             }
         }
         player.changeHeatProduction(4);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

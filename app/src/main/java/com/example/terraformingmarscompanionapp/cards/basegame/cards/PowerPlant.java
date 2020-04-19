@@ -16,8 +16,8 @@ public final class PowerPlant extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(1);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

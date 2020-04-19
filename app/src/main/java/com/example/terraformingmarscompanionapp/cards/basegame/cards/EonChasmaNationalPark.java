@@ -18,10 +18,10 @@ public final class EonChasmaNationalPark extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changePlants(3);
         player.changeMoneyProduction(2);
         //TODO lisää eläin toiselle kortille
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

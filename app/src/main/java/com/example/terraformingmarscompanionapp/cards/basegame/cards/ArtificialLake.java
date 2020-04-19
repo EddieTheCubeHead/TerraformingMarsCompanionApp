@@ -17,7 +17,7 @@ public final class ArtificialLake extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeLandOcean(player)) {
                 break;
@@ -26,7 +26,6 @@ public final class ArtificialLake extends Card {
             }
         }
         owner_game.update_manager.onVpCardPlayed(player);
-
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

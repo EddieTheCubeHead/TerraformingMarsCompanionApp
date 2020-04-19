@@ -17,7 +17,7 @@ public final class NoctisCity extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeNoctis(player)) {
                 break;
@@ -28,6 +28,6 @@ public final class NoctisCity extends Card {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

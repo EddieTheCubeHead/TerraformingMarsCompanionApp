@@ -19,10 +19,10 @@ public final class Livestock extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changePlantsProduction(-1);
         player.changeMoneyProduction(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

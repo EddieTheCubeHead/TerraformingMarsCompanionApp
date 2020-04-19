@@ -4,7 +4,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Steelworks extends Card implements ActionCard {
     public Steelworks(Game game) {
@@ -13,13 +12,6 @@ public final class Steelworks extends Card implements ActionCard {
         price = 15;
         tags.add(Tag.BUILDING);
         owner_game = game;
-    }
-
-    @Override
-    public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addAction(this);
-        owner_player = player;
     }
 
     @Override

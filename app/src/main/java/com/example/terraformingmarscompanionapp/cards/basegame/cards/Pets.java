@@ -18,9 +18,9 @@ public final class Pets extends ResourceCard implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         resource_amount++;
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

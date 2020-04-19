@@ -16,8 +16,8 @@ public final class GeothermalPower extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

@@ -14,10 +14,10 @@ public final class CloudSeeding extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoneyProduction(-1);
         //TODO poista toiselta pelaajalta lämmöntuotanto
         player.changePlantsProduction(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

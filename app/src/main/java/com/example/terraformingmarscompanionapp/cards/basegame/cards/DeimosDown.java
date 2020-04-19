@@ -16,12 +16,12 @@ public final class DeimosDown extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeSteel(4);
         //TODO vähennä 8 kasvia
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

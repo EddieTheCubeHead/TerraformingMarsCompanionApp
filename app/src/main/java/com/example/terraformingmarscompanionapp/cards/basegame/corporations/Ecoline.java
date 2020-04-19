@@ -14,11 +14,11 @@ public final class Ecoline extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeGreeneryPlantCostModifier(1);
         player.changePlantsProduction(2);
         player.changePlants(3);
         player.changeMoney(36);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

@@ -18,9 +18,9 @@ public final class SearchForLife extends ResourceCard implements MetadataAction 
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

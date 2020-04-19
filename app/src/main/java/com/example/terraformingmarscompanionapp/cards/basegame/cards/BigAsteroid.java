@@ -16,11 +16,11 @@ public final class BigAsteroid extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
         player.changeTitanium(4);
         //TODO poista 4 kasvia muilta
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

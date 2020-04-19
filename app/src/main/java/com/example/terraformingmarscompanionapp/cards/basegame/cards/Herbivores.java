@@ -18,10 +18,10 @@ public final class Herbivores extends ResourceCard implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         //TODO poista toiselta pelaajalta yksi kasvintuotanto
         resource_amount++;
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

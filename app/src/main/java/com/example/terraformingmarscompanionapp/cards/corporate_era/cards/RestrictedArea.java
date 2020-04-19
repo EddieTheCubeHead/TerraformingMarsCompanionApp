@@ -20,7 +20,7 @@ public final class RestrictedArea extends Card implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeRestrictedArea(player)) {
                 break;
@@ -28,7 +28,7 @@ public final class RestrictedArea extends Card implements ActionCard {
                 //TODO UI feedback ja prompti haluaako keskeyttää asettamisen
             }
         }
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

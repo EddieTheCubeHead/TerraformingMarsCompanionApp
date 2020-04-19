@@ -4,7 +4,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class WaterSplittingPlant extends Card implements ActionCard {
     public WaterSplittingPlant(Game game) {
@@ -14,13 +13,6 @@ public final class WaterSplittingPlant extends Card implements ActionCard {
         tags.add(Tag.BUILDING);
         requirements.setMinOceans(2);
         owner_game = game;
-    }
-
-    @Override
-    public void onPlay(Player player) {
-        player.addBuildingTag();
-        player.addAction(this);
-        owner_player = player;
     }
 
     @Override

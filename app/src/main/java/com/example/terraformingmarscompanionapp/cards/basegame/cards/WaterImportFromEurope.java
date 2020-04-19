@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class WaterImportFromEurope extends Card implements ActionCard {
     public WaterImportFromEurope(Game game) {
@@ -13,6 +14,12 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
         tags.add(Tag.SPACE);
         tags.add(Tag.JOVIAN);
         owner_game = game;
+    }
+
+    @Override
+    public Integer onPlay(Player player) {
+        owner_game.update_manager.onVpCardPlayed(player);
+        return super.onPlay(player);
     }
 
     @Override

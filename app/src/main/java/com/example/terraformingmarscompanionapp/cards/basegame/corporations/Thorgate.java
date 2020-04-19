@@ -14,10 +14,10 @@ public final class Thorgate extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoney(48);
         player.changeEnergyProduction(1);
         player.changeEnergyTagDiscount(3);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

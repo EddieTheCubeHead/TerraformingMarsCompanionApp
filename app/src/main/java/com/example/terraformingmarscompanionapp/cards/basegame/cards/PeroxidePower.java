@@ -16,9 +16,9 @@ public final class PeroxidePower extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoneyProduction(-1);
         player.changeEnergyProduction(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

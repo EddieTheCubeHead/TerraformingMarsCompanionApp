@@ -16,7 +16,7 @@ public final class Plantation extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeGreenery(player)) {
                 break;
@@ -25,6 +25,6 @@ public final class Plantation extends Card {
             }
         }
         player.addGreenery();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

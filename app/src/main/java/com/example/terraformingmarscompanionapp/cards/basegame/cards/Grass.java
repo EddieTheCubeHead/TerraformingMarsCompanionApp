@@ -16,9 +16,9 @@ public final class Grass extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changePlantsProduction(1);
         player.changePlants(3);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

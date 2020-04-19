@@ -17,9 +17,9 @@ public final class NitrophilicMoss extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changePlants(-2);
         player.changePlantsProduction(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

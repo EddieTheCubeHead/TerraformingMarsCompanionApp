@@ -17,10 +17,10 @@ public final class ImportedNitrogen extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeTerraformingRating(1);
         player.changePlants(4);
         //TODO lisää 3 mikrobia ja kaksi eläintä
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

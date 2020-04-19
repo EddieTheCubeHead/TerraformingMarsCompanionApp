@@ -6,7 +6,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class GHGProducingBacteria extends ResourceCard implements MetadataAction {
     public GHGProducingBacteria(Game game) {
@@ -18,14 +17,6 @@ public final class GHGProducingBacteria extends ResourceCard implements Metadata
         requirements.setMinOxygen(4);
         resource_type = ResourceType.MICROBE;
         owner_game = game;
-    }
-
-    @Override
-    public void onPlay(Player player) {
-        player.addScienceTag();
-        player.addMicrobeTag();
-        player.addAction(this);
-        owner_player = player;
     }
 
     @Override

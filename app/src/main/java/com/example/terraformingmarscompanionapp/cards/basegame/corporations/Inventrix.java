@@ -14,10 +14,11 @@ public final class Inventrix extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoney(45);
         player.changeBaseTrRequirementDiscount(2);
         //TODO UI-prompt ota kolme korttia
-        super.onPlay(player);
+        player.changeHandSize(3);
+        return super.onPlay(player);
     }
 }

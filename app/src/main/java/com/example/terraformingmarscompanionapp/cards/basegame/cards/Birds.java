@@ -18,10 +18,10 @@ public final class Birds extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         //TODO vie toiselta 2 kasvintuotantoa
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

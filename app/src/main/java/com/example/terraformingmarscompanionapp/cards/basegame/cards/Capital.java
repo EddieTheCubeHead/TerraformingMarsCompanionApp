@@ -18,7 +18,7 @@ public final class Capital extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeCapital(player)) {
                 break;
@@ -31,6 +31,6 @@ public final class Capital extends Card {
         player.changeMoneyProduction(5);
         owner_game.update_manager.onVpCardPlayed(player);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

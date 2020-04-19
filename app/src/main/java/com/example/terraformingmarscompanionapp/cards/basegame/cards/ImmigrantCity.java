@@ -18,7 +18,7 @@ public final class ImmigrantCity extends Card implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeCity(player)) {
                 break;
@@ -29,7 +29,7 @@ public final class ImmigrantCity extends Card implements EffectCard {
         player.changeMoneyProduction(-2);
         player.changeEnergyProduction(-1);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

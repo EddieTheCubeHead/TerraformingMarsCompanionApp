@@ -16,9 +16,9 @@ public final class NuclearPower extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoneyProduction(-2);
         player.changeEnergyProduction(3);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

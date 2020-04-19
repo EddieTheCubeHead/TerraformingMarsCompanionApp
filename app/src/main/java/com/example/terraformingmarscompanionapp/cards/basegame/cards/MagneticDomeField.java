@@ -16,10 +16,10 @@ public final class MagneticDomeField extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(-2);
         player.changePlantsProduction(1);
         player.changeTerraformingRating(1);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

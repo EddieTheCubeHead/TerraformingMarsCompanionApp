@@ -18,10 +18,10 @@ public final class MethaneFromTitan extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeHeatProduction(2);
         player.changePlantsProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

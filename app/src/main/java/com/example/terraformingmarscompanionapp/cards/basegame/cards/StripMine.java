@@ -16,12 +16,12 @@ public final class StripMine extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(-2);
         player.changeSteelProduction(2);
         player.changeTitaniumProduction(1);
         owner_game.raiseOxygen(player);
         owner_game.raiseOxygen(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

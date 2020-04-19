@@ -15,7 +15,7 @@ public final class LakeMarineris extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -33,6 +33,6 @@ public final class LakeMarineris extends Card {
         owner_player = player;
         owner_game.update_manager.onVpCardPlayed(player);
 
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

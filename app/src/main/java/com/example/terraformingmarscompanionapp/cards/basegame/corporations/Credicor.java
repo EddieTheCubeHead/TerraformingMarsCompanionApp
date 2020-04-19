@@ -13,9 +13,9 @@ public final class Credicor extends Card implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoney(57);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

@@ -18,11 +18,11 @@ public final class SmallAnimals extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         //TODO toiselta pelaajalta kasvien poistaminen
         owner_player = player;
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

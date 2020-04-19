@@ -17,10 +17,10 @@ public final class FoodFactory extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changePlants(-1);
         player.changeMoneyProduction(4);
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

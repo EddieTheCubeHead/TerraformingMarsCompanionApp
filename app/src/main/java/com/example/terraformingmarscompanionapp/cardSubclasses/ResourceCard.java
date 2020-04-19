@@ -32,8 +32,9 @@ public abstract class ResourceCard extends Card {
         }
     }
 
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.addResourceHolder(this);
         super.onPlay(player);
+        return null;
     }
 }

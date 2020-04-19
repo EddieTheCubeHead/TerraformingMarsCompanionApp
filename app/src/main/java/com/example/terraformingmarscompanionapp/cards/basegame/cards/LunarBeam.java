@@ -16,10 +16,10 @@ public final class LunarBeam extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoneyProduction(-2);
         player.changeHeatProduction(2);
         player.changeEnergyProduction(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

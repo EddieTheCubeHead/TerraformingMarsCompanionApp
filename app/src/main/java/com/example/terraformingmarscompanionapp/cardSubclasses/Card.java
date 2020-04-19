@@ -6,9 +6,9 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.TurnActionInfoPacket;
 
 import java.util.ArrayList;
 
@@ -48,7 +48,8 @@ public abstract class Card {
         type = card_type;
     }
 
-    public void onPlay (Player player) {
+    //Palauttaa metadatan tarvittaessa, muuten palauttaa null. Palautusarvo huomioidaan vaan serveripelissä.
+    public Integer onPlay (Player player) {
         owner_player = player;
 
         boolean is_event = (type == Type.RED);
@@ -178,6 +179,7 @@ public abstract class Card {
         if (this instanceof ActionCard) {
             player.addAction((ActionCard)this);
         }
+        return null;
     }
 
     /* Serveri-implementaatiossa on siirrettävä jotenkin kortin pelaamiseen liittyvät päätökset.
@@ -193,16 +195,18 @@ public abstract class Card {
     }
 
     //Lähettää serverille ilmoituksen, että serverin täytyy odottaa lisää paketteja
-    public final void updateWaitInformation(CardEventPacket event) {
-        if (event.getIsAction()) {
-            event.setMetadata(wait_action_metadata);
-            event.setResourceEvents(wait_action_resource_event);
-            event.setTileEvents(wait_action_tile_event);
-        } else {
-            event.setMetadata(wait_metadata);
-            event.setResourceEvents(wait_resource_event);
-            event.setTileEvents(wait_tile_event);
-        }
+    public final TurnActionInfoPacket playWaitInformation() {
+        TurnActionInfoPacket event = new TurnActionInfoPacket(false);
+        event.setResourceEventCount(wait_resource_event);
+        event.setTileEventCount(wait_tile_event);
+        return event;
+    }
+
+    public final TurnActionInfoPacket actionWaitInformation() {
+        TurnActionInfoPacket event = new TurnActionInfoPacket(false);
+        event.setResourceEventCount(wait_action_resource_event);
+        event.setTileEventCount(wait_action_tile_event);
+        return event;
     }
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}

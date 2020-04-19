@@ -18,9 +18,9 @@ public final class TectonicStressPower extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.update_manager.onVpCardPlayed(player);
         player.changeEnergyProduction(3);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

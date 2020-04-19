@@ -16,7 +16,7 @@ public final class TowingAComet extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -26,6 +26,6 @@ public final class TowingAComet extends Card {
         }
         player.changePlants(2);
         owner_game.raiseOxygen(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

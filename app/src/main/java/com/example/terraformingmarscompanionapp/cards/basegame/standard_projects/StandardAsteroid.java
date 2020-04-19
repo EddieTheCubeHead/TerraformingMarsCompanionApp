@@ -12,8 +12,8 @@ public final class StandardAsteroid extends StandardProject {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

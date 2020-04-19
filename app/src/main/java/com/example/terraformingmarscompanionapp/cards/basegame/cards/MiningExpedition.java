@@ -15,10 +15,10 @@ public final class MiningExpedition extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeSteel(2);
         owner_game.raiseOxygen(player);
         //TODO toiselta pelaajalta kasvien poisto
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

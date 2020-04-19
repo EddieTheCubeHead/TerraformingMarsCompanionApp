@@ -17,7 +17,7 @@ public final class UndergroundCity extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeCity(player)) {
                 break;
@@ -28,6 +28,6 @@ public final class UndergroundCity extends Card {
         player.changeEnergyProduction(-2);
         player.changeSteelProduction(2);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

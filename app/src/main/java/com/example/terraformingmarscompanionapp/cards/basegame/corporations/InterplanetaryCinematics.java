@@ -15,10 +15,10 @@ public final class InterplanetaryCinematics extends Card implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeSteel(20);
         player.changeMoney(30);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

@@ -15,7 +15,7 @@ public final class SubterraneanReservoir extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -23,6 +23,6 @@ public final class SubterraneanReservoir extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

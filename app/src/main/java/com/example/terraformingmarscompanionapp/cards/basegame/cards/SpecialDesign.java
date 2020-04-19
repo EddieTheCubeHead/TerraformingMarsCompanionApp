@@ -16,9 +16,9 @@ public final class SpecialDesign extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.setSpecialDesignEffect(true);
         player.changeBaseTrRequirementDiscount(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

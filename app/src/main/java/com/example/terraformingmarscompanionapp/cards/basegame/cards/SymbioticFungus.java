@@ -4,7 +4,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SymbioticFungus extends Card implements ActionCard {
     public SymbioticFungus(Game game) {
@@ -13,13 +12,6 @@ public final class SymbioticFungus extends Card implements ActionCard {
         price = 4;
         tags.add(Tag.MICROBE);
         requirements.setMinTemperature(-14);
-    }
-
-    @Override
-    public void onPlay(Player player) {
-        player.addMicrobeTag();
-        player.addAction(this);
-        owner_player = player;
     }
 
     @Override

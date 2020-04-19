@@ -18,9 +18,9 @@ public final class BiomassCombustion extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         //TODO poista toiselta kasvi
         player.changeEnergyProduction(2);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

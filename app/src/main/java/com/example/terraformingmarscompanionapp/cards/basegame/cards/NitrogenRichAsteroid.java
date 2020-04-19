@@ -16,7 +16,7 @@ public final class NitrogenRichAsteroid extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.update_manager.onSpaceEvent(player);
         owner_game.raiseTemperature(player);
         player.changeTerraformingRating(2);
@@ -25,6 +25,6 @@ public final class NitrogenRichAsteroid extends Card {
         } else {
             player.changePlantsProduction(4);
         }
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

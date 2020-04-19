@@ -16,9 +16,9 @@ public final class Algae extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changePlantsProduction(2);
         player.changePlants(1);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

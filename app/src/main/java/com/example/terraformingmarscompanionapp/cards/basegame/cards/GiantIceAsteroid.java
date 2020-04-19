@@ -16,7 +16,7 @@ public final class GiantIceAsteroid extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -37,6 +37,6 @@ public final class GiantIceAsteroid extends Card {
             }
         }
 
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

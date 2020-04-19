@@ -17,9 +17,9 @@ public final class ImportedGHG extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeHeatProduction(1);
         player.changeHeat(3);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

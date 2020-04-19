@@ -17,12 +17,12 @@ public final class Insulation extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         Integer heat_reduction_amount = 0;
         //TODO UI kysymään kuinka paljon lämmöntuotantoa poistetaan
         player.changeHeatProduction(-heat_reduction_amount);
         player.changeMoneyProduction(heat_reduction_amount);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

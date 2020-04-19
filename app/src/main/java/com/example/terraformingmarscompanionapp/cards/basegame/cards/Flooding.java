@@ -16,7 +16,7 @@ public final class Flooding extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -25,6 +25,6 @@ public final class Flooding extends Card {
             }
         }
         //TODO poista toiselta neljä rahaa UI
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

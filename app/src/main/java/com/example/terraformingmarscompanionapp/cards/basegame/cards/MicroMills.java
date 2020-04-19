@@ -13,8 +13,8 @@ public final class MicroMills extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeHeatProduction(1);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

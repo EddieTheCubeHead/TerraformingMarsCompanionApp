@@ -22,7 +22,7 @@ public final class LargeConvoy extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         boolean chose_plants = true;
         //TODO kasveja 5 tai eläimiä 4 UI
         if (chose_plants) {
@@ -31,7 +31,7 @@ public final class LargeConvoy extends Card {
             //TODO lisää 4 eläintä toiselle kortille
         }
         //TODO prompti nostaa kaksi korttia
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

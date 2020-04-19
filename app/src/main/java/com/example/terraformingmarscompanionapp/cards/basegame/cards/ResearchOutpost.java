@@ -17,7 +17,7 @@ public final class ResearchOutpost extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeResearchOutpost(player)) {
                 break;
@@ -27,6 +27,6 @@ public final class ResearchOutpost extends Card {
         }
         player.changeCardDiscount(1);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

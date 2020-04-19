@@ -14,8 +14,8 @@ public final class StandardPowerPlant extends StandardProject {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(1);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

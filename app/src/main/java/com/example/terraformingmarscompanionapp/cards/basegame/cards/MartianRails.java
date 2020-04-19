@@ -4,7 +4,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MartianRails extends Card implements ActionCard {
     public MartianRails(Game game) {
@@ -15,10 +14,6 @@ public final class MartianRails extends Card implements ActionCard {
         owner_game = game;
     }
 
-    @Override
-    public void onPlay(Player player) {
-        super.onPlay(player);
-    }
     public boolean cardAction() {
         if (!owner_player.changeEnergy(-1) | action_used) {
             return false;

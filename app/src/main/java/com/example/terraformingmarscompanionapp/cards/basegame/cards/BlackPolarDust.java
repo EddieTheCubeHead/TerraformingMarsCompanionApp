@@ -13,7 +13,7 @@ public final class BlackPolarDust extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoneyProduction(-2);
         player.changeHeatProduction(3);
         while (true) {
@@ -23,6 +23,6 @@ public final class BlackPolarDust extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }
