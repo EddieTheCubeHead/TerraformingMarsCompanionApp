@@ -52,8 +52,6 @@ public class ResourceChangerAdapter extends RecyclerView.Adapter<ResourceChanger
 
         this.card = card;
 
-        ArrayList<com.example.terraformingmarscompanionapp.cardSubclasses.Tag> tags = card.getTags();
-        System.out.println("TAGS: " + tags);
 
     }
 
