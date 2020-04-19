@@ -1,7 +1,18 @@
 package com.example.terraformingmarscompanionapp.webSocket.events;
 
 //Luokka kortin pelaamisen vaatimien resurssien listaamiseen kompaktisti.
-public class CardCostPacket {
+public class CardCostPacket
+{
+    //ui-puolella chekataan isEligible -funktiota käyttäen voidaanko korttia pelata resursseilla.
+
+    private Boolean eligibility = true;
+    public void reject() { eligibility = false; }
+    public boolean isEligible() { return eligibility; }
+
+    private String rejectance_message;
+    public boolean setRejectanceMessage(String message) { rejectance_message = message; }
+
+
     private Integer money;
     private Integer steel;
     private Integer titanium;
