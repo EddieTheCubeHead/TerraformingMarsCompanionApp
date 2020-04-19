@@ -195,14 +195,14 @@ public abstract class Card {
     }
 
     //Lähettää serverille ilmoituksen, että serverin täytyy odottaa lisää paketteja
-    public final TurnActionInfoPacket playWaitInformation() {
+    public final TurnActionInfoPacket getOnPlayWaitInformation() {
         TurnActionInfoPacket event = new TurnActionInfoPacket(false);
         event.setResourceEventCount(wait_resource_event);
         event.setTileEventCount(wait_tile_event);
         return event;
     }
 
-    public final TurnActionInfoPacket actionWaitInformation() {
+    public final TurnActionInfoPacket getOnActionWaitInformation() {
         TurnActionInfoPacket event = new TurnActionInfoPacket(false);
         event.setResourceEventCount(wait_action_resource_event);
         event.setTileEventCount(wait_action_tile_event);

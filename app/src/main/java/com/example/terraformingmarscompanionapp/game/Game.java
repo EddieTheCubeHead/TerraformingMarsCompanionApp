@@ -173,7 +173,7 @@ public class Game implements Serializable {
 
 
     //Koko kortin pelaaminen yhdessä funktiossa. Ottaa Card- ja Player -oliot
-    public void playCard(Card card, Player player) {
+    public void initializePlayCard(Card card, Player player) {
         Log.i("Game", "Playing card");
         CardCostPacket resources_to_use = checkCardCost(card, player);
         if (resources_to_use == null | !checkCardRequirements(card, player)) {
@@ -184,7 +184,17 @@ public class Game implements Serializable {
 
         Log.i("Game", String.format("Cost packet aquired, money: %d, steel: %d, titanium: %d heat: %d.", resources_to_use.getMoney(), resources_to_use.getSteel(), resources_to_use.getTitanium(), resources_to_use.getHeat()));
 
-        //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
+        //Tarkistetaan voiko pelaaja maksaa kortin jollain muulla kuin saadulla tavalla.
+        if ((card.getTags().contains(Tag.BUILDING) && player.getSteel() > resources_to_use.getSteel()) |
+            (card.getTags().contains(Tag.SPACE) && player.getTitanium() > resources_to_use.getTitanium()) |
+            (player.getHeatIsMoney() && player.getHeat() > resources_to_use.getHeat())) {
+            //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
+        } else {
+            finishPlayCard(card, player, resources_to_use);
+        }
+    }
+
+    private void finishPlayCard(Card card, Player player, CardCostPacket resources_to_use) {
 
         player.changeMoney(-resources_to_use.getMoney());
         player.changeSteel(-resources_to_use.getSteel());
@@ -198,7 +208,7 @@ public class Game implements Serializable {
 
         if (server_multiplayer) {
             card_event = new CardEventPacket(card.getName(), player.getName(), metadata);
-            turn_actions = card.playWaitInformation();
+            turn_actions = card.getOnPlayWaitInformation();
 
             Timer timer = new Timer();
 
