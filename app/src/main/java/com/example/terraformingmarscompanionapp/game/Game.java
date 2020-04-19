@@ -171,23 +171,41 @@ public class Game implements Serializable {
         return true;
     }
 
+    public CardCostPacket getRecommendedCardCost(Card card)
+    {
+        /*hinta chekataan ensin koska siinä tapauksessa että se hylätään pelaaja
+        * voi nähdä käyttöliittymästä helposti sen miten monta resurssia enemmän tarvitsee*/
+        CardCostPacket resources_to_use = checkCardCost(card);
 
-    //Koko kortin pelaaminen yhdessä funktiossa. Ottaa Card- ja Player -oliot
-    public void initializePlayCard(Card card, Player player) {
-        Log.i("Game", "Playing card");
-        CardCostPacket resources_to_use = checkCardCost(card, player);
-        if (resources_to_use == null | !checkCardRequirements(card, player)) {
-            Log.i("Game", "Requirements or cost check invalid");
-            return;
+        if (!checkCardRequirements(card))
+        {
+            Log.i("Game", "Requirements deemed invalid for card " + card.getName());
+            resources_to_use.reject();
+            resources_to_use.setRejectanceMessage("You don't meet the requirements for playing this card.");
         }
-        Log.i("Game", "Requirements and cost checks valid");
+        else if (!resources_to_use.isEligible())
+        {
+            Log.i("Game", "Resources deemed invalid for card " + card.getName());
+        }
+        else
+        {
+            Log.i("Game", "Requirements and cost checks valid for card " + card.getName());
+            Log.i("Game", String.format("Cost packet aquired, money: %d, steel: %d, titanium: %d heat: %d.",
+                    resources_to_use.getMoney(), resources_to_use.getSteel(), resources_to_use.getTitanium(), resources_to_use.getHeat()));
+        }
 
-        Log.i("Game", String.format("Cost packet aquired, money: %d, steel: %d, titanium: %d heat: %d.", resources_to_use.getMoney(), resources_to_use.getSteel(), resources_to_use.getTitanium(), resources_to_use.getHeat()));
-
-        //TODO UI kysy onko käytettävät resurssit ok ja haluaako muuttaa jotain
+        return resources_to_use;
     }
 
-    private void finishPlayCard(Card card, Player player, CardCostPacket resources_to_use) {
+    public void playCard(Card card, final CardCostPacket resources_to_use)
+    {
+        Player player = GameController.getInstance().getCurrentPlayer();
+
+        if (!resources_to_use.isEligible())
+        {
+            Log.i("Game", "CARD THAT COULDN'T BE PLAYED CALLED FROM UI, TALK TO ME -Alex");
+            return;
+        }
 
         player.changeMoney(-resources_to_use.getMoney());
         player.changeSteel(-resources_to_use.getSteel());
@@ -199,28 +217,34 @@ public class Game implements Serializable {
         Log.i("Game", "OnPlay called");
         Integer metadata = card.onPlay(player);
 
-        if (server_multiplayer) {
+        if (server_multiplayer)
+        {
             card_event = new CardEventPacket(card.getName(), player.getName(), metadata);
             turn_actions = card.getOnPlayWaitInformation();
 
             Timer timer = new Timer();
 
             //Timer tarkistaa onko kaikki kortin määrittämät tapahtumat tallennettu ja lähettää paketit jos näin on
-            timer.schedule(new TimerTask() {
+            timer.schedule(new TimerTask()
+            {
                 @Override
-                public void run() {
+                public void run()
+                {
                     if (turn_actions.getResourceEventCount() == resource_events.size() &&
-                        turn_actions.getTileEventCount() == tile_events.size()) {
+                        turn_actions.getTileEventCount() == tile_events.size())
+                    {
                         GameActions.sendTurnInfo(turn_actions);
                         GameActions.sendCardEvent(card_event);
                         GameActions.sendCardCost(resources_to_use);
-                        for (TileEventPacket tile_event : tile_events) {
+
+                        for (TileEventPacket tile_event : tile_events)
                             GameActions.sendTileEvent(tile_event);
-                        }
+
                         tile_events.clear();
-                        for (ResourceEventPacket resource_event : resource_events) {
+
+                        for (ResourceEventPacket resource_event : resource_events)
                             GameActions.sendResourceEvent(resource_event);
-                        }
+
                         timer.cancel();
                     }
                 }
@@ -229,7 +253,10 @@ public class Game implements Serializable {
     }
 
     //Kortin pelaamisen ensimmäinen vaihe. Palautta hinnan CardCost -oliona
-    private CardCostPacket checkCardCost(Card card, Player player) {
+    private CardCostPacket checkCardCost(Card card)
+    {
+        Player player = GameController.getInstance().getCurrentPlayer();
+
         Log.i("Game", "Checking card cost");
         //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
 
@@ -280,7 +307,13 @@ public class Game implements Serializable {
 
 
         //Mikäli raaka raha ei riitä, tarkistetaan voiko korvata muilla resursseilla
-        if (actual_price > player.getMoney()) {
+        if (actual_price <= player.getMoney())
+        {
+            Log.i("Game", "Cost packet created");
+            return new CardCostPacket(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+        }
+        else
+        {
             money_amount = player.getMoney();
             needed_money = actual_price - money_amount;
 
@@ -292,35 +325,47 @@ public class Game implements Serializable {
              *
              * Jos pelaajan resurssimäärä ei riitä, lisätään kaikki pelaajalta löytyvät resurssit muistiin
              * ja siirrytään tarkastamaan näiden kanssa seuraavan resurssin riittävyys. */
-            if (card_tags.contains(Tag.SPACE)) {
+
+            //titanium lisäys
+            if (card_tags.contains(Tag.SPACE))
+            {
                 Log.i("Game", "Player titanium amount: " + player.getTitanium());
-                if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money) {
+
+                if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money)
+                {
                     titanium_amount = (needed_money + needed_money % (3 + player.getTitaniumValueModifier())) / (3 + player.getTitaniumValueModifier());
                     money_amount = actual_price - titanium_amount * (3 + player.getTitaniumValueModifier());
 
-                    if (money_amount < 0) {
+                    if (money_amount < 0)
                         money_amount = 0;
-                    }
 
                     return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
-                } else {
+                }
+                else
+                {
                     titanium_amount = player.getTitanium();
                     needed_money -= titanium_amount * (3 + player.getTitaniumValueModifier());
                 }
             }
 
-            if (card_tags.contains(Tag.BUILDING)) {
+            //steel lisäys
+            if (card_tags.contains(Tag.BUILDING))
+            {
                 Log.i("Game", "Player steel amount: " + player.getSteel());
-                if (player.getSteel() * (2 + player.getSteelValueModifier()) >= needed_money) {
+
+                if (player.getSteel() * (2 + player.getSteelValueModifier()) >= needed_money)
+                {
                     steel_amount = (needed_money + needed_money % (2 + player.getSteelValueModifier())) / (2 + player.getSteelValueModifier());
                     money_amount = actual_price - (steel_amount * (2 + player.getSteelValueModifier()
                                                    + titanium_amount * (3 + player.getTitaniumValueModifier())));
-                    if (money_amount < 0) {
+
+                    if (money_amount < 0)
                         money_amount = 0;
-                    }
 
                     return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
-                } else {
+                }
+                else
+                {
                     steel_amount = player.getSteel();
                     needed_money -= steel_amount * (2 + player.getSteelValueModifier());
                 }
@@ -330,27 +375,29 @@ public class Game implements Serializable {
 
             //TODO Lisää floater = venus tag rahaa jahka kortti implementoitu
 
-            if (player.getHeatIsMoney()) {
-                if (player.getHeat() >= needed_money) {
-                    Log.i("Game", "Cost packet created");
-                    heat_amount = needed_money;
-                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
-                } else {
-                    Log.i("Game", "Invalid funds");
-                    return null;
-                }
+            //heat lisäys
+            CardCostPacket cardCostPacket;
+            if (player.getHeatIsMoney() && player.getHeat() >= needed_money)
+            {
+                heat_amount = needed_money;
+                cardCostPacket = new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
             }
-            Log.i("Game", "Invalid funds");
-            return null;
+            else
+            {
+                cardCostPacket = new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                cardCostPacket.reject();
+                cardCostPacket.setRejectanceMessage("Invalid funds");
+                Log.i("Game", "Invalid funds");
+            }
 
-        } else {
-            Log.i("Game", "Cost packet created");
-            return new CardCostPacket(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+            return cardCostPacket;
         }
     }
 
     //Kortin pelaamisen toinen vaihe. Palauttaa totuusarvon, täyttääkö pelaajan nykytilanne kortin vaatimukset.
-    private Boolean checkCardRequirements(Card card, Player player) {
+    private Boolean checkCardRequirements(Card card) {
+
+        Player player = GameController.getInstance().getCurrentPlayer();
         Log.i("Game", "Checking card requirements");
 
         //Erittäin tylsä if-hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
