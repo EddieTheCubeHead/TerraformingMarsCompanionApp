@@ -1,22 +1,23 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class NoctisCity extends Card {
     public NoctisCity(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Noctis city";
         price = 18;
-        tags.add("city");
-        tags.add("building");
+        tags.add(Tag.CITY);
+        tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
         owner_game = game;
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeNoctis(player)) {
                 break;
@@ -27,6 +28,6 @@ public final class NoctisCity extends Card {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
         player.addCity();
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

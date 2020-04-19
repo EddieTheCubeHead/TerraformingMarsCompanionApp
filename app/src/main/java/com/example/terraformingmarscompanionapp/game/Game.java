@@ -1,29 +1,63 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import android.util.Log;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.TurnActionInfoPacket;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Game implements Serializable {
 
+    //Suuremmat logiikkaa ohjaavat luokat
     public final UpdateManager update_manager;
-    private final ArrayList<Player> players = new ArrayList<>();
-    private final HashMap<String, Card> deck;
-
-    private HashMap<String, Card> preludes = new HashMap<>();
-    private final HashMap<String, Card> corporations = new HashMap<>();
     public final TileHandler tile_handler;
 
+    //Erityyppiset pakat
+    private final HashMap<String, Card> deck;
+    private HashMap<String, Card> preludes = new HashMap<>();
+    private final HashMap<String, Card> corporations;
+
+    //Simppeli ArrayList pelaajia. Pelaajien tarkempi hallinta ylempänä GameController -luokassa
+    private final ArrayList<Player> players = new ArrayList<>();
+
+    //Pelataanko peli serverin välityksellä vai ei
+    private Boolean server_multiplayer = false;
+    public Boolean getServerMultiplayer() {return server_multiplayer;}
+
+    /* Serveripelissä siirrosta lähetetään serverille aina vähintään CardEventPacketin (voi kuvata myös toimintaa)
+     * lisäksi packet kertoo mitä kaikkea muuta lähetetään perässä. Nämä mahdolliset perässälähetettävät toiminnot
+     * säilytetään vuoron ajan listoissa. CardEventPacket ja ResourceEventPacket luodaan tarvittaessa erikseen.
+     */
+    private TurnActionInfoPacket turn_actions;
+    private CardEventPacket card_event;
+    private ArrayList<ResourceEventPacket> resource_events = new ArrayList<>();
+    private ArrayList<TileEventPacket> tile_events = new ArrayList<>();
+
+    public void addResourceEvent(ResourceEventPacket event) {resource_events.add(event);}
+    public void addTileEvent(TileEventPacket event) {tile_events.add(event);}
+
+    //Getterit pelaajille ja pakoille, plus pakalle listana
     public ArrayList<Player> getPlayers() {return  players;}
     public HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
-    public HashMap<String, Card> getCorporations() {return  corporations;}
+    public HashMap<String, Card> getCorporations() {return corporations;}
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
+
+    //EffectCard -rajapinnan korttien haku pakasta UpdateManageria varten
     HashMap<String, EffectCard> getEffectCards() {
         HashMap<String, EffectCard> effect_cards = new HashMap<>();
         for (Map.Entry<String, Card> entry : deck.entrySet()) {
@@ -31,9 +65,27 @@ public class Game implements Serializable {
                 effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
             }
         }
+
+        for (Map.Entry<String, Card> entry : corporations.entrySet()) {
+            if (entry.getValue() instanceof EffectCard) {
+                effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
+            }
+        }
+
         return effect_cards;
     }
 
+    //Getteri pelaajalle nimen perusteella
+    public Player getPlayer(String player_name) {
+        for (Player player : players) {
+            if (player.getName().equals(player_name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    //Pelin tilan parametrit, getterit ja setterit
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
     private Integer global_oxygen;
@@ -49,6 +101,7 @@ public class Game implements Serializable {
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
 
+    //Rakentaja
     public Game(
                     ArrayList<String> player_names,
                     boolean hellas_elysium,
@@ -58,6 +111,7 @@ public class Game implements Serializable {
                     boolean venus,
                     boolean turmoil,
                     boolean extra_corporations,
+                    boolean server_multiplayer,
                     Integer map
                 )
     {
@@ -68,10 +122,13 @@ public class Game implements Serializable {
 
         GameConstructor constructor = new GameConstructor();
         deck = constructor.createDeck(this, corporate_era, prelude, colonies, venus, turmoil);
+        corporations = constructor.createCorporations(this, corporate_era, prelude, colonies, venus, turmoil);
 
         if (prelude) {
             preludes = constructor.createPreludes();
         }
+
+        this.server_multiplayer = server_multiplayer;
 
         tile_handler = new TileHandler(this, map, venus);
         update_manager =  new UpdateManager(this, corporate_era, prelude, colonies, venus, turmoil);
@@ -86,6 +143,7 @@ public class Game implements Serializable {
         //TODO viimeistele constructor
     }
 
+    //Terraformaus-sliderien manipulaatio
     public boolean raiseTemperature(Player raising_player) {
         if (global_temperature >= 8) {
             return false;
@@ -113,7 +171,64 @@ public class Game implements Serializable {
         return true;
     }
 
-    private CardCost checkCardCost(Card card, Player player) {
+
+    //Koko kortin pelaaminen yhdessä funktiossa. Ottaa Card- ja Player -oliot
+    public void playCard(Card card, Player player) {
+        Log.i("Game", "Playing card");
+        CardCostPacket resources_to_use = checkCardCost(card, player);
+        if (resources_to_use == null | !checkCardRequirements(card, player)) {
+            Log.i("Game", "Requirements or cost check invalid");
+            return;
+        }
+        Log.i("Game", "Requirements and cost checks valid");
+
+        Log.i("Game", String.format("Cost packet aquired, money: %d, steel: %d, titanium: %d heat: %d.", resources_to_use.getMoney(), resources_to_use.getSteel(), resources_to_use.getTitanium(), resources_to_use.getHeat()));
+
+        //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
+
+        player.changeMoney(-resources_to_use.getMoney());
+        player.changeSteel(-resources_to_use.getSteel());
+        player.changeTitanium(-resources_to_use.getTitanium());
+        player.changeHeat(-resources_to_use.getHeat());
+
+        //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
+
+        Log.i("Game", "OnPlay called");
+        Integer metadata = card.onPlay(player);
+
+        if (server_multiplayer) {
+            card_event = new CardEventPacket(card.getName(), player.getName(), metadata);
+            turn_actions = card.playWaitInformation();
+
+            Timer timer = new Timer();
+
+            //Timer tarkistaa onko kaikki kortin määrittämät tapahtumat tallennettu ja lähettää paketit jos näin on
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (turn_actions.getResourceEventCount() == resource_events.size() &&
+                        turn_actions.getTileEventCount() == tile_events.size()) {
+                        GameActions.sendTurnInfo(turn_actions);
+                        GameActions.sendCardEvent(card_event);
+                        GameActions.sendCardCost(resources_to_use);
+                        for (TileEventPacket tile_event : tile_events) {
+                            GameActions.sendTileEvent(tile_event);
+                        }
+                        tile_events.clear();
+                        for (ResourceEventPacket resource_event : resource_events) {
+                            GameActions.sendResourceEvent(resource_event);
+                        }
+                        timer.cancel();
+                    }
+                }
+            }, 0, 1000);
+        }
+    }
+
+    //Kortin pelaamisen ensimmäinen vaihe. Palautta hinnan CardCost -oliona
+    private CardCostPacket checkCardCost(Card card, Player player) {
+        Log.i("Game", "Checking card cost");
+        //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
 
         Integer actual_price = card.getPrice();
         Integer money_amount;
@@ -123,34 +238,34 @@ public class Game implements Serializable {
         Integer plants_amount = 0;
         Integer floaters_amount = 0;
         Integer needed_money;
-        ArrayList<String> card_tags = card.getTags();
+        ArrayList<Tag> card_tags = card.getTags();
 
         //If -tarkistukset tagialennuksille
-        if (!card_tags.contains("Standard project")) {
+        if (card.getType() != Card.Type.STANDARD_PROJECT) {
             actual_price -= player.getCardDiscount();
         }
 
-        if (card_tags.contains("Building")) {
+        if (card_tags.contains(Tag.BUILDING)) {
             actual_price -= player.getBuildingTagDiscount();
         }
 
-        if (card_tags.contains("Space")) {
+        if (card_tags.contains(Tag.SPACE)) {
             actual_price -= player.getSpaceTagDiscount();
         }
 
-        if (card_tags.contains("Earth")) {
+        if (card_tags.contains(Tag.EARTH)) {
             actual_price -= player.getEarthTagDiscount();
         }
 
-        if (card_tags.contains("Science")) {
+        if (card_tags.contains(Tag.SCIENCE)) {
             actual_price -= player.getScienceTagDiscount();
         }
 
-        if (card_tags.contains("Energy")) {
+        if (card_tags.contains(Tag.ENERGY)) {
             actual_price -= player.getEnergyTagDiscount();
         }
 
-        if (card_tags.contains("Venus")) {
+        if (card_tags.contains(Tag.VENUS)) {
             actual_price -= player.getVenusTagDiscount();
         }
 
@@ -158,31 +273,52 @@ public class Game implements Serializable {
             actual_price = 0;
         }
 
+        Log.i("Game", "Actual price for card '" + card.getName() + "' played by player '" + player.getName() + "': " + actual_price);
 
-        //Mikäli raaka raha ei riitä, ahne algoritmi tarkistamaan voiko korvata muilla resursseilla
-        if (actual_price < player.getMoney()) {
+
+        //Mikäli raaka raha ei riitä, tarkistetaan voiko korvata muilla resursseilla
+        if (actual_price > player.getMoney()) {
             money_amount = player.getMoney();
             needed_money = actual_price - money_amount;
 
-            if (card_tags.contains("Space")) {
+            /* Käytettävän teräksen ja titaanin tarkastus toimii seuraavasti:
+             * Jos kortissa on käyttämiseen oikeuttava tägi, katsotaan onko pelaajan
+             * ko. resurssin määrä tarpeeksi suuri maksamaan kortin, huomioiden mahdolliset korteista
+             * saadut arvomuutokset resurssille. Sitten jakojäännöksen avulla poistetaan käytettyä rahaa
+             * niin että resurssin arvoa ei mene hukkaan.
+             *
+             * Jos pelaajan resurssimäärä ei riitä, lisätään kaikki pelaajalta löytyvät resurssit muistiin
+             * ja siirrytään tarkastamaan näiden kanssa seuraavan resurssin riittävyys. */
+            if (card_tags.contains(Tag.SPACE)) {
+                Log.i("Game", "Player titanium amount: " + player.getTitanium());
                 if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money) {
-                    titanium_amount = needed_money / (3 + player.getTitaniumValueModifier());
+                    titanium_amount = (needed_money + needed_money % (3 + player.getTitaniumValueModifier())) / (3 + player.getTitaniumValueModifier());
                     money_amount = actual_price - titanium_amount * (3 + player.getTitaniumValueModifier());
-                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+
+                    if (money_amount < 0) {
+                        money_amount = 0;
+                    }
+
+                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
                     titanium_amount = player.getTitanium();
                     needed_money -= titanium_amount * (3 + player.getTitaniumValueModifier());
                 }
             }
 
-            if (card_tags.contains("Building")) {
+            if (card_tags.contains(Tag.BUILDING)) {
+                Log.i("Game", "Player steel amount: " + player.getSteel());
                 if (player.getSteel() * (2 + player.getSteelValueModifier()) >= needed_money) {
-                    steel_amount = needed_money / (2 + player.getSteelValueModifier());
+                    steel_amount = (needed_money + needed_money % (2 + player.getSteelValueModifier())) / (2 + player.getSteelValueModifier());
                     money_amount = actual_price - (steel_amount * (2 + player.getSteelValueModifier()
                                                    + titanium_amount * (3 + player.getTitaniumValueModifier())));
-                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    if (money_amount < 0) {
+                        money_amount = 0;
+                    }
+
+                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
-                    steel_amount = player.getTitanium();
+                    steel_amount = player.getSteel();
                     needed_money -= steel_amount * (2 + player.getSteelValueModifier());
                 }
             }
@@ -193,20 +329,29 @@ public class Game implements Serializable {
 
             if (player.getHeatIsMoney()) {
                 if (player.getHeat() >= needed_money) {
-                    return new CardCost(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    Log.i("Game", "Cost packet created");
+                    heat_amount = needed_money;
+                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 } else {
+                    Log.i("Game", "Invalid funds");
                     return null;
                 }
             }
+            Log.i("Game", "Invalid funds");
             return null;
 
         } else {
-            return new CardCost(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+            Log.i("Game", "Cost packet created");
+            return new CardCostPacket(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
     }
 
+    //Kortin pelaamisen toinen vaihe. Palauttaa totuusarvon, täyttääkö pelaajan nykytilanne kortin vaatimukset.
     private Boolean checkCardRequirements(Card card, Player player) {
-        //Erittäin tylsä switch-case hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
+        Log.i("Game", "Checking card requirements");
+
+        //Erittäin tylsä if-hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
+        //Suosittelen lämpimästi minimoimaan tämän.
         CardRequirements requirements = card.getRequirements();
 
         Integer base_discount = player.getBaseTrRequirementDiscount();
@@ -272,25 +417,41 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMinMicrobeTags() != null && player.getMicrobeTags() < requirements.getMinMicrobeTags()) {
-            return false;
+            if (player.getMicrobeTags() + unused_jokers > requirements.getMinMicrobeTags()) {
+                unused_jokers -= (requirements.getMinMicrobeTags() - player.getMicrobeTags());
+            } else {
+                return false;
+            }
         }
 
         if (requirements.getMinAnimalTags() != null && player.getAnimalTags() < requirements.getMinAnimalTags()) {
-            return false;
+            if (player.getAnimalTags() + unused_jokers > requirements.getMinAnimalTags()) {
+                unused_jokers -= (requirements.getMinAnimalTags() - player.getAnimalTags());
+            } else {
+                return false;
+            }
         }
 
         if (requirements.getMinEarthTags() != null && player.getEarthTags() < requirements.getMinEarthTags()) {
-            return false;
+            if (player.getEarthTags() + unused_jokers > requirements.getMinEarthTags()) {
+                unused_jokers -= (requirements.getMinEarthTags() - player.getEarthTags());
+            } else {
+                return false;
+            }
         }
 
         if (requirements.getMinEnergyTags() != null && player.getEnergyTags() < requirements.getMinEnergyTags()) {
-            return false;
+            if (player.getEnergyTags() + unused_jokers > requirements.getMinEnergyTags()) {
+                unused_jokers -= (requirements.getMinEnergyTags() - player.getEnergyTags());
+            } else {
+                return false;
+            }
         }
 
         if (requirements.getMinFloaters() != null) {
             int floaters = 0;
             for (ResourceCard resource_card : player.getResourceHolders()) {
-                if (resource_card.getResourceType() == 4) {
+                if (resource_card.getResourceType() == ResourceCard.ResourceType.FLOATER) {
                     floaters += resource_card.getResourceAmount();
                 }
             }
@@ -320,7 +481,10 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMinVenusTags() != null && player.getVenusTags() < requirements.getMinVenusTags()) {
-            return false;
+            if (!(player.getVenusTags() + unused_jokers > requirements.getMinVenusTags())) {
+
+                return false;
+            }
         }
 
         if (requirements.getMinHeat() != null && player.getHeat() < requirements.getMinHeat()) {
@@ -345,24 +509,6 @@ public class Game implements Serializable {
 
         return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
     }
-    
-    public void playCard(Card card, Player player) {
-        CardCost resources_to_use = checkCardCost(card, player);
-        if (resources_to_use == null | !checkCardRequirements(card, player)) {
-            return;
-        }
-
-        //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
-
-        player.changeMoney(-resources_to_use.getMoney());
-        player.changeSteel(-resources_to_use.getSteel());
-        player.changeTitanium(-resources_to_use.getTitanium());
-        player.changeHeat(-resources_to_use.getHeat());
-
-        //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
-
-        card.onPlay(player);
-    }
 
     //Tätä tarvitaan erityisesti serveripohjaisessa moninpelissä, mutta myös parissa erityistapauksessa
     //paikallisissa peleissä.
@@ -376,6 +522,7 @@ public class Game implements Serializable {
         resource_holder.changeResourceAmount(amount);
     }
 
+    //Sukupolven päättäminen
     public void onGenerationEnd() {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
             endGame();
@@ -389,6 +536,8 @@ public class Game implements Serializable {
             player.changeEnergy(-player.getEnergy());
             player.changeEnergy(player.getEnergyProduction());
             player.changeHeat(player.getHeatProduction());
+            player.setRaisedTrThisGeneration(false);
+            player.resetActions();
         }
         //TODO turmoil-hommat tähän
     }

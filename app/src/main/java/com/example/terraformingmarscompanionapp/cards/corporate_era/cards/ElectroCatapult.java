@@ -2,15 +2,16 @@ package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ElectroCatapult extends Card implements ActionCard {
     public ElectroCatapult(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Electro catapult";
         price = 17;
-        tags.add("building");
+        tags.add(Tag.BUILDING);
         requirements.setMaxOxygen(8);
         requirements.setMinEnergyProduction(1);
         victory_points = 1;
@@ -18,10 +19,10 @@ public final class ElectroCatapult extends Card implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeEnergyProduction(-1);
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     public boolean cardAction() {

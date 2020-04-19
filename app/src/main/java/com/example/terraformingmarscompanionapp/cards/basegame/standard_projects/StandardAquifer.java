@@ -12,8 +12,8 @@ public final class StandardAquifer extends StandardProject {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         owner_game.tile_handler.placeOcean(player);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

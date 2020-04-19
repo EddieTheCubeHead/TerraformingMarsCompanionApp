@@ -7,15 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Credicor extends Card implements EffectCard {
     public Credicor(Game game) {
-        super("corporation");
+        super(Type.CORPORATION);
         name = "Credicor";
         owner_game = game;
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoney(57);
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

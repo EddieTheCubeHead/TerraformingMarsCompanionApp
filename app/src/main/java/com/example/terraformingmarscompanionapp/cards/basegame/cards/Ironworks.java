@@ -2,14 +2,15 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class Ironworks extends Card implements ActionCard {
     public Ironworks(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Ironworks";
         price = 11;
-        tags.add("building");
+        tags.add(Tag.BUILDING);
         owner_game = game;
     }
 

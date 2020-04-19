@@ -1,4 +1,5 @@
 package com.example.terraformingmarscompanionapp;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
 
 import java.util.ArrayList;
 
@@ -36,9 +36,6 @@ public class GameCreationActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_creation);
-
-        //WebSocketin implementaation testit on tässä. Pitäisi olla poistettu mergeen mennessä, mutta tiedä häntä.
-        WebSocketHandler.createWebSocketClient();
 
         //textview
         final TextView textview_names = findViewById(R.id.name_textview);
@@ -110,7 +107,7 @@ public class GameCreationActivity extends AppCompatActivity
         }
 
         Game game = new Game(player_names,
-                hellas_elysium, corporate_era, prelude, colonies, venus, turmoil, extra_corporations,
+                hellas_elysium, corporate_era, prelude, colonies, venus, turmoil, extra_corporations, false,
                 map);
 
         GameController gameController = GameController.makeInstance(game);

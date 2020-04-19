@@ -1,21 +1,22 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Flooding extends Card {
     public Flooding(Game game) {
-        super("red");
+        super(Type.RED);
         name = "Flooding";
         price = 7;
-        tags.add("event");
+        tags.add(Tag.EVENT);
         victory_points = -1;
         owner_game = game;
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -24,6 +25,6 @@ public final class Flooding extends Card {
             }
         }
         //TODO poista toiselta neljä rahaa UI
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

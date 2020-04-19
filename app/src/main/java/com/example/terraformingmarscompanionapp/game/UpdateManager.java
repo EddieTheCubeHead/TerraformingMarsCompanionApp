@@ -5,6 +5,13 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import java.util.HashMap;
 
 @SuppressWarnings("EmptyMethod")
+
+/* UpdateManager -luokka luodaan aina pelin yhteydessä. Se sisältää eri triggereille funktioita,
+ * joita peli voi kutsua. Funktiot aktivoivat korttien effektifunktioita.
+ * Osa luokan funktioista on helpompaa kutsua suoraan triggerin aktivoivasta kortista. Nämä funktiot
+ * ovat julkisia package-private:n sijaan.
+ */
+
 public final class UpdateManager {
     private final HashMap<String, EffectCard> effect_cards;
     private final Game owner_game;
@@ -109,7 +116,6 @@ public final class UpdateManager {
         effect_cards.get("Mining guild").cardEffect(player);
     }
 
-    //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
     public void onVpCardPlayed(Player player) {
 
     }

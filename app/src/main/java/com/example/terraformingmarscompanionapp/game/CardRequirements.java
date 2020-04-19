@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.game;
 
+//Dataluokka kortin vaatimusten säilömiseen ja siirtämiseen kompaktisti.
 public class CardRequirements {
     private Integer min_oceans;
     private Integer min_plants;

@@ -6,14 +6,14 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class BlackPolarDust extends Card {
     public BlackPolarDust(Game game) {
-        super("green");
+        super(Type.GREEN);
         name = "Black polar dust";
         price = 15;
         owner_game = game;
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         player.changeMoneyProduction(-2);
         player.changeHeatProduction(3);
         while (true) {
@@ -23,6 +23,6 @@ public final class BlackPolarDust extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

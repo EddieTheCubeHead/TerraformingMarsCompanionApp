@@ -48,11 +48,22 @@ public final class WebSocketHandler {
                             UserActions.handleLogin(s);
                             break;
 
+                        //Pelin luominen ja liittyminen
+                        case "game_created":
+                            Log.i("WebSocket", "Game created with code: " + contents[1]);
+                            break;
+
+
                         //Exceptioneiden käsittely
                         case "username_exception":
                             Log.i("WebSocketException", "Invalid username: " + contents[1]);
+                            break;
                         case "password_exception":
                             Log.i("WebSocketException", "Invalid password: " + contents[1]);
+                            break;
+
+                        case "test":
+                            Log.i("WebSocket", "Successful test");
 
                         //Tunnistamattomien viestien loggaaminen
                         default:
@@ -66,7 +77,7 @@ public final class WebSocketHandler {
 
             @Override
             public void onPingReceived(byte[] data) {
-
+                webSocketClient.sendPong(new byte[] {1});
             }
 
             @Override
@@ -76,7 +87,7 @@ public final class WebSocketHandler {
 
             @Override
             public void onException(Exception e) {
-                System.out.println(e.getMessage());
+                Log.i("WebSocket",  "exception on message " + e.getMessage());
             }
 
             @Override

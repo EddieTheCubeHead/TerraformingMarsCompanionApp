@@ -1,8 +1,18 @@
 Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi varata itselleen laittamalla nimen kohdan viereen.
 
-TODO: Game.checkCardCost rewrite palauttamaan yksityisen datapakettiolion -Eetu
-TODO: Card.requirements rewrite käyttämään erillistä requirements-oliota.
+TODO: Seuraavat UI-näkymät:
+    Aloitusnäyttö
+    Kirjautumisnäyttö
+    Pelaajan resurssinäyttö
+    Pelaajan korttilista
+    Heksan asettaminen
+    Moninpelin pelinrakennusnäyttö (En ole varma voiko käyttää hotseat-näyttöä, Eetu)
 TODO: Kortteja kehiin, -Aapo
+
+TODO: WebSocket serveripeli -Eetu
+    Kortin pelaamisen framework metadatan ja EventPackettien avulla
+        Gson-integraatio pakettien siirtämiseen
+    Pelin rakentaminen
 
 Harkkatyön palautuksen jälkeiset:
 

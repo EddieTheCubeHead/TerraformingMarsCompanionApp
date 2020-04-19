@@ -4,16 +4,17 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class RegolithEaters extends ResourceCard implements MetadataAction {
     public RegolithEaters(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Regolith eaters";
         price = 13;
-        tags.add("science");
-        tags.add("microbe");
-        resource_type = 1;
+        tags.add(Tag.SCIENCE);
+        tags.add(Tag.MICROBE);
+        resource_type = ResourceType.MICROBE;
         owner_game = game;
     }
 

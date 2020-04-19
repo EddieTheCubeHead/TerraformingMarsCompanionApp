@@ -1,21 +1,22 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class GiantIceAsteroid extends Card {
     public GiantIceAsteroid(Game game) {
-        super("red");
+        super(Type.RED);
         name = "Giant ice asteroid";
         price = 36;
-        tags.add("space");
-        tags.add("event");
+        tags.add(Tag.SPACE);
+        tags.add(Tag.EVENT);
         owner_game = game;
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         while (true) {
             if (owner_game.tile_handler.placeOcean(player)) {
                 break;
@@ -36,6 +37,6 @@ public final class GiantIceAsteroid extends Card {
             }
         }
 
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 }

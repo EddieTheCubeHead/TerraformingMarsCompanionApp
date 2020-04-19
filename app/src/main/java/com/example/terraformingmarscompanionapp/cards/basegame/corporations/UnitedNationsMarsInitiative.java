@@ -2,23 +2,22 @@ package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class UnitedNationsMarsInitiative extends Card implements ActionCard {
     public UnitedNationsMarsInitiative(Game game) {
-        super("corporation");
+        super(Type.CORPORATION);
         name = "UNMI";
-        tags.add("earth");
+        tags.add(Tag.EARTH);
         owner_game = game;
     }
 
     @Override
-    public void onPlay(Player player) {
-        player.addEarthTag();
+    public Integer onPlay(Player player) {
         player.changeMoney(40);
-        player.setCorporation(this);
-        owner_player = player;
+        return super.onPlay(player);
     }
 
     @Override

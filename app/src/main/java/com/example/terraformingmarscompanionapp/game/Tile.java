@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.game;
 
 import java.util.ArrayList;
 
+//Luokka heksan ja sillä mahdollisesti olevan tiilen esittämiseen
 class Tile {
     private final Game game;
     private Boolean is_ocean = false;
@@ -16,8 +17,10 @@ class Tile {
     Boolean getIsOcean() {return is_ocean;}
     Boolean getIsVolcanic() {return is_volcanic;}
     String getPlacedHex() {return placed_hex;}
+    Player getOwner() {return owner;}
     ArrayList<String> getPlacementBonuses() {return placement_bonuses;}
 
+    //Rakentajat
     Tile(Game tile_game, ArrayList<String> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates) {
         placement_bonuses = tile_placement_bonuses;
         coordinates = tile_coordinates;
@@ -39,7 +42,7 @@ class Tile {
         coordinates[1] = null;
     }
 
-
+    //Heksan asettaminen ko. tiileen
     void placeHex(Player player, String hex_type) {
         if (placed_hex != null) {
             return;
@@ -50,11 +53,9 @@ class Tile {
                 switch (bonus) {
                     case "steel":
                         player.changeSteel(1);
-                        game.update_manager.onPlacementBonus(player);
                         break;
                     case "titanium":
                         player.changeTitanium(1);
-                        game.update_manager.onPlacementBonus(player);
                         break;
                     case "plant":
                         player.changePlants(1);
@@ -68,7 +69,11 @@ class Tile {
                         }
                     case "card":
                         //TODO UI prompt -ota kortti
+                        player.changeHandSize(1);
                 }
+            }
+            if (placement_bonuses.contains("steel") | placement_bonuses.contains("titanium")) {
+                game.update_manager.onPlacementBonus(player);
             }
         }
         owner = player;

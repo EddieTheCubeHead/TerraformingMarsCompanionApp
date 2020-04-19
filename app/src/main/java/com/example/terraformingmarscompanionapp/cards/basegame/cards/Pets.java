@@ -2,24 +2,25 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Pets extends ResourceCard implements EffectCard {
     public Pets(Game game) {
-        super("blue");
+        super(Type.BLUE);
         name = "Pets";
         price = 10;
-        tags.add("earth");
-        tags.add("animal");
-        resource_type = 6;
+        tags.add(Tag.EARTH);
+        tags.add(Tag.ANIMAL);
+        resource_type = ResourceType.PET;
         owner_game = game;
     }
 
     @Override
-    public void onPlay(Player player) {
+    public Integer onPlay(Player player) {
         resource_amount++;
-        super.onPlay(player);
+        return super.onPlay(player);
     }
 
     @Override

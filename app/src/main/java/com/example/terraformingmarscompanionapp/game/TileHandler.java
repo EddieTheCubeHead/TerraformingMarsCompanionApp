@@ -27,6 +27,7 @@ public class TileHandler {
         }
 
         //Manuaalisesti asetetaan karttaa vastaavat tiilet. Hardkoodattu, koska karttoja on vain kolme
+        //Suosittelen minimoimaan
         switch (map) {
             case 0:
                 //Peruspelin kartta
@@ -247,18 +248,25 @@ public class TileHandler {
                 mars_tiles[12][0] = new Tile(game, new ArrayList<>(Arrays.asList("steel", "steel")), false, new Integer[]{12, 0});
         }
 
+        //Avaruustiilillä ei ole asettamisbonusta tai viereisyysbonuksia. Venus-lisäri lisää 4 avaruustiiltä
         if (venus_in_game) {
             space_tiles = new Tile[7];
         } else {
             space_tiles = new Tile[3];
         }
 
+        //Avaruustiilten alustaminen
         for (int i = 0; i < space_tiles.length; i++) {
             space_tiles[i] = new Tile(game);
         }
     }
 
 
+    /**************************************************************************
+     * Monta tiilen asettamisfunktiota. Jokaiselle tiilityypille omansa.
+     * Funktiot ottavat Player-luokan olion ja palauttavat totuusarvon asettamisen
+     * onnistumisesta
+     **************************************************************************/
 
     public Boolean placeGreenery(Player player) {
         Tile placing_tile = getCoordinatesFromPlayer("greenery");
@@ -505,6 +513,16 @@ public class TileHandler {
         return placeTile(player, placing_tile, "nuclear_zone");
     }
 
+    public Boolean placeRestrictedArea(Player player) {
+        Tile placing_tile = getCoordinatesFromPlayer("restricted_area");
+
+        if (placing_tile.getIsOcean()) {
+            return false;
+        }
+
+        return placeTile(player, placing_tile, "restricted_area");
+    }
+
     private Boolean placeTile(Player player, Tile to_place, String tile_type) {
 
         //Erikoiskäsittely peruskartan noctis-city -tiilelle
@@ -523,7 +541,7 @@ public class TileHandler {
         }
         for (Tile neighbour : getNeighbours(to_place)) {
             if (neighbour != null) {
-                if (neighbour.getPlacedHex().equals("ocean")) {
+                if (neighbour.getPlacedHex() != null && neighbour.getPlacedHex().equals("ocean")) {
                     player.changeMoney(2 + player.getOceanAdjacencyBonusModifier());
                 }
             }
@@ -532,6 +550,8 @@ public class TileHandler {
         return true;
     }
 
+
+    //Yksityinen funktio tiilen naapurien saamiseen
     private ArrayList<Tile> getNeighbours(Tile tile) {
         Integer x = tile.getX();
         Integer y = tile.getY();
@@ -558,6 +578,7 @@ public class TileHandler {
         return neighbours;
     }
 
+    //UI-hook funktio. Tulee kysymään GUI:n avulla mihin koordinaatteihin tiili asetetaan
     private Tile getCoordinatesFromPlayer(String tile_type) {
         Tile tile = mars_tiles[8][4];
         //TODO tänne UI tiilen asettamispaikan saamiseksi
