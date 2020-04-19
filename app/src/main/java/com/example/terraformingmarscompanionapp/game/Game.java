@@ -184,14 +184,7 @@ public class Game implements Serializable {
 
         Log.i("Game", String.format("Cost packet aquired, money: %d, steel: %d, titanium: %d heat: %d.", resources_to_use.getMoney(), resources_to_use.getSteel(), resources_to_use.getTitanium(), resources_to_use.getHeat()));
 
-        //Tarkistetaan voiko pelaaja maksaa kortin jollain muulla kuin saadulla tavalla.
-        if ((card.getTags().contains(Tag.BUILDING) && player.getSteel() > resources_to_use.getSteel()) |
-            (card.getTags().contains(Tag.SPACE) && player.getTitanium() > resources_to_use.getTitanium()) |
-            (player.getHeatIsMoney() && player.getHeat() > resources_to_use.getHeat())) {
-            //TODO UI kysy haluaako pelaaja muuttaa resurssien määrää
-        } else {
-            finishPlayCard(card, player, resources_to_use);
-        }
+        //TODO UI kysy onko käytettävät resurssit ok ja haluaako muuttaa jotain
     }
 
     private void finishPlayCard(Card card, Player player, CardCostPacket resources_to_use) {
