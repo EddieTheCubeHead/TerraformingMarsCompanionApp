@@ -1,5 +1,8 @@
 package com.example.terraformingmarscompanionapp;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SearchView;
@@ -13,6 +16,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
+import com.example.terraformingmarscompanionapp.ui.main.ResourceChangerAdapter;
+import com.example.terraformingmarscompanionapp.ui.main.ResourceDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +33,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     private RecyclerAdapter adapter;
 
 
+    Dialog resource_dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -46,7 +52,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             card_list.add(entry.getValue());
 
         RecyclerView recyclerview = findViewById(R.id.result_recyclerview);
-        recyclerview.setHasFixedSize(true); //TODO testausta recyclerview sethasfixedsize kanssa(ilmeisesti parempi performanssi)
+        recyclerview.setHasFixedSize(true);
 
         adapter = new RecyclerAdapter(card_list, this, this); //this koska tämä luokka implementoi metodit
         recyclerview.setAdapter(adapter);
@@ -86,10 +92,17 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         Toast.makeText(getApplicationContext(),
                 card.getName() + " was played" , Toast.LENGTH_SHORT).show();
     }
+
+    //tehdään uusi adapteri, popup ajetaan
     @Override public boolean onCardLongClick(int position) {
-        Toast.makeText(getApplicationContext(), "card buy menu for: " +
-                card_list.get(position).getName() , Toast.LENGTH_SHORT).show();
+        Card card = card_list.get(position);
+        ResourceDialog resourceDialog = new ResourceDialog(this, getCurrentFocus());
+        resourceDialog.show(card);
+
         return true;
     }
+
+
+
 }
 
