@@ -85,8 +85,10 @@ public class GameCreationActivity extends AppCompatActivity
         //nappien listenerit
         button_add.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                String name = edittext_name.getText().toString();
-                player_names.add(name.trim());
+                String name = edittext_name.getText().toString().trim();
+                if (name.length() == 0)
+                    return;
+                player_names.add(name);
                 textview_names.append("\n"+name);
                 edittext_name.setText("");
             }
