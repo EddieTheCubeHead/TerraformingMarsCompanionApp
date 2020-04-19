@@ -197,7 +197,7 @@ public class Game implements Serializable {
         return resources_to_use;
     }
 
-    public void playCard(Card card, final CardCostPacket resources_to_use)
+    public void playCard(Card card, CardCostPacket resources_to_use)
     {
         Player player = GameController.getInstance().getCurrentPlayer();
 
