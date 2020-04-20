@@ -87,19 +87,15 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     @Override public void onCardClick(int position) {
         Card card = card_list.get(position);
 
-        controller.playCard(card);
+
 
         Toast.makeText(getApplicationContext(),
                 card.getName() + " was played" , Toast.LENGTH_SHORT).show();
     }
 
-    //tehdään uusi adapteri, popup ajetaan
+    //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) {
-        Card card = card_list.get(position);
-        ResourceDialog resourceDialog = new ResourceDialog(this, getCurrentFocus());
-        resourceDialog.show(card);
-
-        return true;
+        return false;
     }
 
 
