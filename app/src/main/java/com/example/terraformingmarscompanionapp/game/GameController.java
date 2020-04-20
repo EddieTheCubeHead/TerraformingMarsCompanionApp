@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.game;
 
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -69,11 +70,6 @@ public class GameController
         return instance;
     }
 
-    public void playCard(com.example.terraformingmarscompanionapp.cardSubclasses.Card card)
-    {
-        game.initializePlayCard(card, current_player);
-    }
-
     //vuorojen hallitseminen
     private Boolean folding = false;
     public void setPlayerIsFolding(Boolean currentIsFolding) { folding = currentIsFolding; }
@@ -126,9 +122,4 @@ public class GameController
     }
 
     //TODO tokenien sijoittaminen
-
-    private void doStuff()
-    {
-
-    }
 }
