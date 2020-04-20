@@ -13,10 +13,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameCreationActivity extends AppCompatActivity
 {
@@ -112,7 +115,7 @@ public class GameCreationActivity extends AppCompatActivity
                 hellas_elysium, corporate_era, prelude, colonies, venus, turmoil, extra_corporations, false,
                 map);
 
-        GameController gameController = GameController.makeInstance(game);
+        GameController.makeInstance(game);
 
         Intent intent = new Intent(this, InGameUI.class);
         startActivity(intent);
