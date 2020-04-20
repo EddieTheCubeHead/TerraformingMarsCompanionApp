@@ -1,10 +1,9 @@
 package com.example.terraformingmarscompanionapp;
 
 import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+
 import android.os.Bundle;
-import android.view.View;
+
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -16,8 +15,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
-import com.example.terraformingmarscompanionapp.ui.main.ResourceChangerAdapter;
-import com.example.terraformingmarscompanionapp.ui.main.ResourceDialog;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,32 +69,24 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         });
 
         //aloittaa kirjoittamisen aina kun klikataan eikä vain suurennuslasista.
-        searchview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchview.setIconified(false);
-            }
-        });
+        searchview.setOnClickListener(v -> searchview.setIconified(false));
 
 
     }
-
-    //TODO laita tähän kortin pelaaminen, ehkä klikkausääni jotenkin.
-    /*pitää jotenkin selvittää että mitä ikkunoita avautuu pelaamisesta tai hinnasta.*/
 
     @Override public void onCardClick(int position) {
         Card card = card_list.get(position);
 
+        //aloitushinta
+        CardCostPacket cost = game.getRecommendedCardCost(card);
 
+        //TODO dialogin aloittaminen cardcostpacketin tiedoilla
 
-        Toast.makeText(getApplicationContext(),
-                card.getName() + " was played" , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "add buy menu", Toast.LENGTH_SHORT).show();
     }
 
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
-    @Override public boolean onCardLongClick(int position) {
-        return false;
-    }
+    @Override public boolean onCardLongClick(int position) { return false; }
 
 
 
