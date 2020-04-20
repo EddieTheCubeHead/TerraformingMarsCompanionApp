@@ -10,7 +10,7 @@ public class CardCostPacket
     public boolean isEligible() { return eligibility; }
 
     private String rejectance_message;
-    public boolean setRejectanceMessage(String message) { rejectance_message = message; }
+    public void setRejectanceMessage(String message) { rejectance_message = message; }
 
 
     private Integer money;
