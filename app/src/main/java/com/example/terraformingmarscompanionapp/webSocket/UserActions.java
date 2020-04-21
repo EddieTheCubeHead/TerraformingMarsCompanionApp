@@ -26,7 +26,6 @@ public class UserActions {
     }
 
     public static void createGame(
-            boolean hellas_elysium,
             boolean corporate_era,
             boolean prelude,
             boolean colonies,
@@ -34,10 +33,9 @@ public class UserActions {
             boolean turmoil,
             boolean extra_corporations,
             Integer map) {
-        WebSocketHandler.sendMessage(String.format(Locale.ENGLISH, "create_game;%s;%s;%b;%b;%b;%b;%b;%b;%b;%d",
+        WebSocketHandler.sendMessage(String.format(Locale.ENGLISH, "create_game;%s;%s;%b;%b;%b;%b;%b;%b;%d",
                 session_user,
                 session_id,
-                hellas_elysium,
                 corporate_era,
                 prelude,
                 colonies,

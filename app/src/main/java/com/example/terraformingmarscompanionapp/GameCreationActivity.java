@@ -15,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.UserActions;
+import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 import java.util.ArrayList;
 
@@ -37,6 +41,22 @@ public class GameCreationActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_creation);
+
+        //Testejä by Eetu
+        WebSocketHandler.createWebSocketClient();
+        UserActions.loginUser("Eddie", "test_pass");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        UserActions.createGame(true,true,true,false,false,true, 2);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        GameActions.sendCardEvent(new CardEventPacket("Earth catapult", "Eddie", 0));
 
         //textview
         final TextView textview_names = findViewById(R.id.name_textview);

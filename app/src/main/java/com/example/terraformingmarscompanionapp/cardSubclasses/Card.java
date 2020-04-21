@@ -195,18 +195,14 @@ public abstract class Card {
     }
 
     //Lähettää serverille ilmoituksen, että serverin täytyy odottaa lisää paketteja
-    public final TurnActionInfoPacket getOnPlayWaitInformation() {
-        TurnActionInfoPacket event = new TurnActionInfoPacket(false);
-        event.setResourceEventCount(wait_resource_event);
-        event.setTileEventCount(wait_tile_event);
-        return event;
+    public final void getOnPlayWaitInformation(TurnActionInfoPacket event) {
+        event.changeResourceEventCount(wait_resource_event);
+        event.changeTileEventCount(wait_tile_event);
     }
 
-    public final TurnActionInfoPacket getOnActionWaitInformation() {
-        TurnActionInfoPacket event = new TurnActionInfoPacket(false);
-        event.setResourceEventCount(wait_action_resource_event);
-        event.setTileEventCount(wait_action_tile_event);
-        return event;
+    public final void getOnActionWaitInformation(TurnActionInfoPacket event) {
+        event.changeResourceEventCount(wait_action_resource_event);
+        event.changeTileEventCount(wait_action_tile_event);
     }
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}

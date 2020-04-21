@@ -50,9 +50,15 @@ public final class WebSocketHandler {
 
                         //Pelin luominen ja liittyminen
                         case "game_created":
-                            Log.i("WebSocket", "Game created with code: " + contents[1]);
+                            GameActions.handleGameCreated(s);
                             break;
 
+                        case "game_joined":
+                            GameActions.handleGameJoined(s);
+                            break;
+
+                        case "player_joined":
+                            GameActions.handlePlayerJoined(s);
 
                         //Exceptioneiden käsittely
                         case "username_exception":
@@ -104,6 +110,7 @@ public final class WebSocketHandler {
 
     //Kutsutaan GameActions- ja UserActions -luokista.
     static void sendMessage(String message) {
+        Log.i("WebSocket", "Sending message " + message);
         webSocketClient.send(message);
     }
 }

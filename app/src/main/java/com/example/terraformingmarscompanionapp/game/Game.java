@@ -42,7 +42,7 @@ public class Game implements Serializable {
      * lisäksi packet kertoo mitä kaikkea muuta lähetetään perässä. Nämä mahdolliset perässälähetettävät toiminnot
      * säilytetään vuoron ajan listoissa. CardEventPacket ja ResourceEventPacket luodaan tarvittaessa erikseen.
      */
-    private TurnActionInfoPacket turn_actions;
+    private TurnActionInfoPacket turn_actions = new TurnActionInfoPacket();
     private CardEventPacket card_event;
     private ArrayList<ResourceEventPacket> resource_events = new ArrayList<>();
     private ArrayList<TileEventPacket> tile_events = new ArrayList<>();
@@ -150,6 +150,10 @@ public class Game implements Serializable {
         }
         raising_player.changeTerraformingRating(1);
         global_temperature += 2;
+        if (global_temperature == 0) {
+            turn_actions.changeTileEventCount(1);
+            tile_handler.placeOcean(raising_player);
+        }
         return true;
     }
 
@@ -220,7 +224,7 @@ public class Game implements Serializable {
         if (server_multiplayer)
         {
             card_event = new CardEventPacket(card.getName(), player.getName(), metadata);
-            turn_actions = card.getOnPlayWaitInformation();
+            card.getOnPlayWaitInformation(turn_actions);
 
             Timer timer = new Timer();
 
@@ -244,6 +248,8 @@ public class Game implements Serializable {
 
                         for (ResourceEventPacket resource_event : resource_events)
                             GameActions.sendResourceEvent(resource_event);
+
+                        turn_actions.resetActions();
 
                         timer.cancel();
                     }
