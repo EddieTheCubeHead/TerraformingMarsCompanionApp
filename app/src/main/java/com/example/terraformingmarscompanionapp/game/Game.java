@@ -9,16 +9,11 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.TurnActionInfoPacket;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Game implements Serializable {
 
@@ -37,18 +32,6 @@ public class Game implements Serializable {
     //Pelataanko peli serverin välityksellä vai ei
     private Boolean server_multiplayer = false;
     public Boolean getServerMultiplayer() {return server_multiplayer;}
-
-    /* Serveripelissä siirrosta lähetetään serverille aina vähintään CardEventPacketin (voi kuvata myös toimintaa)
-     * lisäksi packet kertoo mitä kaikkea muuta lähetetään perässä. Nämä mahdolliset perässälähetettävät toiminnot
-     * säilytetään vuoron ajan listoissa. CardEventPacket ja ResourceEventPacket luodaan tarvittaessa erikseen.
-     */
-    private TurnActionInfoPacket turn_actions = new TurnActionInfoPacket();
-    private CardEventPacket card_event;
-    private ArrayList<ResourceEventPacket> resource_events = new ArrayList<>();
-    private ArrayList<TileEventPacket> tile_events = new ArrayList<>();
-
-    public void addResourceEvent(ResourceEventPacket event) {resource_events.add(event);}
-    public void addTileEvent(TileEventPacket event) {tile_events.add(event);}
 
     //Getterit pelaajille ja pakoille, plus pakalle listana
     public ArrayList<Player> getPlayers() {return  players;}
@@ -150,7 +133,6 @@ public class Game implements Serializable {
         raising_player.changeTerraformingRating(1);
         global_temperature += 2;
         if (global_temperature == 0) {
-            turn_actions.changeTileEventCount(1);
             tile_handler.placeOcean(raising_player);
         }
         return true;
@@ -223,38 +205,7 @@ public class Game implements Serializable {
 
         if (server_multiplayer)
         {
-            card_event = new CardEventPacket(card.getName(), player.getName(), metadata);
-            card.getOnPlayWaitInformation(turn_actions);
-
-            Timer timer = new Timer();
-
-            //Timer tarkistaa onko kaikki kortin määrittämät tapahtumat tallennettu ja lähettää paketit jos näin on
-            timer.schedule(new TimerTask()
-            {
-                @Override
-                public void run()
-                {
-                    if (turn_actions.getResourceEventCount() == resource_events.size() &&
-                        turn_actions.getTileEventCount() == tile_events.size())
-                    {
-                        GameActions.sendTurnInfo(turn_actions);
-                        GameActions.sendCardEvent(card_event);
-                        GameActions.sendCardCost(resources_to_use);
-
-                        for (TileEventPacket tile_event : tile_events)
-                            GameActions.sendTileEvent(tile_event);
-
-                        tile_events.clear();
-
-                        for (ResourceEventPacket resource_event : resource_events)
-                            GameActions.sendResourceEvent(resource_event);
-
-                        turn_actions.resetActions();
-
-                        timer.cancel();
-                    }
-                }
-            }, 0, 1000);
+            GameActions.sendCardEvent(new CardEventPacket(card.getName(), player.getName(), metadata));
         }
     }
 

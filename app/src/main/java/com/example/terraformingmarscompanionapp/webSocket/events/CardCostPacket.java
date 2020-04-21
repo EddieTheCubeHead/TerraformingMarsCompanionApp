@@ -1,7 +1,10 @@
 package com.example.terraformingmarscompanionapp.webSocket.events;
 
+import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.Player;
+
 //Luokka kortin pelaamisen vaatimien resurssien listaamiseen kompaktisti.
-public class CardCostPacket
+public class CardCostPacket implements PlayablePacket
 {
     //ui-puolella chekataan isEligible -funktiota käyttäen voidaanko korttia pelata resursseilla.
 
@@ -40,5 +43,16 @@ public class CardCostPacket
         this.heat = heat;
         this.plant_resources = plant_resources;
         this.floater_resources = floater_resources;
+    }
+
+    @Override
+    public void playPacket() {
+        Player player = GameController.getInstance().getCurrentPlayer();
+        player.changeMoney(-money);
+        player.changeSteel(-steel);
+        player.changeTitanium(-titanium);
+        player.changeHeat(-heat);
+
+        //TODO resurssi-integraatio
     }
 }

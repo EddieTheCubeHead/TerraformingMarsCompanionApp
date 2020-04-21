@@ -523,7 +523,7 @@ public class TileHandler {
         return placeTile(player, placing_tile, "restricted_area");
     }
 
-    private Boolean placeTile(Player player, Tile to_place, String tile_type) {
+    public Boolean placeTile(Player player, Tile to_place, String tile_type) {
 
         //Erikoiskäsittely peruskartan noctis-city -tiilelle
         if (map == 0 && to_place.getX() == 4 && to_place.getY() == 4) {
@@ -583,5 +583,9 @@ public class TileHandler {
         Tile tile = mars_tiles[8][4];
         //TODO tänne UI tiilen asettamispaikan saamiseksi
         return tile;
+    }
+
+    public Tile getTile(Integer x, Integer y) {
+        return mars_tiles[x][y];
     }
 }

@@ -61,6 +61,11 @@ public final class WebSocketHandler {
                             GameActions.handlePlayerJoined(s);
                             break;
 
+                        //Pelin toiminnot
+                        case "game_action":
+                            GameActions.handleGameEvent(s);
+                            break;
+
                         //Exceptioneiden käsittely
                         case "username_exception":
                             Log.i("WebSocketException", "Invalid username: " + contents[1]);

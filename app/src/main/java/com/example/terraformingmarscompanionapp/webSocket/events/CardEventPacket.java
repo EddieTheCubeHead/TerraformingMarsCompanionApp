@@ -1,6 +1,9 @@
 package com.example.terraformingmarscompanionapp.webSocket.events;
 
-public class CardEventPacket {
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
+
+public class CardEventPacket implements PlayablePacket {
     private String card_name;
     private String player_name;
     private Integer metadata;
@@ -13,5 +16,11 @@ public class CardEventPacket {
         this.card_name = card_name;
         this.player_name = player_name;
         this.metadata = metadata;
+    }
+
+    @Override
+    public void playPacket() {
+        Game game = GameController.getInstance().getGame();
+        game.getDeck().get(card_name).playWithMetadata(game.getPlayer(player_name), metadata);
     }
 }

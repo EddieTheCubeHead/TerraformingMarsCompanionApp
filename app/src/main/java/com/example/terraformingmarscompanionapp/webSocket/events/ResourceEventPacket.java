@@ -1,15 +1,21 @@
 package com.example.terraformingmarscompanionapp.webSocket.events;
 
-import java.util.HashMap;
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
-public class ResourceEventPacket {
-    private HashMap<String, Integer> resource_changes = new HashMap<>();
+public class ResourceEventPacket implements PlayablePacket {
+    private String card_name;
+    private Integer change;
 
-    public ResourceEventPacket(HashMap<String, Integer> resource_changes) {
-        this.resource_changes = resource_changes;
+    public ResourceEventPacket(String card_name, Integer change) {
+        this.card_name = card_name;
+        this.change = change;
     }
 
-    public HashMap<String, Integer> getResourceChanges() {
-        return resource_changes;
+
+    @Override
+    public void playPacket() {
+       Game game = GameController.getInstance().getGame();
+       game.changeCardResources(game.getDeck().get(card_name), change);
     }
 }

@@ -6,9 +6,6 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.TurnActionInfoPacket;
 
 import java.util.ArrayList;
 
@@ -34,15 +31,6 @@ public abstract class Card {
         OTHER,
         GHOST
     }
-
-    //Käytetään serverin kanssa pelatessa ilmoittamaan serverille tarvittavat lisätiedot yhdessä
-    //sendWaitInformation(Boolean action) -funktion kanssa
-    protected Integer wait_tile_event = 0;
-    protected Integer wait_metadata = 0;
-    protected Integer wait_resource_event = 0;
-    protected Integer wait_action_tile_event = 0;
-    protected Integer wait_action_metadata = 0;
-    protected Integer wait_action_resource_event = 0;
 
     public Card(Type card_type) {
         type = card_type;
@@ -185,24 +173,9 @@ public abstract class Card {
     /* Serveri-implementaatiossa on siirrettävä jotenkin kortin pelaamiseen liittyvät päätökset.
      * Onneksi kaikki nämä päätökset ovat kuvattavissa yhdellä kokonaisluvulla. Tarvittaessa
      * kortti voi override:aa tämän funktion, jotta sen pelaaminen muilla pelissä olevilla onnistuu
-     * ilman kortin sisällä tehtävää päätöstä. Samoin jos kortissa on manuaalisesti toteutettava
-     * resurssi- tai tiilitapahtuma kyseinen tapahtuma saadaan serveriltä eikä UI:sta. playWithMetadata
-     * ottaa arraylistin TileEventteja ja ResourceEventtejä näiden kuvastamiseen.
-     */
-    public void playWithMetadata(Player player, Integer data, ArrayList<TileEventPacket> tile_events, ArrayList<ResourceEventPacket> resource_events) {
-        Log.i("Card", "Play with metadata called from unsupported card: " + this.name);
+     * ilman kortin sisällä tehtävää päätöstä. */
+    public void playWithMetadata(Player player, Integer data) {
         onPlay(player);
-    }
-
-    //Lähettää serverille ilmoituksen, että serverin täytyy odottaa lisää paketteja
-    public final void getOnPlayWaitInformation(TurnActionInfoPacket event) {
-        event.changeResourceEventCount(wait_resource_event);
-        event.changeTileEventCount(wait_tile_event);
-    }
-
-    public final void getOnActionWaitInformation(TurnActionInfoPacket event) {
-        event.changeResourceEventCount(wait_action_resource_event);
-        event.changeTileEventCount(wait_action_tile_event);
     }
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}

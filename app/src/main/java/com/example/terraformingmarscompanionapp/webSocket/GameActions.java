@@ -7,7 +7,6 @@ import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.TurnActionInfoPacket;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,7 +21,7 @@ public class GameActions {
     public static void handleGameEvent(String event_data) {
         String event_type = event_data.split(Pattern.quote(";"))[1];
         String event = event_data.split(Pattern.quote(";"))[2];
-        switch (event_data.split(Pattern.quote(";"))[1]) {
+        switch (event_type) {
             case "turn_info":
                 break;
             case "card_event":
