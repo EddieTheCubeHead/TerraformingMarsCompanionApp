@@ -1,4 +1,7 @@
-package com.example.terraformingmarscompanionapp.game;
+package com.example.terraformingmarscompanionapp.game.tileSystem;
+
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
 
@@ -6,9 +9,9 @@ import java.util.ArrayList;
 class Tile {
     private final Game game;
     private Boolean is_ocean = false;
-    private ArrayList<String> placement_bonuses = new ArrayList<>();
+    private ArrayList<PlacementBonus> placement_bonuses = new ArrayList<>();
     private Integer[] coordinates = new Integer[2];
-    private String placed_hex = null;
+    private Placeable placed_hex = null;
     private Boolean is_volcanic = false;
     private Player owner = null;
 
@@ -16,19 +19,19 @@ class Tile {
     Integer getY() {return coordinates[1];}
     Boolean getIsOcean() {return is_ocean;}
     Boolean getIsVolcanic() {return is_volcanic;}
-    String getPlacedHex() {return placed_hex;}
-    Player getOwner() {return owner;}
-    ArrayList<String> getPlacementBonuses() {return placement_bonuses;}
+    public Placeable getPlacedHex() {return placed_hex;}
+    public Player getOwner() {return owner;}
+    ArrayList<PlacementBonus> getPlacementBonuses() {return placement_bonuses;}
 
     //Rakentajat
-    Tile(Game tile_game, ArrayList<String> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates) {
+    Tile(Game tile_game, ArrayList<PlacementBonus> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates) {
         placement_bonuses = tile_placement_bonuses;
         coordinates = tile_coordinates;
         is_ocean = tile_is_ocean;
         game = tile_game;
     }
 
-    Tile(Game tile_game, ArrayList<String> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates, Boolean tile_is_volcanic) {
+    Tile(Game tile_game, ArrayList<PlacementBonus> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates, Boolean tile_is_volcanic) {
         placement_bonuses = tile_placement_bonuses;
         coordinates = tile_coordinates;
         is_ocean = tile_is_ocean;
@@ -43,36 +46,36 @@ class Tile {
     }
 
     //Heksan asettaminen ko. tiileen
-    void placeHex(Player player, String hex_type) {
+    void placeHex(Player player, Placeable hex_type) {
         if (placed_hex != null) {
             return;
         }
         placed_hex = hex_type;
         if (placement_bonuses != null) {
-            for (String bonus : placement_bonuses) {
+            for (PlacementBonus bonus : placement_bonuses) {
                 switch (bonus) {
-                    case "steel":
+                    case STEEL:
                         player.changeSteel(1);
                         break;
-                    case "titanium":
+                    case TITANIUM:
                         player.changeTitanium(1);
                         break;
-                    case "plant":
+                    case PLANT:
                         player.changePlants(1);
                         break;
-                    case "heat":
+                    case HEAT:
                         player.changeHeat(1);
                         break;
-                    case "ocean":
+                    case OCEAN:
                         if (player.changeMoney(-6)) {
                             game.tile_handler.placeOcean(player);
                         }
-                    case "card":
+                    case CARD:
                         //TODO UI prompt -ota kortti
                         player.changeHandSize(1);
                 }
             }
-            if (placement_bonuses.contains("steel") | placement_bonuses.contains("titanium")) {
+            if (placement_bonuses.contains(PlacementBonus.STEEL) | placement_bonuses.contains(PlacementBonus.TITANIUM)) {
                 game.update_manager.onPlacementBonus(player);
             }
         }

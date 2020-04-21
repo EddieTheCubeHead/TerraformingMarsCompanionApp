@@ -4,10 +4,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
-
-import java.util.ArrayList;
 
 public final class ImportedHydrogen extends Card {
     public ImportedHydrogen(Game game) {
@@ -34,7 +30,7 @@ public final class ImportedHydrogen extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data, ArrayList<TileEventPacket> tile_events, ArrayList<ResourceEventPacket> resource_events) {
+    public void playWithMetadata(Player player, Integer data) {
         //TODO hookki tile-event pakettiin
         if (data == 0) {
             player.changePlants(3);

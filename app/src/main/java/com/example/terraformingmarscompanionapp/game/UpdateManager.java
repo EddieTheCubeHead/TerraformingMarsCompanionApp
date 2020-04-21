@@ -35,7 +35,7 @@ public final class UpdateManager {
 
     }
 
-    void onCityPlaced(Player player, Boolean onMars) {
+    public void onCityPlaced(Player player, Boolean onMars) {
         if (onMars) {
             owner_game.addCityOnMars();
             effect_cards.get("Tharsis republic ghost").cardEffect(player);
@@ -92,7 +92,7 @@ public final class UpdateManager {
 
     }
 
-    void onOceanPlaced(Player player) {
+    public void onOceanPlaced(Player player) {
         effect_cards.get("Arctic algae").cardEffect(player);
     }
 
@@ -112,7 +112,7 @@ public final class UpdateManager {
         effect_cards.get("Credicor").cardEffect(player);
     }
 
-    void onPlacementBonus(Player player) {
+    public void onPlacementBonus(Player player) {
         effect_cards.get("Mining guild").cardEffect(player);
     }
 
@@ -128,11 +128,10 @@ public final class UpdateManager {
 
     }
 
-    void onGreeneryPlaced(Player player) {
+    public void onGreeneryPlaced(Player player) {
         effect_cards.get("Herbivores").cardEffect(player);
     }
 
-    //Tämä on simppelimpää kutsua korteista, jotka sijaitsevat eri packagessa, siksi public
     public void onSpaceEvent(Player player) {
         effect_cards.get("Optimal aerobraking").cardEffect(player);
     }

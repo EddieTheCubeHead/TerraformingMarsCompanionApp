@@ -6,9 +6,11 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -74,7 +76,7 @@ public class Game implements Serializable {
     private Integer global_oxygen;
     public Integer getGlobalOxygen() {return global_oxygen;}
     private final Integer oceans_placed;
-    Integer getOceansPlaced() {return oceans_placed;}
+    public Integer getOceansPlaced() {return oceans_placed;}
     private Integer venus_terraform;
     public Integer getVenusTerraform() {return venus_terraform;}
     private Integer cities_on_mars;
@@ -514,16 +516,18 @@ public class Game implements Serializable {
         return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
     }
 
-    //Tätä tarvitaan erityisesti serveripohjaisessa moninpelissä, mutta myös parissa erityistapauksessa
-    //paikallisissa peleissä.
+    //Kutsutaan resurssimuutoksia kortteihin tekevistä UI:sta
     public void changeCardResources(Card card, Integer amount) {
 
         if (!(card instanceof ResourceCard)) {
             return;
         }
         ResourceCard resource_holder = (ResourceCard)card;
-
         resource_holder.changeResourceAmount(amount);
+
+        if (server_multiplayer) {
+            GameActions.sendResourceEvent(new ResourceEventPacket(resource_holder.getName(), amount));
+        }
     }
 
     //Sukupolven päättäminen

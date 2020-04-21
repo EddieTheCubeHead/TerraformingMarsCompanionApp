@@ -15,10 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.UserActions;
-import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 import java.util.ArrayList;
 
@@ -42,8 +38,8 @@ public class GameCreationActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_creation);
 
-        //Testejä by Eetu
-        WebSocketHandler.createWebSocketClient();
+        //Testejä by Eetu jätä kommentoiduiksi, mutta älä poista. Käytän näitä vielä.
+        /*WebSocketHandler.createWebSocketClient();
         UserActions.loginUser("Edd1e", "test_pass");
         try {
             Thread.sleep(1000);
@@ -57,7 +53,7 @@ public class GameCreationActivity extends AppCompatActivity
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        GameActions.sendCardEvent(new CardEventPacket("Earth catapult", "Eddie", 0));
+        GameActions.sendCardEvent(new CardEventPacket("Earth catapult", "Eddie", 0));*/
 
         //textview
         final TextView textview_names = findViewById(R.id.name_textview);

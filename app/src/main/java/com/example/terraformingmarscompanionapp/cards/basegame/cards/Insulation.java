@@ -3,10 +3,6 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
-
-import java.util.ArrayList;
 
 public final class Insulation extends Card {
     public Insulation(Game game) {
@@ -26,7 +22,7 @@ public final class Insulation extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data, ArrayList<TileEventPacket> tile_events, ArrayList<ResourceEventPacket> resource_events) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeHeatProduction(-data);
         player.changeMoneyProduction(data);
         super.onPlay(player);
