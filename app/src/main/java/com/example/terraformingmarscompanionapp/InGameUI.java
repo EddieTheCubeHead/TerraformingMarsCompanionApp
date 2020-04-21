@@ -87,6 +87,8 @@ public class InGameUI extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //TODO foldaus
+
     //TODO back nappiin toiminnallisuus, vaikkapa ylös scrollaus
     @Override public void onBackPressed() {} //back -nappi ei tee nyt mitään.
 }

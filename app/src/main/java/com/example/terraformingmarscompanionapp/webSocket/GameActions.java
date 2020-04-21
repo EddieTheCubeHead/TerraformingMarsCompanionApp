@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.webSocket;
 
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
@@ -19,7 +20,26 @@ public class GameActions {
 
     //Kaikki pelitapahtumat routataan tästä läpi ServerGameControlleriin
     public static void handleGameEvent(String event_data) {
-        //TODO tarvittavat UI-hookit
+        String event_type = event_data.split(Pattern.quote(";"))[1];
+        String event = event_data.split(Pattern.quote(";"))[2];
+        switch (event_data.split(Pattern.quote(";"))[1]) {
+            case "turn_info":
+                break;
+            case "card_event":
+                break;
+            case "card_cost":
+                break;
+            case "resource_event":
+                break;
+            case "tile_event":
+                break;
+            case "fold":
+                GameController.getInstance().setPlayerIsFolding(true);
+                GameController.getInstance().endTurn();
+                break;
+            default:
+                Log.i("GameActions", "Unrecognized game action: " + event_data);
+        }
     }
 
     //Pelin luominen, tallentaa pelikoodin
@@ -80,6 +100,11 @@ public class GameActions {
         String message = String.format("game_action;%s;%s;%s;tile_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);
         WebSocketHandler.sendMessage(message);
+    }
+
+    //Foldaamisen lähettäminen
+    public static void sendFold() {
+        WebSocketHandler.sendMessage("game_action;%s;%s;%s;fold");
     }
 
     //Pelin luonut pelaaja määrittää pelin alussa vuorojärjestyksen ja se lähetetään tällä
