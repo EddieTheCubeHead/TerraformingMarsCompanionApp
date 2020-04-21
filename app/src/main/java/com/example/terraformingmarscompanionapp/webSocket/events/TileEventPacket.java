@@ -25,5 +25,17 @@ public class TileEventPacket implements PlayablePacket{
     public void playPacket() {
         Game game = GameController.getInstance().getGame();
         game.tile_handler.placeTile(game.getPlayer(player_name), game.tile_handler.getTile(x_coord, y_coord), tile_type);
+        switch (tile_type) {
+            case OCEAN:
+                game.getPlayer(player_name).changeTerraformingRating(1);
+                break;
+            case GREENERY:
+                game.raiseOxygen(game.getPlayer(player_name));
+                break;
+            case MINING_AREA:
+                //TODO Eetu tämä sotku
+            default:
+                break;
+        }
     }
 }

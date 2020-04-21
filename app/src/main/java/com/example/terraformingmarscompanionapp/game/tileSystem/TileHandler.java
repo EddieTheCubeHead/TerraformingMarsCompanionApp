@@ -527,6 +527,27 @@ public class TileHandler {
         return placeTile(player, placing_tile, Placeable.RESTRICTED_AREA);
     }
 
+    public ArrayList<String> placeFloodOcean(Player player) {
+        Tile placing_tile = getCoordinatesFromPlayer(Placeable.OCEAN);
+        ArrayList<String> neighbour_players = new ArrayList<>();
+
+        if (!placing_tile.getIsOcean() | game.getOceansPlaced() >= 9) {
+            //Pieni häkki, tätä voi käyttää falsen palauttamisen sijaan, koska pelaajanimet ovat vähintään 3 merkkiä pitkiä.
+            return new ArrayList<String>(Collections.singletonList("E"));
+        }
+        if (placeTile(player, placing_tile, Placeable.OCEAN)) {
+            player.changeTerraformingRating(1);
+            game.update_manager.onOceanPlaced(player);
+            for (Tile tile : getNeighbours(placing_tile)) {
+                if (tile.getOwner() != null) {
+                    neighbour_players.add(tile.getOwner().getName());
+                }
+            }
+            return neighbour_players;
+        }
+        return new ArrayList<String>(Collections.singletonList("E"));
+    }
+
     public Boolean placeTile(Player player, Tile to_place, Placeable tile_type) {
 
         //Erikoiskäsittely peruskartan noctis-city -tiilelle

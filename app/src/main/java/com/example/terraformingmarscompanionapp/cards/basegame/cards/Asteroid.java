@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.webSocket.ServerGameController;
 
 public final class Asteroid extends Card {
     public Asteroid(Game game) {
@@ -21,5 +22,10 @@ public final class Asteroid extends Card {
         player.changeTitanium(2);
         //TODO poista toiselta 3 kasvia
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        owner_game.getPlayer(ServerGameController.getPlayerName(data)).changePlants(3);
     }
 }

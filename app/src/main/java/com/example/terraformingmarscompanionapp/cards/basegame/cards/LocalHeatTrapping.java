@@ -25,7 +25,8 @@ public final class LocalHeatTrapping extends Card {
         } else {
             player.changePlants(4);
         }
-        return super.onPlay(player);
+        super.onPlay(player);
+        return added_animals ? 1 : 0;
     }
 
     @Override

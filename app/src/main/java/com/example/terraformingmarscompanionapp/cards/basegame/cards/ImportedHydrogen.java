@@ -31,11 +31,8 @@ public final class ImportedHydrogen extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        //TODO hookki tile-event pakettiin
         if (data == 0) {
             player.changePlants(3);
-        } else {
-            //TODO hookki resourcepakettiin
         }
         super.onPlay(player);
     }

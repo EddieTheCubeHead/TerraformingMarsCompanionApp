@@ -180,7 +180,7 @@ public abstract class Card {
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}
     public final String getName() {return name;}
-    public final Player getOwenr() {return owner_player;}
+    public final Player getOwmer() {return owner_player;}
     public final Integer getPrice() {return price;}
     public final Type getType() {return type;}
     public final ArrayList<Tag> getTags() {return tags;}

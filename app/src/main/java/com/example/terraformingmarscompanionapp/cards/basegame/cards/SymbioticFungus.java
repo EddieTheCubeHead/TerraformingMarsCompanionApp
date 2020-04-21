@@ -1,11 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 
-public final class SymbioticFungus extends Card implements ActionCard {
+public final class SymbioticFungus extends Card implements MetadataAction {
     public SymbioticFungus(Game game) {
         super(Type.BLUE);
         name = "Symbiotic fungus";
@@ -28,5 +28,10 @@ public final class SymbioticFungus extends Card implements ActionCard {
     @Override
     public Boolean getActionUsed() {
         return action_used;
+    }
+
+    @Override
+    public boolean actionWithMetadata(Integer data) {
+        return true;
     }
 }

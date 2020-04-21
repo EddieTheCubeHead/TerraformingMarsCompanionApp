@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class ServerGameController {
     private static ArrayList<String> players = new ArrayList<>();
+    public static String getPlayerName(Integer index) {return players.get(index - 1);}
 
     public static void addPlayer(String player_name) {
         players.add(player_name);

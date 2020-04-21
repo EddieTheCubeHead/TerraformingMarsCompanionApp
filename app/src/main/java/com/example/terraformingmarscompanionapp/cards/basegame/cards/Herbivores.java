@@ -5,6 +5,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.webSocket.ServerGameController;
 
 public final class Herbivores extends ResourceCard implements EffectCard {
     public Herbivores(Game game) {
@@ -22,6 +23,13 @@ public final class Herbivores extends ResourceCard implements EffectCard {
         //TODO poista toiselta pelaajalta yksi kasvintuotanto
         resource_amount++;
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        owner_game.getPlayer(ServerGameController.getPlayerName(data)).takePlantsProduction(1);
+        resource_amount++;
+        super.onPlay(player);
     }
 
     @Override

@@ -1,5 +1,10 @@
 package com.example.terraformingmarscompanionapp.webSocket.events;
 
+import android.util.Log;
+
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
@@ -18,9 +23,21 @@ public class CardEventPacket implements PlayablePacket {
         this.metadata = metadata;
     }
 
+    /* Saadut paketit pelataan. Onko kyseessä kortin pelaaminen vai toiminnan käyttö selviää kortin omistajasta:
+     * pelatulla kortilla on aina omistaja => omistajallinen kortti on pelattu toimintona.
+     */
     @Override
     public void playPacket() {
         Game game = GameController.getInstance().getGame();
-        game.getDeck().get(card_name).playWithMetadata(game.getPlayer(player_name), metadata);
+        Card card = game.getDeck().get(card_name);
+        if (card.getOwmer() == null) {
+            card.playWithMetadata(game.getPlayer(player_name), metadata);
+        } else if (card instanceof MetadataAction) {
+            ((MetadataAction) card).actionWithMetadata(metadata);
+        } else if (card instanceof ActionCard) {
+            ((ActionCard) card).cardAction();
+        } else {
+            Log.i("WebSocket", "CardEffectPacket lähetetty omistetusta kortista, jolla ei ole toimintaa. Huomauta Eetua. Kortin nimi: " + card_name);
+        }
     }
 }

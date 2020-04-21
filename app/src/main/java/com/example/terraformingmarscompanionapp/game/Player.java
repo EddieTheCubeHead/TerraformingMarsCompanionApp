@@ -92,6 +92,17 @@ public class Player {
         money += change_amount;
         return true;
     }
+    /* Jotkin kortit vievät mahdollisimman paljon resurssia, takeResource() -funktiot vievät annetun
+     * määrän mutta jättävät määrän nollaan ja toimivat vaikkei annettua määrä voisi viedä.
+     */
+    public void takeMoney(Integer amount) {
+        money -= amount;
+        if (money < 0) {
+            money = 0;
+        }
+    }
+
+
     public Integer getMoneyProduction() {return money_production;}
     public void changeMoneyProduction(Integer change_amount) {
         money_production += change_amount;
@@ -109,6 +120,13 @@ public class Player {
         steel += change_amount;
         return true;
     }
+    public void takeSteel(Integer amount) {
+        steel -= amount;
+        if (steel < 0) {
+            steel = 0;
+        }
+    }
+
     public Integer getSteelProduction() {return steel_production;}
     public boolean changeSteelProduction(Integer change_amount) {
         if (steel_production + change_amount < 0) {
@@ -130,6 +148,13 @@ public class Player {
         titanium += change_amount;
         return true;
     }
+    public void takeTitanium(Integer amount) {
+        titanium -= amount;
+        if (titanium < 0) {
+            titanium = 0;
+        }
+    }
+
     public Integer getTitaniumProduction() {return titanium_production;}
     public boolean changeTitaniumProduction(Integer change_amount) {
         if (titanium_production + change_amount < 0) {
@@ -151,6 +176,13 @@ public class Player {
         plants += change_amount;
         return true;
     }
+    public void takePlants(Integer amount) {
+        plants -= amount;
+        if (plants < 0) {
+            plants = 0;
+        }
+    }
+
     public Integer getPlantsProduction() {return plants_production;}
     public boolean changePlantsProduction(Integer change_amount) {
         if (plants_production + change_amount < 0) {
@@ -159,6 +191,12 @@ public class Player {
         plants_production += change_amount;
         game.update_manager.onPlantsProductionRaised(this, change_amount);
         return true;
+    }
+    public void takePlantsProduction(Integer amount) {
+        plants_production -= amount;
+        if (plants_production < 0) {
+            plants_production = 0;
+        }
     }
 
     //Energia
@@ -172,6 +210,7 @@ public class Player {
         energy += change_amount;
         return true;
     }
+
     public Integer getEnergyProduction() {return energy_production;}
     public boolean changeEnergyProduction(Integer change_amount) {
         if (energy_production + change_amount < 0) {
@@ -180,6 +219,12 @@ public class Player {
         energy_production += change_amount;
         game.update_manager.onEnergyProductionRaised(this, change_amount);
         return true;
+    }
+    public void takeEnergyProduction(Integer amount) {
+        energy_production -= amount;
+        if (energy_production < 0) {
+            energy_production = 0;
+        }
     }
 
     //Lämpö
@@ -201,6 +246,12 @@ public class Player {
         heat_production += change_amount;
         game.update_manager.onHeatProductionRaised(this, change_amount);
         return true;
+    }
+    public void takeHeatProduction(Integer amount) {
+        heat_production -= amount;
+        if (heat_production < 0) {
+            heat_production = 0;
+        }
     }
 
     //TR
