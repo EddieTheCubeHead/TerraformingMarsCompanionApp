@@ -17,20 +17,21 @@ public class GameActions {
     private static Gson gson = builder.create();
     private static String game_code;
 
-    //Kaikki pelitapahtumat routataan tästä läpi ServerGameControlleriin
     public static void handleGameEvent(String event_data) {
         String event_type = event_data.split(Pattern.quote(";"))[1];
         String event = event_data.split(Pattern.quote(";"))[2];
         switch (event_type) {
-            case "turn_info":
-                break;
             case "card_event":
+                gson.fromJson(event, CardEventPacket.class).playPacket();
                 break;
             case "card_cost":
+                gson.fromJson(event, CardCostPacket.class).playPacket();
                 break;
             case "resource_event":
+                gson.fromJson(event, ResourceEventPacket.class).playPacket();
                 break;
             case "tile_event":
+                gson.fromJson(event, TileEventPacket.class).playPacket();
                 break;
             case "fold":
                 GameController.getInstance().setPlayerIsFolding(true);
@@ -69,14 +70,7 @@ public class GameActions {
         //TODO tarvittavat UI-hookit
     }
 
-    /* Seuraavat viisi funktiota lähettävät kaikki vuoron pelaamisen aikana mahdollisesti tapahtuvat
-     * tapahtumat erityyppisinä datapaketteina */
-    public static void sendTurnInfo(TurnActionInfoPacket action_info) {
-        String message = String.format("game_action;%s;%s;%s;turn_info;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
-        message += gson.toJson(action_info);
-        WebSocketHandler.sendMessage(message);
-    }
-
+    //Eri event pakettien lähettäminen:
     public static void sendCardEvent(CardEventPacket event) {
         String message = String.format("game_action;%s;%s;%s;card_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);

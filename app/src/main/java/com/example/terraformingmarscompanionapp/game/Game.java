@@ -192,10 +192,7 @@ public class Game implements Serializable {
             return;
         }
 
-        player.changeMoney(-resources_to_use.getMoney());
-        player.changeSteel(-resources_to_use.getSteel());
-        player.changeTitanium(-resources_to_use.getTitanium());
-        player.changeHeat(-resources_to_use.getHeat());
+        resources_to_use.playPacket();
 
         //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
 
@@ -203,8 +200,8 @@ public class Game implements Serializable {
         Integer metadata = card.onPlay(player);
         GameController.getInstance().useAction();
 
-        if (server_multiplayer)
-        {
+        if (server_multiplayer) {
+            GameActions.sendCardCost(resources_to_use);
             GameActions.sendCardEvent(new CardEventPacket(card.getName(), player.getName(), metadata));
         }
     }
