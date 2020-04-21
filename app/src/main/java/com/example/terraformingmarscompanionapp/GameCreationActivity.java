@@ -44,13 +44,14 @@ public class GameCreationActivity extends AppCompatActivity
 
         //Testejä by Eetu
         WebSocketHandler.createWebSocketClient();
-        UserActions.loginUser("Eddie", "test_pass");
+        UserActions.loginUser("Edd1e", "test_pass");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        UserActions.createGame(true,true,true,false,false,true, 2);
+        //UserActions.createGame(true,true,true,false,false,true, 2);
+        UserActions.joinGame("LWqyj5");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -130,7 +131,7 @@ public class GameCreationActivity extends AppCompatActivity
         }
 
         Game game = new Game(player_names,
-                hellas_elysium, corporate_era, prelude, colonies, venus, turmoil, extra_corporations, false,
+                corporate_era, prelude, colonies, venus, turmoil, extra_corporations, false,
                 map);
 
         GameController.makeInstance(game);

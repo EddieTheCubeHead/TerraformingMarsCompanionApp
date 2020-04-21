@@ -59,6 +59,7 @@ public final class WebSocketHandler {
 
                         case "player_joined":
                             GameActions.handlePlayerJoined(s);
+                            break;
 
                         //Exceptioneiden käsittely
                         case "username_exception":

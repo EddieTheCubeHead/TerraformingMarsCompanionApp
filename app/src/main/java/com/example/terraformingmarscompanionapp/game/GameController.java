@@ -23,6 +23,10 @@ public class GameController
     private Player current_player;
     private Player current_starter;
 
+    //Controllerin pitää tietää onko peli serverin välityksellä pelattu, ja jos on, kuka pelaajista on kyseisen clientin omistaja
+    private Boolean server_multiplayer = false;
+    private Player self_player;
+
     public Game getGame() { return game; }
     public Player getCurrentPlayer()  { return current_player; }
     public Player getCurrentStarter() { return current_starter; }
@@ -57,6 +61,11 @@ public class GameController
         }
         instance = new GameController(game);
         return instance;
+    }
+
+    public void makeMultiplayer(Player player) {
+        server_multiplayer=true;
+        self_player = player;
     }
 
     public static GameController getInstance()

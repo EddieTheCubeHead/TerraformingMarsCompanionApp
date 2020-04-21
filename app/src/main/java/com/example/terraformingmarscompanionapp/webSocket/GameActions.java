@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 public class GameActions {
     private static GsonBuilder builder = new GsonBuilder();
     private static Gson gson = builder.create();
-
     private static String game_code;
 
     //Kaikki pelitapahtumat routataan tästä läpi ServerGameControlleriin

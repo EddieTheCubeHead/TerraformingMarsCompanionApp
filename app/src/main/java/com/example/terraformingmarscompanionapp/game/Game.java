@@ -104,7 +104,6 @@ public class Game implements Serializable {
     //Rakentaja
     public Game(
                     ArrayList<String> player_names,
-                    boolean hellas_elysium,
                     boolean corporate_era,
                     boolean prelude,
                     boolean colonies,
