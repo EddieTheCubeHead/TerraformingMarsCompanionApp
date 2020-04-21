@@ -2,13 +2,11 @@ package com.example.terraformingmarscompanionapp.webSocket;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
 
 public class ServerGameController {
     private static ArrayList<String> players = new ArrayList<>();
-    private static Player self = null;
 
     public static void addPlayer(String player_name) {
         players.add(player_name);
@@ -19,9 +17,8 @@ public class ServerGameController {
                 corporate_era, prelude, colonies, venus, turmoil, extra_corporations, true,
                 map);
 
-        self = game.getPlayer(UserActions.getSessionUser());
         GameController controller = GameController.makeInstance(game);
-        controller.makeMultiplayer();
+        controller.makeMultiplayer(game.getPlayer(UserActions.getSessionUser()));
         return controller;
     }
 }

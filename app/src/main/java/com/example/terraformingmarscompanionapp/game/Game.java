@@ -219,6 +219,7 @@ public class Game implements Serializable {
 
         Log.i("Game", "OnPlay called");
         Integer metadata = card.onPlay(player);
+        GameController.getInstance().useAction();
 
         if (server_multiplayer)
         {

@@ -25,6 +25,9 @@ public class GameController
     private Player current_player;
     private Player current_starter;
 
+    //Seuraa käytettyjen toimintojen määrää, nollataan aina kun pelaaja vaihtuu
+    private Integer actions_used = 0;
+
     //Controllerin pitää tietää onko peli serverin välityksellä pelattu, ja jos on, kuka pelaajista on kyseisen clientin omistaja
     private Boolean server_multiplayer = false;
     private Player self_player;
@@ -97,6 +100,14 @@ public class GameController
     public void setPlayerIsFolding(Boolean currentIsFolding) { folding = currentIsFolding; }
     public void foldOnTurnEnd() { folding = true; }
 
+    //Toiminnon käyttäminen
+    public void useAction() {
+        actions_used++;
+        if (actions_used == 2) {
+            endTurn();
+        }
+    }
+
     public void endTurn()
     {
         beforeTurnEnd();
@@ -119,6 +130,7 @@ public class GameController
 
     private void beforeTurnEnd()
     {
+        actions_used = 0;
         //TODO kaikki vuoron lopussa vuoron lopettavalle current_playerille tapahtuva
     }
 
