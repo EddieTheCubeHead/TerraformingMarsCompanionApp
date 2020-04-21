@@ -1,6 +1,8 @@
 package com.example.terraformingmarscompanionapp.game;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -30,6 +32,17 @@ public class GameController
     public Game getGame() { return game; }
     public Player getCurrentPlayer()  { return current_player; }
     public Player getCurrentStarter() { return current_starter; }
+
+    //Serveripeliä varten tarkistus onko clientin vuoro, vai jonkun muun
+    public Boolean checkTurnEligibility() {
+        if (!server_multiplayer) {
+            return true;
+        } else if (self_player == null) {
+            Log.i("GameController", "Moninpelilogiikkavirhe vuorojen tarkkailussa, huomauta Eetua.");
+            return false;
+        }
+        return current_player==self_player;
+    }
 
     //Player player = new Player(game, "Testipelaaja");
 

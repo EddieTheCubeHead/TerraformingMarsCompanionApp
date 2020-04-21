@@ -2,17 +2,17 @@ package com.example.terraformingmarscompanionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Toast;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
 
 public class InGameUI extends AppCompatActivity {
 
@@ -38,6 +38,13 @@ public class InGameUI extends AppCompatActivity {
         //KAIKKI LISTENERIT PLACEHOLDEREITA ATM
         findViewById(R.id.item_1).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
+
+                /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
+                 * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
+                if (!gameController.checkTurnEligibility()) {
+                    Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Player current_player = gameController.getCurrentPlayer();
 
                 current_player.changeMoney(10);
@@ -70,6 +77,12 @@ public class InGameUI extends AppCompatActivity {
 
     private void startSearchActivity()
     {
+        /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
+         * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
+        if (!gameController.checkTurnEligibility()) {
+            Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
