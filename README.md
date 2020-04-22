@@ -22,3 +22,7 @@ with none of the functions ready. Deadline of the assignment is 08/05/2020, but 
 assignment is returned.
 
 At the moment the are no plans to release the app in any way or form, only share with some friends after it is ready.
+
+Note about comments and documentation: Most of the documentations, commit messages and comments are Finnish right now, because the
+course for which this project will be submitted as practice assignment is in Finnish. After the assignment is done, comments and
+documentation should get translated into english.
