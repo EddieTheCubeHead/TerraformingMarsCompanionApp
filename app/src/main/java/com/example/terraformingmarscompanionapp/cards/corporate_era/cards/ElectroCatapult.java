@@ -25,15 +25,15 @@ public final class ElectroCatapult extends Card implements ActionCard {
         return super.onPlay(player);
     }
 
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         }
         else {
             //TODO Valitse kasvi/teräs
             owner_player.changeMoney(7);
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

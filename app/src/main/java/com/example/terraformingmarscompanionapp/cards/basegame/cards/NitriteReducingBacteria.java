@@ -23,9 +23,9 @@ public final class NitriteReducingBacteria extends ResourceCard implements Metad
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             Boolean add_microbe = true;
             //TODO booleanin kysyminen UI:lla
@@ -35,10 +35,10 @@ public final class NitriteReducingBacteria extends ResourceCard implements Metad
                 resource_amount -= 3;
                 owner_player.changeTerraformingRating(1);
             } else {
-                return false;
+                return -1;
             }
             action_used = true;
-            return true;
+            return add_microbe ? 0 : 1;
         }
     }
 

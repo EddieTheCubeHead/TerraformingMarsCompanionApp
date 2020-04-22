@@ -15,9 +15,13 @@ public final class SymbioticFungus extends Card implements MetadataAction {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
+        if (action_used) {
+            return -1;
+        }
         //TODO lisää toiminto jahka korttiresurssijärjestelmä implementoitu
-        return true;
+        action_used = true;
+        return 0;
     }
 
     @Override

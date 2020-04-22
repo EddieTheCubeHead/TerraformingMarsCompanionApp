@@ -21,14 +21,14 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used | !owner_player.getRaisedTrThisGeneration() | owner_player.getMoney() < 3) {
-            return false;
+            return -1;
         } else {
             owner_player.changeMoney(-3);
             owner_player.changeTerraformingRating(1);
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

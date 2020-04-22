@@ -19,9 +19,9 @@ public final class RegolithEaters extends ResourceCard implements MetadataAction
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             boolean added_microbes = true;
             //TODO UI kysymään lisääkö mikrobeita vai nostaako happea
@@ -31,10 +31,10 @@ public final class RegolithEaters extends ResourceCard implements MetadataAction
                 resource_amount -= 2;
                 owner_game.raiseOxygen(owner_player);
             } else {
-                return false;
+                return -1;
             }
             action_used = true;
-            return true;
+            return added_microbes ? 0 : 1;
         }
     }
 

@@ -16,9 +16,9 @@ public final class ExtremeColdFungus extends Card implements MetadataAction {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             Boolean chose_microbes = true;
             //TODO UI kasveja vai mikrobeja UI
@@ -28,7 +28,7 @@ public final class ExtremeColdFungus extends Card implements MetadataAction {
                 owner_player.changePlants(1);
             }
             action_used = true;
-            return true;
+            return chose_microbes ? 0 : 1;
         }
     }
 

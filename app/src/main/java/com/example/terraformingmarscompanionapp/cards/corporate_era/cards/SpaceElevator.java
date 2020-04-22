@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -25,15 +25,15 @@ public final class SpaceElevator extends Card implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used | owner_player.getSteel() < 1) {
-            return false;
+            return -1;
         }
         else {
             owner_player.changeSteel(-1);
             owner_player.changeMoney(5);
             action_used = true;
-            return true;
+            return 0;
         }
 
     }

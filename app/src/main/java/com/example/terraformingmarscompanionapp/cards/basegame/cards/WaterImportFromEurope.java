@@ -23,9 +23,9 @@ public final class WaterImportFromEurope extends Card implements MetadataAction 
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             //TODO implementoi ota 12 rahana/titaanina
             action_used = true;
@@ -36,7 +36,7 @@ public final class WaterImportFromEurope extends Card implements MetadataAction 
                     //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
                 }
             }
-            return true;
+            return 0;
         }
     }
 

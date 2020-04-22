@@ -3,16 +3,13 @@ package com.example.terraformingmarscompanionapp.webSocket.events;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
+import com.example.terraformingmarscompanionapp.game.tileSystem.PlacementBonus;
 
 public class TileEventPacket implements PlayablePacket{
     private Placeable tile_type;
     private String player_name;
     private Integer x_coord;
     private Integer y_coord;
-
-    public Placeable getTileType() {return tile_type;}
-    public Integer getXCoord() {return x_coord;}
-    public Integer getYCoord() {return y_coord;}
 
     public TileEventPacket(Placeable tile_type, String player_name, Integer x_coord, Integer y_coord) {
         this.tile_type = tile_type;
@@ -28,12 +25,21 @@ public class TileEventPacket implements PlayablePacket{
         switch (tile_type) {
             case OCEAN:
                 game.getPlayer(player_name).changeTerraformingRating(1);
+                game.update_manager.onOceanPlaced(game.getPlayer(player_name));
                 break;
             case GREENERY:
                 game.raiseOxygen(game.getPlayer(player_name));
+                game.update_manager.onGreeneryPlaced(game.getPlayer(player_name));
+                break;
+            case CITY:
+                game.update_manager.onCityPlaced(game.getPlayer(player_name), true);
                 break;
             case MINING_AREA:
-                //TODO Eetu tämä sotku
+                if (game.tile_handler.getTile(x_coord, y_coord).getPlacementBonuses().contains(PlacementBonus.TITANIUM)) {
+                    game.getPlayer(player_name).changeTitaniumProduction(1);
+                } else {
+                    game.getPlayer(player_name).changeSteelProduction(1);
+                }
             default:
                 break;
         }

@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
 public interface ActionCard {
-    boolean cardAction();
+    Integer cardAction();
     String getActionName();
     Boolean getActionUsed();
 }

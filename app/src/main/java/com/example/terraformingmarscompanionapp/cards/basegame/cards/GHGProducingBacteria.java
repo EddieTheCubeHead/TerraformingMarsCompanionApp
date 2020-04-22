@@ -20,21 +20,21 @@ public final class GHGProducingBacteria extends ResourceCard implements Metadata
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             Boolean added_microbes = true;
             //TODO UI kysymään tämä
             if (added_microbes) {
                 resource_amount++;
             } else if (resource_amount < 2) {
-                return false;
+                return -1;
             } else {
                 resource_amount -= 2;
             }
             action_used = true;
-            return true;
+            return added_microbes ? 1 : 0;
         }
     }
 

@@ -24,13 +24,13 @@ public final class Ants extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             //TODO poista resurssi toiselta kortilta
             resource_amount++;
-            return true;
+            return 0;
         }
     }
 

@@ -23,13 +23,13 @@ public final class Predators extends ResourceCard implements MetadataAction {
         return super.onPlay(player);
     }
 
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             //TODO poista toiselta eläin
             resource_amount++;
-            return true;
+            return 0;
         }
     }
 

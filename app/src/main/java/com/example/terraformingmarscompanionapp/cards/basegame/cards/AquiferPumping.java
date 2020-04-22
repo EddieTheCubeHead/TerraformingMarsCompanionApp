@@ -15,9 +15,9 @@ public final class AquiferPumping extends Card implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else if (owner_player != null) {
             //TODO implementoi tähän vie 8 rahana tai teräksenä
             while (true) {
@@ -28,9 +28,9 @@ public final class AquiferPumping extends Card implements ActionCard {
                 }
             }
             action_used = true;
-            return true;
+            return 0;
         }
-        return false;
+        return -1;
     }
 
     @Override

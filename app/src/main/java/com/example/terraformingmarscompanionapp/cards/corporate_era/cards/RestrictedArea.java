@@ -33,15 +33,15 @@ public final class RestrictedArea extends Card implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used | owner_player.getMoney() < 2) {
-            return false;
+            return -1;
         } else {
             //Todo UI-prompt ota kortti
             owner_player.changeMoney(-2);
             owner_player.changeHandSize(1);
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

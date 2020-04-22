@@ -15,19 +15,19 @@ public final class UndergroundDetonation extends Card implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else if (owner_player != null) {
             if (owner_player.getMoney() < 10) {
-                return false;
+                return -1;
             }
             owner_player.changeMoney(-10);
             owner_player.changeHeatProduction(2);
             action_used = true;
-            return true;
+            return 0;
         }
-        return false;
+        return -1;
     }
 
     @Override

@@ -15,14 +15,14 @@ public final class EquatorialMagnetizer extends Card implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used | owner_player.getEnergyProduction() < 1) {
-            return false;
+            return -1;
         } else {
             owner_player.changeEnergyProduction(-1);
             owner_player.changeTerraformingRating(1);
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

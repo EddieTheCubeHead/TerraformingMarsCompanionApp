@@ -46,5 +46,6 @@ public final class GiantIceAsteroid extends Card {
         owner_game.getPlayer(ServerGameController.getPlayerName(data)).takePlants(6);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
+        super.onPlay(player);
     }
 }

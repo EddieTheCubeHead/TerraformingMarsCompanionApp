@@ -14,13 +14,13 @@ public final class MartianRails extends Card implements ActionCard {
         owner_game = game;
     }
 
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (!owner_player.changeEnergy(-1) | action_used) {
-            return false;
+            return -1;
         } else {
             owner_player.changeMoney(owner_game.getCitiesOnMars());
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

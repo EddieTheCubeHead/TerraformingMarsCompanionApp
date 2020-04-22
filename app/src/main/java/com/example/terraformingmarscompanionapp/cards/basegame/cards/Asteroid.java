@@ -26,6 +26,11 @@ public final class Asteroid extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.getPlayer(ServerGameController.getPlayerName(data)).changePlants(3);
+        if (data != 0) {
+            owner_game.getPlayer(ServerGameController.getPlayerName(data)).changePlants(3);
+        }
+        owner_game.raiseTemperature(player);
+        player.changeTitanium(2);
+        super.onPlay(player);
     }
 }

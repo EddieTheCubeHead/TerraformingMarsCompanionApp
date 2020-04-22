@@ -33,12 +33,12 @@ public final class Birds extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             resource_amount++;
-            return true;
+            return 0;
         }
     }
 

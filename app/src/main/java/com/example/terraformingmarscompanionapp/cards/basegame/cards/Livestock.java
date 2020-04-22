@@ -26,13 +26,13 @@ public final class Livestock extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else {
             resource_amount++;
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

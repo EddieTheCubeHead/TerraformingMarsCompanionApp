@@ -31,14 +31,14 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used | owner_player.getTitanium() < 1) {
-            return false;
+            return -1;
         } else {
             owner_player.changeTitanium(-1);
             resource_amount++;
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

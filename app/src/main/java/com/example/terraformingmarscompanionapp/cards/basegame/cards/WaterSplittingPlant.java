@@ -16,14 +16,14 @@ public final class WaterSplittingPlant extends Card implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if ((owner_player.getEnergy() < 3) | action_used) {
-            return false;
+            return -1;
         } else {
             owner_player.changeEnergy(-3);
             owner_game.raiseOxygen(owner_player);
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

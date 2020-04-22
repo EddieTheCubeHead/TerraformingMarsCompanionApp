@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 import java.util.ArrayList;
 
 //Luokka heksan ja sillä mahdollisesti olevan tiilen esittämiseen
-class Tile {
+public class Tile {
     private final Game game;
     private Boolean is_ocean = false;
     private ArrayList<PlacementBonus> placement_bonuses = new ArrayList<>();
@@ -21,7 +21,7 @@ class Tile {
     Boolean getIsVolcanic() {return is_volcanic;}
     public Placeable getPlacedHex() {return placed_hex;}
     public Player getOwner() {return owner;}
-    ArrayList<PlacementBonus> getPlacementBonuses() {return placement_bonuses;}
+    public ArrayList<PlacementBonus> getPlacementBonuses() {return placement_bonuses;}
 
     //Rakentajat
     Tile(Game tile_game, ArrayList<PlacementBonus> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates) {

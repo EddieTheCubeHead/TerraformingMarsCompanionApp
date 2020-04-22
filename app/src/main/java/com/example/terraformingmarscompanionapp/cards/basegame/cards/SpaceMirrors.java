@@ -16,14 +16,14 @@ public final class SpaceMirrors extends Card implements ActionCard {
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if ((owner_player.getMoney() < 7) | action_used) {
-            return false;
+            return -1;
         } else {
             owner_player.changeMoney(-7);
             owner_player.changeEnergyProduction(1);
             action_used = true;
-            return true;
+            return 0;
         }
     }
 

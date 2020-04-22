@@ -24,11 +24,11 @@ public final class SearchForLife extends ResourceCard implements MetadataAction 
     }
 
     @Override
-    public boolean cardAction() {
+    public Integer cardAction() {
         if (action_used) {
-            return false;
+            return -1;
         } else if (owner_player.getMoney() < 1) {
-            return false;
+            return -1;
         } else {
             owner_player.changeMoney(-1);
             boolean found_life = false;
@@ -36,7 +36,7 @@ public final class SearchForLife extends ResourceCard implements MetadataAction 
             if (found_life) {
                 resource_amount++;
             }
-            return true;
+            return found_life ? 1 : 0;
         }
     }
 
@@ -57,7 +57,7 @@ public final class SearchForLife extends ResourceCard implements MetadataAction 
 
     @Override
     public void onGameEnd() {
-        if (resource_amount < 0) {
+        if (resource_amount > 0) {
             owner_player.changeVictoryPoints(3);
         }
     }
