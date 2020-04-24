@@ -25,8 +25,14 @@ public final class ResearchOutpost extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-        player.changeCardDiscount(1);
         player.addCity();
+        player.changeCardDiscount(1);
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeCardDiscount(1);
+        super.onPlay(player);
     }
 }

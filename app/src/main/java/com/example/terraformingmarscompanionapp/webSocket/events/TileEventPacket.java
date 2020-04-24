@@ -29,10 +29,12 @@ public class TileEventPacket implements PlayablePacket{
                 break;
             case GREENERY:
                 game.raiseOxygen(game.getPlayer(player_name));
+                game.getPlayer(player_name).addGreenery();
                 game.update_manager.onGreeneryPlaced(game.getPlayer(player_name));
                 break;
             case CITY:
                 game.update_manager.onCityPlaced(game.getPlayer(player_name), true);
+                game.getPlayer(player_name).addCity();
                 break;
             case MINING_AREA:
                 if (game.tile_handler.getTile(x_coord, y_coord).getPlacementBonuses().contains(PlacementBonus.TITANIUM)) {

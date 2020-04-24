@@ -26,9 +26,16 @@ public final class CupolaCity extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
+        player.addCity();
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
-        player.addCity();
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeEnergyProduction(-1);
+        player.changeMoneyProduction(3);
+        super.onPlay(player);
     }
 }

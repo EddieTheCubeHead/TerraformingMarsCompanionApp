@@ -26,7 +26,12 @@ public final class ConvoyFromEurope extends Card {
         }
         //TODO prompti yhden kortin nostoon
         player.changeHandSize(1);
-
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeHandSize(1);
+        super.onPlay(player);
     }
 }

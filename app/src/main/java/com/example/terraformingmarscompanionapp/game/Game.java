@@ -196,8 +196,6 @@ public class Game implements Serializable {
 
         resources_to_use.playPacket();
 
-        //TODO pelaajan korttiresurssien vähentäminen kun kyseinen järjestelmä implementoitu.
-
         Log.i("Game", "OnPlay called");
         Integer metadata = card.onPlay(player);
         GameController.getInstance().useAction();

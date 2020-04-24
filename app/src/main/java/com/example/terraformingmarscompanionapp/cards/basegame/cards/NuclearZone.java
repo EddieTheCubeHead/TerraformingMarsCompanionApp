@@ -28,4 +28,11 @@ public final class NuclearZone extends Card {
         owner_game.raiseTemperature(player);
         return super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        owner_game.raiseTemperature(player);
+        owner_game.raiseTemperature(player);
+        super.onPlay(player);
+    }
 }

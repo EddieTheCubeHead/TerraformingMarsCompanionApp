@@ -26,4 +26,10 @@ public final class MoholeArea extends Card {
         player.changeHeatProduction(4);
         return super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeHeatProduction(4);
+        super.onPlay(player);
+    }
 }

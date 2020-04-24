@@ -10,10 +10,9 @@ TODO: Seuraavat UI-näkymät:
 TODO: Kortteja kehiin, -Aapo
 
 TODO: WebSocket serveripeli -Eetu
-    Kortin pelaamisen framework metadatan ja EventPackettien avulla
-        Gson-integraatio pakettien siirtämiseen
     Pelin rakentaminen
 
 Harkkatyön palautuksen jälkeiset:
 
 TODO: Tekstit (flavor ja kuvaus)
+TODO: kirjoita korttien onPlay ja playWithMetadata -interaktio uudestaan koodin määrän vähentämiseksi

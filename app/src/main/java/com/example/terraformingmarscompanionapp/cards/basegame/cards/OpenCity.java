@@ -20,7 +20,6 @@ public final class OpenCity extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        owner_game.update_manager.onVpCardPlayed(player);
         while (true) {
             if (owner_game.tile_handler.placeCity(player)) {
                 break;
@@ -28,10 +27,20 @@ public final class OpenCity extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
+        player.addCity();
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(4);
         player.changePlants(2);
-        player.addCity();
+        owner_game.update_manager.onVpCardPlayed(player);
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeEnergyProduction(-1);
+        player.changeMoneyProduction(4);
+        player.changePlants(2);
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 }

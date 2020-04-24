@@ -28,11 +28,20 @@ public final class DomedCrater extends Card {
             }
         }
 
+        player.addCity();
         player.changePlants(3);
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
         owner_game.update_manager.onVpCardPlayed(player);
-        player.addCity();
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changePlants(3);
+        player.changeEnergyProduction(-1);
+        player.changeMoneyProduction(3);
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 }

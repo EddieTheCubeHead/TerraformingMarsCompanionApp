@@ -28,4 +28,11 @@ public final class TowingAComet extends Card {
         owner_game.raiseOxygen(player);
         return super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changePlants(2);
+        owner_game.raiseOxygen(player);
+        super.onPlay(player);
+    }
 }

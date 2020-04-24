@@ -27,4 +27,9 @@ public final class Plantation extends Card {
         player.addGreenery();
         return super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        super.onPlay(player);
+    }
 }

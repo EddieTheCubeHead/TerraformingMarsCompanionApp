@@ -24,4 +24,11 @@ public final class EonChasmaNationalPark extends Card {
         //TODO lisää eläin toiselle kortille
         return super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changePlants(3);
+        player.changeMoneyProduction(2);
+        super.onPlay(player);
+    }
 }

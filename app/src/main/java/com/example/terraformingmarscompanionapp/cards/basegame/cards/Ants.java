@@ -1,12 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-public final class Ants extends ResourceCard implements ActionCard {
+public final class Ants extends ResourceCard implements MetadataAction {
     public Ants(Game game) {
         super(Type.BLUE);
         name = "Ants";
@@ -37,6 +37,12 @@ public final class Ants extends ResourceCard implements ActionCard {
     @Override
     public String getActionName() {
         return getName();
+    }
+
+    @Override
+    public boolean actionWithMetadata(Integer data) {
+        resource_amount++;
+        return true;
     }
 
     @Override

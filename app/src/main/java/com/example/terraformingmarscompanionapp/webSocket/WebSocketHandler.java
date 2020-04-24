@@ -14,8 +14,6 @@ public final class WebSocketHandler {
     private static WebSocketClient webSocketClient = null;
 
     //WebSocketin sydän. Vastaanottaa serverin viestit. Käsittelyyn oltava funktio muualla logia lukuunottamatta.
-    //TODO kaikki käsittelevät funktiot oikeaan kohtaan koodissa
-    //TODO, Eetu: tutustu gson-tarjoamiin mahdollisuuksiin, suunnittele pelin tapahtumille paras tapa kulkea serverin ja clientin välillä.
     public static void createWebSocketClient() {
         URI uri;
         try {

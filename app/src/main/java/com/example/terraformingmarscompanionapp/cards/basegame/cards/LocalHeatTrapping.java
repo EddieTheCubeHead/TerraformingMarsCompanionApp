@@ -20,12 +20,7 @@ public final class LocalHeatTrapping extends Card {
         player.changeHeat(-5);
         boolean added_animals = true;
         //TODO UI kysy kasvien vai eläinten lisäys, jos eläimet, minne?
-        if (added_animals) {
-            //TODO lisää eläimet haluttuun paikkaan
-        } else {
-            player.changePlants(4);
-        }
-        super.onPlay(player);
+        playWithMetadata(player, added_animals ? 1 : 0);
         return added_animals ? 1 : 0;
     }
 
@@ -34,8 +29,7 @@ public final class LocalHeatTrapping extends Card {
         player.changeHeat(-5);
         if (data == 0) {
             player.changePlants(4);
-        } else {
-            //TODO hookki resourcepakettiin
         }
+        super.onPlay(player);
     }
 }

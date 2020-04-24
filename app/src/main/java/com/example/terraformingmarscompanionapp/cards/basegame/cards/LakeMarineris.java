@@ -30,9 +30,13 @@ public final class LakeMarineris extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-        owner_player = player;
         owner_game.update_manager.onVpCardPlayed(player);
-
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
     }
 }

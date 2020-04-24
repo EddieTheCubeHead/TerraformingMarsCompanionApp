@@ -30,4 +30,11 @@ public final class NaturalPreserve extends Card {
         owner_game.update_manager.onVpCardPlayed(player);
         return super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeMoneyProduction(1);
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
+    }
 }

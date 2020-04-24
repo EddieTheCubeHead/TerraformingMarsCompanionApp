@@ -24,8 +24,14 @@ public final class ProtectedValley extends Card {
                 //TODO feedback pelaajalla ja mahdollisuus peruuttaa
             }
         }
-        player.changeMoneyProduction(2);
         player.addGreenery();
+        player.changeMoneyProduction(2);
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeMoneyProduction(2);
+        super.onPlay(player);
     }
 }

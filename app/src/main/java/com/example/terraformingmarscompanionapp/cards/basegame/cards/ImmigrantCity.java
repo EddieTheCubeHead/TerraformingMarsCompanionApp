@@ -26,10 +26,17 @@ public final class ImmigrantCity extends Card implements EffectCard {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
+        player.addCity();
         player.changeMoneyProduction(-2);
         player.changeEnergyProduction(-1);
-        player.addCity();
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeMoneyProduction(-2);
+        player.changeEnergyProduction(-1);
+        super.onPlay(player);
     }
 
     @Override

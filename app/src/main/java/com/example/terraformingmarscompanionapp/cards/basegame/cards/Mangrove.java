@@ -29,4 +29,10 @@ public final class Mangrove extends Card {
         player.addGreenery();
         return super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        owner_game.update_manager.onVpCardPlayed(player);
+        super.onPlay(player);
+    }
 }
