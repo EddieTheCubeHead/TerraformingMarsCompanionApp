@@ -3,8 +3,8 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.ServerGameController;
 
 public final class DeimosDown extends Card {
     public DeimosDown(Game game) {
@@ -18,17 +18,19 @@ public final class DeimosDown extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        player.changeSteel(4);
-        //TODO vähennä 8 kasvia
-        owner_game.raiseTemperature(player);
-        owner_game.raiseTemperature(player);
-        owner_game.raiseTemperature(player);
-        return super.onPlay(player);
+        Integer player_to_take_from = 0;
+        //TODO UI kysy keneltä viedään kasvit
+        //Tämän voi kutsua UI:sta
+        playWithMetadata(player, player_to_take_from);
+
+        return player_to_take_from;
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.getPlayer(ServerGameController.getPlayerName(data)).takePlants(8);
+        if (data != 0) {
+            GameController.getInstance().getPlayer(data).takePlants(8);
+        }
         player.changeSteel(4);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);

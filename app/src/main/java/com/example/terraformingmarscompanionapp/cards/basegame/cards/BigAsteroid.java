@@ -3,8 +3,8 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.ServerGameController;
 
 public final class BigAsteroid extends Card {
     public BigAsteroid(Game game) {
@@ -18,16 +18,19 @@ public final class BigAsteroid extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        owner_game.raiseTemperature(player);
-        owner_game.raiseTemperature(player);
-        player.changeTitanium(4);
-        //TODO poista 4 kasvia muilta
-        return super.onPlay(player);
+        Integer player_to_take_from = 0;
+        //TODO UI kysy keneltä poistetaan kasveja
+        //Tämän voi kutsua UI:sta
+        playWithMetadata(player, player_to_take_from);
+
+        return player_to_take_from;
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.getPlayer(ServerGameController.getPlayerName(data)).takePlants(4);
+        if (data != 0) {
+            GameController.getInstance().getPlayer(data).takePlants(4);
+        }
         player.changeTitanium(4);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);

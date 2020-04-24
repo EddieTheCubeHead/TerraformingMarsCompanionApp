@@ -48,6 +48,8 @@ public class GameController
         return current_player==self_player;
     }
 
+    public Player getPlayer(Integer index) {return queue_full.get(index - 1);}
+
     //Player player = new Player(game, "Testipelaaja");
 
     private GameController(Game game){

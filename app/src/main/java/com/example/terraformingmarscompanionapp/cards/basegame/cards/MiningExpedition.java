@@ -3,8 +3,8 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.ServerGameController;
 
 public final class MiningExpedition extends Card {
     public MiningExpedition(Game game) {
@@ -17,15 +17,18 @@ public final class MiningExpedition extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        player.changeSteel(2);
-        owner_game.raiseOxygen(player);
-        //TODO toiselta pelaajalta kasvien poisto
-        return super.onPlay(player);
+        Integer player_to_take_from = 0;
+        //TODO UI kysy keneltä poistetaan
+        playWithMetadata(player, player_to_take_from);
+
+        return player_to_take_from;
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.getPlayer(ServerGameController.getPlayerName(data)).takePlants(2);
+        if (data != 0) {
+            GameController.getInstance().getPlayer(data).takePlants(2);
+        }
         player.changeSteel(2);
         owner_game.raiseOxygen(player);
         super.onPlay(player);

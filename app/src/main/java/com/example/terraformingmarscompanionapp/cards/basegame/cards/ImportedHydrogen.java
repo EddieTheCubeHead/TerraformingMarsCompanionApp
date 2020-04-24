@@ -25,8 +25,11 @@ public final class ImportedHydrogen extends Card {
                 //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
             }
         }
-        //TODO kasvin, mikrobin tai eläimen lisäys
-        return super.onPlay(player);
+        Integer choice = 0;
+        //TODO UI kasvin (0), mikrobin (1) tai eläimen (2) lisäys
+        playWithMetadata(player, choice);
+
+        return choice;
     }
 
     @Override

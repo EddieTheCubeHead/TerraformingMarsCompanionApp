@@ -14,5 +14,6 @@ TODO: WebSocket serveripeli -Eetu
 
 Harkkatyön palautuksen jälkeiset:
 
+TODO: Game ja GameController aidoiksi singeltoneiksi init-funktiolla
 TODO: Tekstit (flavor ja kuvaus)
 TODO: kirjoita korttien onPlay ja playWithMetadata -interaktio uudestaan koodin määrän vähentämiseksi

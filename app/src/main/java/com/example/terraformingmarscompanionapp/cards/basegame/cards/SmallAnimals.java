@@ -4,8 +4,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.ServerGameController;
 
 public final class SmallAnimals extends ResourceCard implements ActionCard {
     public SmallAnimals(Game game) {
@@ -20,14 +20,17 @@ public final class SmallAnimals extends ResourceCard implements ActionCard {
 
     @Override
     public Integer onPlay(Player player) {
-        //TODO toiselta pelaajalta kasvien poistaminen
-        owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        Integer player_to_take_from = 0;
+        //TODO UI kysy keneltä viedään kasveja
+        //Tämän voi kutsua suoraan UI:sta
+        playWithMetadata(player, player_to_take_from);
+
+        return player_to_take_from;
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.getPlayer(ServerGameController.getPlayerName(data)).takePlantsProduction(1);
+        GameController.getInstance().getPlayer(data).takePlantsProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.onPlay(player);
     }
