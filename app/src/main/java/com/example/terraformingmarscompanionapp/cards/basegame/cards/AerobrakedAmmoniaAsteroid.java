@@ -17,10 +17,16 @@ public final class AerobrakedAmmoniaAsteroid extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        owner_game.update_manager.onSpaceEvent(player);
         player.changeHeatProduction(3);
         player.changePlantsProduction(1);
         //TODO lisää 2 mikrobia toiselle kortille
         return super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeHeatProduction(3);
+        player.changePlantsProduction(1);
+        super.onPlay(player);
     }
 }

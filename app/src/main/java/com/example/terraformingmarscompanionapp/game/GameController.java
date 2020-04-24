@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Olio jonka pitäisi sisältää kaikki UI-luokkien kutsuma joka liittyy pelilogiikkaan.
@@ -20,7 +21,7 @@ public class GameController
     static GameController instance = null;
 
     private Game game;
-    private Deque<Player> queue_full = new LinkedList<>(); //double ended queue
+    private List<Player> queue_full = new ArrayList<>(); //double ended queue
     private Deque<Player> queue = new LinkedList<>();
     private Player current_player;
     private Player current_starter;

@@ -23,4 +23,11 @@ public final class ImportedNitrogen extends Card {
         //TODO lisää 3 mikrobia ja kaksi eläintä
         return super.onPlay(player);
     }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeTerraformingRating(1);
+        player.changePlants(4);
+        super.onPlay(player);
+    }
 }

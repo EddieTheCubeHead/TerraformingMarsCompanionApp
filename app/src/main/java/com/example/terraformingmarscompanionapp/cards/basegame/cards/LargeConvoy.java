@@ -34,10 +34,9 @@ public final class LargeConvoy extends Card {
     public void playWithMetadata(Player player, Integer data) {
         if (data == 0) {
             player.changePlants(5);
-        } else {
-            //TODO hookki saatuun resourcepackettiin
         }
-        //TOdo prompti nosta kaksi korttia
+        //TODO prompti nosta kaksi korttia
+        player.changeHandSize(2);
         super.onPlay(player);
     }
 }

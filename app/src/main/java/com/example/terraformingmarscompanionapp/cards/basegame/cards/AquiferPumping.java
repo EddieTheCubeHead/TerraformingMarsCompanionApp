@@ -1,11 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 
-public final class AquiferPumping extends Card implements ActionCard {
+public final class AquiferPumping extends Card implements MetadataAction {
     public AquiferPumping(Game game) {
         super(Type.BLUE);
         name = "Aquifer pumping";
@@ -31,6 +31,11 @@ public final class AquiferPumping extends Card implements ActionCard {
             return 0;
         }
         return -1;
+    }
+
+    @Override
+    public boolean actionWithMetadata(Integer data) {
+        return true;
     }
 
     @Override

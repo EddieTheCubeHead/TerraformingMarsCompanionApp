@@ -10,7 +10,6 @@ import tech.gusavila92.websocketclient.WebSocketClient;
 
 //https://www.pubnub.com/blog/java-websocket-programming-with-android-and-spring-boot/
 public final class WebSocketHandler {
-
     private static WebSocketClient webSocketClient = null;
 
     //WebSocketin sydän. Vastaanottaa serverin viestit. Käsittelyyn oltava funktio muualla logia lukuunottamatta.

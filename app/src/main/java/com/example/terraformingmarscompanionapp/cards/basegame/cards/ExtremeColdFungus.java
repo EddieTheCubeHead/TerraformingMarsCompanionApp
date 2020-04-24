@@ -34,17 +34,11 @@ public final class ExtremeColdFungus extends Card implements MetadataAction {
 
     @Override
     public boolean actionWithMetadata(Integer data) {
-        if (action_used) {
-            return false;
-        } else {
-            if (data == 0) {
-                //TODO lisää toiselle kortilla kaksi mikrobia
-            } else {
-                owner_player.changePlants(1);
-            }
-            action_used = true;
-            return true;
+        if (data != 0) {
+            owner_player.changePlants(1);
         }
+        action_used = true;
+        return true;
     }
 
     @Override
