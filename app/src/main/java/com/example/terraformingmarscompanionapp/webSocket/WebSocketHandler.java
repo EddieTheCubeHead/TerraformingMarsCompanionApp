@@ -42,6 +42,7 @@ public final class WebSocketHandler {
                             break;
                         case "login_successful":
                             Log.i("WebSocket", "Login successful!");
+                            UserActions.successful_login = true;
                             UserActions.handleLogin(s);
                             break;
 
@@ -66,9 +67,13 @@ public final class WebSocketHandler {
                         //Exceptioneiden käsittely
                         case "username_exception":
                             Log.i("WebSocketException", "Invalid username: " + contents[1]);
+                            UserActions.successful_login = false;
+                            UserActions.message = "Invalid username.";
                             break;
                         case "password_exception":
                             Log.i("WebSocketException", "Invalid password: " + contents[1]);
+                            UserActions.successful_login = false;
+                            UserActions.message = "Invalid password.";
                             break;
 
                         case "test":

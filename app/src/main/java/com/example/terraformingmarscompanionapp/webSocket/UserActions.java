@@ -13,6 +13,10 @@ public class UserActions {
     static String getSessionId() {return session_id;}
     static String getSessionUser() {return session_user;}
 
+    //ui:n kutsumat sisäänkirjautumisen onnistuneisuuden merkit.
+    public static Boolean successful_login = false;
+    public static String message = "";
+
     //Login, ottaa käyttäjänimen ja salasanan.
     public static void loginUser(String username, String password) {
         WebSocketHandler.sendMessage(String.format("login;%s;%s", username, password));
