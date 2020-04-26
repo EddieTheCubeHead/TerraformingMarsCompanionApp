@@ -27,19 +27,34 @@ class GameConstructor {
     private final HashMap<String, Card> deck;
     private final HashMap<String, Card> preludes;
     private final HashMap<String, Card> corporations;
+    private Game game;
+    private Boolean corporate_era;
+    private Boolean prelude;
+    private Boolean colonies;
+    private Boolean venus;
+    private Boolean turmoil;
+    private Boolean extra_corporations;
 
-    GameConstructor() {
+    GameConstructor(Game game,
+                    boolean corporate_era,
+                    boolean prelude,
+                    boolean colonies,
+                    boolean venus,
+                    boolean turmoil,
+                    boolean extra_corporations) {
         deck = new HashMap<>();
         preludes = new HashMap<>();
         corporations = new HashMap<>();
+        this.game = game;
+        this.corporate_era = corporate_era;
+        this.prelude = prelude;
+        this.colonies = colonies;
+        this.venus = venus;
+        this.turmoil = turmoil;
+        this.extra_corporations = extra_corporations;
     }
 
-    HashMap<String, Card> createDeck(Game game,
-                                     boolean corporate_era,
-                                     boolean prelude,
-                                     boolean colonies,
-                                     boolean venus,
-                                     boolean turmoil) {
+    HashMap<String, Card> createDeck() {
 
         //Peruspelin kortit:
         Card adaptation_technology = new AdaptationTechnology(game);
@@ -506,13 +521,7 @@ class GameConstructor {
         return preludes;
     }
 
-    HashMap<String, Card> createCorporations(Game game,
-                                             boolean corporate_era,
-                                             boolean prelude,
-                                             boolean colonies,
-                                             boolean venus,
-                                             boolean turmoil,
-                                             boolean extra_corporations) {
+    HashMap<String, Card> createCorporations() {
 
         HashMap<String, Card> corporations = new HashMap<>();
 
