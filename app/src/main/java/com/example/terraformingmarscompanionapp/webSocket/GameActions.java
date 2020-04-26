@@ -21,15 +21,13 @@ public class GameActions {
     private static Integer action_number;
     private static Integer generation;
 
-    public static void incrementGeneration() {generation++;}
-    public static void incrementAction() {action_number++;}
-
-    public static void handleGameEvent(String event_data) {
+    static void handleGameEvent(String event_data) {
         String event_type = event_data.split(Pattern.quote(";"))[1];
         String event = event_data.split(Pattern.quote(";"))[2];
         switch (event_type) {
             case "card_event":
                 gson.fromJson(event, CardEventPacket.class).playPacket();
+                action_number++;
                 break;
             case "card_cost":
                 gson.fromJson(event, CardCostPacket.class).playPacket();
@@ -43,6 +41,10 @@ public class GameActions {
             case "fold":
                 GameController.getInstance().setPlayerIsFolding(true);
                 GameController.getInstance().endTurn();
+                break;
+            case "end_generation":
+                generation++;
+                GameController.getInstance().endGeneration();
                 break;
             default:
                 Log.i("GameActions", "Unrecognized game action: " + event_data);
@@ -82,7 +84,7 @@ public class GameActions {
         String message = String.format("game_action;%s;%s;%s;card_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);
         message += String.format(";%d;%d", action_number, generation);
-        incrementAction();
+        action_number++;
         WebSocketHandler.sendMessage(message);
     }
 

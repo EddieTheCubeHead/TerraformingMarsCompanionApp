@@ -50,6 +50,10 @@ public class UserActions {
     }
 
     public static void joinGame(String game_code) {
+        if (session_user == null | session_id == null) {
+            //TODO error handling
+            return;
+        }
         WebSocketHandler.sendMessage(String.format("join_game;%s;%s;%s", session_user, session_id, game_code));
     }
 

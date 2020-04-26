@@ -14,8 +14,14 @@ public final class StandardSellPatents extends StandardProject {
     public Integer onPlay(Player player) {
         Integer cards_sold = 1;
         //TODO UI kysy montako korttia myytiin
-        player.changeMoney(cards_sold);
-        player.changeHandSize(-cards_sold);
+        playWithMetadata(player, cards_sold);
+
         return cards_sold;
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        player.changeMoney(data);
+        player.changeHandSize(-data);
     }
 }

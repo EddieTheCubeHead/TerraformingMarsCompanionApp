@@ -1,5 +1,7 @@
 Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi varata itselleen laittamalla nimen kohdan viereen.
 
+Kirjasin kaiken mikä on vielä tekemättä ennen harkkatyödedistä. Osassa kategorioista on samoja tehtäviä.
+
 TODO: Seuraavat UI-näkymät:
     Aloitusnäyttö
     Kirjautumisnäyttö
@@ -11,11 +13,65 @@ TODO: Seuraavat UI-näkymät:
     Moninpelin pelinrakennusnäyttö (En ole varma voiko käyttää hotseat-näyttöä, Eetu)
 TODO: Kortteja kehiin, -Aapo
 
+TODO: Raaka resurssienhallinta kuntoon
+    Vain yhden pelaajan resurssit, TR ja tuotannot, niiden manuaalinen muuttaminen ja "päätä sukupolvi -nappi"
+        Pääasiassa UI-hommaa
+
+TODO: Hotseat-peli kuntoon
+    Heksan asettaminen (UI)
+    Korttiresurssitapahtuman kohteen valinta (UI)
+    Pelin tekemisen viimeistely
+        Pelaajien järjestyksen valinta tai prompti "anna nimet pelaamisjärjestyksessä"
+            Järjestyksen valinta olisi parempi, koska saman koodin voisi kierrättä serveripeliin
+    Vuorologiikan viimeistely
+        Osittain UI-pohjainen, foldausnapit, vain yhden toiminnan teko vuorolla
+    Pelin alun toiminnot
+        Korporaatioiden pelaaminen
+        Preludien pelaaminen
+        Ensimmäisellä kierroksella "tee ensimmäisenä tämä toiminto -korttien pelaaminen"
+            Ks. FirstAction -rajapinta
+        Alun "kuinka monta korttia ostit? (0-10) -prompti"
+            Beginner corporation -erikoistapauksen huomiointi
+    Sukupolvien välissä "kuinka monta korttia ostit? (0-4) -prompti".
+    Saavutusten ja kilpailujen implementointi.
+    Pistelasku
+
 TODO: WebSocket serveripeli -Eetu
-    Pelin rakentaminen
+    Hotseat-peli toimii pohjana: pitää olla kunnossa
+    Pelin rakentaminen (Eli moninpelin pelinrakennusnäyttö -ks. UI-tehtävät)
+    Hotseatista eroavat UI-toiminnot
+        Serveripeli on tällä hetkellä optimoitu niin, että teoriassa eroavaisuudet hotseat-peliin ovat minimaaliset pelin rakentamisen jälkeen
+        Kun ei ole oma vuoro, jonkinlainen indikaattori
+            Koodipuolella toimintojen tekeminen jo mahdotonta toisen vuorolla, mutta vuoroindikaattori olisi hyvä käytettävyyslisä
+
+TODO: Corporate-era -korttien ja Prelude -lisäosan lisääminen
+    Kaikki tarvittavat frameworkit valmiina, nyt vain kortteja pöytään
+
+TODO: TESTAAMINEN
+
+Ennen palautusta jos kerkeää, palautuksen jälkeen jos ei kerkeä:
+
+TODO: Muut lisäosat (esitetty tässä arvioidussa implementoimisen helppousjärjestyksessä):
+    - Venus
+        Systeemit valmiina, vain kortit puuttuvat
+    - Colonies
+        Kuiden implementointi voi tuottaa pieniä ongelmia. Kauppareissuille tarvitsisi todennäköisesti oman UI:n
+    - Turmoil (Jos Aapo haluaa oman projektin, niin politiikkasysteemi on yksi mahdollinen tapa saada kirjoittaa
+    paljon koodia ilman että muut ovat tehneet kehikon, jonka mukaan koodi pitää tehdä)
+        I am not brave enough for politics
+
+TODO: Yhden pelaajan automatisoitu peli kuntoon
+    Nykyisellä tilanteella tässä eniten hommaa: siksi tämä tehdään vasta kun kaikki muu deadlineen tehtävä valmista
+    Jos Turmoil ei kiinnosta niin tämän vaatimat lisäykset voisivat olla Aapolle hyvä tapa saada selkeä oma tehtävä
+
+TODO: Serveripuolella pelien tallennus, lataaminen ja datan analysointi
+    Eetulle tehtävää ennen deadlinea jos kaikki muut toiminnallisuudet valmiina.
 
 Harkkatyön palautuksen jälkeiset:
 
 TODO: Game ja GameController aidoiksi singeltoneiksi init-funktiolla
+    Tämä tulee rikkomaan kaikki kortit. Eetu pääsee aloittamaan kiireettömän kehitysvaiheen ~200 luokan uudelleenkirjoittamisella
 TODO: Tekstit (flavor ja kuvaus)
+    Korttien nimet ja tekemiset
 TODO: kirjoita korttien onPlay ja playWithMetadata -interaktio uudestaan koodin määrän vähentämiseksi
+TODO: Saavutukset, tämä ainakin hauskaa.

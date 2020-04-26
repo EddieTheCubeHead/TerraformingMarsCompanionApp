@@ -142,7 +142,7 @@ public class GameController
         //TODO kaikki vuoron alussa vuoron aloittavalle current_playerille tapahtuva
     }
 
-    private void endGeneration()
+    public void endGeneration()
     {
         game.onGenerationEnd();
 

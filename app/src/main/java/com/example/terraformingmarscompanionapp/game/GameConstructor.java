@@ -13,6 +13,12 @@ import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Thar
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.TharsisRepublicSecondEffect;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Thorgate;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.UnitedNationsMarsInitiative;
+import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardAquifer;
+import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardAsteroid;
+import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardCity;
+import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardGreenery;
+import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardPowerPlant;
+import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardSellPatents;
 
 import java.util.HashMap;
 
@@ -447,6 +453,25 @@ class GameConstructor {
         Card zeppelins = new Zeppelins(game);
         deck.put(zeppelins.getName(), zeppelins);
 
+        //Vakioprojektit
+        Card standard_aquifer = new StandardAquifer(game);
+        deck.put(standard_aquifer.getName(), standard_aquifer);
+
+        Card standard_asteroid = new StandardAsteroid(game);
+        deck.put(standard_asteroid.getName(), standard_asteroid);
+
+        Card standard_city = new StandardCity(game);
+        deck.put(standard_city.getName(), standard_city);
+
+        Card standard_greenery = new StandardGreenery(game);
+        deck.put(standard_greenery.getName(), standard_greenery);
+
+        Card standard_power_plant = new StandardPowerPlant(game);
+        deck.put(standard_power_plant.getName(), standard_power_plant);
+
+        Card standard_sell_patents = new StandardSellPatents(game);
+        deck.put(standard_sell_patents.getName(), standard_sell_patents);
+
         //Corporate eran kortit:
         if (corporate_era) {
             //TODO lisää Corporate eran kortit tähän
@@ -486,7 +511,8 @@ class GameConstructor {
                                              boolean prelude,
                                              boolean colonies,
                                              boolean venus,
-                                             boolean turmoil) {
+                                             boolean turmoil,
+                                             boolean extra_corporations) {
 
         HashMap<String, Card> corporations = new HashMap<>();
 
@@ -526,6 +552,8 @@ class GameConstructor {
         //Corporate eran kortit:
         if (corporate_era) {
             //TODO lisää Corporate eran kortit tähän
+        } else if (extra_corporations) {
+
         }
 
         //Preludin kortit:

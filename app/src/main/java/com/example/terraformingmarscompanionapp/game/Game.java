@@ -36,7 +36,7 @@ public class Game implements Serializable {
     public Boolean getServerMultiplayer() {return server_multiplayer;}
 
     //Getterit pelaajille ja pakoille, plus pakalle listana
-    public ArrayList<Player> getPlayers() {return  players;}
+    public ArrayList<Player> getPlayers() {return players;}
     public HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return corporations;}
@@ -73,15 +73,20 @@ public class Game implements Serializable {
     //Pelin tilan parametrit, getterit ja setterit
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
+
     private Integer global_oxygen;
     public Integer getGlobalOxygen() {return global_oxygen;}
+
     private final Integer oceans_placed;
     public Integer getOceansPlaced() {return oceans_placed;}
+
     private Integer venus_terraform;
     public Integer getVenusTerraform() {return venus_terraform;}
+
     private Integer cities_on_mars;
     public Integer getCitiesOnMars() {return cities_on_mars;}
     void addCityOnMars() {cities_on_mars++;}
+
     private Integer cities_in_space;
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
@@ -106,7 +111,7 @@ public class Game implements Serializable {
 
         GameConstructor constructor = new GameConstructor();
         deck = constructor.createDeck(this, corporate_era, prelude, colonies, venus, turmoil);
-        corporations = constructor.createCorporations(this, corporate_era, prelude, colonies, venus, turmoil);
+        corporations = constructor.createCorporations(this, corporate_era, prelude, colonies, venus, turmoil, extra_corporations);
 
         if (prelude) {
             preludes = constructor.createPreludes();
