@@ -105,14 +105,46 @@ public class GameController
     public void setPlayerIsFolding(Boolean currentIsFolding) { folding = currentIsFolding; }
     public void foldOnTurnEnd() { folding = true; }
 
-    //Toiminnon käyttäminen
+    //Toiminnon käyttäminen ilman toastia vuoron lopussa
+    public void useAction() {
+        actions_used++;
+        if (actions_used >= 2) {
+            endTurn();
+        }
+    }
+
+    //Toiminnon käyttäminen toastilla vuoron lopussa
     public void useAction(Context context) {
         actions_used++;
-        if (actions_used == 2) {
+        if (actions_used >= 2) {
             endTurn(context);
         }
     }
 
+    //ilman toastia
+    public void endTurn()
+    {
+        beforeTurnEnd();
+
+        //vuoron vaihto
+        if (folding)
+            queue.removeFirst();
+        else
+            queue.addLast(queue.removeFirst());
+        setPlayerIsFolding(false);
+
+        //kun kaikki on foldannu
+        if (queue.size() == 0)
+        {
+            endGeneration();
+        }
+
+        current_player = queue.getFirst();
+
+        atTurnStart();
+    }
+
+    //toastilla, passataan applicationcontext
     public void endTurn(Context context)
     {
         beforeTurnEnd();
