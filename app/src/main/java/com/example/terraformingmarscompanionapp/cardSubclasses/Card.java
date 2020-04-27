@@ -29,6 +29,8 @@ public abstract class Card {
         PRELUDE,
         STANDARD_PROJECT,
         OTHER,
+        MILESTONE,
+        AWARD,
         GHOST
     }
 
@@ -213,6 +215,11 @@ public abstract class Card {
             }
         }
         return tag_integers;
+    }
+
+    //Tarkistaa onko kortilla olemassa vaatimuksia jotka lasketaan specialist (tms, en muista nimeaä) -saavutukseen
+    public Boolean getHasRequirement() {
+        return requirements.getDrawableRequrement() != 0;
     }
 
     public final Integer getRequirementInt()

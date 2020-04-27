@@ -42,6 +42,15 @@ public class Game implements Serializable {
     public HashMap<String, Card> getCorporations() {return corporations;}
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
 
+    //Milestonet ja awardit
+    private Integer claimed_milestones = 0;
+    public void claimMilestone() {claimed_milestones++;}
+    public Integer getClaimedMilestones() {return claimed_milestones;}
+
+    private Integer claimed_awards = 0;
+    public void claimAward() {claimed_awards++;}
+    public Integer getClaimedAwards() {return claimed_awards;}
+
     //EffectCard -rajapinnan korttien haku pakasta UpdateManageria varten
     HashMap<String, EffectCard> getEffectCards() {
         HashMap<String, EffectCard> effect_cards = new HashMap<>();
@@ -109,9 +118,9 @@ public class Game implements Serializable {
             players.add(new Player(this, player_name));
         }
 
-        GameConstructor constructor = new GameConstructor();
-        deck = constructor.createDeck(this, corporate_era, prelude, colonies, venus, turmoil);
-        corporations = constructor.createCorporations(this, corporate_era, prelude, colonies, venus, turmoil, extra_corporations);
+        GameConstructor constructor = new GameConstructor(this, corporate_era, prelude, colonies, venus, turmoil, extra_corporations);
+        deck = constructor.createDeck();
+        corporations = constructor.createCorporations();
 
         if (prelude) {
             preludes = constructor.createPreludes();
@@ -269,7 +278,7 @@ public class Game implements Serializable {
         if (actual_price <= player.getMoney())
         {
             Log.i("Game", "Cost packet created");
-            return new CardCostPacket(actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+            return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
         else
         {
@@ -298,7 +307,7 @@ public class Game implements Serializable {
                     if (money_amount < 0)
                         money_amount = 0;
 
-                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 }
                 else
                 {
@@ -321,7 +330,7 @@ public class Game implements Serializable {
                     if (money_amount < 0)
                         money_amount = 0;
 
-                    return new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 }
                 else
                 {
@@ -339,11 +348,11 @@ public class Game implements Serializable {
             if (player.getHeatIsMoney() && player.getHeat() >= needed_money)
             {
                 heat_amount = needed_money;
-                cardCostPacket = new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                cardCostPacket = new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
             }
             else
             {
-                cardCostPacket = new CardCostPacket(money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                cardCostPacket = new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 cardCostPacket.reject();
                 cardCostPacket.setRejectanceMessage("Invalid funds");
                 Log.i("Game", "Invalid funds");
@@ -513,6 +522,10 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMaxPersonalColonies() != null && player.getColonies() > requirements.getMaxPersonalColonies()) {
+            return false;
+        }
+
+        if (requirements.getMaxMilestonesClaimed() != null && claimed_milestones > requirements.getMaxMilestonesClaimed()) {
             return false;
         }
 

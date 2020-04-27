@@ -5,6 +5,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 
@@ -18,7 +19,7 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
 
     @Override
     public Integer onPlay(Player player) {
-        owner_game.playCard(owner_game.getDeck().get("Tharsis republic ghost"), new CardCostPacket(0, 0, 0, 0, 0, 0));
+        owner_game.playCard(owner_game.getDeck().get("Tharsis republic ghost"), new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), 0, 0, 0, 0, 0, 0));
         player.changeMoney(40);
         return super.onPlay(player);
     }

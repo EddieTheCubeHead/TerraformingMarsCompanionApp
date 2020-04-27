@@ -15,7 +15,7 @@ public class CardCostPacket implements PlayablePacket
     private String rejectance_message;
     public void setRejectanceMessage(String message) { rejectance_message = message; }
 
-
+    private String player_name;
     private Integer money;
     private Integer steel;
     private Integer titanium;
@@ -30,13 +30,15 @@ public class CardCostPacket implements PlayablePacket
     public Integer getPlantResources() {return plant_resources;}
     public Integer getFloaterResources() {return floater_resources;}
 
-    public CardCostPacket(Integer money,
+    public CardCostPacket(String player_name,
+                          Integer money,
                           Integer steel,
                           Integer titanium,
                           Integer heat,
                           Integer plant_resources,
                           Integer floater_resources)
     {
+        this.player_name = player_name;
         this.money = money;
         this.steel = steel;
         this.titanium = titanium;
@@ -47,7 +49,7 @@ public class CardCostPacket implements PlayablePacket
 
     @Override
     public void playPacket() {
-        Player player = GameController.getInstance().getCurrentPlayer();
+        Player player = GameController.getInstance().getGame().getPlayer(player_name);
         player.changeMoney(-money);
         player.changeSteel(-steel);
         player.changeTitanium(-titanium);
