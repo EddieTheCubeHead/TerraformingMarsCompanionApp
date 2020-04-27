@@ -156,19 +156,12 @@ public class GameController
             queue.addLast(queue.removeFirst());
         setPlayerIsFolding(false);
 
-        Toast toast;
-        String text = "";
 
         //kun kaikki on foldannu
         if (queue.size() == 0)
         {
-            endGeneration();
-            text += "Generation ended. ";
+            endGeneration(context);
         }
-
-        text += current_player.getName() + "'s turn.";
-
-        toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
 
         atTurnStart();
     }
@@ -199,6 +192,12 @@ public class GameController
 
         current_starter = queue.getFirst();
         current_player = current_starter;
+    }
+
+    public void endGeneration(Context context)
+    {
+        endGeneration();
+        Toast.makeText(context, "Generation ended, "+ current_player.getName() + "'s turn.", Toast.LENGTH_SHORT).show();
     }
 
     //TODO tokenien sijoittaminen
