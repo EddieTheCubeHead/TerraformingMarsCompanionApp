@@ -28,100 +28,206 @@ public class CardRequirements {
     private Integer min_venus_tags;
     private Integer min_heat;
 
+    //Milestoneja varten
+    private Integer min_highest_production;
+    private Integer min_organic_tags;
+    private Integer min_cards_on_table;
+    private Integer min_cards_in_hand;
+    private Integer min_events_played;
+    private Integer min_money_production;
+    private Integer min_unique_tags;
+    private Integer min_requirement_cards;
+    private Integer min_polar_tiles;
+    private Integer min_building_tags;
+
     private Integer max_temperature;
     private Integer max_oceans;
     private Integer max_oxygen;
     private Integer max_personal_colonies;
     private Integer max_venus_tr;
+    private Integer max_milestones_claimed;
+    private Integer max_awards_claimed;
 
-    public Integer getMinOceans() {return min_oceans;}
+    Integer getMinOceans() {return min_oceans;}
     public void setMinOceans(Integer value) {min_oceans = value;}
 
-    public Integer getMinPlants() {return min_plants;}
+    Integer getMinPlants() {return min_plants;}
     public void setMinPlants(Integer value) {min_plants = value;}
 
-    public Integer getMinEnergyProduction() {return min_energy_production;}
+    Integer getMinEnergyProduction() {return min_energy_production;}
     public void setMinEnergyProduction(Integer value) {min_energy_production = value;}
 
-    public Integer getMinOxygen() {return min_oxygen;}
+    Integer getMinOxygen() {return min_oxygen;}
     public void setMinOxygen(Integer value) {min_oxygen = value;}
 
-    public Integer getMinScienceTags() {return min_science_tags;}
+    Integer getMinScienceTags() {return min_science_tags;}
     public void setMinScienceTags(Integer value) {min_science_tags = value;}
 
-    public Integer getMinJovianTags() {return min_jovian_tags;}
+    Integer getMinJovianTags() {return min_jovian_tags;}
     public void setMinJovianTags(Integer value) {min_jovian_tags = value;}
 
-    public Integer getMinSteelProduction() {return min_steel_production;}
+    Integer getMinSteelProduction() {return min_steel_production;}
     public void setMinSteelProduction(Integer value) {min_steel_production = value;}
 
-    public Integer getMinGlobalCities() {return min_global_cities;}
+    Integer getMinGlobalCities() {return min_global_cities;}
     public void setMinGlobalCities(Integer value) {min_global_cities = value;}
 
-    public Integer getMinPersonalCities() {return min_personal_cities;}
+    Integer getMinPersonalCities() {return min_personal_cities;}
     public void setMinPersonalCities(Integer value) {min_personal_cities = value;}
 
-    public Integer getMinVenusTr() {return min_venus_tr;}
+    Integer getMinVenusTr() {return min_venus_tr;}
     public void setMinVenusTr(Integer value) {min_venus_tr = value;}
 
-    public Integer getMinTemperature() {return min_temperature;}
+    Integer getMinTemperature() {return min_temperature;}
     public void setMinTemperature(Integer value) {min_temperature = value;}
 
-    public Integer getMinPlantProduction() {return min_plant_production;}
+    Integer getMinPlantProduction() {return min_plant_production;}
     public void setMinPlantProduction(Integer value) {min_plant_production = value;}
 
     public Integer getMinPlantTags() {return min_plant_tags;}
     public void setMinPlantTags(Integer value) {min_plant_tags = value;}
 
-    public Integer getMinMicrobeTags() {return min_microbe_tags;}
+    Integer getMinMicrobeTags() {return min_microbe_tags;}
     public void setMinMicrobeTags(Integer value) {min_microbe_tags = value;}
 
-    public Integer getMinAnimalTags() {return min_animal_tags;}
+    Integer getMinAnimalTags() {return min_animal_tags;}
     public void setMinAnimalTags(Integer value) {min_animal_tags = value;}
 
-    public Integer getMinEarthTags() {return min_earth_tags;}
+    Integer getMinEarthTags() {return min_earth_tags;}
     public void setMinEarthTags(Integer value) {min_earth_tags = value;}
 
-    public Integer getMinEnergyTags() {return min_energy_tags;}
+    Integer getMinEnergyTags() {return min_energy_tags;}
     public void setMinEnergyTags(Integer value) {min_energy_tags = value;}
 
-    public Integer getMinFloaters() {return min_floaters;}
+    Integer getMinFloaters() {return min_floaters;}
     public void setMinFloaters(Integer value) {min_floaters = value;}
 
-    public Integer getMinPersonalColonies() {return min_personal_colonies;}
+    Integer getMinPersonalColonies() {return min_personal_colonies;}
     public void setMinPersonalColonies(Integer value) {min_personal_colonies = value;}
 
-    public Integer getMinTitaniumProduction() {return min_titanium_production;}
+    Integer getMinTitaniumProduction() {return min_titanium_production;}
     public void setMinTitaniumProduction(Integer value) {min_titanium_production = value;}
 
-    public Integer getMinPersonalGreeneries() {return min_personal_greeneries;}
+    Integer getMinPersonalGreeneries() {return min_personal_greeneries;}
     public void setMinPersonalGreeneries(Integer value) {min_personal_greeneries = value;}
 
-    public Integer getMinHeatProduction() {return min_heat_production;}
+    Integer getMinHeatProduction() {return min_heat_production;}
     public void setMinHeatProduction(Integer value) {min_heat_production = value;}
 
-    public Integer getMinTr() {return min_tr;}
+    Integer getMinTr() {return min_tr;}
     public void setMinTr(Integer value) {min_tr = value;}
 
-    public Integer getMinVenusTags() {return min_venus_tags;}
+    Integer getMinVenusTags() {return min_venus_tags;}
     public void setMinVenusTags(Integer value) {min_venus_tags = value;}
 
-    public Integer getMinHeat() {return min_heat;}
+    Integer getMinHeat() {return min_heat;}
     public void setMinHeat(Integer value) {min_heat = value;}
 
+    Integer getMinHighestProduction() {return min_highest_production;}
+    public void setMinHighestProduction(Integer value) {min_highest_production = value;}
 
-    public Integer getMaxTemperature() {return max_temperature;}
+    Integer getMinOrganicTags() {return min_organic_tags;}
+    public void setMinOrganicTags(Integer value) {min_organic_tags = value;}
+
+    Integer getMinCardsInHand() {return min_cards_in_hand;}
+    public void setMinCardsInHand(Integer value) {min_cards_in_hand = value;}
+
+    Integer getMinCardsOnTable() {return min_cards_on_table;}
+    public void setMinCardsOnTable(Integer value) {min_cards_on_table = value;}
+
+    Integer getMinEventsPlayed() {return min_events_played;}
+    public void setMinEventsPlayed(Integer value) {min_events_played = value;}
+
+    Integer getMinMoneyProduction() {return min_money_production;}
+    public void setMinMoneyProduction(Integer value) {min_money_production = value;}
+
+    Integer getMinUniqueTags() {return min_unique_tags;}
+    public void setMinUniqueTags(Integer value) {min_unique_tags = value;}
+
+    Integer getMinRequirementCards() {return min_requirement_cards;}
+    public void setMinRequirementCards(Integer value) {min_requirement_cards = value;}
+
+    Integer getMinPolarTiles() {return min_polar_tiles;}
+    public void setMinPolarTiles(Integer value) {min_polar_tiles = value;}
+
+    Integer getMinBuildingTags() {return min_building_tags;}
+    public void setMinBuildingTags(Integer value) {min_building_tags = value;}
+
+
+    Integer getMaxTemperature() {return max_temperature;}
     public void setMaxTemperature(Integer value) {max_temperature = value;}
 
-    public Integer getMaxOceans() {return max_oceans;}
+    Integer getMaxOceans() {return max_oceans;}
     public void setMaxOceans(Integer value) {max_oceans = value;}
 
-    public Integer getMaxOxygen() {return max_oxygen;}
+    Integer getMaxOxygen() {return max_oxygen;}
     public void setMaxOxygen(Integer value) {max_oxygen = value;}
 
-    public Integer getMaxPersonalColonies() {return max_personal_colonies;}
+    Integer getMaxPersonalColonies() {return max_personal_colonies;}
     public void setMaxPersonalColonies(Integer value) {max_personal_colonies = value;}
 
-    public Integer getMaxVenusTr() {return max_venus_tr;}
+    Integer getMaxMilestonesClaimed() {return max_milestones_claimed;}
+    public void setMaxMilestonesClaimed(Integer value) {max_milestones_claimed = value;}
+
+    Integer getMaxAwardsClaimed() {return max_awards_claimed;}
+    public void setMaxAwardsClaimed(Integer value) {max_awards_claimed = value;}
+
+    Integer getMaxVenusTr() {return max_venus_tr;}
     public void setMaxVenusTr(Integer value) {max_venus_tr = value;}
+
+    public Integer getDrawableRequrement() {
+        //TODO siivous tänne jahka tiedetään mitä UI tarvitsee tästä ulos
+        if (min_oceans != null) {
+            return 1;
+        } else if (min_oxygen != null) {
+            return 2;
+        } else if (min_science_tags != null) {
+            return 3;
+        } else if (min_jovian_tags != null) {
+            return 4;
+        } else if (min_global_cities != null) {
+            return 5;
+        } else if (min_personal_greeneries != null) {
+            return 6;
+        } else if (min_personal_cities != null) {
+            return 7;
+        } else if (min_venus_tr != null) {
+            return 8;
+        } else if (min_temperature != null) {
+            return 9;
+        } else if (min_steel_production != null) {
+            return 10;
+        } else if (min_plant_tags != null) {
+            return 11;
+        } else if (min_microbe_tags != null) {
+            return 12;
+        } else if (min_animal_tags != null) {
+            return 13;
+        } else if (min_earth_tags != null) {
+            return 14;
+        } else if (min_energy_tags != null) {
+            return 15;
+        } else if (min_floaters != null) {
+            return 16;
+        } else if (min_personal_colonies != null) {
+            return 17;
+        } else if (min_titanium_production != null) {
+            return 18;
+        } else if (min_tr != null) {
+            return 19;
+        } else if (min_venus_tags != null) {
+            return 20;
+        } else if (max_oceans != null) {
+            return 21;
+        } else if (max_oxygen != null) {
+            return 22;
+        } else if (max_personal_colonies != null) {
+            return 23;
+        } else if (max_venus_tr != null) {
+            return 24;
+        } else if (max_temperature != null) {
+            return 25;
+        }
+        return 0;
+    }
 }
