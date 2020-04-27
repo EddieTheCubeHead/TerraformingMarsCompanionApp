@@ -1,7 +1,9 @@
 package com.example.terraformingmarscompanionapp.game;
 
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -104,14 +106,14 @@ public class GameController
     public void foldOnTurnEnd() { folding = true; }
 
     //Toiminnon käyttäminen
-    public void useAction() {
+    public void useAction(Context context) {
         actions_used++;
         if (actions_used == 2) {
-            endTurn();
+            endTurn(context);
         }
     }
 
-    public void endTurn()
+    public void endTurn(Context context)
     {
         beforeTurnEnd();
 
@@ -122,11 +124,21 @@ public class GameController
             queue.addLast(queue.removeFirst());
         setPlayerIsFolding(false);
 
+        Toast toast;
+        String text = "";
+
         //kun kaikki on foldannu
         if (queue.size() == 0)
+        {
             endGeneration();
+            text += "Generation ended. ";
+        }
 
         current_player = queue.getFirst();
+
+        text += current_player.getName() + "'s turn.";
+
+        toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
 
         atTurnStart();
     }
