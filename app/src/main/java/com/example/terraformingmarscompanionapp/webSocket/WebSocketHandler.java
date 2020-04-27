@@ -12,11 +12,14 @@ import tech.gusavila92.websocketclient.WebSocketClient;
 public final class WebSocketHandler {
     private static WebSocketClient webSocketClient = null;
 
+    //Aseta serverin ip tänne testauksessa
+    private static final String WEBSOCKET_URI = null;
+
     //WebSocketin sydän. Vastaanottaa serverin viestit. Käsittelyyn oltava funktio muualla logia lukuunottamatta.
     public static void createWebSocketClient() {
         URI uri;
         try {
-            uri = new URI("ws://10.0.2.2:8080/tfmca");
+            uri = new URI(WEBSOCKET_URI == null ? "ws://10.0.2.2:8080/tfmca" : WEBSOCKET_URI);
             System.out.println("WebSocket: URI set.");
         } catch (URISyntaxException e) {
             e.printStackTrace();

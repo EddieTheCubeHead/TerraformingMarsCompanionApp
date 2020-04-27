@@ -18,8 +18,8 @@ public class GameActions {
     private static GsonBuilder builder = new GsonBuilder();
     private static Gson gson = builder.create();
     private static String game_code;
-    private static Integer action_number;
-    private static Integer generation;
+    private static Integer action_number = 0;
+    private static Integer generation = 0;
 
     static void handleGameEvent(String event_data) {
         String event_type = event_data.split(Pattern.quote(";"))[1];

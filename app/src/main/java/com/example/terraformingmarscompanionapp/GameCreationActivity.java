@@ -40,7 +40,7 @@ public class GameCreationActivity extends AppCompatActivity
 
         //Testejä by Eetu jätä kommentoiduiksi, mutta älä poista. Käytän näitä vielä.
         /*WebSocketHandler.createWebSocketClient();
-        UserActions.loginUser("Edd1e", "test_pass");
+        UserActions.createUser("Edd1e", "test_pass");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
