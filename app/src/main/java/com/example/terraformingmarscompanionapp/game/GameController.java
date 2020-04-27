@@ -166,8 +166,6 @@ public class GameController
             text += "Generation ended. ";
         }
 
-        current_player = queue.getFirst();
-
         text += current_player.getName() + "'s turn.";
 
         toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
@@ -200,6 +198,7 @@ public class GameController
         queue.addLast(queue.removeFirst());
 
         current_starter = queue.getFirst();
+        current_player = current_starter;
     }
 
     //TODO tokenien sijoittaminen
