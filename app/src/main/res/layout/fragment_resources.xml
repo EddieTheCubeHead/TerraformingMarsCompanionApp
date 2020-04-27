@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentlayout"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:orientation="horizontal"
+
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginBottom="5dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+
+                android:text="Terraforming rating"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/textview_tfr"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+
+                android:layout_margin="5dp"
+
+                android:text="420"
+                android:textSize="20sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:orientation="vertical"
+
+            android:layout_marginLeft="5dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+
+                android:text="Something else"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/not_decided"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+
+                android:layout_margin="5dp"
+
+                android:text="420"
+                android:textSize="20sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:orientation="vertical"
+
+            android:layout_marginLeft="5dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+
+                android:text="Something else yet"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/not_decided_2"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+
+                android:layout_margin="5dp"
+
+                android:text="420"
+                android:textSize="20sp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- array nappeja jms -->
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginHorizontal="5dp"
+
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="5dp">
+
+        <!-- credit -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageview_tag_credit"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_ph" />
+
+            <ImageButton
+                android:id="@+id/button_credit_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_credit"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    android:textSize="20sp"
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_credit"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+
+            <ImageButton
+                android:id="@+id/button_credit_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+            <ImageButton
+                android:id="@+id/button_credit_production_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_credit_2"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    android:textSize="20sp"
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_credit_production"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/button_credit_production_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+        </LinearLayout>
+
+        <!-- steel -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageview_tag_steel"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_ph" />
+
+            <ImageButton
+                android:id="@+id/button_steel_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_steel"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    android:textSize="20sp"
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_steel"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+
+            <ImageButton
+                android:id="@+id/button_steel_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+            <ImageButton
+                android:id="@+id/button_steel_production_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_steel_2"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    android:textSize="20sp"
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_steel_production"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/button_steel_production_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+        </LinearLayout>
+
+        <!-- titanium -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageview_tag_titanium"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_ph" />
+
+            <ImageButton
+                android:id="@+id/button_titanium_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_titanium"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    android:textSize="20sp"
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_titanium"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+
+            <ImageButton
+                android:id="@+id/button_titanium_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+            <ImageButton
+                android:id="@+id/button_titanium_production_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_titanium_2"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    android:textSize="20sp"
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_titanium_production"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/button_titanium_production_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+        </LinearLayout>
+
+        <!-- plant -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageview_tag_plant"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_ph" />
+
+            <ImageButton
+                android:id="@+id/button_plant_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_plant"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_plant"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+
+            <ImageButton
+                android:id="@+id/button_plant_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+            <ImageButton
+                android:id="@+id/button_plant_production_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_plant_2"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_plant_production"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/button_plant_production_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+        </LinearLayout>
+
+        <!-- power -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageview_tag_power"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_ph" />
+
+            <ImageButton
+                android:id="@+id/button_power_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_power"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_power"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+
+            <ImageButton
+                android:id="@+id/button_power_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+            <ImageButton
+                android:id="@+id/button_power_production_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_power_2"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_power_production"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/button_power_production_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+        </LinearLayout>
+
+        <!-- heat -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageview_tag_heat"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_ph" />
+
+            <ImageButton
+                android:id="@+id/button_heat_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_heat"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_heat"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+
+            <ImageButton
+                android:id="@+id/button_heat_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+            <ImageButton
+                android:id="@+id/button_heat_production_minus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_remove_custom" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageview_heat_2"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center"
+
+                    app:srcCompat="@drawable/ic_credit" />
+
+                <TextView
+                    android:id="@+id/textview_heat_production"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+            </FrameLayout>
+
+            <ImageButton
+                android:id="@+id/button_heat_production_plus"
+
+                android:layout_width="50dp"
+
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/ic_add_custom" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
