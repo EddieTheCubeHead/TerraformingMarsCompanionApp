@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 public class InGameUI extends AppCompatActivity {
 
     Game game;
-    GameController gameController;
+    GameController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,45 +33,36 @@ public class InGameUI extends AppCompatActivity {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        gameController = GameController.getInstance();
+        controller = GameController.getInstance();
 
         //KAIKKI LISTENERIT PLACEHOLDEREITA ATM
-        findViewById(R.id.item_1).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+        findViewById(R.id.item_1).setOnClickListener(view -> {
 
-                /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
-                 * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
-                if (!gameController.checkTurnEligibility()) {
-                    Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Player current_player = gameController.getCurrentPlayer();
-
-                current_player.changeMoney(10);
-
-                Toast.makeText(getApplicationContext(),
-                        current_player.getName() + ": " + current_player.getMoney() + "c",
-                        Toast.LENGTH_SHORT).show();
+            /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
+             * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
+            if (!controller.checkTurnEligibility()) {
+                Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
+                return;
             }
+            Player current_player = controller.getCurrentPlayer();
+
+            current_player.changeMoney(10);
+
+            Toast.makeText(getApplicationContext(),
+                    current_player.getName() + ": " + current_player.getMoney() + "c",
+                    Toast.LENGTH_SHORT).show();
         });
 
-        findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),
-                        "lisää toiminnallisuus ingameui-luokassa", Toast.LENGTH_SHORT).show();
-            }
-        });
+        findViewById(R.id.item_2).setOnClickListener(view -> 
+                Toast.makeText(getApplicationContext(), "lisää toiminnallisuus ingameui-luokassa", Toast.LENGTH_SHORT).show());
 
-        findViewById(R.id.item_3).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                startSearchActivity();
-            }
-        });
+        findViewById(R.id.item_3).setOnClickListener(view -> startSearchActivity());
 
-        findViewById(R.id.item_4).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                gameController.endTurn();
-            }
+        findViewById(R.id.item_4).setOnClickListener(view -> controller.endTurn(getApplicationContext()));
+        
+        findViewById(R.id.item_4).setOnLongClickListener(v -> {
+            controller.endGeneration(getApplicationContext());
+            return true;
         });
     }
 
@@ -79,15 +70,13 @@ public class InGameUI extends AppCompatActivity {
     {
         /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
          * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
-        if (!gameController.checkTurnEligibility()) {
+        if (!controller.checkTurnEligibility()) {
             Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
-
-    //TODO foldaus
 
     //TODO back nappiin toiminnallisuus, vaikkapa ylös scrollaus
     @Override public void onBackPressed() {} //back -nappi ei tee nyt mitään.
