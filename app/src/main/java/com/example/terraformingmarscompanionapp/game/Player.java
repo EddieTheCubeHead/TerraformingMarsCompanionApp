@@ -49,10 +49,10 @@ public class Player {
     public Integer getHandSize() {return hand_size;}
 
     public Card getCorporation() {return corporation;}
-    public ArrayList<Card> getGreens() {return green_cards;}
-    public ArrayList<Card> getReds() {return red_cards;}
+    public ArrayList<Card> getGreen() {return green_cards;}
+    public ArrayList<Card> getRed() {return red_cards;}
     public ArrayList<ActionCard> getActions() {return action_cards;}
-    public ArrayList<Card> getEffects() {return blue_cards;}
+    public ArrayList<Card> getBlue() {return blue_cards;}
     public ArrayList<ResourceCard> getResourceHolders() {return resource_holders;}
 
     //Käsikoon asettaminen
