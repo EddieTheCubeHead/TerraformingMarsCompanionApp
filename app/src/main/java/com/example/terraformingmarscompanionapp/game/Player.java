@@ -136,6 +136,12 @@ public class Player {
         game.update_manager.onSteelProductionRaised(this, change_amount);
         return true;
     }
+    public void takeSteelProduction(Integer amount) {
+        steel_production -= amount;
+        if (steel_production < 0) {
+            steel_production = 0;
+        }
+    }
 
     //Titaani
     private Integer titanium = 0;
@@ -163,6 +169,12 @@ public class Player {
         titanium_production += change_amount;
         game.update_manager.onTitaniumProductionRaised(this, change_amount);
         return true;
+    }
+    public void takeTitaniumProduction(Integer amount) {
+        titanium_production -= amount;
+        if (titanium_production < 0) {
+            titanium_production = 0;
+        }
     }
 
     //Kasvit
