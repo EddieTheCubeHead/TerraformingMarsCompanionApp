@@ -36,8 +36,11 @@ public class UserActions {
             boolean venus,
             boolean turmoil,
             boolean extra_corporations,
+            boolean world_government_terraforming,
+            boolean must_max_venus,
+            boolean turmoil_terraforming_revision,
             Integer map) {
-        WebSocketHandler.sendMessage(String.format(Locale.ENGLISH, "create_game;%s;%s;%b;%b;%b;%b;%b;%b;%d",
+        WebSocketHandler.sendMessage(String.format(Locale.ENGLISH, "create_game;%s;%s;%b;%b;%b;%b;%b;%b;%b;%b;%b;%d",
                 session_user,
                 session_id,
                 corporate_era,
@@ -46,6 +49,9 @@ public class UserActions {
                 venus,
                 turmoil,
                 extra_corporations,
+                world_government_terraforming,
+                must_max_venus,
+                turmoil_terraforming_revision,
                 map));
     }
 

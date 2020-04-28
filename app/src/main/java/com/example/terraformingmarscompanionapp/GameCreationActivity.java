@@ -40,20 +40,20 @@ public class GameCreationActivity extends AppCompatActivity
 
         //Testejä by Eetu jätä kommentoiduiksi, mutta älä poista. Käytän näitä vielä.
         /*WebSocketHandler.createWebSocketClient();
-        UserActions.createUser("Edd1e", "test_pass");
+        UserActions.loginUser("Edd1e", "test_pass");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //UserActions.createGame(true,true,true,false,false,true, 2);
-        UserActions.joinGame("LWqyj5");
+        UserActions.createGame(true,true,true,false,false,true, false, false, true,0);
+        //UserActions.joinGame("LWqyj5");
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        GameActions.sendCardEvent(new CardEventPacket("Earth catapult", "Eddie", 0));*/
+        GameActions.sendCardEvent(new CardEventPacket("Earth catapult", "Edd1e", 0));*/
 
         //textview
         final TextView textview_names = findViewById(R.id.name_textview);
