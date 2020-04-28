@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -198,6 +200,17 @@ public class GameController
     {
         endGeneration();
         Toast.makeText(context, "Generation ended, "+ current_player.getName() + "'s turn.", Toast.LENGTH_SHORT).show();
+    }
+
+    public ArrayList<Card> getCards()
+    {
+        ArrayList<Card> deck = new ArrayList<>();
+
+        deck.addAll(current_player.getBlue());
+        deck.addAll(current_player.getGreen());
+        deck.addAll(current_player.getRed());
+
+        return deck;
     }
 
     //TODO tokenien sijoittaminen
