@@ -14,10 +14,12 @@ import com.example.terraformingmarscompanionapp.R;
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class SectionsPagerAdapter extends FragmentPagerAdapter
+{
 
-    @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final String[] TAB_TITLES =
+            new String[]{"Player", "Cards"};
+
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -26,16 +28,28 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
-    }
+    public Fragment getItem(int position)
+    {
+        //annetut ohjeet:
+        // "getItem is called to instantiate the fragment for the given page.
+        // Return a PlaceholderFragment (defined as a static inner class below)."
 
+        //kaikki eri päänäkymän täbit tähän.
+        switch (position)
+        {
+            case 0:
+                return new ResourcesFragment();
+                //return PlaceholderFragment.newInstance(position + 1);
+            case 1:
+                return new CardsFragment();
+            default:
+                return null;
+        }
+    }
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mContext.getResources().getString(TAB_TITLES[position]);
+        return TAB_TITLES[position];
     }
 
     @Override
