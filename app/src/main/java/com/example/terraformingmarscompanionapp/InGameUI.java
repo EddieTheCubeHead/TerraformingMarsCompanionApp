@@ -2,7 +2,6 @@ package com.example.terraformingmarscompanionapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,15 +18,17 @@ public class InGameUI extends AppCompatActivity {
     Game game;
     GameController controller;
 
+    SectionsPagerAdapter sectionsPagerAdapter;
+    ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_game_u_i);
 
         //default ui-juttuja
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-
-        ViewPager viewPager = findViewById(R.id.view_pager);
+        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
 
         TabLayout tabs = findViewById(R.id.tabs);
@@ -53,8 +54,9 @@ public class InGameUI extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         });
 
-        findViewById(R.id.item_2).setOnClickListener(view -> 
-                Toast.makeText(getApplicationContext(), "lisää toiminnallisuus ingameui-luokassa", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.item_2).setOnClickListener(view ->
+                System.out.println("ei toimintoa")
+        );
 
         findViewById(R.id.item_3).setOnClickListener(view -> startSearchActivity());
 
@@ -78,6 +80,9 @@ public class InGameUI extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //TODO back nappiin toiminnallisuus, vaikkapa ylös scrollaus
-    @Override public void onBackPressed() {} //back -nappi ei tee nyt mitään.
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem() != 0) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        }
+    }
 }
