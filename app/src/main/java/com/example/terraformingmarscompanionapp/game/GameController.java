@@ -213,5 +213,10 @@ public class GameController
         return deck;
     }
 
+    public List<Player> getPlayers()
+    {
+        return queue_full;
+    }
+
     //TODO tokenien sijoittaminen
 }

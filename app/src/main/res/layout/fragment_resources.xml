@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:orientation="vertical"
 
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parentlayout"
@@ -36,21 +38,48 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
 
-                android:text="Terraforming rating"
+                android:text="Temperature"
                 android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/textview_tfr"
-
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+                >
 
-                android:layout_margin="5dp"
+                <ImageButton
+                    android:layout_weight="1"
 
-                android:text="420"
-                android:textSize="20sp"
-                />
+                    app:srcCompat="@drawable/ic_remove_custom"
+
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:id="@+id/textview_tfr"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+
+                    android:layout_weight="1"
+
+                    android:text="9"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:layout_weight="1"
+
+                    app:srcCompat="@drawable/ic_add_custom"
+
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -70,22 +99,46 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
 
-                android:text="Something else"
+                android:text="Terraforming rating"
                 android:textSize="12sp"
                 />
 
-            <TextView
-                android:id="@+id/not_decided"
-
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+                >
 
-                android:layout_margin="5dp"
+                <ImageButton
+                    android:layout_weight="1"
 
-                android:text="420"
-                android:textSize="20sp"
-                />
+                    app:srcCompat="@drawable/ic_remove_custom"
+
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+
+                    android:layout_weight="1"
+
+                    android:text="420"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:layout_weight="1"
+
+                    app:srcCompat="@drawable/ic_add_custom"
+
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -105,22 +158,46 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
 
-                android:text="Something else yet"
+                android:text="Oxygen"
                 android:textSize="12sp"
                 />
 
-            <TextView
-                android:id="@+id/not_decided_2"
-
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
+                >
 
-                android:layout_margin="5dp"
+                <ImageButton
+                    android:layout_weight="1"
 
-                android:text="420"
-                android:textSize="20sp"
-                />
+                    app:srcCompat="@drawable/ic_remove_custom"
+
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+
+                    android:layout_weight="1"
+
+                    android:text="9%"
+                    android:textSize="20sp" />
+
+                <ImageButton
+                    android:layout_weight="1"
+
+                    app:srcCompat="@drawable/ic_add_custom"
+
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -128,7 +205,6 @@
 
     <!-- array nappeja jms -->
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
@@ -809,4 +885,62 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
+
+        <Button
+            android:layout_weight="0"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+
+            android:text="1"
+            />
+
+        <Button
+            android:layout_weight="0"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="5dp"
+
+            android:text="5"
+            />
+
+        <Button
+            android:layout_weight="0"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="5dp"
+
+            android:text="10"
+            />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+
+            android:text="save"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp"
+
+            android:text="edit"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            />
+
+    </LinearLayout>
+    
+
+
+</LinearLayout>
