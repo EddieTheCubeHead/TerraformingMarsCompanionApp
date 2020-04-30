@@ -2,11 +2,17 @@ Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi 
 
 Kirjasin kaiken mikä on vielä tekemättä ennen harkkatyödedistä. Osassa kategorioista on samoja tehtäviä.
 
+TODO: layout valmiina, ei koodia.
+    Kirjautumisnäyttö
+    Pelaajan resurssinäyttö -ville
+
+TODO: helppo mutta vaatii tietoa tehokkaaseen tekemiseen
+    Pelaajan korttilista.
+        -valmiina, mutta ei vielä korttiactioneita.
+        -ei myöskään ns. tokeneita. Nopea tehdä kunhan tiedetään mitä eri tapauksia on
+
 TODO: Seuraavat UI-näkymät:
     Aloitusnäyttö -Tekeillä
-    Kirjautumisnäyttö -Alex, noin valmis.
-    Pelaajan resurssinäyttö -ville, alex
-    Pelaajan korttilista -Alex, secondfragmentissa puolivalmiina
     Heksan asettaminen -ville
     Moninpelin pelinrakennusnäyttö (En ole varma voiko käyttää hotseat-näyttöä, Eetu)
 TODO: Kortteja kehiin, -Aapo
@@ -23,7 +29,7 @@ TODO: Hotseat-peli kuntoon
             Järjestyksen valinta olisi parempi, koska saman koodin voisi kierrättä serveripeliin
             Listview-implementaatio: https://www.youtube.com/watch?v=_BZIvjMgH-Q
     Vuorologiikan viimeistely
-        Osittain UI-pohjainen, foldausnapit, vain yhden toiminnan teko vuorolla
+        Osittain UI-pohjainen, foldausnapit
             -Alex, käsityksen mukaan jo valmis?
     Pelin alun toiminnot
         Korporaatioiden pelaaminen

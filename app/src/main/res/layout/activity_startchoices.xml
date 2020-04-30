@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:background="#80000000"
+
+    android:id="@+id/card_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.NoActionBar"
+    app:cardCornerRadius="@dimen/round_corner_radius"
+    app:cardUseCompatPadding="true"
+    android:fadingEdge="vertical"
+    app:contentPadding="5dp"
+    app:cardBackgroundColor="@color/colorWindow"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/textview_corp_choice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="name's corporation"
+            />
+
+        <Spinner
+            android:id="@+id/spinner_corporation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="103dp"
+            tools:layout_editor_absoluteY="174dp"
+            />
+
+        <Button
+            android:id="@+id/button_corp_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="confirm"
+            />
+
+    </LinearLayout>
+
+
+
+</com.google.android.material.card.MaterialCardView>
