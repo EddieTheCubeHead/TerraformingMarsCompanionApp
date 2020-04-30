@@ -71,6 +71,7 @@ TODO: Serveripuolella pelien tallennus, lataaminen ja datan analysointi
 
 Harkkatyön palautuksen jälkeiset:
 
+TODO: Award-korttien getAwardResult() -metodin uudelleenkirjoittaminen
 TODO: Game ja GameController aidoiksi singeltoneiksi init-funktiolla
     Tämä tulee rikkomaan kaikki kortit. Eetu pääsee aloittamaan kiireettömän kehitysvaiheen ~200 luokan uudelleenkirjoittamisella
 TODO: Tekstit (flavor ja kuvaus)

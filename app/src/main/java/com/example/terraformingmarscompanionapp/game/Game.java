@@ -6,6 +6,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
@@ -48,7 +49,9 @@ public class Game implements Serializable {
     public Integer getClaimedMilestones() {return claimed_milestones;}
 
     private Integer claimed_awards = 0;
-    public void claimAward() {claimed_awards++;}
+    public void claimAward() {
+        claimed_awards++;
+    }
     public Integer getClaimedAwards() {return claimed_awards;}
 
     //EffectCard -rajapinnan korttien haku pakasta UpdateManageria varten
@@ -499,8 +502,9 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMinVenusTags() != null && player.getVenusTags() < requirements.getMinVenusTags()) {
-            if (!(player.getVenusTags() + unused_jokers > requirements.getMinVenusTags())) {
-
+            if (player.getVenusTags() + unused_jokers > requirements.getMinVenusTags()) {
+                unused_jokers -= (requirements.getMinVenusTags() - player.getVenusTags());
+            } else {
                 return false;
             }
         }
@@ -508,6 +512,107 @@ public class Game implements Serializable {
         if (requirements.getMinHeat() != null && player.getHeat() < requirements.getMinHeat()) {
             return false;
         }
+
+        if (requirements.getMinHighestProduction() != null) {
+            //Tämän voisi tehdä kivoilla for-loopeilla ja listoilla, mutta oon väsynyt ja haluun tän pois alta
+            //ALL ABOARD THE IF -TRAIN!
+            //TODO katso olisiko järkevää kirjoittaa ei-sieluaraastavaan muotoon
+            Integer max = 0;
+            if (player.getMoneyProduction() > max) {
+                max = player.getMoneyProduction();
+            }
+
+            if (player.getSteelProduction() > max) {
+                max = player.getSteelProduction();
+            }
+
+            if (player.getTitaniumProduction() > max) {
+                max = player.getTitaniumProduction();
+            }
+
+            if (player.getPlantsProduction() > max) {
+                max = player.getPlantsProduction();
+            }
+
+            if (player.getEnergyProduction() > max) {
+                max = player.getEnergyProduction();
+            }
+
+            if (player.getHeatProduction() > max) {
+                max = player.getHeatProduction();
+            }
+
+            if (max < requirements.getMinHighestProduction()) {
+                return false;
+            }
+        }
+
+        //Pieni erikoistapaus, aina milestone: ei voi olla muiden tag-requirementtien kanssa samaan aikaan
+        if (requirements.getMinOrganicTags() != null) {
+            if (player.getPlantTags() + player.getMicrobeTags() + player.getAnimalTags() + player.getJokerTags() < requirements.getMinOrganicTags()) {
+                return false;
+            }
+        }
+
+        if (requirements.getMinCardsInHand() != null && player.getHandSize() < requirements.getMinCardsInHand()) {
+            return false;
+        }
+
+        if (requirements.getMinCardsOnTable() != null &&
+                player.getGreen().size() + player.getBlue().size() < requirements.getMinCardsOnTable()) {
+            return false;
+        }
+
+        if (requirements.getMinEventsPlayed() != null && player.getRed().size() < requirements.getMinEventsPlayed()) {
+            return false;
+        }
+
+        if (requirements.getMinMoneyProduction() != null && player.getMoneyProduction() < requirements.getMinMoneyProduction()) {
+            return false;
+        }
+
+        if (requirements.getMinUniqueTags() != null && player.getUniqueTags() < requirements.getMinUniqueTags()) {
+            return false;
+        }
+
+        if (requirements.getMinRequirementCards() != null) {
+            Integer amount = 0;
+            for (Card card_to_check : player.getBlue()) {
+                if (card_to_check.getRequirements().getDrawableRequrement() != null) {
+                    amount++;
+                }
+            }
+
+            for (Card card_to_check : player.getGreen()) {
+                if (card_to_check.getRequirements().getDrawableRequrement() != null) {
+                    amount++;
+                }
+            }
+
+            if (amount < requirements.getMinRequirementCards()) {
+                return false;
+            }
+        }
+
+        if (requirements.getMinPolarTiles() != null) {
+            Integer amount = 0;
+            for (Tile tile : player.getOwnedTiles()) {
+                if (tile.getY() < 2) {
+                    amount++;
+                }
+            }
+
+            if (amount < requirements.getMinPolarTiles()) {
+                return false;
+            }
+        }
+
+        if (requirements.getMinBuildingTags() != null) {
+            if (!(player.getBuildingTags() + unused_jokers > requirements.getMinBuildingTags())) {
+                return false;
+            }
+        }
+
 
         if (requirements.getMaxTemperature() != null && global_temperature > requirements.getMaxTemperature() + base_discount) {
             return false;
@@ -526,6 +631,10 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMaxMilestonesClaimed() != null && claimed_milestones > requirements.getMaxMilestonesClaimed()) {
+            return false;
+        }
+
+        if (requirements.getMaxAwardsClaimed() != null && claimed_awards > requirements.getMaxAwardsClaimed()) {
             return false;
         }
 
