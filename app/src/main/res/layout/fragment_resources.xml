@@ -48,15 +48,16 @@
                 >
 
                 <ImageButton
-                    android:layout_weight="1"
-
-                    app:srcCompat="@drawable/ic_remove_custom"
+                    android:id="@+id/button_temperature_minus"
 
                     android:layout_width="20dp"
-                    android:layout_height="match_parent"/>
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_remove_custom" />
 
                 <TextView
-                    android:id="@+id/textview_tfr"
+                    android:id="@+id/textview_temperature"
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,12 +72,13 @@
                     android:textSize="20sp" />
 
                 <ImageButton
-                    android:layout_weight="1"
-
-                    app:srcCompat="@drawable/ic_add_custom"
+                    android:id="@+id/button_temperature_plus"
 
                     android:layout_width="20dp"
-                    android:layout_height="match_parent"/>
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_add_custom" />
 
             </LinearLayout>
 
@@ -110,33 +112,36 @@
                 >
 
                 <ImageButton
-                    android:layout_weight="1"
-
-                    app:srcCompat="@drawable/ic_remove_custom"
+                    android:id="@+id/button_tfr_minus"
 
                     android:layout_width="20dp"
-                    android:layout_height="match_parent"/>
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_remove_custom" />
 
                 <TextView
+                    android:id="@+id/textview_tfr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
 
-                    android:gravity="center"
                     android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
 
                     android:layout_weight="1"
 
+                    android:gravity="center"
                     android:text="420"
                     android:textSize="20sp" />
 
                 <ImageButton
-                    android:layout_weight="1"
-
-                    app:srcCompat="@drawable/ic_add_custom"
+                    android:id="@+id/button_tfr_plus"
 
                     android:layout_width="20dp"
-                    android:layout_height="match_parent"/>
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_add_custom" />
 
             </LinearLayout>
 
@@ -169,33 +174,36 @@
                 >
 
                 <ImageButton
-                    android:layout_weight="1"
-
-                    app:srcCompat="@drawable/ic_remove_custom"
+                    android:id="@+id/button_oxygen_minus"
 
                     android:layout_width="20dp"
-                    android:layout_height="match_parent"/>
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_remove_custom" />
 
                 <TextView
+                    android:id="@+id/textview_oxygen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
 
-                    android:gravity="center"
                     android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
 
                     android:layout_weight="1"
 
+                    android:gravity="center"
                     android:text="9%"
                     android:textSize="20sp" />
 
                 <ImageButton
-                    android:layout_weight="1"
-
-                    app:srcCompat="@drawable/ic_add_custom"
+                    android:id="@+id/button_oxygen_plus"
 
                     android:layout_width="20dp"
-                    android:layout_height="match_parent"/>
+
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_add_custom" />
 
             </LinearLayout>
 
@@ -232,7 +240,7 @@
                 app:srcCompat="@drawable/ic_ph" />
 
             <ImageButton
-                android:id="@+id/button_credit_minus"
+                android:id="@+id/button_money_minus"
 
                 android:layout_width="50dp"
 
@@ -258,7 +266,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
-                    android:id="@+id/textview_credit"
+                    android:id="@+id/textview_money"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -271,7 +279,7 @@
 
 
             <ImageButton
-                android:id="@+id/button_credit_plus"
+                android:id="@+id/button_money_plus"
 
                 android:layout_width="50dp"
 
@@ -280,7 +288,7 @@
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
-                android:id="@+id/button_credit_production_minus"
+                android:id="@+id/button_money_production_minus"
 
                 android:layout_width="50dp"
 
@@ -306,7 +314,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
-                    android:id="@+id/textview_credit_production"
+                    android:id="@+id/textview_money_production"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -318,7 +326,7 @@
             </FrameLayout>
 
             <ImageButton
-                android:id="@+id/button_credit_production_plus"
+                android:id="@+id/button_money_production_plus"
 
                 android:layout_width="50dp"
 
@@ -892,55 +900,55 @@
         >
 
         <Button
-            android:layout_weight="0"
+            android:id="@+id/button_multiplier_1"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
 
-            android:text="1"
-            />
+            android:layout_weight="0"
+            android:text="1" />
 
         <Button
-            android:layout_weight="0"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="5dp"
-
-            android:text="5"
-            />
-
-        <Button
-            android:layout_weight="0"
+            android:id="@+id/button_multiplier_5"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
 
             android:layout_marginLeft="5dp"
 
-            android:text="10"
-            />
+            android:layout_weight="0"
+            android:text="5" />
 
         <Button
-            android:layout_weight="1"
+            android:id="@+id/button_multiplier_10"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="5dp"
+
+            android:layout_weight="0"
+            android:text="10" />
+
+        <Button
+            android:id="@+id/button_save_resources"
+            android:layout_width="0dp"
+
+            android:layout_height="match_parent"
+
             android:layout_marginLeft="20dp"
-
-            android:text="save"
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            />
+            android:layout_weight="1"
+            android:text="save" />
 
         <Button
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-
-            android:text="edit"
-
+            android:id="@+id/button_editcancel_resources"
             android:layout_width="0dp"
+
             android:layout_height="match_parent"
-            />
+
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:text="edit" />
 
     </LinearLayout>
-    
+
 
 
 </LinearLayout>
