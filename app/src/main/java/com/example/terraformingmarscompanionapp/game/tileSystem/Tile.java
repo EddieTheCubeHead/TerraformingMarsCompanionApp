@@ -15,8 +15,8 @@ public class Tile {
     private Boolean is_volcanic = false;
     private Player owner = null;
 
-    Integer getX() {return coordinates[0];}
-    Integer getY() {return coordinates[1];}
+    public Integer getX() {return coordinates[0];}
+    public Integer getY() {return coordinates[1];}
     Boolean getIsOcean() {return is_ocean;}
     Boolean getIsVolcanic() {return is_volcanic;}
     public Placeable getPlacedHex() {return placed_hex;}

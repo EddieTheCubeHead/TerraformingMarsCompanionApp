@@ -138,7 +138,7 @@ public abstract class Card {
         }
 
 
-        if (tags.size() == 0 && type != Type.GHOST ) {
+        if (tags.size() == 0 && type != Type.GHOST && type != Type.STANDARD_PROJECT && type != Type.AWARD && type != Type.MILESTONE && type != Type.OTHER) {
             player.addNullTag();
         }
 
@@ -160,6 +160,8 @@ public abstract class Card {
                 break;
             case GHOST:
             case STANDARD_PROJECT:
+            case AWARD:
+            case MILESTONE:
             case OTHER:
                 break;
             default:
@@ -183,7 +185,7 @@ public abstract class Card {
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}
     public final String getName() {return name;}
     public final Player getOwmer() {return owner_player;}
-    public final Integer getPrice() {return price;}
+    public Integer getPrice() {return price;}
     public final Type getType() {return type;}
     public final ArrayList<Tag> getTags() {return tags;}
     public final CardRequirements getRequirements() {return requirements;}

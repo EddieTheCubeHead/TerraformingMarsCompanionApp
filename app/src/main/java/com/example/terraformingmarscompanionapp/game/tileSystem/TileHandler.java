@@ -572,6 +572,7 @@ public class TileHandler {
             }
         }
         to_place.placeHex(player, tile_type);
+        player.addTile(to_place);
         if (game.getServerMultiplayer()) {
             GameActions.sendTileEvent(new TileEventPacket(tile_type, player.getName(), to_place.getX(), to_place.getY()));
         }
