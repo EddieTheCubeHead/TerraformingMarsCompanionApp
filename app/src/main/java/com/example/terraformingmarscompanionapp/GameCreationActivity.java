@@ -1,7 +1,11 @@
 package com.example.terraformingmarscompanionapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,8 +21,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import java.util.ArrayList;
 
 
-public class GameCreationActivity extends AppCompatActivity
-{
+public class GameCreationActivity extends AppCompatActivity {
     ArrayList<String> player_names = new ArrayList<>();
     boolean hellas_elysium = false;
     boolean corporate_era = false;
@@ -29,9 +32,11 @@ public class GameCreationActivity extends AppCompatActivity
     boolean extra_corporations = false;
     Integer map = 0;
 
+    EditText edittext_name;
+    TextView textview_names;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_creation);
 
@@ -43,10 +48,10 @@ public class GameCreationActivity extends AppCompatActivity
         //fi eetukoodi
 
         //textview
-        final TextView textview_names = findViewById(R.id.name_textview);
+        textview_names = findViewById(R.id.name_textview);
 
         //EditText
-        final EditText edittext_name = findViewById(R.id.name_edittext);
+        edittext_name = findViewById(R.id.name_edittext);
 
         //Switchit
         Switch switch_hellas_elysiym = findViewById(R.id.switch_elysium);
@@ -57,41 +62,51 @@ public class GameCreationActivity extends AppCompatActivity
         Switch switch_turmoil = findViewById(R.id.switch_turmoil);
         Switch switch_extra_corporations = findViewById(R.id.switch_extra_corporations);
 
+        //switchien listenerit, vaihtaa booleaneja
+        switch_hellas_elysiym.setOnCheckedChangeListener((buttonView, isChecked) -> hellas_elysium = isChecked);
+        switch_corporate_era.setOnCheckedChangeListener((buttonView, isChecked) -> corporate_era = isChecked);
+        switch_prelude.setOnCheckedChangeListener((buttonView, isChecked) -> prelude = isChecked);
+        switch_colonies.setOnCheckedChangeListener((buttonView, isChecked) -> colonies = isChecked);
+        switch_venus.setOnCheckedChangeListener((buttonView, isChecked) -> venus = isChecked);
+        switch_turmoil.setOnCheckedChangeListener((buttonView, isChecked) -> turmoil = isChecked);
+        switch_extra_corporations.setOnCheckedChangeListener((buttonView, isChecked) -> extra_corporations = isChecked);
+
         //buttonit
         ImageButton button_add = findViewById(R.id.imageButton);
         Button button_start = findViewById(R.id.button_start);
 
-        //switchien listenerit, vaihtaa booleaneja
-        switch_hellas_elysiym.setOnCheckedChangeListener((buttonView, isChecked) -> hellas_elysium = isChecked);
-
-        switch_corporate_era.setOnCheckedChangeListener((buttonView, isChecked) -> corporate_era = isChecked);
-
-        switch_prelude.setOnCheckedChangeListener((buttonView, isChecked) -> prelude = isChecked);
-
-        switch_colonies.setOnCheckedChangeListener((buttonView, isChecked) -> colonies = isChecked);
-
-        switch_venus.setOnCheckedChangeListener((buttonView, isChecked) -> venus = isChecked);
-
-        switch_turmoil.setOnCheckedChangeListener((buttonView, isChecked) -> turmoil = isChecked);
-
-        switch_extra_corporations.setOnCheckedChangeListener((buttonView, isChecked) -> extra_corporations = isChecked);
-
         //nappien listenerit
-        button_add.setOnClickListener(v -> {
-            String name = edittext_name.getText().toString().trim();
-            if (name.length() == 0)
-                return;
-            player_names.add(name);
-            textview_names.append("\n"+name);
-            edittext_name.setText("");
-        });
+        button_add.setOnClickListener(v -> enterName());
         button_start.setOnClickListener(v -> startInGameUI());
+
+        //näppäimistön enterin listener
+        //TODO korjaa tää
+        edittext_name.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_GO) {
+                enterName();
+                return true;
+            }
+            return false;
+        });
     }
 
-    public void startInGameUI()
-    {
-        if (player_names.size() == 0)
-        {
+    private void enterName() {
+        String name = edittext_name.getText().toString().trim();
+        if (name.length() == 0)
+            return;
+
+        if (player_names.contains(name)) {
+            Toast.makeText(getApplicationContext(), "Use unique names!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        player_names.add(name);
+        textview_names.append("\n" + name);
+        edittext_name.setText("");
+    }
+
+    public void startInGameUI() {
+        if (player_names.size() == 0) {
             Toast.makeText(getApplicationContext(), "Enter names first!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -101,6 +116,15 @@ public class GameCreationActivity extends AppCompatActivity
                 map);
 
         GameController.makeInstance(game);
+
+        //piilottaa näppäimistön
+        Context c = getBaseContext();
+        View v = edittext_name.findFocus();
+        if (v == null)
+            return;
+        InputMethodManager inputManager = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        ////
 
         Intent intent = new Intent(this, InGameUI.class);
         startActivity(intent);
