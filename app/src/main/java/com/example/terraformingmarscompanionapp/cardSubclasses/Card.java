@@ -226,4 +226,9 @@ public abstract class Card {
     {
         return R.drawable.ic_ph;
     }
+
+    //tehty spinnereitä varten. kutsuu tostring defaulttina.
+    @Override public String toString() {
+        return getName();
+    }
 }
