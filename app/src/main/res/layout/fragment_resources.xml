@@ -1,36 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    android:orientation="vertical"
-
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parentlayout"
 
+    android:id="@+id/parentlayout"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
 
+        android:layout_marginHorizontal="5dp"
+
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
 
-        android:layout_marginHorizontal="5dp"
-        android:layout_marginBottom="5dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        >
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
 
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -42,10 +38,9 @@
                 android:textSize="12sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/button_temperature_minus"
@@ -54,6 +49,8 @@
 
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:alpha="00"
+                    android:clickable="false"
                     app:srcCompat="@drawable/ic_remove_custom" />
 
                 <TextView
@@ -61,12 +58,12 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-
-                    android:gravity="center"
                     android:layout_gravity="center_vertical"
 
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
+
+                    android:gravity="center"
 
                     android:text="9"
                     android:textSize="20sp" />
@@ -78,6 +75,8 @@
 
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:alpha="00"
+                    android:clickable="false"
                     app:srcCompat="@drawable/ic_add_custom" />
 
             </LinearLayout>
@@ -88,12 +87,11 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+
             android:layout_weight="1"
 
-            android:orientation="vertical"
-
-            android:layout_marginLeft="5dp"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,14 +100,12 @@
                 android:layout_gravity="start"
 
                 android:text="Terraforming rating"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/button_tfr_minus"
@@ -118,6 +114,8 @@
 
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:alpha="00"
+                    android:clickable="false"
                     app:srcCompat="@drawable/ic_remove_custom" />
 
                 <TextView
@@ -141,6 +139,8 @@
 
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:alpha="00"
+                    android:clickable="false"
                     app:srcCompat="@drawable/ic_add_custom" />
 
             </LinearLayout>
@@ -150,12 +150,11 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+
             android:layout_weight="1"
 
-            android:orientation="vertical"
-
-            android:layout_marginLeft="5dp"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -164,14 +163,12 @@
                 android:layout_gravity="start"
 
                 android:text="Oxygen"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/button_oxygen_minus"
@@ -180,6 +177,8 @@
 
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:alpha="00"
+                    android:clickable="false"
                     app:srcCompat="@drawable/ic_remove_custom" />
 
                 <TextView
@@ -203,6 +202,8 @@
 
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:alpha="00"
+                    android:clickable="false"
                     app:srcCompat="@drawable/ic_add_custom" />
 
             </LinearLayout>
@@ -246,6 +247,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -285,6 +288,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -294,6 +299,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -332,6 +339,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -358,6 +367,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -397,6 +408,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -406,6 +419,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -444,6 +459,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -470,6 +487,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -509,6 +528,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -518,6 +539,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -556,6 +579,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -576,13 +601,15 @@
                 app:srcCompat="@drawable/ic_ph" />
 
             <ImageButton
-                android:id="@+id/button_plant_minus"
+                android:id="@+id/button_plants_minus"
 
                 android:layout_width="50dp"
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_remove_custom" />
+                android:clickable="false"
+                app:srcCompat="@drawable/ic_remove_custom"
+                android:alpha="00" />
 
             <FrameLayout
                 android:layout_width="0dp"
@@ -601,7 +628,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
-                    android:id="@+id/textview_plant"
+                    android:id="@+id/textview_plants"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -614,21 +641,25 @@
 
 
             <ImageButton
-                android:id="@+id/button_plant_plus"
+                android:id="@+id/button_plants_plus"
 
                 android:layout_width="50dp"
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
-                android:id="@+id/button_plant_production_minus"
+                android:id="@+id/button_plants_production_minus"
 
                 android:layout_width="50dp"
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -648,7 +679,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
-                    android:id="@+id/textview_plant_production"
+                    android:id="@+id/textview_plants_production"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -660,12 +691,14 @@
             </FrameLayout>
 
             <ImageButton
-                android:id="@+id/button_plant_production_plus"
+                android:id="@+id/button_plants_production_plus"
 
                 android:layout_width="50dp"
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -686,12 +719,14 @@
                 app:srcCompat="@drawable/ic_ph" />
 
             <ImageButton
-                android:id="@+id/button_power_minus"
+                android:id="@+id/button_energy_minus"
 
                 android:layout_width="50dp"
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -711,7 +746,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
-                    android:id="@+id/textview_power"
+                    android:id="@+id/textview_energy"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -724,21 +759,25 @@
 
 
             <ImageButton
-                android:id="@+id/button_power_plus"
+                android:id="@+id/button_energy_plus"
 
                 android:layout_width="50dp"
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
-                android:id="@+id/button_power_production_minus"
+                android:id="@+id/button_energy_production_minus"
 
                 android:layout_width="50dp"
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -758,7 +797,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
-                    android:id="@+id/textview_power_production"
+                    android:id="@+id/textview_energy_production"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -770,12 +809,14 @@
             </FrameLayout>
 
             <ImageButton
-                android:id="@+id/button_power_production_plus"
+                android:id="@+id/button_energy_production_plus"
 
                 android:layout_width="50dp"
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -802,6 +843,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -840,6 +883,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -849,6 +894,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -886,6 +933,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
+                android:alpha="00"
+                android:clickable="false"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -896,8 +945,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        >
+        android:layout_margin="5dp">
 
         <Button
             android:id="@+id/button_multiplier_1"
@@ -905,6 +953,8 @@
             android:layout_height="wrap_content"
 
             android:layout_weight="0"
+            android:alpha="00"
+            android:clickable="false"
             android:text="1" />
 
         <Button
@@ -915,6 +965,8 @@
             android:layout_marginLeft="5dp"
 
             android:layout_weight="0"
+            android:alpha="00"
+            android:clickable="false"
             android:text="5" />
 
         <Button
@@ -925,6 +977,8 @@
             android:layout_marginLeft="5dp"
 
             android:layout_weight="0"
+            android:alpha="00"
+            android:clickable="false"
             android:text="10" />
 
         <Button
@@ -935,6 +989,8 @@
 
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
+            android:alpha="00"
+            android:clickable="false"
             android:text="save" />
 
         <Button
@@ -948,7 +1004,6 @@
             android:text="edit" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>
