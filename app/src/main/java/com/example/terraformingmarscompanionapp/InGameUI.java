@@ -1,13 +1,14 @@
 package com.example.terraformingmarscompanionapp;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +21,6 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 public class InGameUI extends AppCompatActivity {
+
+    boolean is_first_run = false;
 
     Game game;
     GameController controller;
@@ -83,17 +85,26 @@ public class InGameUI extends AppCompatActivity {
         });
 
 
-        boolean serverGame = false;
+        //tehdään vain kerran
+        if (!is_first_run)
+        {
+            is_first_run = false;
 
-        if (serverGame) {
-        } else
-            corporationRound();
+            boolean serverGame = false;
 
+            if (serverGame) {
+                //servergame
+            } else
+                corporationRound();
+        }
     }
 
 
-    //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisikasi
-    private void corporationRound() {
+    //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisiksi
+    //tässä vaiheessa aika paljon toistoa
+    //tehty toistaen alku koska kuitenkin niin paljon eri asioita että on järkevää tehdä erillisiksi
+    private void corporationRound()
+    {
         List<Player> players = controller.getPlayers();
 
         //layoutin rakentaminen
@@ -103,11 +114,17 @@ public class InGameUI extends AppCompatActivity {
         //visuaalinen muokkaus
         view.setBackgroundColor(Color.TRANSPARENT);
 
+            //corporationroundissa käyttämättömien poisto.
+        LinearLayout linearLayout = view.findViewById(R.id.startchoices_linearlayout);
+
+        linearLayout.removeViewAt(2);
+        linearLayout.removeViewAt(2);
+
         //findviewbyid't
         TextView title = view.findViewById(R.id.first_round_title);
         Spinner spinner = view.findViewById(R.id.first_round_spinner);
 
-        //korporaatioiden hankkiminen
+        //korporaatioiden hankkiminen arraylistiin
         HashMap<String, Card> corps_hashmap = game.getCorporations();
 
         ArrayList<Card> corporations = new ArrayList<>();
@@ -120,7 +137,6 @@ public class InGameUI extends AppCompatActivity {
         ArrayAdapter<Card> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, corporations);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner.setAdapter(adapter);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
@@ -138,21 +154,105 @@ public class InGameUI extends AppCompatActivity {
             private int player_index = 0;
 
             @Override
-            public void onClick(View v) {
-                Player player = players.get(player_index);
-
-                title.setText("Choose " + player.getName() + "'s corporation.");
-
+            public void onClick(View v)
+            {
+                //korporaation asettaminen
+                players.get(player_index).setCorporation((Card) spinner.getSelectedItem());
 
                 //seuraavaan pelaajaan siirtyminen
-                player.setCorporation((Card) spinner.getSelectedItem());
                 spinner.setSelection(0);
+                player_index++;
+
+                //viimeisen valinnan ohessa dialogi suljetaan
+                if (player_index == players.size()) {
+                    dialog.dismiss();
+                    return;
+                }
+
+                title.setText("Choose " + players.get(player_index).getName() + "'s corporation.");
+            }
+        });
+    }
+
+    private void preludeRound()
+    {
+        List<Player> players = controller.getPlayers();
+
+        //layoutin rakentaminen
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.activity_startchoices, null);
+
+        //visuaalinen muokkaus
+        view.setBackgroundColor(Color.TRANSPARENT);
+
+        //findviewbyid't
+        TextView title = view.findViewById(R.id.first_round_title);
+
+        Spinner spinner1 = view.findViewById(R.id.first_round_spinner);
+        Spinner spinner2 = view.findViewById(R.id.first_round_spinner_2);
+
+        //preludien hankkiminen arraylistiin
+        HashMap<String, Card> preludes_hashmap = game.getPreludes();
+
+        ArrayList<Card> preludes = new ArrayList<>();
+
+        for (Map.Entry<String, Card> corp_entry : preludes_hashmap.entrySet())
+            preludes.add(corp_entry.getValue());
+
+        //spinnerin valmistaminen
+        //arrayadapter kutsuu toString -metodia
+        ArrayAdapter<Card> adapter = new ArrayAdapter<Card> (
+                this, android.R.layout.simple_spinner_item, preludes);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner1.setAdapter(adapter);
+        spinner2.setAdapter(adapter);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(view)
+                .setCancelable(false)
+                .create();
+
+        dialog.show();
+
+        title.setText("Choose " + players.get(0).getName() + "'s preludes.");
+
+        //eri pelaajien läpi menemisen logiikka onclicklistenerissä
+        //voi uudelleenkirjottaa
+        view.findViewById(R.id.first_round_confirm).setOnClickListener(new View.OnClickListener() {
+            private int player_index = 0;
+
+            @Override
+            public void onClick(View v)
+            {
+                Card prelude1 = (Card) spinner1.getSelectedItem();
+                Card prelude2 = (Card) spinner2.getSelectedItem();
+
+                if (prelude1 == null || prelude2 == null) {
+                    return;
+                }
+
+                if (prelude1 == prelude2) {
+                    return;
+                }
+
+                //preludien asettaminen
+                players.get(player_index).addPrelude((Card) spinner1.getSelectedItem());
+                players.get(player_index).addPrelude((Card) spinner2.getSelectedItem());
+
+                //seuraavaan pelaajaan siirtyminen
+                spinner1.setSelection(0);
+                spinner2.setSelection(1);
 
                 player_index++;
 
-                //viimeisen valinnan ohessa suljetaan dialogi
-                if (player_index == players.size())
+                //viimeisen valinnan ohessa dialogi suljetaan
+                if (player_index == players.size()) {
                     dialog.dismiss();
+                    return;
+                }
+
+                title.setText("Choose " + players.get(player_index).getName() + "'s corporation.");
             }
         });
     }
