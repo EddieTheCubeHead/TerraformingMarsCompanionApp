@@ -55,6 +55,11 @@ TODO: WebSocket serveripeli -Eetu
 TODO: Corporate-era -korttien ja Prelude -lisäosan lisääminen
     Kaikki tarvittavat frameworkit valmiina, nyt vain kortteja pöytään
 
+
+TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
+    Metadatalliset effektit serveripelissä
+    Effektien pelaaminen automatisoidussa yksinpelissä
+
 TODO: TESTAAMINEN
 
 Ennen palautusta jos kerkeää, palautuksen jälkeen jos ei kerkeä:
@@ -68,6 +73,8 @@ TODO: Muut lisäosat (esitetty tässä arvioidussa implementoimisen helppousjär
     paljon koodia ilman että muut ovat tehneet kehikon, jonka mukaan koodi pitää tehdä)
         I am not brave enough for politics
 
+TODO: Korporaatioiden hakeminen tekstipohjalta korporaatiovalinnasta
+
 TODO: Yhden pelaajan automatisoitu peli kuntoon
     Nykyisellä tilanteella tässä eniten hommaa: siksi tämä tehdään vasta kun kaikki muu deadlineen tehtävä valmista
     Jos Turmoil ei kiinnosta niin tämän vaatimat lisäykset voisivat olla Aapolle hyvä tapa saada selkeä oma tehtävä
@@ -80,6 +87,8 @@ Harkkatyön palautuksen jälkeiset:
 TODO: Award-korttien getAwardResult() -metodin uudelleenkirjoittaminen
 TODO: Game ja GameController aidoiksi singeltoneiksi init-funktiolla
     Tämä tulee rikkomaan kaikki kortit. Eetu pääsee aloittamaan kiireettömän kehitysvaiheen ~200 luokan uudelleenkirjoittamisella
+TODO: resurssisysteemin rewrite
+    Olioita siellä ja olioita täällä
 TODO: Tekstit (flavor ja kuvaus)
     Korttien nimet ja tekemiset
 TODO: kirjoita korttien onPlay ja playWithMetadata -interaktio uudestaan koodin määrän vähentämiseksi

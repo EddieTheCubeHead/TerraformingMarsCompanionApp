@@ -14,8 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 import java.util.ArrayList;
 
@@ -83,16 +86,24 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
     {
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
 
-        //korttien actionit.
-        //TODO chekkaus siitä voiko actionin tehdä, virhe jos ei
-
         //jos kortti implementtaa actioncard-interfacen
         if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard) {
-            //TODO tee korttia vastaava cardaction.
+            Game game = GameController.getInstance().getGame();
+            Integer action_metadata = ((ActionCard) card).cardAction();
+            if (action_metadata == -1) {
+                //TODO error handling: toiminto käytetty jo
+            } else if (action_metadata == -2) {
+                //TODO error handling: ei riittävästi resursseja
+            } else if (game.getServerMultiplayer()) {
+                GameActions.sendCardEvent(new CardEventPacket(card.getName(), card.getOwmer().getName(), action_metadata));
+            }
         }
-        else if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard) {
+
+        //Periaatteessa kaikki effectit on automatisoitu
+        /*else if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard) {
             //TODO tee korttia vastaava effect.
-        }
+        }*/
+
         else Log.i("non-interactable card","Pelaajan korttilistassa kortilla ei ollut CardActionia eikä CardEffectiä");
     }
 

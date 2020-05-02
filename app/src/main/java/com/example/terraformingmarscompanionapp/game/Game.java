@@ -58,6 +58,7 @@ public class Game implements Serializable {
      * must max venus (houserule)
      * turmoil terraforming revision (houserule)
      */
+    //TODO en tiedä miksi kirjoitun näin hankalasti, simppelimpi versio asap, -Eetu
     private Integer expansion_integer;
     @SuppressLint("DefaultLocale")
     public String getExpansionInteger() {return String.format("%09d", Integer.valueOf(Integer.toBinaryString(expansion_integer)));}
@@ -87,7 +88,6 @@ public class Game implements Serializable {
                 effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
             }
         }
-
         return effect_cards;
     }
 
@@ -104,9 +104,11 @@ public class Game implements Serializable {
     //Pelin tilan parametrit, getterit ja setterit
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
+    public void rawChangeTemperature(Integer value) {global_temperature += value;}
 
     private Integer global_oxygen;
     public Integer getGlobalOxygen() {return global_oxygen;}
+    public void rawChangeOxygen(Integer value) {global_oxygen += value;}
 
     private final Integer oceans_placed;
     public Integer getOceansPlaced() {return oceans_placed;}
