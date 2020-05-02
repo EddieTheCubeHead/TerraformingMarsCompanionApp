@@ -15,7 +15,7 @@ public class ServerGameController {
 
     public static GameController startGame(Boolean corporate_era, Boolean prelude, Boolean colonies, Boolean venus, Boolean turmoil, Boolean extra_corporations, Integer map) {
         Game game = new Game(players,
-                corporate_era, prelude, colonies, venus, turmoil, extra_corporations, true,
+                corporate_era, prelude, colonies, venus, turmoil, extra_corporations, false, false, true, true,
                 map);
 
         GameController controller = GameController.makeInstance(game);
