@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -42,6 +43,24 @@ public class Game implements Serializable {
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return corporations;}
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
+
+    /* Lisäosat määrittävä integer ja sen getteri
+     * Käyttö: palauttaa binäärilukua kuvastavan merkkijonon, katso paikkaa kohtaavan luvun totuusarvo,
+     *
+     * Järjestys (vasemmalta oikealle):
+     * corporate era
+     * prelude
+     * colonies
+     * venus
+     * turmoil
+     * extra corporations (houserule)
+     * world government terraforming (houserule)
+     * must max venus (houserule)
+     * turmoil terraforming revision (houserule)
+     */
+    private Integer expansion_integer;
+    @SuppressLint("DefaultLocale")
+    public String getExpansionInteger() {return String.format("%09d", Integer.valueOf(Integer.toBinaryString(expansion_integer)));}
 
     //Milestonet ja awardit
     private Integer claimed_milestones = 0;
@@ -112,6 +131,9 @@ public class Game implements Serializable {
                     boolean venus,
                     boolean turmoil,
                     boolean extra_corporations,
+                    boolean world_government_terraforming,
+                    boolean must_max_venus,
+                    boolean turmoil_terraforming_revision,
                     boolean server_multiplayer,
                     Integer map
                 )
@@ -140,6 +162,19 @@ public class Game implements Serializable {
         cities_in_space = 0;
         cities_on_mars = 0;
         venus_terraform = 0;
+
+        String expansion_integer_builder = "";
+        expansion_integer_builder += corporate_era ? "1" : "0";
+        expansion_integer_builder += prelude ? "1" : "0";
+        expansion_integer_builder += colonies ? "1" : "0";
+        expansion_integer_builder += venus ? "1" : "0";
+        expansion_integer_builder += turmoil ? "1" : "0";
+        expansion_integer_builder += extra_corporations ? "1" : "0";
+        expansion_integer_builder += world_government_terraforming ? "1" : "0";
+        expansion_integer_builder += must_max_venus ? "1" : "0";
+        expansion_integer_builder += turmoil_terraforming_revision ? "1" : "0";
+
+        expansion_integer = Integer.parseInt(expansion_integer_builder, 2);
 
         //TODO viimeistele constructor
     }
