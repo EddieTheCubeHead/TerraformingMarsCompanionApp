@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -105,7 +107,7 @@ public class GameController
     public void setPlayerIsFolding(Boolean currentIsFolding) { folding = currentIsFolding; }
     public void foldOnTurnEnd() { folding = true; }
 
-    //Toiminnon käyttäminen ilman toastia vuoron lopussa
+    //Toiminnon käyttäminen
     public void useAction() {
         actions_used++;
         if (actions_used >= 2) {
@@ -113,18 +115,12 @@ public class GameController
         }
     }
 
-    //Toiminnon käyttäminen toastilla vuoron lopussa
-    public void useAction(Context context) {
-        actions_used++;
-        if (actions_used >= 2) {
-            endTurn(context);
-        }
-    }
-
-    //ilman toastia
     public void endTurn()
     {
         beforeTurnEnd();
+
+        if(actions_used == 0)
+            folding = true;
 
         //vuoron vaihto
         if (folding)
@@ -140,28 +136,6 @@ public class GameController
         }
 
         current_player = queue.getFirst();
-
-        atTurnStart();
-    }
-
-    //toastilla, passataan applicationcontext
-    public void endTurn(Context context)
-    {
-        beforeTurnEnd();
-
-        //vuoron vaihto
-        if (folding)
-            queue.removeFirst();
-        else
-            queue.addLast(queue.removeFirst());
-        setPlayerIsFolding(false);
-
-
-        //kun kaikki on foldannu
-        if (queue.size() == 0)
-        {
-            endGeneration(context);
-        }
 
         atTurnStart();
     }
@@ -194,10 +168,20 @@ public class GameController
         current_player = current_starter;
     }
 
-    public void endGeneration(Context context)
+    public ArrayList<Card> getCards()
     {
-        endGeneration();
-        Toast.makeText(context, "Generation ended, "+ current_player.getName() + "'s turn.", Toast.LENGTH_SHORT).show();
+        ArrayList<Card> deck = new ArrayList<>();
+
+        deck.addAll(current_player.getBlue());
+        deck.addAll(current_player.getGreen());
+        deck.addAll(current_player.getRed());
+
+        return deck;
+    }
+
+    public List<Player> getPlayers()
+    {
+        return queue_full;
     }
 
     //TODO tokenien sijoittaminen

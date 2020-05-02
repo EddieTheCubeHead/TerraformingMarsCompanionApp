@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.game;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 
 import java.util.ArrayList;
 
@@ -15,18 +16,26 @@ public class Player {
     private Integer cities = 0;
     private Integer greeneries = 0;
     private Integer colonies = 0;
-    private Integer hand_size = 0; //Vaikka ei pidetä tietoa, mitä kortteja kädessä, korttien määrä on helppo pitää ylhäällä milestoneja varten
+
+    //Parametrien muuttaminen
+    public void addCity() {cities++;}
+    public void addGreenery() {greeneries++;}
+    public void addColony() {colonies++;}
 
     //Erityyppisille korteille säilytyspaikkoja
+    private Integer hand_size = 0; //Vaikka ei pidetä tietoa, mitä kortteja kädessä, korttien määrä on helppo pitää ylhäällä milestoneja varten
     private Card corporation;
     private final ArrayList<Card> green_cards = new ArrayList<>();
     private final ArrayList<Card> red_cards = new ArrayList<>();
     private final ArrayList<ActionCard> action_cards = new ArrayList<>();
     private final ArrayList<Card> blue_cards = new ArrayList<>();
     private final ArrayList<Card> preludes = new ArrayList<>();
-    private final ArrayList<ResourceCard> resource_holders = new ArrayList<>();
+
+    //Omistetut tiilet
+    private ArrayList<Tile> owned_tiles = new ArrayList<>();
 
     //Korttien lisääminen vastaavaan säilytyspaikkaan
+    private final ArrayList<ResourceCard> resource_holders = new ArrayList<>();
     public void setCorporation(Card card) {corporation=card;}
     public void addGreen(Card card) {green_cards.add(card);}
     public void addRed(Card card) {red_cards.add(card);}
@@ -35,11 +44,6 @@ public class Player {
     public void addPrelude(Card card) {preludes.add(card);}
     public void addResourceHolder(ResourceCard card) {resource_holders.add(card);}
 
-    //Parametrien muuttaminen
-    public void addCity() {cities++;}
-    public void addGreenery() {greeneries++;}
-    public void addColony() {colonies++;}
-
     //Getterit tarvittaville muuttujille
     public String getName() {return name;}
 
@@ -47,12 +51,13 @@ public class Player {
     public Integer getGreeneries() {return greeneries;}
     public Integer getColonies() {return colonies;}
     public Integer getHandSize() {return hand_size;}
+    public ArrayList<Tile> getOwnedTiles() {return owned_tiles;}
 
     public Card getCorporation() {return corporation;}
-    public ArrayList<Card> getGreens() {return green_cards;}
-    public ArrayList<Card> getReds() {return red_cards;}
+    public ArrayList<Card> getGreen() {return green_cards;}
+    public ArrayList<Card> getRed() {return red_cards;}
     public ArrayList<ActionCard> getActions() {return action_cards;}
-    public ArrayList<Card> getEffects() {return blue_cards;}
+    public ArrayList<Card> getBlue() {return blue_cards;}
     public ArrayList<ResourceCard> getResourceHolders() {return resource_holders;}
 
     //Käsikoon asettaminen
@@ -62,6 +67,11 @@ public class Player {
         }
         hand_size += change_amount;
         return true;
+    }
+
+    //Tiilen lisääminen
+    public void addTile(Tile tile) {
+        owned_tiles.add(tile);
     }
 
     //Resetoi toimintojen käyttötilanne sukupolven lopuksi
@@ -136,6 +146,12 @@ public class Player {
         game.update_manager.onSteelProductionRaised(this, change_amount);
         return true;
     }
+    public void takeSteelProduction(Integer amount) {
+        steel_production -= amount;
+        if (steel_production < 0) {
+            steel_production = 0;
+        }
+    }
 
     //Titaani
     private Integer titanium = 0;
@@ -163,6 +179,12 @@ public class Player {
         titanium_production += change_amount;
         game.update_manager.onTitaniumProductionRaised(this, change_amount);
         return true;
+    }
+    public void takeTitaniumProduction(Integer amount) {
+        titanium_production -= amount;
+        if (titanium_production < 0) {
+            titanium_production = 0;
+        }
     }
 
     //Kasvit
