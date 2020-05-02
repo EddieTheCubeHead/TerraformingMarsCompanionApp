@@ -20,6 +20,7 @@
     >
 
     <LinearLayout
+        android:id="@+id/startchoices_linearlayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,6 +34,18 @@
 
         <Spinner
             android:id="@+id/first_round_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            />
+
+        <TextView
+            android:id="@+id/first_round_title_2"
+            android:layout_marginLeft="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:id="@+id/first_round_spinner_2"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             />
