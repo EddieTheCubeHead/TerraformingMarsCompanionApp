@@ -958,6 +958,7 @@
 
             android:layout_weight="0"
             android:alpha="00"
+            android:background="@color/colorPrimaryDark"
             android:clickable="false"
             android:text="1" />
 
@@ -970,6 +971,7 @@
 
             android:layout_weight="0"
             android:alpha="00"
+            android:background="@color/colorPrimary"
             android:clickable="false"
             android:text="5" />
 
@@ -982,6 +984,7 @@
 
             android:layout_weight="0"
             android:alpha="00"
+            android:background="@color/colorPrimary"
             android:clickable="false"
             android:text="10" />
 
