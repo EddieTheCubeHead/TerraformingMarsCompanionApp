@@ -22,7 +22,6 @@
         </activity>
         <activity android:name=".InGameUI" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".ui.main.ResourceDialogActivity" />
     </application>
 
 </manifest>
