@@ -68,6 +68,8 @@ TODO: Muut lisäosat (esitetty tässä arvioidussa implementoimisen helppousjär
     paljon koodia ilman että muut ovat tehneet kehikon, jonka mukaan koodi pitää tehdä)
         I am not brave enough for politics
 
+TODO: Korporaatioiden hakeminen tekstipohjalta korporaatiovalinnasta
+
 TODO: Yhden pelaajan automatisoitu peli kuntoon
     Nykyisellä tilanteella tässä eniten hommaa: siksi tämä tehdään vasta kun kaikki muu deadlineen tehtävä valmista
     Jos Turmoil ei kiinnosta niin tämän vaatimat lisäykset voisivat olla Aapolle hyvä tapa saada selkeä oma tehtävä
@@ -75,11 +77,17 @@ TODO: Yhden pelaajan automatisoitu peli kuntoon
 TODO: Serveripuolella pelien tallennus, lataaminen ja datan analysointi
     Eetulle tehtävää ennen deadlinea jos kaikki muut toiminnallisuudet valmiina.
 
+TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
+    Metadatalliset effektit serveripelissä
+    Effektien pelaaminen automatisoidussa yksinpelissä
+
 Harkkatyön palautuksen jälkeiset:
 
 TODO: Award-korttien getAwardResult() -metodin uudelleenkirjoittaminen
 TODO: Game ja GameController aidoiksi singeltoneiksi init-funktiolla
     Tämä tulee rikkomaan kaikki kortit. Eetu pääsee aloittamaan kiireettömän kehitysvaiheen ~200 luokan uudelleenkirjoittamisella
+TODO: resurssisysteemin rewrite
+    Olioita siellä ja olioita täällä
 TODO: Tekstit (flavor ja kuvaus)
     Korttien nimet ja tekemiset
 TODO: kirjoita korttien onPlay ja playWithMetadata -interaktio uudestaan koodin määrän vähentämiseksi

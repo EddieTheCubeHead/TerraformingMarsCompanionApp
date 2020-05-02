@@ -112,7 +112,6 @@ public class Player {
         }
     }
 
-
     public Integer getMoneyProduction() {return money_production;}
     public void changeMoneyProduction(Integer change_amount) {
         money_production += change_amount;

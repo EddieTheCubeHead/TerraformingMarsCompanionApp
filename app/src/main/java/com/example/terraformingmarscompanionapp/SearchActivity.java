@@ -1,9 +1,7 @@
 package com.example.terraformingmarscompanionapp;
 
 import android.app.Dialog;
-
 import android.os.Bundle;
-
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -87,8 +85,5 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) { return false; }
-
-
-
 }
 

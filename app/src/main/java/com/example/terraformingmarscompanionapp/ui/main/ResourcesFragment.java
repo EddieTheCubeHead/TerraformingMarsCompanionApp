@@ -40,7 +40,6 @@ public class ResourcesFragment extends Fragment {
     private Integer terraformingRating;
     private Integer oxygen;
 
-
     private Integer multiplier;
 
     private Boolean editmode;
