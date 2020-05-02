@@ -220,7 +220,7 @@ public abstract class Card {
     }
 
     //Tarkistaa onko kortilla olemassa vaatimuksia jotka lasketaan specialist (tms, en muista nimeaä) -saavutukseen
-    public Boolean getHasRequirement() {
+    public final Boolean getHasRequirement() {
         return requirements.getDrawableRequrement() != 0;
     }
 

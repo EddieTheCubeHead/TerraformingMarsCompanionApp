@@ -55,6 +55,11 @@ TODO: WebSocket serveripeli -Eetu
 TODO: Corporate-era -korttien ja Prelude -lisäosan lisääminen
     Kaikki tarvittavat frameworkit valmiina, nyt vain kortteja pöytään
 
+
+TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
+    Metadatalliset effektit serveripelissä
+    Effektien pelaaminen automatisoidussa yksinpelissä
+
 TODO: TESTAAMINEN
 
 Ennen palautusta jos kerkeää, palautuksen jälkeen jos ei kerkeä:
@@ -76,10 +81,6 @@ TODO: Yhden pelaajan automatisoitu peli kuntoon
 
 TODO: Serveripuolella pelien tallennus, lataaminen ja datan analysointi
     Eetulle tehtävää ennen deadlinea jos kaikki muut toiminnallisuudet valmiina.
-
-TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
-    Metadatalliset effektit serveripelissä
-    Effektien pelaaminen automatisoidussa yksinpelissä
 
 Harkkatyön palautuksen jälkeiset:
 
