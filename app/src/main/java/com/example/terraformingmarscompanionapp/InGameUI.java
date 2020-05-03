@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -94,8 +93,9 @@ public class InGameUI extends AppCompatActivity {
 
             if (serverGame) {
                 //servergame
-            } else
+            } else {
                 corporationRound();
+            }
         }
     }
 
@@ -157,7 +157,7 @@ public class InGameUI extends AppCompatActivity {
             public void onClick(View v)
             {
                 //korporaation asettaminen
-                players.get(player_index).setCorporation((Card) spinner.getSelectedItem());
+                ((Card) spinner.getSelectedItem()).onPlay(players.get(player_index));
 
                 //seuraavaan pelaajaan siirtyminen
                 spinner.setSelection(0);

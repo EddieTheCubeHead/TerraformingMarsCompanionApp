@@ -1,20 +1,10 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -23,11 +13,6 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class ResourceDialog
 {
@@ -38,6 +23,10 @@ public class ResourceDialog
 
     //käytetään kortin maksun kalibroimiseen suositellusta cardcostista.
     public Integer change;
+
+    //Teräksen ja titaanin arvomuuttujat
+    private Integer steel_value = (2 + player.getSteelValueModifier());
+    private Integer titanium_value = (3 + player.getTitaniumValueModifier());
 
     public Integer credit;
     public Integer steel;
@@ -197,15 +186,16 @@ public class ResourceDialog
 
     //todo, eetu? : lisää valuemodifier support
     public void steelMinus(Integer amount) {
+
         if (steel-amount <= 0)
         {
-            change -= steel;
+            change -= steel * steel_value;
             credit = 0;
             return;
         }
 
         steel -= amount;
-        change -= amount;
+        change -= amount * steel_value;
 
         //update ui
     }
@@ -214,13 +204,13 @@ public class ResourceDialog
     public void steelPlus(Integer amount) {
         if (steel+amount >= player.getSteel())
         {
-            change += player.getSteel() - steel;
+            change += (player.getSteel() - steel) * steel_value;
             steel = player.getSteel();
             return;
         }
 
         steel += amount;
-        change += amount;
+        change += amount * steel_value;
 
         //update ui
     }
@@ -229,7 +219,7 @@ public class ResourceDialog
     public void titaniumMinus(Integer amount) {
         if (titanium-amount <= 0)
         {
-            change -= titanium;
+            change -= titanium * titanium_value;
             credit = 0;
             return;
         }
@@ -244,7 +234,7 @@ public class ResourceDialog
     public void titaniumPlus(Integer amount) {
         if (titanium+amount >= player.getTitanium())
         {
-            change += player.getTitanium() - titanium;
+            change += (player.getTitanium() - titanium) * titanium_value;
             titanium = player.getTitanium();
             return;
         }
@@ -286,13 +276,13 @@ public class ResourceDialog
     public void plantMinus(Integer amount) {
         if (plant-amount <= 0)
         {
-            change -= plant;
+            change -= plant * 2;
             plant = 0;
             return;
         }
 
         plant -= amount;
-        change -= amount;
+        change -= amount * 2;
 
         //update ui
     }
@@ -300,13 +290,13 @@ public class ResourceDialog
     public void plantPlus(Integer amount) {
         if (plant+amount >= player.getPlants())
         {
-            change += player.getPlants() - plant;
-            heat = player.getPlants();
+            change += (player.getPlants() - plant) * 2;
+            plant = player.getPlants();
             return;
         }
 
         plant += amount;
-        change += amount;
+        change += amount * 2;
 
         //update ui
     }
