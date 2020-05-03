@@ -647,7 +647,6 @@ public class ResourcesFragment extends Fragment {
     //TODO sijoita johonkin, jossa aktivoituu yhtiödien valinnan jälkeen
     //TODO Ville: lisää lämpötila, tfr ja happi
     public void SetResourceAmounts() {
-
         textview_money.setText(String.valueOf(player.getMoney()));
         textview_money_production.setText(String.valueOf(player.getMoneyProduction()));
         textview_steel.setText(String.valueOf(player.getSteel()));
@@ -661,5 +660,4 @@ public class ResourcesFragment extends Fragment {
         textview_heat.setText(String.valueOf(player.getHeat()));
         textview_heat_production.setText(String.valueOf(player.getHeatProduction()));
     }
-
 }

@@ -90,6 +90,12 @@ public class Game implements Serializable {
                 effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
             }
         }
+
+        for (Map.Entry<String, Card> entry : ghosts.entrySet()) {
+            if (entry.getValue() instanceof EffectCard) {
+                effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
+            }
+        }
         return effect_cards;
     }
 

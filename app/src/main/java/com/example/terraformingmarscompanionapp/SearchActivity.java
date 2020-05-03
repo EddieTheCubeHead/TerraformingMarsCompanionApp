@@ -187,10 +187,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         //linearlayoutin juttujen poistaminen
         LinearLayout root = view.findViewById(R.id.dialog_root_layout);
 
-        //TODO, eetu: ehdot poistoille
-
-        //root.removeView(root.findViewById(R.id.dialog_credit_layout));
-
         if(!card.getTags().contains(Tag.BUILDING))
             root.removeView(root.findViewById(R.id.dialog_steel_layout));
 
