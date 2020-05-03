@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.webSocket.events;
 
+import android.util.Log;
+
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
@@ -55,6 +57,7 @@ public class CardCostPacket implements PlayablePacket
         player.changeTitanium(-titanium);
         player.changeHeat(-heat);
 
+        Log.i("Game", String.format("%d, %d, %d, %d", -money, -steel, -titanium, -heat));
         //TODO resurssi-integraatio
     }
 }

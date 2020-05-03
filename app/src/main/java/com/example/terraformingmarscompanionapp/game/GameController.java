@@ -3,8 +3,8 @@ package com.example.terraformingmarscompanionapp.game;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 
 import java.util.ArrayList;
@@ -36,6 +36,13 @@ public class GameController
     //Controllerin pitää tietää onko peli serverin välityksellä pelattu, ja jos on, kuka pelaajista on kyseisen clientin omistaja
     private Boolean server_multiplayer = false;
     private Player self_player;
+
+    //Context ingameui:n löytämiseen ja setteri
+    private Context context = null;
+    public void setContext(Context context) {
+        this.context = context;
+        ((InGameUI)this.context).demo();
+    }
 
     public Game getGame() { return game; }
     public Player getCurrentPlayer()  { return current_player; }
@@ -166,6 +173,7 @@ public class GameController
 
         current_starter = queue.getFirst();
         current_player = current_starter;
+        ((InGameUI)context).onGenerationEnd();
     }
 
     public ArrayList<Card> getCards()

@@ -100,10 +100,6 @@ public class ResourceDialog
             //linearlayoutin juttujen poistaminen
         LinearLayout root = view.findViewById(R.id.dialog_root_layout);
 
-        //TODO, eetu: ehdot poistoille
-
-        //root.removeView(root.findViewById(R.id.dialog_credit_layout));
-
         if(!card.getTags().contains(Tag.BUILDING))
             root.removeView(root.findViewById(R.id.dialog_steel_layout));
 
@@ -113,9 +109,9 @@ public class ResourceDialog
         if(!player.getHeatIsMoney())
             root.removeView(root.findViewById(R.id.dialog_heat_layout));
 
-        //root.removeView(root.findViewById(R.id.dialog_plant_layout));
+        root.removeView(root.findViewById(R.id.dialog_plant_layout));
 
-        //root.removeView(root.findViewById(R.id.dialog_floater_layout));
+        root.removeView(root.findViewById(R.id.dialog_floater_layout));
 
         AlertDialog dialog = new AlertDialog.Builder(context).setView(view).create();
 

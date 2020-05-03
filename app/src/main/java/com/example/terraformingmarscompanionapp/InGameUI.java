@@ -47,6 +47,7 @@ public class InGameUI extends AppCompatActivity {
         setContentView(R.layout.activity_in_game_u_i);
 
         controller = GameController.getInstance();
+        controller.setContext(this);
         game = controller.getGame();
 
         //default ui-juttuja
@@ -281,5 +282,17 @@ public class InGameUI extends AppCompatActivity {
         if (viewPager.getCurrentItem() != 0) {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
+    }
+
+    public void onGenerationEnd() {
+        Toast.makeText(getApplicationContext(), "Generation ended.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onTurnChange(String player_name) {
+        Toast.makeText(getApplicationContext(), String.format("%s's turn", player_name), Toast.LENGTH_SHORT).show();
+    }
+
+    public void demo() {
+        Toast.makeText(getApplicationContext(), "Test!", Toast.LENGTH_SHORT).show();
     }
 }
