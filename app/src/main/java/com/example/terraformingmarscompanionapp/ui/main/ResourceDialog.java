@@ -184,7 +184,6 @@ public class ResourceDialog
         //update ui
     }
 
-    //todo, eetu? : lisää valuemodifier support
     public void steelMinus(Integer amount) {
 
         if (steel-amount <= 0)
@@ -200,7 +199,6 @@ public class ResourceDialog
         //update ui
     }
 
-    //todo, eetu? : lisää valuemodifier support
     public void steelPlus(Integer amount) {
         if (steel+amount >= player.getSteel())
         {
@@ -215,7 +213,6 @@ public class ResourceDialog
         //update ui
     }
 
-    //todo, eetu? : lisää valuemodifier support
     public void titaniumMinus(Integer amount) {
         if (titanium-amount <= 0)
         {
@@ -230,7 +227,6 @@ public class ResourceDialog
         //update ui
     }
 
-    //todo, eetu? : lisää valuemodifier support
     public void titaniumPlus(Integer amount) {
         if (titanium+amount >= player.getTitanium())
         {

@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.StandardProject;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +28,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     private HashMap<String, Card> deck;
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
+    private ArrayList<Card.Type> valid_cards = new ArrayList<>(Arrays.asList(Card.Type.BLUE, Card.Type.RED, Card.Type.BLUE));
 
 
     Dialog resource_dialog;
@@ -50,7 +51,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             Card card = entry.getValue();
             Card.Type type = card.getType();
 
-            if (type != Card.Type.RED & type != Card.Type.BLUE & type != Card.Type.GREEN) //TODO eetu, tähän jotain emt
+            if (valid_cards.contains(card.getType()))
                 card_list.add(card);
         }
         RecyclerView recyclerview = findViewById(R.id.result_recyclerview);
