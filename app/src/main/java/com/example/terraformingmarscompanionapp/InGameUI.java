@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ import java.util.Map;
 
 public class InGameUI extends AppCompatActivity {
 
-    boolean is_first_run = false;
+    static boolean is_first_run = true;
 
     Game game;
     GameController controller;
@@ -90,17 +91,11 @@ public class InGameUI extends AppCompatActivity {
 
 
         //tehdään vain kerran
-        if (!is_first_run)
+        if (is_first_run)
         {
             is_first_run = false;
 
-            boolean serverGame = false;
-
-            if (serverGame) {
-                //servergame
-            } else {
-                corporationRound();
-            }
+            corporationRound();
         }
     }
 
@@ -149,11 +144,16 @@ public class InGameUI extends AppCompatActivity {
                 .setCancelable(false)
                 .create();
 
-        Window window = dialog.getWindow();
-        window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setGravity(Gravity.CENTER);
-
         dialog.show();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        Window window = dialog.getWindow();
+
+        window.setLayout(4*width/5, WindowManager.LayoutParams.WRAP_CONTENT);
 
         title.setText("Choose " + players.get(0).getName() + "'s corporation.");
 
