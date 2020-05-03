@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,13 +31,41 @@ import java.util.Map;
 
 public class ResourceDialog
 {
+
+    //huono ratkaisu resurssien vaihtoon. ongelma geneerisyyden puutteessa.
+    public CardCostPacket cost;
+    private Player player;
+
+    //käytetään kortin maksun kalibroimiseen suositellusta cardcostista.
+    public Integer change;
+
+    public Integer credit;
+    public Integer steel;
+    public Integer titanium;
+    public Integer heat;
+    public Integer plant;
+    public Integer floater;
+
     //context oli joka tapauksessa aikaisemmin "this" ingameui:ssa
     public void DisplayDialog(Context context, Card card)
     {
         GameController controller = GameController.getInstance();
         Game game = controller.getGame();
+        player = controller.getCurrentPlayer();
 
-        List<Player> players = controller.getPlayers();
+        //maksujen alustaminen suosituksiin
+        cost = game.getRecommendedCardCost(card);
+
+        //todo näytä viesti
+        if (!cost.isEligible())
+            return;
+
+        credit = cost.getMoney();
+        steel = cost.getSteel();
+        titanium = cost.getTitanium();
+        heat = cost.getHeat();
+        plant = cost.getPlantResources();
+        floater = cost.getFloaterResources();
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -44,6 +73,40 @@ public class ResourceDialog
 
         //visuaalinen muokkaus
         //view.setBackgroundColor(Color.TRANSPARENT);
+
+        //onclicklistenerit resurssien vaihdoille, bracketit minimoimisen takia
+        {
+            view.findViewById(R.id.credit_minus5).setOnClickListener(v -> creditMinus(5));
+            view.findViewById(R.id.credit_minus1).setOnClickListener(v -> creditMinus(1));
+            view.findViewById(R.id.credit_plus1).setOnClickListener(v -> creditPlus(1));
+            view.findViewById(R.id.credit_plus5).setOnClickListener(v -> creditPlus(5));
+
+            view.findViewById(R.id.steel_minus5).setOnClickListener(v -> steelMinus(5));
+            view.findViewById(R.id.steel_minus1).setOnClickListener(v -> steelMinus(1));
+            view.findViewById(R.id.steel_plus1).setOnClickListener(v -> steelPlus(1));
+            view.findViewById(R.id.steel_plus5).setOnClickListener(v -> steelPlus(5));
+
+            view.findViewById(R.id.titanium_minus5).setOnClickListener(v -> titaniumMinus(5));
+            view.findViewById(R.id.titanium_minus1).setOnClickListener(v -> titaniumMinus(1));
+            view.findViewById(R.id.titanium_plus1).setOnClickListener(v -> titaniumPlus(1));
+            view.findViewById(R.id.titanium_plus5).setOnClickListener(v -> titaniumPlus(5));
+
+            view.findViewById(R.id.heat_minus5).setOnClickListener(v -> heatMinus(5));
+            view.findViewById(R.id.heat_minus1).setOnClickListener(v -> heatMinus(1));
+            view.findViewById(R.id.heat_plus1).setOnClickListener(v -> heatPlus(1));
+            view.findViewById(R.id.heat_plus5).setOnClickListener(v -> heatPlus(5));
+
+            view.findViewById(R.id.plant_minus5).setOnClickListener(v -> plantMinus(5));
+            view.findViewById(R.id.plant_minus1).setOnClickListener(v -> plantMinus(1));
+            view.findViewById(R.id.plant_plus1).setOnClickListener(v -> plantPlus(1));
+            view.findViewById(R.id.plant_plus5).setOnClickListener(v -> plantPlus(5));
+            /*
+            view.findViewById(R.id.floater_minus5).setOnClickListener(v -> floaterMinus(5));
+            view.findViewById(R.id.floater_minus1).setOnClickListener(v -> floaterMinus(1));
+            view.findViewById(R.id.floater_plus1).setOnClickListener(v -> floaterPlus(1));
+            view.findViewById(R.id.floater_plus5).setOnClickListener(v -> floaterPlus(5));
+            */
+        }
 
             //linearlayoutin juttujen poistaminen
         LinearLayout root = view.findViewById(R.id.dialog_root_layout);
@@ -58,16 +121,12 @@ public class ResourceDialog
         if(!card.getTags().contains(Tag.SPACE))
             root.removeView(root.findViewById(R.id.dialog_titanium_layout));
 
-        if(!controller.getCurrentPlayer().getHeatIsMoney())
+        if(!player.getHeatIsMoney())
             root.removeView(root.findViewById(R.id.dialog_heat_layout));
 
         //root.removeView(root.findViewById(R.id.dialog_plant_layout));
 
         //root.removeView(root.findViewById(R.id.dialog_floater_layout));
-
-        //findviewbyid't
-            //
-            //
 
         AlertDialog dialog = new AlertDialog.Builder(context).setView(view).create();
 
@@ -85,7 +144,174 @@ public class ResourceDialog
                 //TODO oston vahvistus
             }
         });
+
     }
+
+
+    /*
+    public int getPlayerResource(String type)
+    {
+        switch (type)
+        {
+            case "money": return player.getMoney();
+            case "steel": return player.getSteel();
+            case "titanium": player.getTitanium();
+            case "heat": player.getHeat();
+            case "plant": player.getPlants();
+            case "floater": return 0; //todo floaterilla maksu
+            default:
+                Log.e("bad ui call", "call: '"+ type +"'"); return 0;
+        }
+    }
+     */
+
+
+    //maksuvaihtofunktiot. päivittävät myös textviewtä.
+    public void creditMinus(Integer amount){
+        if (credit-amount <= 0)
+        {
+            change -= credit;
+            credit = 0;
+            return;
+        }
+
+        credit -= amount;
+        change -= amount;
+
+        //update ui
+    }
+
+    public void creditPlus(Integer amount) {
+        if (credit+amount >= player.getMoney())
+        {
+            change += player.getMoney() - credit;
+            credit = player.getMoney();
+            return;
+        }
+
+        credit += amount;
+        change += amount;
+
+        //update ui
+    }
+
+    //todo, eetu? : lisää valuemodifier support
+    public void steelMinus(Integer amount) {
+        if (steel-amount <= 0)
+        {
+            change -= steel;
+            credit = 0;
+            return;
+        }
+
+        steel -= amount;
+        change -= amount;
+
+        //update ui
+    }
+
+    //todo, eetu? : lisää valuemodifier support
+    public void steelPlus(Integer amount) {
+        if (steel+amount >= player.getSteel())
+        {
+            change += player.getSteel() - steel;
+            steel = player.getSteel();
+            return;
+        }
+
+        steel += amount;
+        change += amount;
+
+        //update ui
+    }
+
+    //todo, eetu? : lisää valuemodifier support
+    public void titaniumMinus(Integer amount) {
+        if (titanium-amount <= 0)
+        {
+            change -= titanium;
+            credit = 0;
+            return;
+        }
+
+        titanium -= amount;
+        change -= amount;
+
+        //update ui
+    }
+
+    //todo, eetu? : lisää valuemodifier support
+    public void titaniumPlus(Integer amount) {
+        if (titanium+amount >= player.getTitanium())
+        {
+            change += player.getTitanium() - titanium;
+            titanium = player.getTitanium();
+            return;
+        }
+
+        titanium += amount;
+        change += amount;
+
+        //update ui
+    }
+
+    public void heatMinus(Integer amount) {
+        if (heat-amount <= 0)
+        {
+            change -= heat;
+            heat = 0;
+            return;
+        }
+
+        heat -= amount;
+        change -= amount;
+
+        //update ui
+    }
+
+    public void heatPlus(Integer amount) {
+        if (heat+amount >= player.getHeat())
+        {
+            change += player.getHeat() - heat;
+            heat = player.getHeat();
+            return;
+        }
+
+        heat += amount;
+        change += amount;
+
+        //update ui
+    }
+
+    public void plantMinus(Integer amount) {
+        if (plant-amount <= 0)
+        {
+            change -= plant;
+            plant = 0;
+            return;
+        }
+
+        plant -= amount;
+        change -= amount;
+
+        //update ui
+    }
+
+    public void plantPlus(Integer amount) {
+        if (plant+amount >= player.getPlants())
+        {
+            change += player.getPlants() - plant;
+            heat = player.getPlants();
+            return;
+        }
+
+        plant += amount;
+        change += amount;
+
+        //update ui
+    }
+
+
 
 
     /*
