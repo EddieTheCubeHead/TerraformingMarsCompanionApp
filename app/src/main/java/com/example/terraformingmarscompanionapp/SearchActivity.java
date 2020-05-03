@@ -196,9 +196,9 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         if(!player.getHeatIsMoney())
             root.removeView(root.findViewById(R.id.dialog_heat_layout));
 
-        //root.removeView(root.findViewById(R.id.dialog_plant_layout));
+        root.removeView(root.findViewById(R.id.dialog_plant_layout));
 
-        //root.removeView(root.findViewById(R.id.dialog_floater_layout));
+        root.removeView(root.findViewById(R.id.dialog_floater_layout));
 
         AlertDialog dialog = new AlertDialog.Builder(context).setView(view).create();
 

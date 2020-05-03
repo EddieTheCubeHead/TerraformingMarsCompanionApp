@@ -36,7 +36,7 @@ public class TileHandler {
             case 0:
                 //Peruspelin kartta
                 mars_tiles[4][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{4, 8});
-                mars_tiles[5][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), true, new Integer[]{6, 8});
+                mars_tiles[6][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), true, new Integer[]{6, 8});
                 mars_tiles[8][8] = new Tile(game, null, false, new Integer[]{8, 8});
                 mars_tiles[10][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), true, new Integer[]{10, 8});
                 mars_tiles[12][8] = new Tile(game, null, true, new Integer[]{12, 8});
