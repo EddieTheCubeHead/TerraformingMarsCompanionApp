@@ -251,8 +251,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -292,8 +291,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -303,8 +301,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -343,8 +340,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -371,8 +367,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -412,8 +407,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -423,8 +417,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -463,8 +456,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -491,8 +483,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -532,8 +523,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -543,8 +533,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -583,8 +572,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -611,9 +599,8 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:clickable="false"
-                app:srcCompat="@drawable/ic_remove_custom"
-                android:alpha="00" />
+                android:alpha="11"
+                app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
                 android:layout_width="50dp"
@@ -651,8 +638,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -662,8 +648,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -701,8 +686,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -729,8 +713,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -769,8 +752,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -780,8 +762,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -819,8 +800,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>
@@ -847,8 +827,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -887,8 +866,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
             <ImageButton
@@ -898,8 +876,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_remove_custom" />
 
             <FrameLayout
@@ -937,8 +914,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:alpha="00"
-                android:clickable="false"
+                android:alpha="11"
                 app:srcCompat="@drawable/ic_add_custom" />
 
         </LinearLayout>

@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
@@ -21,6 +22,7 @@ public class ResourcesFragment extends Fragment {
 
     GameController controller = GameController.getInstance();
     Player player = controller.getCurrentPlayer();
+    Game game = controller.getGame();
 
 
     //Paikalliset muuttujat muutosmoodiin
@@ -547,7 +549,7 @@ public class ResourcesFragment extends Fragment {
 
         button_editcancel_resources.setOnClickListener(listener);
 
-
+        ChangeMode(false, 0);
 
     }
 
@@ -645,8 +647,13 @@ public class ResourcesFragment extends Fragment {
     //Asettaa arvot nykyisen pelaajan arvoista
 
     //TODO sijoita johonkin, jossa aktivoituu yhtiödien valinnan jälkeen
-    //TODO Ville: lisää lämpötila, tfr ja happi
+    //TODO Ville: tee minukselle menemisen esto
     public void SetResourceAmounts() {
+
+        textview_temperature.setText(String.valueOf(game.getGlobalTemperature()));
+        textview_oxygen.setText(String.valueOf(game.getGlobalOxygen()));
+        textview_tfr.setText(String.valueOf(player.getTerraformingRating()));
+
         textview_money.setText(String.valueOf(player.getMoney()));
         textview_money_production.setText(String.valueOf(player.getMoneyProduction()));
         textview_steel.setText(String.valueOf(player.getSteel()));
@@ -660,4 +667,5 @@ public class ResourcesFragment extends Fragment {
         textview_heat.setText(String.valueOf(player.getHeat()));
         textview_heat_production.setText(String.valueOf(player.getHeatProduction()));
     }
+
 }
