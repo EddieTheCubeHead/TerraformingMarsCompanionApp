@@ -22,6 +22,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.ui.main.ResourcesFragment;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -173,6 +174,7 @@ public class InGameUI extends AppCompatActivity {
                 //viimeisen valinnan ohessa dialogi suljetaan
                 if (player_index == players.size()) {
                     dialog.dismiss();
+                    ((ResourcesFragment) sectionsPagerAdapter.getItem(0)).SetResourceAmounts();
                     return;
                 }
 

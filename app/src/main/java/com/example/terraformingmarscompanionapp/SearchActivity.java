@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -185,10 +187,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         //linearlayoutin juttujen poistaminen
         LinearLayout root = view.findViewById(R.id.dialog_root_layout);
 
-        //TODO, eetu: ehdot poistoille
-
-        //root.removeView(root.findViewById(R.id.dialog_credit_layout));
-
         if(!card.getTags().contains(Tag.BUILDING))
             root.removeView(root.findViewById(R.id.dialog_steel_layout));
 
@@ -211,17 +209,25 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         });
 
         view.findViewById(R.id.resource_confirm_button).setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onClick(View v)
             {
-                //TODO oston tarkistus
-                //TODO oston vahvistus
+                if (change < 0) {
+                    Toast.makeText(getApplicationContext(), String.format("Please add %d megacredits worth of resources.", -change), Toast.LENGTH_SHORT).show();
+                } else if (change > 0 &&
+                           (!(card.getTags().contains(Tag.BUILDING) && change < steel_value) ||
+                           !(card.getTags().contains(Tag.SPACE) && change < titanium_value))) {
+                    Toast.makeText(getApplicationContext(), String.format("Please remove %d megacredits worth of resources", change), Toast.LENGTH_SHORT).show();
+                } else {
+                    game.playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
+                    Toast.makeText(getApplicationContext(), String.format("Card '%s' played successfully!", card.getName()), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
             }
         });
 
     }
-
-
 
     //maksuvaihtofunktiot. päivittävät myös textviewtä.
     public void creditMinus(Integer amount){
