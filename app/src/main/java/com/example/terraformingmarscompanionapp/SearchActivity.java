@@ -4,9 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -148,7 +153,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         view = inflater.inflate(R.layout.dialog_resource, null);
 
         //visuaalinen muokkaus
-        //view.setBackgroundColor(Color.TRANSPARENT);
+        view.setBackgroundColor(Color.TRANSPARENT);
 
         //onclicklistenerit resurssien vaihdoille, bracketit minimoimisen takia
         {
@@ -203,6 +208,19 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         AlertDialog dialog = new AlertDialog.Builder(context).setView(view).create();
 
         dialog.show();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        Window window = dialog.getWindow();
+
+        window.setLayout(4*width/5, WindowManager.LayoutParams.WRAP_CONTENT);
+
+
+        //window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        //window.setGravity(Gravity.CENTER);
 
         view.findViewById(R.id.resource_decline_button).setOnClickListener(v -> {
             dialog.dismiss();
