@@ -291,8 +291,4 @@ public class InGameUI extends AppCompatActivity {
     public void onTurnChange(String player_name) {
         Toast.makeText(getApplicationContext(), String.format("%s's turn", player_name), Toast.LENGTH_SHORT).show();
     }
-
-    public void demo() {
-        Toast.makeText(getApplicationContext(), "Test!", Toast.LENGTH_SHORT).show();
-    }
 }

@@ -41,7 +41,6 @@ public class GameController
     private Context context = null;
     public void setContext(Context context) {
         this.context = context;
-        ((InGameUI)this.context).demo();
     }
 
     public Game getGame() { return game; }
@@ -144,6 +143,7 @@ public class GameController
 
         current_player = queue.getFirst();
 
+        ((InGameUI)context).onTurnChange(current_player.getName());
         atTurnStart();
     }
 
