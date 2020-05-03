@@ -4,10 +4,10 @@
 
     android:id="@+id/card_view"
 
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 
-    android:theme="@style/AppTheme.NoActionBar"
+    android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert"
 
     app:cardCornerRadius="@dimen/round_corner_radius"
     app:contentPadding="5dp"
