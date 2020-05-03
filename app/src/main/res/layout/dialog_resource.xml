@@ -88,6 +88,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
+                    android:id="@+id/credit_chosen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -153,6 +154,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
+                    android:id="@+id/steel_chosen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -218,6 +220,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
+                    android:id="@+id/titanium_chosen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -283,6 +286,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
+                    android:id="@+id/heat_chosen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -348,6 +352,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
+                    android:id="@+id/plant_chosen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -413,6 +418,7 @@
                     app:srcCompat="@drawable/ic_credit" />
 
                 <TextView
+                    android:id="@+id/floater_chosen"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
