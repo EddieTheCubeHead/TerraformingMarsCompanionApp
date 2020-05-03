@@ -13,7 +13,7 @@ public final class WebSocketHandler {
     private static WebSocketClient webSocketClient = null;
 
     //Aseta serverin ip tänne testauksessa
-    private static final String WEBSOCKET_URI = "ws://52.164.254.24:8080/tfmca";
+    private static final String WEBSOCKET_URI = null;
 
     //WebSocketin sydän. Vastaanottaa serverin viestit. Käsittelyyn oltava funktio muualla logia lukuunottamatta.
     public static void createWebSocketClient() {
