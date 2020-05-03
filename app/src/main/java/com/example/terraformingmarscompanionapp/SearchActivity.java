@@ -234,7 +234,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change -= amount;
         }
 
-        ((TextView) view.findViewById(R.id.credit_chosen)).setText(credit);
+        ((TextView) view.findViewById(R.id.credit_chosen)).setText(credit.toString());
     }
 
     public void creditPlus(Integer amount) {
@@ -247,7 +247,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount;
         }
 
-        ((TextView) view.findViewById(R.id.credit_chosen)).setText(credit);
+        ((TextView) view.findViewById(R.id.credit_chosen)).setText(credit.toString());
     }
 
     public void steelMinus(Integer amount) {
@@ -261,7 +261,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change -= amount * steel_value;
         }
 
-        ((TextView) view.findViewById(R.id.steel_chosen)).setText(steel);
+        ((TextView) view.findViewById(R.id.steel_chosen)).setText(steel.toString());
     }
 
     public void steelPlus(Integer amount) {
@@ -274,7 +274,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount * steel_value;
         }
 
-        ((TextView) view.findViewById(R.id.steel_chosen)).setText(steel);
+        ((TextView) view.findViewById(R.id.steel_chosen)).setText(steel.toString());
     }
 
     public void titaniumMinus(Integer amount) {
@@ -287,7 +287,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change -= amount;
         }
 
-        ((TextView) view.findViewById(R.id.titanium_chosen)).setText(titanium);
+        ((TextView) view.findViewById(R.id.titanium_chosen)).setText(titanium.toString());
     }
 
     public void titaniumPlus(Integer amount) {
@@ -300,7 +300,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount;
         }
 
-        ((TextView) view.findViewById(R.id.titanium_chosen)).setText(titanium);
+        ((TextView) view.findViewById(R.id.titanium_chosen)).setText(titanium.toString());
     }
 
     public void heatMinus(Integer amount) {
@@ -313,7 +313,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change -= amount;
         }
 
-        ((TextView) view.findViewById(R.id.heat_chosen)).setText(heat);
+        ((TextView) view.findViewById(R.id.heat_chosen)).setText(heat.toString());
     }
 
     public void heatPlus(Integer amount) {
@@ -326,7 +326,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount;
         }
 
-        ((TextView) view.findViewById(R.id.heat_chosen)).setText(heat);
+        ((TextView) view.findViewById(R.id.heat_chosen)).setText(heat.toString());
     }
 
     public void plantMinus(Integer amount) {
@@ -339,7 +339,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change -= amount * 2;
         }
 
-        ((TextView) view.findViewById(R.id.plant_chosen)).setText(plant);
+        ((TextView) view.findViewById(R.id.plant_chosen)).setText(plant.toString());
     }
 
     public void plantPlus(Integer amount) {
@@ -352,7 +352,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount * 2;
         }
 
-        ((TextView) view.findViewById(R.id.plant_chosen)).setText(plant);
+        ((TextView) view.findViewById(R.id.plant_chosen)).setText(plant.toString());
     }
 }
 
