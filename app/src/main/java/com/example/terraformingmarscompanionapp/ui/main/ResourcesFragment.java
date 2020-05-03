@@ -208,11 +208,15 @@ public class ResourcesFragment extends Fragment {
 
                     temperature = ChangeResourceAmount(temperature, textview_temperature, true);
 
+                    textview_temperature.setText(temperature + "°C");
+
                 }
 
                 if (v == button_temperature_plus) {
 
                     temperature = ChangeResourceAmount(temperature, textview_temperature, false);
+
+                    textview_temperature.setText(temperature + "°C");
 
                 }
 
@@ -232,12 +236,16 @@ public class ResourcesFragment extends Fragment {
 
                     oxygen = ChangeResourceAmount(oxygen, textview_oxygen, true);
 
+                    textview_oxygen.setText(temperature + "%");
+
 
                 }
 
                 if (v == button_oxygen_plus) {
 
                     oxygen = ChangeResourceAmount(oxygen, textview_oxygen, false);
+
+                    textview_oxygen.setText(temperature + "%");
 
                 }
 
@@ -311,7 +319,7 @@ public class ResourcesFragment extends Fragment {
 
                 if (v == button_heat_plus) {
 
-                    heat = ChangeResourceAmount(heat, textview_heat, true);
+                    heat = ChangeResourceAmount(heat, textview_heat, false);
 
                 }
 
@@ -637,6 +645,7 @@ public class ResourcesFragment extends Fragment {
     //Asettaa arvot nykyisen pelaajan arvoista
 
     //TODO sijoita johonkin, jossa aktivoituu yhtiödien valinnan jälkeen
+    //TODO Ville: lisää lämpötila, tfr ja happi
     public void SetResourceAmounts() {
 
         textview_money.setText(String.valueOf(player.getMoney()));
