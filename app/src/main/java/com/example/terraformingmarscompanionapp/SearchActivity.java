@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.StandardProject;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
@@ -45,8 +46,13 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
         //korttien haku
         for (Map.Entry<String, Card> entry : deck.entrySet())
-            card_list.add(entry.getValue());
+        {
+            Card card = entry.getValue();
+            Card.Type type = card.getType();
 
+            if (type != Card.Type.RED & type != Card.Type.BLUE & type != Card.Type.GREEN) //TODO eetu, tähän jotain emt
+                card_list.add(card);
+        }
         RecyclerView recyclerview = findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
 
