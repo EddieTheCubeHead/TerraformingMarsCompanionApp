@@ -58,7 +58,6 @@ TODO: Corporate-era -korttien ja Prelude -lisäosan lisääminen
 
 TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
     Metadatalliset effektit serveripelissä
-    Effektien pelaaminen automatisoidussa yksinpelissä
 
 TODO: TESTAAMINEN
 
@@ -69,23 +68,25 @@ TODO: Muut lisäosat (esitetty tässä arvioidussa implementoimisen helppousjär
         Systeemit valmiina, vain kortit puuttuvat
     - Colonies
         Kuiden implementointi voi tuottaa pieniä ongelmia. Kauppareissuille tarvitsisi todennäköisesti oman UI:n
-    - Turmoil (Jos Aapo haluaa oman projektin, niin politiikkasysteemi on yksi mahdollinen tapa saada kirjoittaa
-    paljon koodia ilman että muut ovat tehneet kehikon, jonka mukaan koodi pitää tehdä)
-        I am not brave enough for politics
+    - Turmoil
+        I am not brave enough for politics - Eetu
 
 TODO: Korporaatioiden hakeminen tekstipohjalta korporaatiovalinnasta
 
 TODO: Yhden pelaajan automatisoitu peli kuntoon
     Nykyisellä tilanteella tässä eniten hommaa: siksi tämä tehdään vasta kun kaikki muu deadlineen tehtävä valmista
-    Jos Turmoil ei kiinnosta niin tämän vaatimat lisäykset voisivat olla Aapolle hyvä tapa saada selkeä oma tehtävä
 
 TODO: Serveripuolella pelien tallennus, lataaminen ja datan analysointi
     Eetulle tehtävää ennen deadlinea jos kaikki muut toiminnallisuudet valmiina.
+    Tallennus:
+        Framework kunnossa
+    Lataaminen:
+    Analyysi:
 
 Harkkatyön palautuksen jälkeiset:
 
 TODO: Award-korttien getAwardResult() -metodin uudelleenkirjoittaminen
-TODO: Game ja GameController aidoiksi singeltoneiksi init-funktiolla
+TODO: Game ja GameController aidoiksi singeltoneiksi init-funktioilla
     Tämä tulee rikkomaan kaikki kortit. Eetu pääsee aloittamaan kiireettömän kehitysvaiheen ~200 luokan uudelleenkirjoittamisella
 TODO: resurssisysteemin rewrite
     Olioita siellä ja olioita täällä

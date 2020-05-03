@@ -549,9 +549,6 @@ class GameConstructor {
         Card tharsis_republic = new TharsisRepublic(game);
         corporations.put(tharsis_republic.getName(), tharsis_republic);
 
-        Card tharsis_republic_second_effect = new TharsisRepublicSecondEffect(game);
-        corporations.put(tharsis_republic_second_effect.getName(), tharsis_republic_second_effect);
-
         Card thorgate = new Thorgate(game);
         corporations.put(thorgate.getName(), thorgate);
 
@@ -588,5 +585,12 @@ class GameConstructor {
         return corporations;
     }
 
+    HashMap<String, Card> createGhosts() {
+        HashMap<String, Card> ghosts = new HashMap<>();
 
+        Card tharsis_republic_second_effect = new TharsisRepublicSecondEffect(game);
+        ghosts.put(tharsis_republic_second_effect.getName(), tharsis_republic_second_effect);
+
+        return ghosts;
+    }
 }

@@ -29,6 +29,7 @@ public class Game implements Serializable {
     private final HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
     private final HashMap<String, Card> corporations;
+    private final HashMap<String, Card> ghosts;
 
     //Simppeli ArrayList pelaajia. Pelaajien tarkempi hallinta ylempänä GameController -luokassa
     private final ArrayList<Player> players = new ArrayList<>();
@@ -42,6 +43,7 @@ public class Game implements Serializable {
     public HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return corporations;}
+    public HashMap<String, Card> getGhosts() {return ghosts;}
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
 
     /* Lisäosat määrittävä integer ja sen getteri
@@ -148,6 +150,7 @@ public class Game implements Serializable {
         GameConstructor constructor = new GameConstructor(this, corporate_era, prelude, colonies, venus, turmoil, extra_corporations);
         deck = constructor.createDeck();
         corporations = constructor.createCorporations();
+        ghosts = constructor.createGhosts();
 
         if (prelude) {
             preludes = constructor.createPreludes();
