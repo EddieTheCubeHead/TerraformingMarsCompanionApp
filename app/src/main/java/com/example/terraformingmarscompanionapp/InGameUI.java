@@ -167,7 +167,7 @@ public class InGameUI extends AppCompatActivity {
                 //viimeisen valinnan ohessa dialogi suljetaan
                 if (player_index == players.size()) {
                     dialog.dismiss();
-                    ((ResourcesFragment) sectionsPagerAdapter.getItem(0)).SetResourceAmounts();
+                    ((ResourcesFragment) sectionsPagerAdapter.getItem(0)).setResourceAmounts();
                     return;
                 }
 

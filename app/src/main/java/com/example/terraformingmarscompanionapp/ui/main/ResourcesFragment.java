@@ -20,9 +20,9 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public class ResourcesFragment extends Fragment {
 
-    GameController controller = GameController.getInstance();
-    Player player = controller.getCurrentPlayer();
-    Game game = controller.getGame();
+    private GameController controller = GameController.getInstance();
+    private Player player = controller.getCurrentPlayer();
+    private Game game = controller.getGame();
 
 
     //Paikalliset muuttujat muutosmoodiin
@@ -102,7 +102,7 @@ public class ResourcesFragment extends Fragment {
     private TextView textview_heat_production;
 
 
-
+//TODO Ville: tee minukselle menemisen esto
 
 
     @Override public View onCreateView(
@@ -200,312 +200,307 @@ public class ResourcesFragment extends Fragment {
         textview_energy_production = getView().findViewById(R.id.textview_energy_production);
         textview_heat_production = getView().findViewById(R.id.textview_heat_production);
 
-        SetResourceAmounts();
+        setResourceAmounts();
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        View.OnClickListener listener = v -> {
 
-                if (v == button_temperature_minus) {
+            if (v == button_temperature_minus) {
 
-                    temperature = ChangeResourceAmount(temperature, textview_temperature, true);
+                temperature = changeResourceAmount(temperature, textview_temperature, true);
 
-                    textview_temperature.setText(temperature + "°C");
+                textview_temperature.setText(temperature + "°C");
+
+            }
+
+            if (v == button_temperature_plus) {
+
+                temperature = changeResourceAmount(temperature, textview_temperature, false);
+
+                textview_temperature.setText(temperature + "°C");
+
+            }
+
+            if (v == button_tfr_minus) {
+
+                terraformingRating = changeResourceAmount(terraformingRating, textview_tfr, true);
+
+            }
+
+            if (v == button_tfr_plus) {
+
+                terraformingRating = changeResourceAmount(terraformingRating, textview_tfr, false);
+
+            }
+
+            if (v == button_oxygen_minus) {
+
+                oxygen = changeResourceAmount(oxygen, textview_oxygen, true);
+
+                textview_oxygen.setText(temperature + "%");
+
+
+            }
+
+            if (v == button_oxygen_plus) {
+
+                oxygen = changeResourceAmount(oxygen, textview_oxygen, false);
+
+                textview_oxygen.setText(temperature + "%");
+
+            }
+
+            if (v == button_money_minus) {
+
+                money = changeResourceAmount(money, textview_money, true);
+
+            }
+
+            if (v == button_money_plus) {
+
+                money = changeResourceAmount(money, textview_money, false);
+
+            }
+
+            if (v == button_steel_minus) {
+
+                steel = changeResourceAmount(steel, textview_steel, true);
+
+            }
+
+            if (v == button_steel_plus) {
+
+                steel = changeResourceAmount(steel, textview_steel, false);
+
+            }
+
+            if (v == button_titanium_minus) {
+
+                titanium = changeResourceAmount(titanium, textview_titanium, true);
+
+            }
+
+            if (v == button_titanium_plus) {
+
+                titanium = changeResourceAmount(titanium, textview_titanium, false);
+
+            }
+
+            if (v == button_plants_minus) {
+
+                plants = changeResourceAmount(plants, textview_plants, true);
+
+
+            }
+
+            if (v == button_plants_plus) {
+
+                plants = changeResourceAmount(plants, textview_plants, false);
+
+            }
+
+
+            if (v == button_energy_minus) {
+
+                energy = changeResourceAmount(energy, textview_energy, true);
+
+            }
+
+            if (v == button_energy_plus) {
+
+                energy = changeResourceAmount(energy, textview_energy, false);
+
+            }
+
+            if (v == button_heat_minus) {
+
+                heat = changeResourceAmount(heat, textview_heat, true);
+
+            }
+
+            if (v == button_heat_plus) {
+
+                heat = changeResourceAmount(heat, textview_heat, false);
+
+            }
+
+            if (v == button_money_production_minus) {
+
+                moneyProduction = changeResourceAmount(moneyProduction, textview_money_production , true);
+
+            }
+
+            if (v == button_money_production_plus) {
+
+                moneyProduction = changeResourceAmount(moneyProduction, textview_money_production , false);
+
+            }
+
+            if (v == button_steel_production_minus) {
+
+                steelProduction = changeResourceAmount(steelProduction, textview_steel_production , true);
+
+            }
+
+            if (v == button_steel_production_plus) {
+
+                steelProduction = changeResourceAmount(steelProduction, textview_steel_production , false);
+
+            }
+
+            if (v == button_titanium_production_minus) {
+
+                titaniumProduction = changeResourceAmount(titaniumProduction, textview_titanium_production , true);
+
+            }
+
+            if (v == button_titanium_production_plus) {
+
+                titaniumProduction = changeResourceAmount(titaniumProduction, textview_titanium_production , false);
+
+            }
+
+            if (v == button_plants_production_minus) {
+
+                plantsProduction = changeResourceAmount(plantsProduction, textview_plants_production , true);
+
+
+            }
+
+            if (v == button_plants_production_plus) {
+
+                plantsProduction = changeResourceAmount(plantsProduction, textview_plants_production , false);
+
+            }
+
+
+            if (v == button_energy_production_minus) {
+
+                energyProduction = changeResourceAmount(energyProduction, textview_energy_production , true);
+
+            }
+
+            if (v == button_energy_production_plus) {
+
+                energyProduction = changeResourceAmount(energyProduction, textview_energy_production , false);
+
+            }
+
+            if (v == button_heat_production_minus) {
+
+                heatProduction = changeResourceAmount(heatProduction, textview_heat_production , true);
+
+            }
+
+            if (v == button_heat_production_plus) {
+
+                heatProduction = changeResourceAmount(heatProduction, textview_heat_production , false);
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+            if (v == button_multiplier_1) {
+
+                multiplier = 5;
+
+                button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+                button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+
+
+            }
+
+            if (v == button_multiplier_5) {
+
+                multiplier = 5;
+
+                button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+                button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+
+
+            }
+
+            if (v == button_multiplier_10) {
+
+                multiplier = 10;
+
+                button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+
+
+            }
+
+
+
+
+
+
+            if (v == button_save_resources) {
+
+                editmode = false;
+
+                player.changeMoney(money - player.getMoney());
+                player.changeMoneyProduction(moneyProduction - player.getMoneyProduction());
+                player.changeSteel(money - player.getMoney());
+                player.changeSteelProduction(steelProduction - player.getSteelProduction());
+                player.changeTitanium(titanium - player.getTitanium());
+                player.changeTitaniumProduction(titaniumProduction - player.getTitaniumProduction());
+                player.changePlants(plants - player.getPlants());
+                player.changePlantsProduction(plantsProduction - player.getPlantsProduction());
+                player.changeEnergy(energy - player.getEnergy());
+                player.changeEnergyProduction(energyProduction - player.getEnergyProduction());
+                player.changeHeat(heat - player.getHeatProduction());
+                player.changeHeatProduction(heatProduction - player.getHeatProduction());
+
+                changeMode(false, 0);
+                button_editcancel_resources.setText("Edit");
+
+
+            }
+
+            if (v == button_editcancel_resources) {
+
+                //Edit painikkeen painaminen
+                if (!editmode) {
+
+                    editmode = true;
+
+                    changeMode(true, 1);
+
+                    button_editcancel_resources.setText("Cancel");
 
                 }
 
-                if (v == button_temperature_plus) {
-
-                    temperature = ChangeResourceAmount(temperature, textview_temperature, false);
-
-                    textview_temperature.setText(temperature + "°C");
-
-                }
-
-                if (v == button_tfr_minus) {
-
-                    terraformingRating = ChangeResourceAmount(terraformingRating, textview_tfr, true);
-
-                }
-
-                if (v == button_tfr_plus) {
-
-                    terraformingRating = ChangeResourceAmount(terraformingRating, textview_tfr, false);
-
-                }
-
-                if (v == button_oxygen_minus) {
-
-                    oxygen = ChangeResourceAmount(oxygen, textview_oxygen, true);
-
-                    textview_oxygen.setText(temperature + "%");
-
-
-                }
-
-                if (v == button_oxygen_plus) {
-
-                    oxygen = ChangeResourceAmount(oxygen, textview_oxygen, false);
-
-                    textview_oxygen.setText(temperature + "%");
-
-                }
-
-                if (v == button_money_minus) {
-
-                    money = ChangeResourceAmount(money, textview_money, true);
-
-                }
-
-                if (v == button_money_plus) {
-
-                    money = ChangeResourceAmount(money, textview_money, false);
-
-                }
-
-                if (v == button_steel_minus) {
-
-                    steel = ChangeResourceAmount(steel, textview_steel, true);
-
-                }
-
-                if (v == button_steel_plus) {
-
-                    steel = ChangeResourceAmount(steel, textview_steel, false);
-
-                }
-
-                if (v == button_titanium_minus) {
-
-                    titanium = ChangeResourceAmount(titanium, textview_titanium, true);
-
-                }
-
-                if (v == button_titanium_plus) {
-
-                    titanium = ChangeResourceAmount(titanium, textview_titanium, false);
-
-                }
-
-                if (v == button_plants_minus) {
-
-                    plants = ChangeResourceAmount(plants, textview_plants, true);
-
-
-                }
-
-                if (v == button_plants_plus) {
-
-                    plants = ChangeResourceAmount(plants, textview_plants, false);
-
-                }
-
-
-                if (v == button_energy_minus) {
-
-                    energy = ChangeResourceAmount(energy, textview_energy, true);
-
-                }
-
-                if (v == button_energy_plus) {
-
-                    energy = ChangeResourceAmount(energy, textview_energy, false);
-
-                }
-
-                if (v == button_heat_minus) {
-
-                    heat = ChangeResourceAmount(heat, textview_heat, true);
-
-                }
-
-                if (v == button_heat_plus) {
-
-                    heat = ChangeResourceAmount(heat, textview_heat, false);
-
-                }
-
-                if (v == button_money_production_minus) {
-
-                    moneyProduction = ChangeResourceAmount(moneyProduction, textview_money_production , true);
-
-                }
-
-                if (v == button_money_production_plus) {
-
-                    moneyProduction = ChangeResourceAmount(moneyProduction, textview_money_production , false);
-
-                }
-
-                if (v == button_steel_production_minus) {
-
-                    steelProduction = ChangeResourceAmount(steelProduction, textview_steel_production , true);
-
-                }
-
-                if (v == button_steel_production_plus) {
-
-                    steelProduction = ChangeResourceAmount(steelProduction, textview_steel_production , false);
-
-                }
-
-                if (v == button_titanium_production_minus) {
-
-                    titaniumProduction = ChangeResourceAmount(titaniumProduction, textview_titanium_production , true);
-
-                }
-
-                if (v == button_titanium_production_plus) {
-
-                    titaniumProduction = ChangeResourceAmount(titaniumProduction, textview_titanium_production , false);
-
-                }
-
-                if (v == button_plants_production_minus) {
-
-                    plantsProduction = ChangeResourceAmount(plantsProduction, textview_plants_production , true);
-
-
-                }
-
-                if (v == button_plants_production_plus) {
-
-                    plantsProduction = ChangeResourceAmount(plantsProduction, textview_plants_production , false);
-
-                }
-
-
-                if (v == button_energy_production_minus) {
-
-                    energyProduction = ChangeResourceAmount(energyProduction, textview_energy_production , true);
-
-                }
-
-                if (v == button_energy_production_plus) {
-
-                    energyProduction = ChangeResourceAmount(energyProduction, textview_energy_production , false);
-
-                }
-
-                if (v == button_heat_production_minus) {
-
-                    heatProduction = ChangeResourceAmount(heatProduction, textview_heat_production , true);
-
-                }
-
-                if (v == button_heat_production_plus) {
-
-                    heatProduction = ChangeResourceAmount(heatProduction, textview_heat_production , false);
-
-                }
-
-
-
-
-
-
-
-
-
-
-
-                if (v == button_multiplier_1) {
-
-                    multiplier = 5;
-
-                    button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
-                    button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                    button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-
-
-                }
-
-                if (v == button_multiplier_5) {
-
-                    multiplier = 5;
-
-                    button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                    button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
-                    button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-
-
-                }
-
-                if (v == button_multiplier_10) {
-
-                    multiplier = 10;
-
-                    button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                    button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                    button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
-
-
-                }
-
-
-
-
-
-
-                if (v == button_save_resources) {
+                //Cancel painikkeen painaminen
+                else if (editmode) {
 
                     editmode = false;
 
-                    player.changeMoney(money - player.getMoney());
-                    player.changeMoneyProduction(moneyProduction - player.getMoneyProduction());
-                    player.changeSteel(money - player.getMoney());
-                    player.changeSteelProduction(steelProduction - player.getSteelProduction());
-                    player.changeTitanium(titanium - player.getTitanium());
-                    player.changeTitaniumProduction(titaniumProduction - player.getTitaniumProduction());
-                    player.changePlants(plants - player.getPlants());
-                    player.changePlantsProduction(plantsProduction - player.getPlantsProduction());
-                    player.changeEnergy(energy - player.getEnergy());
-                    player.changeEnergyProduction(energyProduction - player.getEnergyProduction());
-                    player.changeHeat(heat - player.getHeatProduction());
-                    player.changeHeatProduction(heatProduction - player.getHeatProduction());
+                    changeMode(false, 0);
 
-                    ChangeMode(false, 0);
                     button_editcancel_resources.setText("Edit");
 
+                    setResourceAmounts();
 
                 }
-
-                if (v == button_editcancel_resources) {
-
-                    //Edit painikkeen painaminen
-                    if (!editmode) {
-
-                        editmode = true;
-
-                        ChangeMode(true, 1);
-
-                        button_editcancel_resources.setText("Cancel");
-
-                    }
-
-                    //Cancel painikkeen painaminen
-                    else if (editmode) {
-
-                        editmode = false;
-
-                        ChangeMode(false, 0);
-
-                        button_editcancel_resources.setText("Edit");
-
-                        SetResourceAmounts();
-
-                    }
-
-
-
-                }
-
-
-
 
 
 
             }
+
+
+
+
 
 
         };
@@ -549,12 +544,12 @@ public class ResourcesFragment extends Fragment {
 
         button_editcancel_resources.setOnClickListener(listener);
 
-        ChangeMode(false, 0);
+        changeMode(false, 0);
 
     }
 
 
-    private void ChangeMode(boolean mode, float alpha) {
+    private void changeMode(boolean mode, float alpha) {
 
         button_temperature_minus.setClickable(mode);
         button_temperature_plus.setClickable(mode);
@@ -633,7 +628,7 @@ public class ResourcesFragment extends Fragment {
     }
 
 
-    private Integer ChangeResourceAmount(Integer resourceType, TextView textView, boolean isMinus) {
+    private Integer changeResourceAmount(Integer resourceType, TextView textView, boolean isMinus) {
 
         if (isMinus) {resourceType -= multiplier;}
         if (!isMinus) {resourceType += multiplier;}
@@ -647,25 +642,30 @@ public class ResourcesFragment extends Fragment {
     //Asettaa arvot nykyisen pelaajan arvoista
 
     //TODO sijoita johonkin, jossa aktivoituu yhtiödien valinnan jälkeen
-    //TODO Ville: tee minukselle menemisen esto
-    public void SetResourceAmounts() {
+    public boolean setResourceAmounts() {
 
-        textview_temperature.setText(String.valueOf(game.getGlobalTemperature()));
-        textview_oxygen.setText(String.valueOf(game.getGlobalOxygen()));
-        textview_tfr.setText(String.valueOf(player.getTerraformingRating()));
+        try {
+            textview_temperature.setText(String.valueOf(game.getGlobalTemperature()));
+            textview_oxygen.setText(String.valueOf(game.getGlobalOxygen()));
+            textview_tfr.setText(String.valueOf(player.getTerraformingRating()));
 
-        textview_money.setText(String.valueOf(player.getMoney()));
-        textview_money_production.setText(String.valueOf(player.getMoneyProduction()));
-        textview_steel.setText(String.valueOf(player.getSteel()));
-        textview_steel_production.setText(String.valueOf(player.getSteelProduction()));
-        textview_titanium.setText(String.valueOf(player.getTitanium()));
-        textview_titanium_production.setText(String.valueOf(player.getTitaniumProduction()));
-        textview_plants.setText(String.valueOf(player.getPlants()));
-        textview_plants_production.setText(String.valueOf(player.getPlantsProduction()));
-        textview_energy.setText(String.valueOf(player.getEnergy()));
-        textview_energy_production.setText(String.valueOf(player.getEnergyProduction()));
-        textview_heat.setText(String.valueOf(player.getHeat()));
-        textview_heat_production.setText(String.valueOf(player.getHeatProduction()));
+            textview_money.setText(String.valueOf(player.getMoney()));
+            textview_money_production.setText(String.valueOf(player.getMoneyProduction()));
+            textview_steel.setText(String.valueOf(player.getSteel()));
+            textview_steel_production.setText(String.valueOf(player.getSteelProduction()));
+            textview_titanium.setText(String.valueOf(player.getTitanium()));
+            textview_titanium_production.setText(String.valueOf(player.getTitaniumProduction()));
+            textview_plants.setText(String.valueOf(player.getPlants()));
+            textview_plants_production.setText(String.valueOf(player.getPlantsProduction()));
+            textview_energy.setText(String.valueOf(player.getEnergy()));
+            textview_energy_production.setText(String.valueOf(player.getEnergyProduction()));
+            textview_heat.setText(String.valueOf(player.getHeat()));
+            textview_heat_production.setText(String.valueOf(player.getHeatProduction()));
+        }
+        catch (NullPointerException e) {
+            return false;
+        }
+        return true;
     }
 
 }
