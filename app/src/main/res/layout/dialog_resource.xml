@@ -57,6 +57,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/credit_minus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -64,6 +65,7 @@
                 android:text="-5"/>
 
             <Button
+                android:id="@+id/credit_minus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -96,6 +98,7 @@
             </FrameLayout>
 
             <Button
+                android:id="@+id/credit_plus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -103,6 +106,7 @@
                 android:text="1"/>
 
             <Button
+                android:id="@+id/credit_plus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -118,6 +122,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/steel_minus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -125,6 +130,7 @@
                 android:text="-5"/>
 
             <Button
+                android:id="@+id/steel_minus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -157,6 +163,7 @@
             </FrameLayout>
 
             <Button
+                android:id="@+id/steel_plus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -164,6 +171,7 @@
                 android:text="1"/>
 
             <Button
+                android:id="@+id/steel_plus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -179,6 +187,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/titanium_minus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -186,6 +195,7 @@
                 android:text="-5"/>
 
             <Button
+                android:id="@+id/titanium_minus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -218,6 +228,7 @@
             </FrameLayout>
 
             <Button
+                android:id="@+id/titanium_plus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -225,6 +236,7 @@
                 android:text="1"/>
 
             <Button
+                android:id="@+id/titanium_plus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -240,6 +252,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/heat_minus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -247,6 +260,7 @@
                 android:text="-5"/>
 
             <Button
+                android:id="@+id/heat_minus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -279,6 +293,7 @@
             </FrameLayout>
 
             <Button
+                android:id="@+id/heat_plus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -286,6 +301,7 @@
                 android:text="1"/>
 
             <Button
+                android:id="@+id/heat_plus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -301,6 +317,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/plant_minus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -308,6 +325,7 @@
                 android:text="-5"/>
 
             <Button
+                android:id="@+id/plant_minus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -340,6 +358,7 @@
             </FrameLayout>
 
             <Button
+                android:id="@+id/plant_plus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -347,6 +366,7 @@
                 android:text="1"/>
 
             <Button
+                android:id="@+id/plant_plus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -362,6 +382,7 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/floater_minus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -369,6 +390,7 @@
                 android:text="-5"/>
 
             <Button
+                android:id="@+id/floater_minus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -401,6 +423,7 @@
             </FrameLayout>
 
             <Button
+                android:id="@+id/floater_plus1"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -408,6 +431,7 @@
                 android:text="1"/>
 
             <Button
+                android:id="@+id/floater_plus5"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -429,7 +453,7 @@
                 android:layout_height="40dp"
 
                 android:text="cancel"
-                android:textSize="10dp"
+                android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -445,8 +469,8 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
 
-                android:text="confirm"
-                android:textSize="10dp"
+                android:text="pay"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
