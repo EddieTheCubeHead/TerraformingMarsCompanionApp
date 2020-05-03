@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -114,6 +115,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
 
     //DIALOGILOGIIKKa (alunperin resourcedialog -luokassa)
+    View view;
     public void DisplayDialog(Context context, Card card)
     {
         GameController controller = GameController.getInstance();
@@ -139,7 +141,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.dialog_resource, null);
+        view = inflater.inflate(R.layout.dialog_resource, null);
 
         //visuaalinen muokkaus
         //view.setBackgroundColor(Color.TRANSPARENT);
@@ -230,7 +232,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change -= amount;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.credit_chosen)).setText(credit);
     }
 
     public void creditPlus(Integer amount) {
@@ -243,7 +245,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.credit_chosen)).setText(credit);
     }
 
     public void steelMinus(Integer amount) {
@@ -251,13 +253,13 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         if (steel-amount <= 0)
         {
             change -= steel * steel_value;
-            credit = 0;
+            steel = 0;
         } else {
             steel -= amount;
             change -= amount * steel_value;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.steel_chosen)).setText(steel);
     }
 
     public void steelPlus(Integer amount) {
@@ -270,20 +272,20 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount * steel_value;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.steel_chosen)).setText(steel);
     }
 
     public void titaniumMinus(Integer amount) {
         if (titanium-amount <= 0)
         {
             change -= titanium * titanium_value;
-            credit = 0;
+            titanium = 0;
         } else {
             titanium -= amount;
             change -= amount;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.titanium_chosen)).setText(titanium);
     }
 
     public void titaniumPlus(Integer amount) {
@@ -296,7 +298,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.titanium_chosen)).setText(titanium);
     }
 
     public void heatMinus(Integer amount) {
@@ -309,7 +311,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change -= amount;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.heat_chosen)).setText(heat);
     }
 
     public void heatPlus(Integer amount) {
@@ -322,7 +324,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.heat_chosen)).setText(heat);
     }
 
     public void plantMinus(Integer amount) {
@@ -335,7 +337,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change -= amount * 2;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.plant_chosen)).setText(plant);
     }
 
     public void plantPlus(Integer amount) {
@@ -348,7 +350,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             change += amount * 2;
         }
 
-        //update ui
+        ((TextView) view.findViewById(R.id.plant_chosen)).setText(plant);
     }
 }
 
