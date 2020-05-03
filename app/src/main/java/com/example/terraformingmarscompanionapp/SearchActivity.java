@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -42,7 +41,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         //note: huono ratkaisu resurssien vaihtoon. ongelma geneerisyyden puutteessa.
 
     //käytetään kortin maksun kalibroimiseen suositellusta cardcostista.
-    public Integer change;
+    public Integer change = 0;
 
     public CardCostPacket cost;
 
@@ -226,11 +225,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change -= credit;
             credit = 0;
-            return;
+        } else {
+            credit -= amount;
+            change -= amount;
         }
-
-        credit -= amount;
-        change -= amount;
 
         //update ui
     }
@@ -240,11 +238,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change += player.getMoney() - credit;
             credit = player.getMoney();
-            return;
+        } else {
+            credit += amount;
+            change += amount;
         }
-
-        credit += amount;
-        change += amount;
 
         //update ui
     }
@@ -255,11 +252,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change -= steel * steel_value;
             credit = 0;
-            return;
+        } else {
+            steel -= amount;
+            change -= amount * steel_value;
         }
-
-        steel -= amount;
-        change -= amount * steel_value;
 
         //update ui
     }
@@ -269,11 +265,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change += (player.getSteel() - steel) * steel_value;
             steel = player.getSteel();
-            return;
+        } else {
+            steel += amount;
+            change += amount * steel_value;
         }
-
-        steel += amount;
-        change += amount * steel_value;
 
         //update ui
     }
@@ -283,11 +278,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change -= titanium * titanium_value;
             credit = 0;
-            return;
+        } else {
+            titanium -= amount;
+            change -= amount;
         }
-
-        titanium -= amount;
-        change -= amount;
 
         //update ui
     }
@@ -297,11 +291,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change += (player.getTitanium() - titanium) * titanium_value;
             titanium = player.getTitanium();
-            return;
+        } else {
+            titanium += amount;
+            change += amount;
         }
-
-        titanium += amount;
-        change += amount;
 
         //update ui
     }
@@ -311,11 +304,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change -= heat;
             heat = 0;
-            return;
+        } else {
+            heat -= amount;
+            change -= amount;
         }
-
-        heat -= amount;
-        change -= amount;
 
         //update ui
     }
@@ -325,11 +317,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change += player.getHeat() - heat;
             heat = player.getHeat();
-            return;
+        } else {
+            heat += amount;
+            change += amount;
         }
-
-        heat += amount;
-        change += amount;
 
         //update ui
     }
@@ -339,11 +330,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change -= plant * 2;
             plant = 0;
-            return;
+        } else {
+            plant -= amount;
+            change -= amount * 2;
         }
-
-        plant -= amount;
-        change -= amount * 2;
 
         //update ui
     }
@@ -353,11 +343,10 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         {
             change += (player.getPlants() - plant) * 2;
             plant = player.getPlants();
-            return;
+        } else {
+            plant += amount;
+            change += amount * 2;
         }
-
-        plant += amount;
-        change += amount * 2;
 
         //update ui
     }
