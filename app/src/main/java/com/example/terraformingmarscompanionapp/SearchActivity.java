@@ -42,7 +42,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         //note: huono ratkaisu resurssien vaihtoon. ongelma geneerisyyden puutteessa.
 
     //käytetään kortin maksun kalibroimiseen suositellusta cardcostista.
-    public Integer change = 0;
+    public Integer change;
 
     public CardCostPacket cost;
 
@@ -121,6 +121,8 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         GameController controller = GameController.getInstance();
         Game game = controller.getGame();
         player = controller.getCurrentPlayer();
+
+        change = 0;
 
         steel_value = (2 + player.getSteelValueModifier());
         titanium_value = (3 + player.getTitaniumValueModifier());
