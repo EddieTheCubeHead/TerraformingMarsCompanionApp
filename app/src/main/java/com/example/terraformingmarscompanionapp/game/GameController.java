@@ -176,18 +176,25 @@ public class GameController
         ((InGameUI)context).onGenerationEnd();
     }
 
-    public ArrayList<Card> getCards()
+    public Player getDisplayPlayer()
     {
-        ArrayList<Card> deck = new ArrayList<>();
-
-        Player subject;
+        Player display_player;
 
         //subject on se jonka kortit näytetään päänäytöllä.
         //nettipelissä
         if (server_multiplayer)
-            subject = self_player;
+            display_player = self_player;
         else
-            subject = getCurrentPlayer();
+            display_player = getCurrentPlayer();
+
+        return display_player;
+    }
+
+    public ArrayList<Card> getCards()
+    {
+        ArrayList<Card> deck = new ArrayList<>();
+
+        Player subject = getDisplayPlayer();
 
         deck.addAll(subject.getBlue());
         deck.addAll(subject.getGreen());
