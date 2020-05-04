@@ -21,7 +21,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import java.util.ArrayList;
 
 
-public class GameCreationActivity extends AppCompatActivity {
+public class GameCreationServerActivity extends AppCompatActivity {
     ArrayList<String> player_names = new ArrayList<>();
     boolean hellas_elysium = false;
     boolean corporate_era = false;
@@ -38,7 +38,7 @@ public class GameCreationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_creation);
+        setContentView(R.layout.activity_game_creation_server);
 
         //textview
         textview_names = findViewById(R.id.name_textview);
@@ -105,17 +105,17 @@ public class GameCreationActivity extends AppCompatActivity {
         }
 
         Game game = new Game(player_names,
-                             corporate_era,
-                             prelude,
-                             colonies,
-                             venus,
-                             turmoil,
-                             extra_corporations,
-                             false,
-                             false,
-                             true,
-                             false,
-                             map);
+                corporate_era,
+                prelude,
+                colonies,
+                venus,
+                turmoil,
+                extra_corporations,
+                false,
+                false,
+                true,
+                false,
+                map);
 
         GameController.makeInstance(game);
 

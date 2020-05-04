@@ -11,12 +11,17 @@ import tech.gusavila92.websocketclient.WebSocketClient;
 //https://www.pubnub.com/blog/java-websocket-programming-with-android-and-spring-boot/
 public final class WebSocketHandler {
     private static WebSocketClient webSocketClient = null;
+    private static Boolean is_initialized = false;
 
     //Aseta serverin ip tänne testauksessa
     private static final String WEBSOCKET_URI = "ws://168.61.98.65:8080/tfmca";
 
     //WebSocketin sydän. Vastaanottaa serverin viestit. Käsittelyyn oltava funktio muualla logia lukuunottamatta.
     public static void createWebSocketClient() {
+        if (is_initialized) {
+            return;
+        }
+        is_initialized = true;
         URI uri;
         try {
             uri = new URI(WEBSOCKET_URI == null ? "ws://10.0.2.2:8080/tfmca" : WEBSOCKET_URI);
@@ -45,8 +50,11 @@ public final class WebSocketHandler {
                             break;
                         case "login_successful":
                             Log.i("WebSocket", "Login successful!");
-                            UserActions.successful_login = true;
                             UserActions.handleLogin(s);
+                            break;
+
+                        case "logout_successful":
+                            //TODO tarkista tarvitseeko tähän mitään
                             break;
 
                         //Pelin luominen ja liittyminen
