@@ -179,9 +179,58 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     };
 
+    //todo tämän oikeaksi muokkaaminen.
+    private Filter played_filter = new Filter()
+    {
+        @Override
+        protected FilterResults performFiltering(CharSequence search_string)
+        {
+            List<Card> filtered_list = new ArrayList<>();
+            FilterResults results = new FilterResults();
+
+            //hakua varten clause
+            if (search_string == null || search_string.length() == 0)
+            {
+                filtered_list.addAll(card_list_full);
+                results.values = filtered_list;
+                return results;
+            }
+
+            String[] keywords = search_string.toString().toLowerCase().trim().split(" ");
+            for (Card card : card_list_full)
+            {
+                String card_name = card.getName();
+                String regex = ".*";
+                for (String word : keywords)
+                {
+                    regex += word + ".*";
+                }
+
+                if (card_name.toLowerCase().matches(regex))
+                {
+                    filtered_list.add(card);
+                }
+            }
+            results.values = filtered_list;
+            return results;
+        }
+
+        //päivittää cardviewtä notifydatasetchangedillä
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results)
+        {
+            try {
+                card_list.clear();
+                card_list.addAll((List) results.values);
+                notifyDataSetChanged();
+            } catch (Exception e) { System.out.println("Alex,debug: virhe RecyclerAdapterin publishresults"); }
+        }
+    };
+
     @Override
     public int getItemCount() { return card_list.size(); }
 
     public Filter getFilter() { return filter; }
 
+    public Filter getPlayedFilter() { return played_filter; }
 }
