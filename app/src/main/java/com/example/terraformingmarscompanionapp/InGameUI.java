@@ -213,7 +213,7 @@ public class InGameUI extends AppCompatActivity {
 
         //spinnerin valmistaminen
         //arrayadapter kutsuu toString -metodia
-        ArrayAdapter<Card> adapter = new ArrayAdapter<Card> (
+        ArrayAdapter<Card> adapter = new ArrayAdapter<> (
                 this, android.R.layout.simple_spinner_item, preludes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -226,6 +226,15 @@ public class InGameUI extends AppCompatActivity {
                 .create();
 
         dialog.show();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        Window window = dialog.getWindow();
+
+        window.setLayout(4*width/5, WindowManager.LayoutParams.WRAP_CONTENT);
 
         title.setText("Choose " + players.get(0).getName() + "'s preludes.");
 
@@ -264,7 +273,7 @@ public class InGameUI extends AppCompatActivity {
                     return;
                 }
 
-                title.setText("Choose " + players.get(player_index).getName() + "'s corporation.");
+                title.setText("Choose " + players.get(player_index).getName() + "'s preludes.");
             }
         });
     }
