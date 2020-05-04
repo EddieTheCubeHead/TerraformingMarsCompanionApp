@@ -1130,6 +1130,7 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
     void onScreenTapped(int x, int y)
     {
 
+        System.out.println("taptest" + x + " " + y);
         boolean missed = true;
         boolean bubble = false;
         // adjust for scroll
@@ -1185,16 +1186,16 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
 
         if (!bubble)
         {
-            if (mAreaList.isEmpty()) {
-            }
             // then check for area taps
             for (Area a : mAreaList)
             {
                 if (a.isInArea((float)testx,(float)testy))
                 {
+                    System.out.println("true");
                     if (mCallbackList != null) {
                         for (OnImageMapClickedHandler h : mCallbackList)
                         {
+                            System.out.println("onimagemapclicked");
                             h.onImageMapClicked(a.getId(), this);
                         }
                     }
@@ -1309,11 +1310,14 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
      * on clicked handler add/remove support
      */
     public void addOnImageMapClickedHandler( OnImageMapClickedHandler h ) {
+        System.out.println("Starts to add onclicklis");
         if (h != null) {
             if (mCallbackList == null) {
                 mCallbackList = new ArrayList<OnImageMapClickedHandler>();
             }
             mCallbackList.add(h);
+            System.out.println("added");
+
         }
     }
 
