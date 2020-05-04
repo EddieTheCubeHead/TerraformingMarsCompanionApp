@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /*
@@ -59,7 +62,14 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
 
         controller = GameController.getInstance();
         game = controller.getGame();
-        card_list = controller.getCards();
+        HashMap<String, Card>deck = game.getDeck();
+
+        //korttien nouto
+        for (Map.Entry<String, Card> entry : deck.entrySet())
+        {
+            Card card = entry.getValue();
+            card_list.add(card);
+        }
 
         RecyclerView recyclerview = view.findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
