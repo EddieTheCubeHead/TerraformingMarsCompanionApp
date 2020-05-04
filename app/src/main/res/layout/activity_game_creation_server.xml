@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false">
@@ -15,25 +13,23 @@
         android:gravity="bottom"
         >
 
-        <!--
-        tähän sitten ne jotka tulee ton ylle
-
-        layout weight aina joko 0 tai 1
-        1 täyttää näytön
-        0 on layout heigh / width kokoinen
-
-        jos layout weight on 1 niin width/height yleensä 0
-        -->
-
         <TextView
             android:id="@+id/name_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="15dp"
-            android:text="gamecode: xd"
-            />
+            android:layout_marginStart="10dp" />
+
+        <TextView
+            android:id="@+id/name_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:textSize="20sp"
+            android:textStyle="bold"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp" />
 
     </LinearLayout>
 
@@ -144,14 +140,6 @@
             android:paddingRight="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_add_custom" />
 
             <Button
                 android:id="@+id/button_start"

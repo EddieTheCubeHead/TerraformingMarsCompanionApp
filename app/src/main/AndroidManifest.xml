@@ -22,6 +22,8 @@
         <activity android:name=".InGameUI" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ui.main.LoginActivity" />
+        <activity android:name=".GameCreationServerActivity" />
+        <activity android:name=".GameJoiningActivity" />
     </application>
 
 </manifest>

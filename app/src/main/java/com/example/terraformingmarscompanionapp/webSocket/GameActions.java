@@ -21,6 +21,8 @@ public class GameActions {
     private static Integer action_number = 0;
     private static Integer generation = 0;
 
+    public static String getGameCode() {return game_code;}
+
     static void handleGameEvent(String event_data) {
         String event_type = event_data.split(Pattern.quote(";"))[1];
         String event = event_data.split(Pattern.quote(";"))[2];
@@ -106,6 +108,12 @@ public class GameActions {
         String message = String.format("game_action;%s;%s;%s;tile_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);
         message += String.format(";%d;%d", action_number, generation);
+        WebSocketHandler.sendMessage(message);
+    }
+
+    public static void sendSettingChange(String setting, Boolean value) {
+        Integer setting_as_int = value ? 1 : 0;
+        String message = String.format("game_setting;%s;%s;%s;%s;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, setting, value);
         WebSocketHandler.sendMessage(message);
     }
 
