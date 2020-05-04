@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,7 +74,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) { return false; }
             @Override public boolean onQueryTextChange(String search_string) {
-                adapter.getFilter().filter(search_string);
+                adapter.getPlayedFilter().filter(search_string);
                 return false;
             }
         });
@@ -84,15 +83,12 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         searchview.setOnClickListener(v -> searchview.setIconified(false));
     }
 
-    //visuaalinen päivittäminen
-    //ehkä kallein tapa tehdä tää
+    //visuaalisen päivittämisen voi laittaa tähän, mutta on hyvin kallista jos ei tee oikein
     @Override
     public void onResume() {
         super.onResume();
+        adapter.getPlayedFilter().filter("");
 
-        card_list = controller.getCards();
-        adapter = new RecyclerAdapter(card_list, this, this);
-        recyclerview.setAdapter(adapter);
     }
 
     @Override public void onCardClick(int position)
@@ -108,7 +104,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             } else if (action_metadata == -2) {
                 //TODO error handling: ei riittävästi resursseja
             } else if (game.getServerMultiplayer()) {
-                GameActions.sendCardEvent(new CardEventPacket(card.getName(), card.getOwmer().getName(), action_metadata));
+                GameActions.sendCardEvent(new CardEventPacket(card.getName(), card.getOwner().getName(), action_metadata));
             }
         }
 
