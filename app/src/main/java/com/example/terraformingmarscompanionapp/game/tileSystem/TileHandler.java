@@ -1,7 +1,12 @@
 package com.example.terraformingmarscompanionapp.game.tileSystem;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.ui.main.TilePlacementActivity;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
 
@@ -611,6 +616,9 @@ public class TileHandler {
     private Tile getCoordinatesFromPlayer(Placeable tile_type) {
         Tile tile = mars_tiles[8][4];
         //TODO tänne UI tiilen asettamispaikan saamiseksi
+        Context context = GameController.getInstance().getContext();
+        Intent intent = new Intent(context, TilePlacementActivity.class);
+        context.startActivity(intent);
         return tile;
     }
 

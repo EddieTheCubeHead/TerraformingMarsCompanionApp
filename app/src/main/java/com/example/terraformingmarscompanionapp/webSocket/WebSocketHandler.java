@@ -14,7 +14,8 @@ public final class WebSocketHandler {
     private static Boolean is_initialized = false;
 
     //Aseta serverin ip tänne testauksessa
-    private static final String WEBSOCKET_URI = "ws://168.61.98.65:8080/tfmca";
+    private static final String WEBSOCKET_URI = null;
+    //"ws://168.61.98.65:8080/tfmca"
 
     //WebSocketin sydän. Vastaanottaa serverin viestit. Käsittelyyn oltava funktio muualla logia lukuunottamatta.
     public static void createWebSocketClient() {
@@ -70,6 +71,10 @@ public final class WebSocketHandler {
                             GameActions.handlePlayerJoined(s);
                             break;
 
+                        case "game_start":
+                            GameActions.handleGameStart();
+                            break;
+
                         //Pelin toiminnot
                         case "game_action":
                             GameActions.handleGameEvent(s);
@@ -112,7 +117,7 @@ public final class WebSocketHandler {
 
             @Override
             public void onException(Exception e) {
-                Log.i("WebSocket",  "exception on message " + e.getMessage());
+                Log.i("WebSocket",  "exception on message: " + e.getMessage());
             }
 
             @Override

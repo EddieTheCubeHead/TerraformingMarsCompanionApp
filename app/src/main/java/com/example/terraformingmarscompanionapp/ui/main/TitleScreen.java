@@ -1,15 +1,20 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.GameCreationActivity;
+import com.example.terraformingmarscompanionapp.GameCreationServerActivity;
+import com.example.terraformingmarscompanionapp.GameJoiningActivity;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.webSocket.UserActions;
 import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
@@ -17,6 +22,7 @@ import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
 public class TitleScreen extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "msg";
+    public static final String GAME_CODE_INTENT = "code";
     Intent intent;
 
     @Override
@@ -50,12 +56,41 @@ public class TitleScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void startServerGame(View view) {
+    public void hostServerGame(View view) {
         if (UserActions.getUser() == null) {
             Toast.makeText(getApplicationContext(), "Please log in or sign up first!", Toast.LENGTH_SHORT).show();
         } else {
-            //TODO tämä
+            intent = new Intent(this, GameCreationServerActivity.class);
+            startActivity(intent);
         }
+    }
+
+    //http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog.html
+    public void joinServerGame(View view) {
+        intent = new Intent(this, GameJoiningActivity.class);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Title");
+        alert.setMessage("Message");
+
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        alert.setView(input);
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String value = input.getText().toString();
+                intent.putExtra(GAME_CODE_INTENT, value);
+                startActivity(intent);
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+
+        alert.show();
     }
 
     public void logIn(View view) {

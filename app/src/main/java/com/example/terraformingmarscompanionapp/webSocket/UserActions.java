@@ -37,30 +37,10 @@ public class UserActions {
         session_id = null;
     }
 
-    public static void createGame(
-            boolean corporate_era,
-            boolean prelude,
-            boolean colonies,
-            boolean venus,
-            boolean turmoil,
-            boolean extra_corporations,
-            boolean world_government_terraforming,
-            boolean must_max_venus,
-            boolean turmoil_terraforming_revision,
-            Integer map) {
-        WebSocketHandler.sendMessage(String.format(Locale.ENGLISH, "create_game;%s;%s;%b;%b;%b;%b;%b;%b;%b;%b;%b;%d",
+    public static void createGame() {
+        WebSocketHandler.sendMessage(String.format(Locale.ENGLISH, "create_game;%s;%s",
                 session_user,
-                session_id,
-                corporate_era,
-                prelude,
-                colonies,
-                venus,
-                turmoil,
-                extra_corporations,
-                world_government_terraforming,
-                must_max_venus,
-                turmoil_terraforming_revision,
-                map));
+                session_id));
     }
 
     public static void joinGame(String game_code) {
