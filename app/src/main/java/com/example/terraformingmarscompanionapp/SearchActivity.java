@@ -154,6 +154,11 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
         //visuaalinen muokkaus
         view.setBackgroundColor(Color.TRANSPARENT);
+        ((TextView) view.findViewById(R.id.credit_chosen)).setText(credit.toString());
+        ((TextView) view.findViewById(R.id.steel_chosen)).setText(steel.toString());
+        ((TextView) view.findViewById(R.id.titanium_chosen)).setText(titanium.toString());
+        ((TextView) view.findViewById(R.id.heat_chosen)).setText(heat.toString());
+        ((TextView) view.findViewById(R.id.plant_chosen)).setText(plant.toString());
 
         //onclicklistenerit resurssien vaihdoille, bracketit minimoimisen takia
         {
