@@ -71,6 +71,10 @@ public final class WebSocketHandler {
                             GameActions.handlePlayerJoined(s);
                             break;
 
+                        case "game_start":
+                            GameActions.handleGameStart();
+                            break;
+
                         //Pelin toiminnot
                         case "game_action":
                             GameActions.handleGameEvent(s);
@@ -113,7 +117,7 @@ public final class WebSocketHandler {
 
             @Override
             public void onException(Exception e) {
-                Log.i("WebSocket",  "exception on message " + e.getMessage());
+                Log.i("WebSocket",  "exception on message: " + e.getMessage());
             }
 
             @Override

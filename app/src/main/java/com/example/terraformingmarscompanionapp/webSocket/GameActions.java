@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp.webSocket;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -20,6 +21,9 @@ public class GameActions {
     private static String game_code;
     private static Integer action_number = 0;
     private static Integer generation = 0;
+
+    private static Context setup_screen;
+    public static void setSetupScreen(Context screen) {setup_screen = screen;}
 
     public static String getGameCode() {return game_code;}
 
@@ -64,21 +68,29 @@ public class GameActions {
     static void handleGameJoined(String join_data) {
         game_code = join_data.split(Pattern.quote(";"))[1];
         Log.i("WebSocket", "Game '" + game_code + "' joined.");
-        //TODO Tarvittavat UI-hookit
-
+        for (int i = 2; i < join_data.split(Pattern.quote(";")).length ; i++) {
+            //Jos pelaajia on vähemmän kuin viisi, tämä heittää errorin. Otetaan kiinni hiljaa.
+            String player_name = join_data.split(Pattern.quote(";"))[i];
+            Log.i("WebSocketJoin", player_name);
+            ((ServerSetupScreen)setup_screen).playerJoined(player_name);
+        }
     }
 
     //Toisen liittyminen peliin, käytännössä käyttäjänimen kirjaaminen
     static void handlePlayerJoined(String join_data) {
         String joined_user = join_data.split(Pattern.quote(";"))[1];
         Log.i("WebSocket", "User '" + joined_user + "' joined the game.");
-        //TODO liittymislogiikka
-        //TODO tarvittavat UI-hookit
+        ((ServerSetupScreen)setup_screen).playerJoined(joined_user);
     }
 
     //Pelin aloittaminen
-    static void handleGameStart(String start_data) {
-        //TODO tarvittavat UI-hookit
+    static void handleGameStart() {
+        Log.i("WebSocketGame", "Starting game");
+        ((ServerSetupScreen)setup_screen).startGame();
+    }
+
+    public static void sendGameStart() {
+        WebSocketHandler.sendMessage(String.format("start_game;%s;%s;%s", UserActions.getSessionUser(), UserActions.getSessionId(), game_code));
     }
 
     //Eri event pakettien lähettäminen:
