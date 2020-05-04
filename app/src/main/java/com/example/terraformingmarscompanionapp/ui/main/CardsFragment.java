@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,7 +34,9 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
     private GameController controller;
     private Game game;
     private ArrayList<com.example.terraformingmarscompanionapp.cardSubclasses.Card> card_list = new ArrayList<>();
+    RecyclerView recyclerview;
     private RecyclerAdapter adapter;
+    RecyclerView.LayoutManager layout_manager;
 
     //otettu
     @Override public View onCreateView
@@ -59,15 +62,14 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
 
         controller = GameController.getInstance();
         game = controller.getGame();
-        card_list = controller.getCards();
 
-        RecyclerView recyclerview = view.findViewById(R.id.result_recyclerview);
+        recyclerview = view.findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
 
         adapter = new RecyclerAdapter(card_list, this, this); //this koska tämä luokka implementoi metodit
         recyclerview.setAdapter(adapter);
 
-        RecyclerView.LayoutManager layout_manager = new LinearLayoutManager(getContext()); //en tiedä onko oikea konteksti
+        layout_manager = new LinearLayoutManager(getContext()); //en tiedä onko oikea konteksti
         recyclerview.setLayoutManager(layout_manager);
 
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -80,6 +82,17 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
 
         //aloittaa kirjoittamisen aina kun klikataan eikä vain suurennuslasista.
         searchview.setOnClickListener(v -> searchview.setIconified(false));
+    }
+
+    //visuaalinen päivittäminen
+    //ehkä kallein tapa tehdä tää
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        card_list = controller.getCards();
+        adapter = new RecyclerAdapter(card_list, this, this);
+        recyclerview.setAdapter(adapter);
     }
 
     @Override public void onCardClick(int position)
@@ -105,13 +118,17 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         }*/
 
         else Log.i("non-interactable card","Pelaajan korttilistassa kortilla ei ollut CardActionia eikä CardEffectiä");
+
+        String text = "xd xd xd";
+
+        //visuaalinen muutos
+        TextView token_text = (TextView) layout_manager.findViewByPosition(position).findViewById(R.id.token_text);
+
+        token_text.setText(text);
+
     }
 
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) { return false; }
 
-    public void goToFragment1() {
-        NavHostFragment.findNavController(CardsFragment.this)
-                .navigate(R.id.action_SecondFragment_to_FirstFragment);
-    }
 }
