@@ -13,6 +13,8 @@ public class UserActions {
     static String getSessionId() {return session_id;}
     static String getSessionUser() {return session_user;}
 
+    public static String getUser() {return session_user;}
+
     //ui:n kutsumat sisäänkirjautumisen onnistuneisuuden merkit.
     public static Boolean successful_login = false;
     public static String message = "";
@@ -27,6 +29,12 @@ public class UserActions {
     public static void createUser(String username, String password) {
         WebSocketHandler.sendMessage(String.format("new_user;%s;%s", username, password));
         session_user = username;
+    }
+
+    public static void logoutUser() {
+        WebSocketHandler.sendMessage(String.format("logout;%s", session_id));
+        session_user = null;
+        session_id = null;
     }
 
     public static void createGame(
@@ -65,10 +73,12 @@ public class UserActions {
 
     static void handleLogin(String web_socket_message) {
         getSessionId(web_socket_message);
+        successful_login = true;
     }
 
     static void handleCreation(String web_socket_message) {
         getSessionId(web_socket_message);
+        successful_login = true;
     }
 
     private static void getSessionId(String web_socket_message) {
