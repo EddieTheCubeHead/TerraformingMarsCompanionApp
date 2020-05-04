@@ -22,7 +22,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.ui.main.ResourcesFragment;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -32,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 public class InGameUI extends AppCompatActivity {
+
+    static boolean is_first_run = true;
 
     Game game;
     GameController controller;
@@ -81,24 +82,15 @@ public class InGameUI extends AppCompatActivity {
 
         findViewById(R.id.item_4).setOnClickListener(view -> controller.endTurn());
 
-        findViewById(R.id.item_4).setOnLongClickListener(v -> {
-            controller.endGeneration();
-            return true;
-        });
-    }
-
-
-    static boolean is_first_run = true;
-    @Override
-    protected void onStart() {
-        super.onStart();
-
         //tehdään vain kerran
         if (is_first_run)
         {
+            is_first_run = false;
+
             corporationRound();
         }
     }
+
 
     //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisiksi
     //tässä vaiheessa aika paljon toistoa
@@ -174,12 +166,11 @@ public class InGameUI extends AppCompatActivity {
 
                 //viimeisen valinnan ohessa dialogi suljetaan
                 if (player_index == players.size()) {
-                    is_first_run = false;
                     dialog.dismiss();
                     if (game.modifiers.getPrelude()) {
                         preludeRound();
                     }
-                    ((ResourcesFragment) sectionsPagerAdapter.getItem(0)).setResourceAmounts();
+                    GameController.getInstance().gameUpdate();
                     return;
                 }
 
@@ -215,7 +206,7 @@ public class InGameUI extends AppCompatActivity {
 
         //spinnerin valmistaminen
         //arrayadapter kutsuu toString -metodia
-        ArrayAdapter<Card> adapter = new ArrayAdapter<> (
+        ArrayAdapter<Card> adapter = new ArrayAdapter<Card> (
                 this, android.R.layout.simple_spinner_item, preludes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -228,15 +219,6 @@ public class InGameUI extends AppCompatActivity {
                 .create();
 
         dialog.show();
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-
-        Window window = dialog.getWindow();
-
-        window.setLayout(2*width/3, WindowManager.LayoutParams.WRAP_CONTENT);
 
         title.setText("Choose " + players.get(0).getName() + "'s preludes.");
 
@@ -274,8 +256,7 @@ public class InGameUI extends AppCompatActivity {
                     dialog.dismiss();
                     return;
                 }
-
-                title.setText("Choose " + players.get(player_index).getName() + "'s preludes.");
+                title.setText("Choose " + players.get(player_index).getName() + "'s corporation.");
             }
         });
     }

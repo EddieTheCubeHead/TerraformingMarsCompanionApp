@@ -43,6 +43,7 @@ public class GameController
         this.context = context;
     }
 
+    //Gettereitä yleisesti käytetyille muuttujille
     public Game getGame() { return game; }
     public Player getCurrentPlayer()  { return current_player; }
     public Player getCurrentStarter() { return current_starter; }
@@ -211,6 +212,29 @@ public class GameController
         deck.addAll(subject.getRed());
 
         return deck;
+    }
+
+    //https://stackoverflow.com/questions/37759734/dynamically-updating-a-fragment/37761276#37761276
+    //Fragmenttien päivittämiseen
+    public interface GameUpdateListener {
+        void update();
+    }
+
+    private List<GameUpdateListener> game_listeners = new ArrayList<>();
+
+    public synchronized void registerGameUpdateListener(GameUpdateListener listener) {
+        game_listeners.add(listener);
+    }
+
+    public synchronized void unregisterGameUpdateListener(GameUpdateListener listener) {
+        game_listeners.remove(listener);
+    }
+
+    public void gameUpdate() {
+        Log.i("Game", "Update called");
+        for (GameUpdateListener listener : game_listeners) {
+            listener.update();
+        }
     }
 
     public List<Player> getPlayers()

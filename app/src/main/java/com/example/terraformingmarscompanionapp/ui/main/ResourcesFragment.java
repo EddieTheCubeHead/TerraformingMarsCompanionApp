@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-public class ResourcesFragment extends Fragment {
+public class ResourcesFragment extends Fragment implements GameController.GameUpdateListener {
 
     private GameController controller = GameController.getInstance();
     private Player player = controller.getCurrentPlayer();
@@ -638,10 +639,25 @@ public class ResourcesFragment extends Fragment {
         return resourceType;
     }
 
+    //Pelin tapahtumien kuuntelu
+    @Override
+    public void update() {
+        setResourceAmounts();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        GameController.getInstance().registerGameUpdateListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        GameController.getInstance().unregisterGameUpdateListener(this);
+    }
 
     //Asettaa arvot nykyisen pelaajan arvoista
-
-    //TODO sijoita johonkin, jossa aktivoituu yhtiödien valinnan jälkeen
     public boolean setResourceAmounts() {
 
         player = GameController.getInstance().getCurrentPlayer();
