@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,26 +181,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     };
 
-    //todo tämän oikeaksi muokkaaminen.
+    //filtteröi display playerin mukaiseksi
     private Filter played_filter = new Filter()
     {
         @Override
         protected FilterResults performFiltering(CharSequence search_string)
         {
+            Player display_player = GameController.getInstance().getDisplayPlayer();
+
             List<Card> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();
-
-            //hakua varten clause
-            if (search_string == null || search_string.length() == 0)
-            {
-                filtered_list.addAll(card_list_full);
-                results.values = filtered_list;
-                return results;
-            }
 
             String[] keywords = search_string.toString().toLowerCase().trim().split(" ");
             for (Card card : card_list_full)
             {
+                if (card.getOwner() != display_player)
+                    continue;
+
                 String card_name = card.getName();
                 String regex = ".*";
                 for (String word : keywords)
