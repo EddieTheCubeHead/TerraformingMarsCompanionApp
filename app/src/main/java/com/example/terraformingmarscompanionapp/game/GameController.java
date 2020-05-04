@@ -47,6 +47,7 @@ public class GameController
     public Game getGame() { return game; }
     public Player getCurrentPlayer()  { return current_player; }
     public Player getCurrentStarter() { return current_starter; }
+    public Context getContext() { return context; }
 
     //Serveripeliä varten tarkistus onko clientin vuoro, vai jonkun muun
     public Boolean checkTurnEligibility() {
