@@ -83,12 +83,6 @@ public class InGameUI extends AppCompatActivity {
 
         findViewById(R.id.item_4).setOnClickListener(view -> controller.endTurn());
 
-        findViewById(R.id.item_4).setOnLongClickListener(v -> {
-            controller.endGeneration();
-            return true;
-        });
-
-
         //tehdään vain kerran
         if (is_first_run)
         {

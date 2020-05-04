@@ -644,6 +644,8 @@ public class ResourcesFragment extends Fragment {
     //TODO sijoita johonkin, jossa aktivoituu yhtiödien valinnan jälkeen
     public boolean setResourceAmounts() {
 
+        player = GameController.getInstance().getCurrentPlayer();
+
         try {
             textview_temperature.setText(String.valueOf(game.getGlobalTemperature()));
             textview_oxygen.setText(String.valueOf(game.getGlobalOxygen()));
