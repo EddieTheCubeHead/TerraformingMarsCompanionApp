@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -175,6 +174,9 @@ public class InGameUI extends AppCompatActivity {
                 //viimeisen valinnan ohessa dialogi suljetaan
                 if (player_index == players.size()) {
                     dialog.dismiss();
+                    if (game.modifiers.getPrelude()) {
+                        preludeRound();
+                    }
                     ((ResourcesFragment) sectionsPagerAdapter.getItem(0)).setResourceAmounts();
                     return;
                 }

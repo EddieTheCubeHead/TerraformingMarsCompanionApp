@@ -1,6 +1,5 @@
 package com.example.terraformingmarscompanionapp.game;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -38,6 +37,9 @@ public class Game implements Serializable {
     private Boolean server_multiplayer = false;
     public Boolean getServerMultiplayer() {return server_multiplayer;}
 
+    //Modifierien säilytys
+    public GameModifiers modifiers;
+
     //Getterit pelaajille ja pakoille, plus pakalle listana
     public ArrayList<Player> getPlayers() {return players;}
     public HashMap<String, Card> getDeck() {return deck;}
@@ -45,25 +47,6 @@ public class Game implements Serializable {
     public HashMap<String, Card> getCorporations() {return corporations;}
     public HashMap<String, Card> getGhosts() {return ghosts;}
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
-
-    /* Lisäosat määrittävä integer ja sen getteri
-     * Käyttö: palauttaa binäärilukua kuvastavan merkkijonon, katso paikkaa kohtaavan luvun totuusarvo,
-     *
-     * Järjestys (vasemmalta oikealle):
-     * corporate era
-     * prelude
-     * colonies
-     * venus
-     * turmoil
-     * extra corporations (houserule)
-     * world government terraforming (houserule)
-     * must max venus (houserule)
-     * turmoil terraforming revision (houserule)
-     */
-    //TODO en tiedä miksi kirjoitun näin hankalasti, simppelimpi versio asap, -Eetu
-    private Integer expansion_integer;
-    @SuppressLint("DefaultLocale")
-    public String getExpansionInteger() {return String.format("%09d", Integer.valueOf(Integer.toBinaryString(expansion_integer)));}
 
     //Milestonet ja awardit
     private Integer claimed_milestones = 0;
@@ -162,6 +145,8 @@ public class Game implements Serializable {
             preludes = constructor.createPreludes();
         }
 
+        this.modifiers = new GameModifiers(corporate_era, prelude, colonies, venus, turmoil, extra_corporations, world_government_terraforming, must_max_venus, turmoil_terraforming_revision);
+
         this.server_multiplayer = server_multiplayer;
 
         tile_handler = new TileHandler(this, map, venus);
@@ -173,19 +158,6 @@ public class Game implements Serializable {
         cities_in_space = 0;
         cities_on_mars = 0;
         venus_terraform = 0;
-
-        String expansion_integer_builder = "";
-        expansion_integer_builder += corporate_era ? "1" : "0";
-        expansion_integer_builder += prelude ? "1" : "0";
-        expansion_integer_builder += colonies ? "1" : "0";
-        expansion_integer_builder += venus ? "1" : "0";
-        expansion_integer_builder += turmoil ? "1" : "0";
-        expansion_integer_builder += extra_corporations ? "1" : "0";
-        expansion_integer_builder += world_government_terraforming ? "1" : "0";
-        expansion_integer_builder += must_max_venus ? "1" : "0";
-        expansion_integer_builder += turmoil_terraforming_revision ? "1" : "0";
-
-        expansion_integer = Integer.parseInt(expansion_integer_builder, 2);
 
         //TODO viimeistele constructor
     }
