@@ -1,4 +1,6 @@
 package com.example.terraformingmarscompanionapp.game;
+import androidx.annotation.NonNull;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
@@ -512,5 +514,11 @@ public class Player {
     public Player(Game super_game, String player_name) {
         game = super_game;
         name = player_name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }
