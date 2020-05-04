@@ -25,8 +25,10 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private Player player = controller.getCurrentPlayer();
     private Game game = controller.getGame();
 
-
     //Paikalliset muuttujat muutosmoodiin
+    private Integer multiplier;
+    private Boolean editmode;
+
     private Integer money;
     private Integer moneyProduction;
     private Integer steel;
@@ -42,10 +44,6 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private Integer temperature;
     private Integer terraformingRating;
     private Integer oxygen;
-
-    private Integer multiplier;
-
-    private Boolean editmode;
 
     private ImageButton button_temperature_minus;
     private ImageButton button_temperature_plus;
@@ -78,13 +76,12 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private ImageButton button_heat_production_minus;
     private ImageButton button_heat_production_plus;
 
+        private Button button_multiplier_1;
+        private Button button_multiplier_5;
+        private Button button_multiplier_10;
 
-    private Button button_multiplier_1;
-    private Button button_multiplier_5;
-    private Button button_multiplier_10;
-
-    private Button button_save_resources;
-    private Button button_editcancel_resources;
+        private Button button_save_resources;
+        private Button button_editcancel_resources;
 
     private TextView textview_temperature;
     private TextView textview_tfr;
@@ -102,18 +99,14 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private TextView textview_energy_production;
     private TextView textview_heat_production;
 
-
 //TODO Ville: tee minukselle menemisen esto
-
 
     @Override public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
     )
     {
-
         editmode = false;
         multiplier = 1;
-
 
         money = player.getMoney();
         moneyProduction = player.getMoneyProduction();
@@ -131,8 +124,6 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         terraformingRating = player.getTerraformingRating();
         oxygen = 0;
 
-
-
                 ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_resources, container, false);
 
@@ -142,7 +133,6 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         System.out.println("testijou");
 
@@ -177,13 +167,12 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_heat_production_minus = getView().findViewById(R.id.button_heat_production_minus);
         button_heat_production_plus = getView().findViewById(R.id.button_heat_production_plus);
 
-        button_multiplier_1 = getView().findViewById(R.id.button_multiplier_1);
-        button_multiplier_5 = getView().findViewById(R.id.button_multiplier_5);
-        button_multiplier_10 = getView().findViewById(R.id.button_multiplier_10);
+            button_multiplier_1 = getView().findViewById(R.id.button_multiplier_1);
+            button_multiplier_5 = getView().findViewById(R.id.button_multiplier_5);
+            button_multiplier_10 = getView().findViewById(R.id.button_multiplier_10);
 
         button_save_resources = getView().findViewById(R.id.button_save_resources);
         button_editcancel_resources = getView().findViewById(R.id.button_editcancel_resources);
-
 
         textview_temperature = getView().findViewById(R.id.textview_temperature);
         textview_tfr = getView().findViewById(R.id.textview_tfr);
@@ -203,251 +192,166 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
         setResourceAmounts();
 
-        View.OnClickListener listener = v -> {
+        View.OnClickListener listener = v ->
+        {
 
             if (v == button_temperature_minus) {
-
                 temperature = changeResourceAmount(temperature, textview_temperature, true);
-
                 textview_temperature.setText(temperature + "°C");
-
             }
 
             if (v == button_temperature_plus) {
-
                 temperature = changeResourceAmount(temperature, textview_temperature, false);
-
                 textview_temperature.setText(temperature + "°C");
-
             }
 
             if (v == button_tfr_minus) {
-
                 terraformingRating = changeResourceAmount(terraformingRating, textview_tfr, true);
-
             }
 
             if (v == button_tfr_plus) {
-
                 terraformingRating = changeResourceAmount(terraformingRating, textview_tfr, false);
-
             }
 
             if (v == button_oxygen_minus) {
-
                 oxygen = changeResourceAmount(oxygen, textview_oxygen, true);
-
                 textview_oxygen.setText(temperature + "%");
-
-
             }
 
             if (v == button_oxygen_plus) {
-
                 oxygen = changeResourceAmount(oxygen, textview_oxygen, false);
-
                 textview_oxygen.setText(temperature + "%");
-
             }
 
             if (v == button_money_minus) {
-
                 money = changeResourceAmount(money, textview_money, true);
-
             }
 
             if (v == button_money_plus) {
-
                 money = changeResourceAmount(money, textview_money, false);
-
             }
 
             if (v == button_steel_minus) {
-
                 steel = changeResourceAmount(steel, textview_steel, true);
-
             }
 
             if (v == button_steel_plus) {
-
                 steel = changeResourceAmount(steel, textview_steel, false);
-
             }
 
             if (v == button_titanium_minus) {
-
                 titanium = changeResourceAmount(titanium, textview_titanium, true);
-
             }
 
             if (v == button_titanium_plus) {
-
                 titanium = changeResourceAmount(titanium, textview_titanium, false);
-
             }
 
             if (v == button_plants_minus) {
-
                 plants = changeResourceAmount(plants, textview_plants, true);
-
-
             }
 
             if (v == button_plants_plus) {
-
                 plants = changeResourceAmount(plants, textview_plants, false);
-
             }
 
 
             if (v == button_energy_minus) {
-
                 energy = changeResourceAmount(energy, textview_energy, true);
-
             }
 
             if (v == button_energy_plus) {
-
                 energy = changeResourceAmount(energy, textview_energy, false);
-
             }
 
             if (v == button_heat_minus) {
-
                 heat = changeResourceAmount(heat, textview_heat, true);
-
             }
 
             if (v == button_heat_plus) {
-
                 heat = changeResourceAmount(heat, textview_heat, false);
-
             }
 
             if (v == button_money_production_minus) {
-
                 moneyProduction = changeResourceAmount(moneyProduction, textview_money_production , true);
-
             }
 
             if (v == button_money_production_plus) {
-
                 moneyProduction = changeResourceAmount(moneyProduction, textview_money_production , false);
-
             }
 
             if (v == button_steel_production_minus) {
-
                 steelProduction = changeResourceAmount(steelProduction, textview_steel_production , true);
-
             }
 
             if (v == button_steel_production_plus) {
-
                 steelProduction = changeResourceAmount(steelProduction, textview_steel_production , false);
-
             }
 
             if (v == button_titanium_production_minus) {
-
                 titaniumProduction = changeResourceAmount(titaniumProduction, textview_titanium_production , true);
-
             }
 
             if (v == button_titanium_production_plus) {
-
                 titaniumProduction = changeResourceAmount(titaniumProduction, textview_titanium_production , false);
-
             }
 
             if (v == button_plants_production_minus) {
-
                 plantsProduction = changeResourceAmount(plantsProduction, textview_plants_production , true);
-
-
             }
 
             if (v == button_plants_production_plus) {
-
                 plantsProduction = changeResourceAmount(plantsProduction, textview_plants_production , false);
-
             }
 
 
             if (v == button_energy_production_minus) {
-
                 energyProduction = changeResourceAmount(energyProduction, textview_energy_production , true);
-
             }
 
             if (v == button_energy_production_plus) {
-
                 energyProduction = changeResourceAmount(energyProduction, textview_energy_production , false);
-
             }
 
             if (v == button_heat_production_minus) {
-
                 heatProduction = changeResourceAmount(heatProduction, textview_heat_production , true);
-
             }
 
             if (v == button_heat_production_plus) {
-
                 heatProduction = changeResourceAmount(heatProduction, textview_heat_production , false);
-
             }
 
 
-
-
-
-
-
-
-
-
-
-            if (v == button_multiplier_1) {
-
+            if (v == button_multiplier_1)
+            {
                 multiplier = 5;
 
                 button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
                 button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-
-
             }
 
-            if (v == button_multiplier_5) {
-
+            if (v == button_multiplier_5)
+            {
                 multiplier = 5;
 
                 button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
                 button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-
-
             }
 
-            if (v == button_multiplier_10) {
-
+            if (v == button_multiplier_10)
+            {
                 multiplier = 10;
 
                 button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
-
-
             }
 
 
-
-
-
-
-            if (v == button_save_resources) {
-
+            if (v == button_save_resources)
+            {
                 editmode = false;
 
                 player.changeMoney(money - player.getMoney());
@@ -465,26 +369,24 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
                 changeMode(false, 0);
                 button_editcancel_resources.setText("Edit");
-
-
             }
 
-            if (v == button_editcancel_resources) {
+            if (v == button_editcancel_resources)
+            {
 
                 //Edit painikkeen painaminen
-                if (!editmode) {
-
+                if (!editmode)
+                {
                     editmode = true;
 
                     changeMode(true, 1);
 
                     button_editcancel_resources.setText("Cancel");
-
                 }
 
                 //Cancel painikkeen painaminen
-                else if (editmode) {
-
+                else if (editmode)
+                {
                     editmode = false;
 
                     changeMode(false, 0);
@@ -494,17 +396,9 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                     setResourceAmounts();
 
                 }
-
-
-
             }
-
-
-
-
-
-
         };
+
         button_temperature_minus.setOnClickListener(listener);
         button_temperature_plus.setOnClickListener(listener);
         button_tfr_minus.setOnClickListener(listener);
@@ -536,12 +430,11 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_heat_production_minus.setOnClickListener(listener);
         button_heat_production_plus.setOnClickListener(listener);
 
-        button_multiplier_1.setOnClickListener(listener);
-        button_multiplier_5.setOnClickListener(listener);
-        button_multiplier_10.setOnClickListener(listener);
+            button_multiplier_1.setOnClickListener(listener);
+            button_multiplier_5.setOnClickListener(listener);
+            button_multiplier_10.setOnClickListener(listener);
 
-        button_save_resources.setOnClickListener(listener);
-
+            button_save_resources.setOnClickListener(listener);
 
         button_editcancel_resources.setOnClickListener(listener);
 
@@ -550,8 +443,8 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     }
 
 
-    private void changeMode(boolean mode, float alpha) {
-
+    private void changeMode(boolean mode, float alpha)
+    {
         button_temperature_minus.setClickable(mode);
         button_temperature_plus.setClickable(mode);
         button_tfr_minus.setClickable(mode);
@@ -583,11 +476,11 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_heat_production_minus.setClickable(mode);
         button_heat_production_plus.setClickable(mode);
 
-        button_multiplier_1.setClickable(mode);
-        button_multiplier_5.setClickable(mode);
-        button_multiplier_10.setClickable(mode);
+            button_multiplier_1.setClickable(mode);
+            button_multiplier_5.setClickable(mode);
+            button_multiplier_10.setClickable(mode);
 
-        button_save_resources.setClickable(mode);
+            button_save_resources.setClickable(mode);
 
         button_temperature_minus.setAlpha(alpha);
         button_temperature_plus.setAlpha(alpha);
@@ -620,17 +513,15 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_heat_production_minus.setAlpha(alpha);
         button_heat_production_plus.setAlpha(alpha);
 
+            button_multiplier_1.setAlpha(alpha);
+            button_multiplier_5.setAlpha(alpha);
+            button_multiplier_10.setAlpha(alpha);
 
-        button_multiplier_1.setAlpha(alpha);
-        button_multiplier_5.setAlpha(alpha);
-        button_multiplier_10.setAlpha(alpha);
-
-        button_save_resources.setAlpha(alpha);
+            button_save_resources.setAlpha(alpha);
     }
 
-
-    private Integer changeResourceAmount(Integer resourceType, TextView textView, boolean isMinus) {
-
+    private Integer changeResourceAmount(Integer resourceType, TextView textView, boolean isMinus)
+    {
         if (isMinus) {resourceType -= multiplier;}
         if (!isMinus) {resourceType += multiplier;}
 
@@ -658,15 +549,14 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     }
 
     //Asettaa arvot nykyisen pelaajan arvoista
-    public boolean setResourceAmounts() {
-
+    public boolean setResourceAmounts()
+    {
         player = GameController.getInstance().getCurrentPlayer();
 
         try {
             textview_temperature.setText(String.valueOf(game.getGlobalTemperature()));
             textview_oxygen.setText(String.valueOf(game.getGlobalOxygen()));
             textview_tfr.setText(String.valueOf(player.getTerraformingRating()));
-
             textview_money.setText(String.valueOf(player.getMoney()));
             textview_money_production.setText(String.valueOf(player.getMoneyProduction()));
             textview_steel.setText(String.valueOf(player.getSteel()));
@@ -679,8 +569,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
             textview_energy_production.setText(String.valueOf(player.getEnergyProduction()));
             textview_heat.setText(String.valueOf(player.getHeat()));
             textview_heat_production.setText(String.valueOf(player.getHeatProduction()));
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return false;
         }
         return true;
