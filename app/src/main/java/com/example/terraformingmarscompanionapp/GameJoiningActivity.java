@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.ui.main.TitleScreen;
-import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.UserActions;
 
 import java.util.ArrayList;
@@ -46,16 +45,6 @@ public class GameJoiningActivity extends AppCompatActivity {
 
         game_code.setText(game_code_string);
 
-        UserActions.createGame();
-
-        while (game_code_string == null) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            game_code_string = GameActions.getGameCode();
-        }
         game_code.setText(String.format("Game code: %s", game_code_string));
     }
 

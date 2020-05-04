@@ -239,6 +239,7 @@ public class GameController
         }
     }
 
+    //Kaikkien pelaajien getteri
     public List<Player> getPlayers()
     {
         return queue_full;

@@ -3,8 +3,6 @@ package com.example.terraformingmarscompanionapp.game.tileSystem;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
-import com.example.terraformingmarscompanionapp.SearchActivity;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -21,7 +19,6 @@ public class TileHandler {
     private final Tile[][] mars_tiles = new Tile[17][9];
     private final Tile[] space_tiles;
     private final Game game;
-    private GameController controller = GameController.getInstance();
     /* koordinaatit x, y, huomioitavaa, että vain y=4 on täysi rivi heksoja
      * Esimerkiksi 0, 3 on tyhjä
      */
@@ -619,7 +616,7 @@ public class TileHandler {
     private Tile getCoordinatesFromPlayer(Placeable tile_type) {
         Tile tile = mars_tiles[8][4];
         //TODO tänne UI tiilen asettamispaikan saamiseksi
-        Context context = controller.getContext();
+        Context context = GameController.getInstance().getContext();
         Intent intent = new Intent(context, TilePlacementActivity.class);
         context.startActivity(intent);
         return tile;
