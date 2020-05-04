@@ -48,7 +48,7 @@
 
     </LinearLayout>
 
-    <com.example.tabpractice.ImageMap
+    <com.example.terraformingmarscompanionapp.ui.main.ImageMap
         android:id="@+id/map"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"

@@ -108,24 +108,9 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         editmode = false;
         multiplier = 1;
 
-        money = player.getMoney();
-        moneyProduction = player.getMoneyProduction();
-        steel = player.getSteel();
-        steelProduction = player.getSteelProduction();
-        titanium = player.getTitanium();
-        titaniumProduction = player.getTitaniumProduction();
-        plants = player.getPlants();
-        plantsProduction = player.getPlantsProduction();
-        energy = player.getEnergy();
-        energyProduction = player.getEnergyProduction();
-        heat = player.getHeat();
-        heatProduction = player.getHeatProduction();
-        temperature = 0;
-        terraformingRating = player.getTerraformingRating();
-        oxygen = 0;
+        refreshEditVariables();
 
-                ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.fragment_resources, container, false);
+        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_resources, container, false);
 
         return rootView;
     }
@@ -133,8 +118,6 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        System.out.println("testijou");
 
         button_temperature_minus = getView().findViewById(R.id.button_temperature_minus);
         button_temperature_plus = getView().findViewById(R.id.button_temperature_plus);
@@ -167,9 +150,9 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_heat_production_minus = getView().findViewById(R.id.button_heat_production_minus);
         button_heat_production_plus = getView().findViewById(R.id.button_heat_production_plus);
 
-            button_multiplier_1 = getView().findViewById(R.id.button_multiplier_1);
-            button_multiplier_5 = getView().findViewById(R.id.button_multiplier_5);
-            button_multiplier_10 = getView().findViewById(R.id.button_multiplier_10);
+        button_multiplier_1 = getView().findViewById(R.id.button_multiplier_1);
+        button_multiplier_5 = getView().findViewById(R.id.button_multiplier_5);
+        button_multiplier_10 = getView().findViewById(R.id.button_multiplier_10);
 
         button_save_resources = getView().findViewById(R.id.button_save_resources);
         button_editcancel_resources = getView().findViewById(R.id.button_editcancel_resources);
@@ -324,7 +307,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
             if (v == button_multiplier_1)
             {
-                multiplier = 5;
+                multiplier = 1;
 
                 button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
                 button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -352,6 +335,12 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
             if (v == button_save_resources)
             {
+                multiplier = 1;
+
+                button_multiplier_1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
+                button_multiplier_5.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                button_multiplier_10.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+
                 editmode = false;
 
                 player.changeMoney(money - player.getMoney());
@@ -367,6 +356,8 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                 player.changeHeat(heat - player.getHeatProduction());
                 player.changeHeatProduction(heatProduction - player.getHeatProduction());
 
+                //TODO Ville: lämpötilan, tfr ja happi muutos päivitysjuttu
+
                 changeMode(false, 0);
                 button_editcancel_resources.setText("Edit");
             }
@@ -378,6 +369,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                 if (!editmode)
                 {
                     editmode = true;
+                    refreshEditVariables();
 
                     changeMode(true, 1);
 
@@ -573,6 +565,24 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
             return false;
         }
         return true;
+    }
+
+    private void refreshEditVariables() {
+        money = player.getMoney();
+        moneyProduction = player.getMoneyProduction();
+        steel = player.getSteel();
+        steelProduction = player.getSteelProduction();
+        titanium = player.getTitanium();
+        titaniumProduction = player.getTitaniumProduction();
+        plants = player.getPlants();
+        plantsProduction = player.getPlantsProduction();
+        energy = player.getEnergy();
+        energyProduction = player.getEnergyProduction();
+        heat = player.getHeat();
+        heatProduction = player.getHeatProduction();
+        temperature = game.getGlobalTemperature();
+        terraformingRating = player.getTerraformingRating();
+        oxygen = game.getGlobalOxygen();
     }
 
     @Override
