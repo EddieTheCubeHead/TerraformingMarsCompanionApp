@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,13 +31,15 @@ import java.util.Map;
  * netistä: You should inflate your layout in onCreateView but shouldn't initialize other views using findViewById in onCreateView.
  * */
 
-public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener{
+public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener, GameController.GameUpdateListener{
 
     private SearchView searchview;
     private GameController controller;
     private Game game;
     private ArrayList<com.example.terraformingmarscompanionapp.cardSubclasses.Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
+    RecyclerView recyclerview;
+    RecyclerView.LayoutManager layout_manager;
 
     //otettu
     @Override public View onCreateView
@@ -56,11 +59,12 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
     {
         super.onViewCreated(view, savedInstanceState);
 
-
         //tästä eteenpäin noin sama koodi kuin searchactivityn oncreate:ssa
         searchview = view.findViewById(R.id.searchview);
 
         controller = GameController.getInstance();
+        controller.registerGameUpdateListener(this);
+
         game = controller.getGame();
         HashMap<String, Card>deck = game.getDeck();
 
@@ -71,13 +75,13 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             card_list.add(card);
         }
 
-        RecyclerView recyclerview = view.findViewById(R.id.result_recyclerview);
+        recyclerview = view.findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
 
         adapter = new RecyclerAdapter(card_list, this, this); //this koska tämä luokka implementoi metodit
         recyclerview.setAdapter(adapter);
 
-        RecyclerView.LayoutManager layout_manager = new LinearLayoutManager(getContext()); //en tiedä onko oikea konteksti
+        layout_manager = new LinearLayoutManager(getContext()); //en tiedä onko oikea konteksti
         recyclerview.setLayoutManager(layout_manager);
 
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -92,39 +96,50 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         searchview.setOnClickListener(v -> searchview.setIconified(false));
     }
 
-    //visuaalisen päivittämisen voi laittaa tähän, mutta on hyvin kallista jos ei tee oikein
+    /* kommentoitu pois sen varalta että update ei toimi
     @Override
     public void onResume() {
         super.onResume();
-        adapter.getPlayedFilter().filter("");
-
+        update();
     }
+     */
+
 
     @Override public void onCardClick(int position)
     {
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
 
         //jos kortti implementtaa actioncard-interfacen
-        if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard) {
+        if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard)
+        {
             Game game = GameController.getInstance().getGame();
             Integer action_metadata = ((ActionCard) card).cardAction();
-            if (action_metadata == -1) {
-                //TODO error handling: toiminto käytetty jo
-            } else if (action_metadata == -2) {
-                //TODO error handling: ei riittävästi resursseja
-            } else if (game.getServerMultiplayer()) {
-                GameActions.sendCardEvent(new CardEventPacket(card.getName(), card.getOwner().getName(), action_metadata));
-            }
-        }
 
-        //Periaatteessa kaikki effectit on automatisoitu
-        /*else if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard) {
-            //TODO tee korttia vastaava effect.
-        }*/
+            if (action_metadata == -1)
+                Toast.makeText(getContext(), "Already used this.", Toast.LENGTH_SHORT).show();
+
+            else if (action_metadata == -2)
+                Toast.makeText(getContext(), "Not enough resources.", Toast.LENGTH_SHORT).show();
+
+            else if (game.getServerMultiplayer())
+                GameActions.sendCardEvent(new CardEventPacket(card.getName(), card.getOwner().getName(), action_metadata));
+
+            update();
+        }
 
         else Log.i("non-interactable card","Pelaajan korttilistassa kortilla ei ollut CardActionia eikä CardEffectiä");
     }
 
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) { return false; }
+
+    @Override
+    public void update() {
+        adapter.getPlayedFilter().filter("");
+
+        for (int i = 0; i<adapter.getItemCount(); i++) {
+            View cardview = layout_manager.findViewByPosition(i);
+            /*todo visuaaliset muutokset yksittäisille korteille*/
+        }
+    }
 }
