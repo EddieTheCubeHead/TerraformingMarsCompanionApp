@@ -2,6 +2,14 @@ Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi 
 
 Kirjasin kaiken mikä on vielä tekemättä ennen harkkatyödedistä. Osassa kategorioista on samoja tehtäviä.
 
+TODO: Top priority
+    Aloitusnäyttö
+    Kirjautumisnäyttö
+    Serveripelin pelinrakennusnäyttö
+    Korttilistan viimeistely
+    Heksa-UI
+    Pelin lopetus
+
 TODO: layout valmiina, ei koodia.
     Kirjautumisnäyttö
     -täysin staattisia juttuja.
@@ -18,10 +26,6 @@ TODO: Seuraavat UI-näkymät:
     Moninpelin pelinrakennusnäyttö (En ole varma voiko käyttää hotseat-näyttöä, Eetu)
 TODO: Kortteja kehiin, -Aapo
 
-TODO: Raaka resurssienhallinta kuntoon
-    Vain yhden pelaajan resurssit, TR ja tuotannot, niiden manuaalinen muuttaminen ja "päätä sukupolvi -nappi"
-        Pääasiassa UI-hommaa
-
 TODO: Hotseat-peli kuntoon
     Heksan asettaminen (UI)
     Korttiresurssitapahtuman kohteen valinta (UI)
@@ -33,16 +37,13 @@ TODO: Hotseat-peli kuntoon
         Osittain UI-pohjainen, foldausnapit
             -Alex, käsityksen mukaan jo valmis?
     Pelin alun toiminnot
-        Korporaatioiden pelaaminen
-        Preludien pelaaminen
         Ensimmäisellä kierroksella "tee ensimmäisenä tämä toiminto -korttien pelaaminen"
             Ks. FirstAction -rajapinta
         Alun "kuinka monta korttia ostit? (0-10) -prompti"
             -kannattaa tehdä samassa kun kun (0-4) prompti
-        Beginner corporation -erikoistapauksen huomiointi
+        Beginner corporation -erikoistapauksen huomiointi -Eetu
     Sukupolvien välissä "kuinka monta korttia ostit? (0-4) -prompti".
         -Kutsuminen funktiosta endgeneration(Context)?
-    Saavutusten ja kilpailujen implementointi. -Eetu
     Pistelasku -Eetu
 
 TODO: WebSocket serveripeli -Eetu
@@ -55,7 +56,6 @@ TODO: WebSocket serveripeli -Eetu
 
 TODO: Corporate-era -korttien ja Prelude -lisäosan lisääminen
     Kaikki tarvittavat frameworkit valmiina, nyt vain kortteja pöytään
-
 
 TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
     Metadatalliset effektit serveripelissä

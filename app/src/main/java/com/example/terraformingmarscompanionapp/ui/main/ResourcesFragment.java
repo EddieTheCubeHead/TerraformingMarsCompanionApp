@@ -184,7 +184,6 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_save_resources = getView().findViewById(R.id.button_save_resources);
         button_editcancel_resources = getView().findViewById(R.id.button_editcancel_resources);
 
-
         textview_temperature = getView().findViewById(R.id.textview_temperature);
         textview_tfr = getView().findViewById(R.id.textview_tfr);
         textview_oxygen = getView().findViewById(R.id.textview_oxygen);
@@ -494,16 +493,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                     setResourceAmounts();
 
                 }
-
-
-
             }
-
-
-
-
-
-
         };
         button_temperature_minus.setOnClickListener(listener);
         button_temperature_plus.setOnClickListener(listener);

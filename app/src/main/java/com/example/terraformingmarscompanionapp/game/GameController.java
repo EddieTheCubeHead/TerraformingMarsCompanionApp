@@ -156,6 +156,7 @@ public class GameController
     private void atTurnStart()
     {
         actions_used = 0;
+        gameUpdate();
         //TODO kaikki vuoron alussa vuoron aloittavalle current_playerille tapahtuva
     }
 

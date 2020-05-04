@@ -7,7 +7,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -243,6 +242,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
                 } else {
                     game.playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
                     Toast.makeText(getApplicationContext(), String.format("Card '%s' played successfully!", card.getName()), Toast.LENGTH_SHORT).show();
+                    onBackPressed();
                     dialog.dismiss();
                 }
             }
