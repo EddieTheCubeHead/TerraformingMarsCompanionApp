@@ -180,9 +180,19 @@ public class GameController
     {
         ArrayList<Card> deck = new ArrayList<>();
 
-        deck.addAll(current_player.getBlue());
-        deck.addAll(current_player.getGreen());
-        deck.addAll(current_player.getRed());
+        //TODO eetu, tää kuntoon
+        Player subject;
+
+        //subject on se jonka kortit näytetään päänäytöllä.
+        //nettipelissä
+        if (server_multiplayer)
+            subject = self_player;
+        else
+            subject = getCurrentPlayer();
+
+        deck.addAll(subject.getBlue());
+        deck.addAll(subject.getGreen());
+        deck.addAll(subject.getRed());
 
         return deck;
     }
