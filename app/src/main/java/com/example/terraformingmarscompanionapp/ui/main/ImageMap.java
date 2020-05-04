@@ -236,7 +236,7 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
                             // as a name for this area, try to find any of these
                             // attributes
                             //  name attribute is custom to this impl (not standard in html area tag)
-                            String name = xpp.getAttributeValue(null, "number");
+                            String name = xpp.getAttributeValue(null, "coordinates");
                             if (name == null) {
                                 name = xpp.getAttributeValue(null, "title");
                             }
