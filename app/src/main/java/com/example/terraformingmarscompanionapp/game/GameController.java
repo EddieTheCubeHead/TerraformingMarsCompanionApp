@@ -180,7 +180,6 @@ public class GameController
     {
         ArrayList<Card> deck = new ArrayList<>();
 
-        //TODO eetu, tää kuntoon
         Player subject;
 
         //subject on se jonka kortit näytetään päänäytöllä.
