@@ -46,6 +46,10 @@ public class InGameUI extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_game_u_i);
 
+        //korjaa näppäimistön satunnaisen ilmestymisen
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         controller = GameController.getInstance();
         controller.setContext(this);
         game = controller.getGame();
@@ -287,6 +291,7 @@ public class InGameUI extends AppCompatActivity {
     private void startTestingActivity() {
         System.out.println("testing activity starting lmao");
         Intent intent = new Intent(this, PlayerChoiceActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
 
