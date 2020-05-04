@@ -4,7 +4,8 @@ Kirjasin kaiken mikä on vielä tekemättä ennen harkkatyödedistä. Osassa kat
 
 TODO: layout valmiina, ei koodia.
     Kirjautumisnäyttö
-    Pelaajan resurssinäyttö -ville
+    -täysin staattisia juttuja.
+    -activity stackin päälle suoraan. ei pitäisi olla mitään ongelmia
 
 TODO: helppo mutta vaatii tietoa tehokkaaseen tekemiseen
     Pelaajan korttilista.

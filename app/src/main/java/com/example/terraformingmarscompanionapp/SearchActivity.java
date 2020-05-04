@@ -119,8 +119,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) { return false; }
 
-
-
     //DIALOGILOGIIKKa (alunperin resourcedialog -luokassa)
     View view;
     public void DisplayDialog(Context context, Card card)

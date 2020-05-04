@@ -180,14 +180,24 @@ public class GameController
     {
         Player display_player;
 
-        //subject on se jonka kortit näytetään päänäytöllä.
-        //nettipelissä
+        //display_player on se jonka kortit näytetään päänäytöllä.
         if (server_multiplayer)
             display_player = self_player;
         else
             display_player = getCurrentPlayer();
 
         return display_player;
+    }
+
+    public ArrayList<Card> getCards(Player player)
+    {
+        ArrayList<Card> deck = new ArrayList<>();
+
+        deck.addAll(player.getBlue());
+        deck.addAll(player.getGreen());
+        deck.addAll(player.getRed());
+
+        return deck;
     }
 
     public ArrayList<Card> getCards()

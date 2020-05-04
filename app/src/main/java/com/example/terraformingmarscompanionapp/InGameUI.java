@@ -33,8 +33,6 @@ import java.util.Map;
 
 public class InGameUI extends AppCompatActivity {
 
-    static boolean is_first_run = true;
-
     Game game;
     GameController controller;
 
@@ -83,15 +81,24 @@ public class InGameUI extends AppCompatActivity {
 
         findViewById(R.id.item_4).setOnClickListener(view -> controller.endTurn());
 
+        findViewById(R.id.item_4).setOnLongClickListener(v -> {
+            controller.endGeneration();
+            return true;
+        });
+    }
+
+
+    static boolean is_first_run = true;
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         //tehdään vain kerran
         if (is_first_run)
         {
-            is_first_run = false;
-
             corporationRound();
         }
     }
-
 
     //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisiksi
     //tässä vaiheessa aika paljon toistoa
@@ -167,6 +174,7 @@ public class InGameUI extends AppCompatActivity {
 
                 //viimeisen valinnan ohessa dialogi suljetaan
                 if (player_index == players.size()) {
+                    is_first_run = false;
                     dialog.dismiss();
                     if (game.modifiers.getPrelude()) {
                         preludeRound();
@@ -228,7 +236,7 @@ public class InGameUI extends AppCompatActivity {
 
         Window window = dialog.getWindow();
 
-        window.setLayout(4*width/5, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout(2*width/3, WindowManager.LayoutParams.WRAP_CONTENT);
 
         title.setText("Choose " + players.get(0).getName() + "'s preludes.");
 
