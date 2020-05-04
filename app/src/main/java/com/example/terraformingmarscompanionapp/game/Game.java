@@ -233,7 +233,9 @@ public class Game implements Serializable {
 
         Log.i("Game", "OnPlay called");
         Integer metadata = card.onPlay(player);
-        GameController.getInstance().useAction();
+        if (card.getType() != Card.Type.GHOST) {
+            GameController.getInstance().useAction();
+        }
 
         if (server_multiplayer) {
             GameActions.sendCardCost(resources_to_use);

@@ -149,12 +149,12 @@ public class GameController
 
     private void beforeTurnEnd()
     {
-        actions_used = 0;
         //TODO kaikki vuoron lopussa vuoron lopettavalle current_playerille tapahtuva
     }
 
     private void atTurnStart()
     {
+        actions_used = 0;
         //TODO kaikki vuoron alussa vuoron aloittavalle current_playerille tapahtuva
     }
 

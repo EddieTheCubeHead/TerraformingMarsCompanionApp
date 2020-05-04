@@ -211,6 +211,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     filtered_list.add(card);
                 }
             }
+
             results.values = filtered_list;
             return results;
         }
