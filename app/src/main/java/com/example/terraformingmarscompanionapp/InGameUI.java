@@ -108,7 +108,6 @@ public class InGameUI extends AppCompatActivity {
 
             //corporationroundissa käyttämättömien poisto.
         LinearLayout linearLayout = view.findViewById(R.id.startchoices_linearlayout);
-
         linearLayout.removeViewAt(2);
         linearLayout.removeViewAt(2);
 
@@ -145,7 +144,7 @@ public class InGameUI extends AppCompatActivity {
 
         Window window = dialog.getWindow();
 
-        window.setLayout(4*width/5, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout(2*width/3, WindowManager.LayoutParams.WRAP_CONTENT);
 
         title.setText("Choose " + players.get(0).getName() + "'s corporation.");
 
@@ -219,6 +218,15 @@ public class InGameUI extends AppCompatActivity {
                 .create();
 
         dialog.show();
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        Window window = dialog.getWindow();
+
+        window.setLayout(2*width/3, WindowManager.LayoutParams.WRAP_CONTENT);
 
         title.setText("Choose " + players.get(0).getName() + "'s preludes.");
 
