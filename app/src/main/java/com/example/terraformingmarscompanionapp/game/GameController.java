@@ -1,7 +1,6 @@
 package com.example.terraformingmarscompanionapp.game;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -81,8 +80,6 @@ public class GameController
     }
 
     public Player getPlayer(Integer index) {return queue_full.get(index - 1);}
-
-    //Player player = new Player(game, "Testipelaaja");
 
     private GameController(Game game){
         this.game = game;
@@ -178,7 +175,7 @@ public class GameController
     {
         actions_used = 0;
         gameUpdate();
-        if (current_player.getCorporation() instanceof FirstAction) {
+        if (generation == 1 && current_player.getCorporation() instanceof FirstAction) {
             FirstAction action = (FirstAction)current_player.getCorporation();
             if (!action.firstActionUsed()) {
                 action.firstAction();
@@ -214,6 +211,8 @@ public class GameController
         Intent intent = new Intent(context, PlayerChoiceActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         context.startActivity(intent);
+
+        atTurnStart();
     }
 
     public Player getDisplayPlayer()
@@ -280,6 +279,10 @@ public class GameController
     public List<Player> getPlayers()
     {
         return queue_full;
+    }
+
+    public void endGame() {
+
     }
 
     //TODO tokenien sijoittaminen
