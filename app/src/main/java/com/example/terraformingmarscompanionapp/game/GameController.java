@@ -2,14 +2,12 @@ package com.example.terraformingmarscompanionapp.game;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
-import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -217,11 +215,6 @@ public class GameController
         if (!server_multiplayer)
         {
             do {
-                Intent intent = new Intent(context, PlayerChoiceActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("player", queue.getLast().getName());
-                context.startActivity(intent);
-
                 queue.addFirst(queue.removeLast());
             } while (queue.getLast() != current_starter);
         }
