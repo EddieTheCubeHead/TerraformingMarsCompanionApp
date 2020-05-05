@@ -50,18 +50,19 @@ public class PlayerChoiceActivity extends AppCompatActivity {
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.activity_startchoices, null);
+        View view = inflater.inflate(R.layout.dialog_spinners, null);
 
         //visuaalinen muokkaus
         view.setBackgroundColor(Color.TRANSPARENT);
 
-        LinearLayout linearLayout = view.findViewById(R.id.startchoices_linearlayout);
-        linearLayout.removeViewAt(2);
-        linearLayout.removeViewAt(2);
+        LinearLayout linearLayout = view.findViewById(R.id.root_linearlayout);
+
+        linearLayout.removeView(view.findViewById(R.id.title2));
+        linearLayout.removeView(view.findViewById(R.id.spinner2));
 
         //findviewbyid't
-        TextView title = view.findViewById(R.id.first_round_title);
-        Spinner spinner = view.findViewById(R.id.first_round_spinner);
+        TextView title = view.findViewById(R.id.title1);
+        Spinner spinner = view.findViewById(R.id.spinner1);
 
         //spinnerin valmistaminen
         //arrayadapter kutsuu toString -metodia kortissa.
@@ -89,7 +90,7 @@ public class PlayerChoiceActivity extends AppCompatActivity {
 
         title.setText("Choose your target");
 
-        view.findViewById(R.id.first_round_confirm).setOnClickListener(v -> {
+        view.findViewById(R.id.button_confirm).setOnClickListener(v -> {
 
             dialog.dismiss();
             PlayerChoiceActivity.super.onBackPressed();

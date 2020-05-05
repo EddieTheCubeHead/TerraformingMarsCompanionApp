@@ -257,58 +257,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         }
     }
 
-    //todo kaikkien dialogien yhdistäminen.
-    private void displayPlayerChoiceDialog()
-    {
-        ArrayList<Player> targets = new ArrayList<>();
-        targets.addAll(controller.getPlayers());
-
-        targets.remove(player);
-
-        //layoutin rakentaminen
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.activity_startchoices, null);
-
-        //visuaalinen muokkaus
-        view.setBackgroundColor(Color.TRANSPARENT);
-
-        LinearLayout linearLayout = view.findViewById(R.id.startchoices_linearlayout);
-        linearLayout.removeViewAt(2);
-        linearLayout.removeViewAt(2);
-
-        //findviewbyid't
-        TextView title = view.findViewById(R.id.first_round_title);
-        Spinner spinner = view.findViewById(R.id.first_round_spinner);
-
-        //spinnerin valmistaminen
-        //arrayadapter kutsuu toString -metodia kortissa.
-        ArrayAdapter<Player> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, targets);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(view)
-                .setCancelable(false)
-                .create();
-
-        dialog.show();
-
-        //dialogin koon muuttaminen
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-
-        Window window = dialog.getWindow();
-
-        window.setLayout(2 * width / 3, WindowManager.LayoutParams.WRAP_CONTENT);
-
-        title.setText("Choose your target");
-
-        view.findViewById(R.id.first_round_confirm).setOnClickListener(v -> spinner.getSelectedItem());
-    }
-
     //maksuvaihtofunktiot. päivittävät myös textviewtä.
     public void creditMinus(Integer amount){
         if (credit-amount <= 0)

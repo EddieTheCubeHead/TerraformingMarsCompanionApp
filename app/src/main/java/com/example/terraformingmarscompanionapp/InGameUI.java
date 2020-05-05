@@ -109,19 +109,20 @@ public class InGameUI extends AppCompatActivity {
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.activity_startchoices, null);
+        View view = inflater.inflate(R.layout.dialog_spinners, null);
 
         //visuaalinen muokkaus
         view.setBackgroundColor(Color.TRANSPARENT);
 
             //corporationroundissa käyttämättömien poisto.
-        LinearLayout linearLayout = view.findViewById(R.id.startchoices_linearlayout);
-        linearLayout.removeViewAt(2);
-        linearLayout.removeViewAt(2);
+        LinearLayout linearLayout = view.findViewById(R.id.root_linearlayout);
+
+        linearLayout.removeView(view.findViewById(R.id.title2));
+        linearLayout.removeView(view.findViewById(R.id.spinner2));
 
         //findviewbyid't
-        TextView title = view.findViewById(R.id.first_round_title);
-        Spinner spinner = view.findViewById(R.id.first_round_spinner);
+        TextView title = view.findViewById(R.id.title1);
+        Spinner spinner = view.findViewById(R.id.spinner1);
 
         //korporaatioiden hankkiminen arraylistiin
         HashMap<String, Card> corps_hashmap = game.getCorporations();
@@ -158,7 +159,7 @@ public class InGameUI extends AppCompatActivity {
 
         //eri pelaajien läpi menemisen logiikka onclicklistenerissä
         //voi uudelleenkirjottaa
-        view.findViewById(R.id.first_round_confirm).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
             private int player_index = 0;
 
             @Override
@@ -192,16 +193,16 @@ public class InGameUI extends AppCompatActivity {
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.activity_startchoices, null);
+        View view = inflater.inflate(R.layout.dialog_spinners, null);
 
         //visuaalinen muokkaus
         view.setBackgroundColor(Color.TRANSPARENT);
 
         //findviewbyid't
-        TextView title = view.findViewById(R.id.first_round_title);
+        TextView title = view.findViewById(R.id.title1);
 
-        Spinner spinner1 = view.findViewById(R.id.first_round_spinner);
-        Spinner spinner2 = view.findViewById(R.id.first_round_spinner_2);
+        Spinner spinner1 = view.findViewById(R.id.spinner1);
+        Spinner spinner2 = view.findViewById(R.id.spinner2);
 
         //preludien hankkiminen arraylistiin
         HashMap<String, Card> preludes_hashmap = game.getPreludes();
@@ -240,7 +241,7 @@ public class InGameUI extends AppCompatActivity {
 
         //eri pelaajien läpi menemisen logiikka onclicklistenerissä
         //voi uudelleenkirjottaa
-        view.findViewById(R.id.first_round_confirm).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
             private int player_index = 0;
 
             @Override
