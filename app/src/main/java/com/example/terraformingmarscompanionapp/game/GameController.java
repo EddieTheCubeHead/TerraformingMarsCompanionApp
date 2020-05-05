@@ -175,9 +175,13 @@ public class GameController
     {
         actions_used = 0;
         gameUpdate();
-        if (generation == 1 && current_player.getCorporation() instanceof FirstAction) {
+
+        if (generation == 1 && current_player.getCorporation() instanceof FirstAction)
+        {
             FirstAction action = (FirstAction)current_player.getCorporation();
-            if (!action.firstActionUsed()) {
+
+            if (!action.firstActionUsed())
+            {
                 action.firstAction();
                 useAction();
             }
@@ -202,15 +206,24 @@ public class GameController
         ((InGameUI)context).onGenerationEnd();
 
         atGenerationStart();
-
-        gameUpdate();
     }
 
     public void atGenerationStart()
     {
-        Intent intent = new Intent(context, PlayerChoiceActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        context.startActivity(intent);
+        generation++;
+
+        //cardboughtactivityt activity stackkiin
+        if (!server_multiplayer)
+        {
+            do {
+                Intent intent = new Intent(context, PlayerChoiceActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra("player", queue.getLast().getName());
+                context.startActivity(intent);
+
+                queue.addFirst(queue.removeLast());
+            } while (queue.getLast() != current_starter);
+        }
 
         atTurnStart();
     }
