@@ -250,6 +250,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             game.playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
             Toast.makeText(getApplicationContext(), String.format("Card '%s' played successfully!", card.getName()), Toast.LENGTH_SHORT).show();
             dialog.dismiss();
+            super.onBackPressed();
         }
     }
 
