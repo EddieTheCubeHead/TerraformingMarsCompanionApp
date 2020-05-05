@@ -170,8 +170,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             default: color = 0x80000000; break;
         }
 
-        System.out.println(card.getName() +": "+ Color.red(color) + ", " +Color.green(color)+ ", " +Color.blue(color));
-
         holder.type_view_mid.setColorFilter(Color.argb(Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color)));
         //holder.type_view_mid.setBackgroundColor(color);
         //holder.type_view_mid.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
