@@ -197,6 +197,10 @@ public class GameController
         gameUpdate();
     }
 
+    void endGame() {
+        
+    }
+
     public void atGenerationStart() {
         //TODO korttien kysyntä
 

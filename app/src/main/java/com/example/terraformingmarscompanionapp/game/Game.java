@@ -678,7 +678,7 @@ public class Game implements Serializable {
     //Sukupolven päättäminen
     public void onGenerationEnd() {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
-            endGame();
+            GameController.getInstance().endGame();
         }
         for (Player player : players) {
             player.changeMoney(player.getMoneyProduction() + player.getTerraformingRating());
@@ -693,9 +693,5 @@ public class Game implements Serializable {
             player.resetActions();
         }
         //TODO turmoil-hommat tähän
-    }
-
-    private void endGame() {
-
     }
 }
