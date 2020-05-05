@@ -3,12 +3,9 @@ package com.example.terraformingmarscompanionapp.ui.main;
 import android.content.Context;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
-import com.example.terraformingmarscompanionapp.R;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -18,7 +15,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter
 {
 
     private static final String[] TAB_TITLES =
-            new String[]{"Player", "Cards"};
+            new String[]{"Player", "Cards", "Special"};
 
     private final Context mContext;
 
@@ -42,6 +39,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter
                 //return PlaceholderFragment.newInstance(position + 1);
             case 1:
                 return new CardsFragment();
+            case 2:
+                return new SpecialCardFragment();
             default:
                 return null;
         }
@@ -54,7 +53,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter
 
     @Override
     public int getCount() {
-        // Show 2 total pages.
-        return 2;
+        // Show 3 total pages.
+        return 3;
     }
 }
