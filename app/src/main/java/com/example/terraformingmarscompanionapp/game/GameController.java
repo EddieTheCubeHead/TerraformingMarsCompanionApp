@@ -209,7 +209,7 @@ public class GameController
         gameUpdate();
     }
 
-    public void atGenerationStart()
+    private void atGenerationStart()
     {
         Intent intent = new Intent(context, PlayerChoiceActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
