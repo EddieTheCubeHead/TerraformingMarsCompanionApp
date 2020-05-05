@@ -141,35 +141,51 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         if (adapter.getItemCount() == 0)
             return;
 
-        for (int i = 0; i<adapter.getItemCount(); i++) {
+        for (int i = 0; i<adapter.getItemCount(); i++)
+        {
             Card card = adapter.getItemAtPosition(i);
-            View cardview = layout_manager.findViewByPosition(i);
+            View cardview = layout_manager.findViewByPosition(i+1);
 
-            String resourceText = "";
+            if(cardview == null) {
+                System.out.println("position: " + i + ", card: " + card.getName());
+                return;
+            }
+
 
             if (card instanceof ResourceCard)
             {
+                String resourceText = "";
+                Integer resourceAmount = 0;
+
                 switch (((ResourceCard) card).getResourceType())
                 {
                     case PET:
                     case ANIMAL:
-                        resourceText = String.format("Animals: %s", ((ResourceCard) card).getResourceAmount());
+                        resourceText = "Animals: ";
                         break;
                     case FLOATER:
-                        resourceText = String.format("Floaters: %s", ((ResourceCard) card).getResourceAmount());
+                        resourceText = "Floaters: ";
                         break;
                     case MICROBE:
-                        resourceText = String.format("Microbes: %s", ((ResourceCard) card).getResourceAmount());
+                        resourceText = "Microbes: ";
                         break;
                     case SCIENCE:
-                        resourceText = String.format("Science resources: %s", ((ResourceCard) card).getResourceAmount());
+                        resourceText = "Science resources: ";
                         break;
                     default:
-                        resourceText = String.format("Resources: %s", ((ResourceCard) card).getResourceAmount());
+                        resourceText = "Resources: ";
                         break;
                 }
+
+                resourceAmount = ((ResourceCard) card).getResourceAmount();
+
+                TextView token_text = cardview.findViewById(R.id.token_text);
+
+                if(token_text != null)
+                    token_text.setText(resourceText + resourceAmount);
+                else
+                    System.out.println("position: " + i + "card: " + card.getName());
             }
-            //((TextView) cardview.findViewById(R.id.token_text)).setText(resourceText);
         }
     }
 }
