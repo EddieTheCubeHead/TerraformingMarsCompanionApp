@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,8 @@ public class TilePlacementActivity extends AppCompatActivity {
     Placeable tile = null;
     TileHandler handler;
 
+    ImageView tileicon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +41,61 @@ public class TilePlacementActivity extends AppCompatActivity {
         mImageMap = findViewById(R.id.map);
         mImageMap.setImageResource(R.drawable.hexamap);
 
+        tileicon = findViewById(R.id.imageView_tiletype);
+
         tile = Placeable.valueOf(getIntent().getStringExtra("tile"));
         handler = GameController.getInstance().getGame().tile_handler;
+
+        switch (tile) {
+
+            case CITY:
+
+            case OCEAN:
+
+            case MOHOLE:
+
+            case NOCTIS:
+
+            case CAPITAL:
+
+            case GREENERY:
+
+            case LAVA_FLOW:
+
+            case LAND_OCEAN:
+
+            case FLOOD_OCEAN:
+
+            case MINING_AREA:
+
+            case NUCLEAR_ZONE:
+
+            case MINING_RIGHTS:
+
+            case RESERVED_AREA:
+
+            case VOLCANIC_CITY:
+
+            case OCEAN_GREENERY:
+
+            case URBANIZED_AREA:
+
+            case ECOLOGICAL_ZONE:
+
+            case NATURAL_RESERVE:
+
+            case RESTRICTED_AREA:
+
+            case RESEARCH_OUTPOST:
+
+            case COMMERCIAL_DISTRICT:
+
+                tileicon.setImageResource(R.drawable.ic_ph);
+                break;
+
+
+        }
+
 
         // add a click handler to react when areas are tapped
         mImageMap.addOnImageMapClickedHandler(new ImageMap.OnImageMapClickedHandler()
@@ -49,11 +105,19 @@ public class TilePlacementActivity extends AppCompatActivity {
             {
                 // when the area is tapped, show the name in a
                 // text bubble
-                mImageMap.showBubble(id);
+                String text;
                 x = Integer.valueOf(mImageMap.getAreaAttribute(id, "coordinates").split(Pattern.quote(";"))[0]);
                 y = Integer.valueOf(mImageMap.getAreaAttribute(id, "coordinates").split(Pattern.quote(";"))[1]);
                 is_valid = handler.checkPlacementValidity(tile, x, y);
-                System.out.println("Coords recieved: " + x + ":" + y + ", placement validity: " + is_valid);
+                if (!is_valid) {
+                    text = "Position is not valid";
+                    mImageMap.showBubble(text, id);
+                }
+                else {
+                    text = "Position is valid";
+
+                }
+                mImageMap.showBubble(text, id);
 
             }
 
@@ -77,8 +141,10 @@ public class TilePlacementActivity extends AppCompatActivity {
         if (!is_valid) {
             Toast.makeText(getApplicationContext(), "Current placement is not valid!", Toast.LENGTH_SHORT).show();
         }
-        handler.placeTile(GameController.getInstance().getCurrentPlayer(), handler.getTile(x, y), tile);
-        exit(view);
+        else {
+            handler.placeTile(GameController.getInstance().getCurrentPlayer(), handler.getTile(x, y), tile);
+            exit(view);
+        }
     }
 
     public void exit(View view) {

@@ -98,7 +98,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private TextView textview_plants_production;
     private TextView textview_energy_production;
     private TextView textview_heat_production;
-    
+
 
     @Override public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState

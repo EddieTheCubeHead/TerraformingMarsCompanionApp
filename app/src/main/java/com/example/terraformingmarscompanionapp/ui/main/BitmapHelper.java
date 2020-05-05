@@ -12,8 +12,6 @@ import android.util.LruCache;
  * The implementation is taken from the official manual:
  * @link http://developer.android.com/training/displaying-bitmaps/cache-bitmap.html
  *
- * TODO: implement asynchronous image loading.
- * TODO: configurable cache size.
  *
  */
 public class BitmapHelper

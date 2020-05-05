@@ -398,6 +398,7 @@ public class TileHandler {
         Intent intent = new Intent(context, TilePlacementActivity.class);
         intent.putExtra("tile", tile_type.toString());
         context.startActivity(intent);
+
     }
 
     public Boolean checkPlacementValidity(Placeable tile_type, Integer x, Integer y) {
