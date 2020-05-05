@@ -20,7 +20,6 @@ public class GameActions {
     private static Gson gson = builder.create();
     private static String game_code;
     private static Integer action_number = 0;
-    private static Integer generation = 0;
 
     private static Context setup_screen;
     public static void setSetupScreen(Context screen) {setup_screen = screen;}
@@ -49,7 +48,6 @@ public class GameActions {
                 GameController.getInstance().endTurn();
                 break;
             case "end_generation":
-                generation++;
                 GameController.getInstance().endGeneration();
                 break;
             default:
@@ -121,7 +119,7 @@ public class GameActions {
     public static void sendCardEvent(CardEventPacket event) {
         String message = String.format("game_action;%s;%s;%s;card_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);
-        message += String.format(";%d;%d", action_number, generation);
+        message += String.format(";%d;%d", action_number, GameController.getInstance().getGeneration());
         action_number++;
         WebSocketHandler.sendMessage(message);
     }
@@ -129,27 +127,27 @@ public class GameActions {
     public static void sendCardCost(CardCostPacket cost_packet) {
         String message = String.format("game_action;%s;%s;%s;card_cost;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(cost_packet);
-        message += String.format(";%d;%d", action_number, generation);
+        message += String.format(";%d;%d", action_number, GameController.getInstance().getGeneration());
         WebSocketHandler.sendMessage(message);
     }
 
     public static void sendResourceEvent(ResourceEventPacket event) {
         String message = String.format("game_action;%s;%s;%s;resource_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);
-        message += String.format(";%d;%d", action_number, generation);
+        message += String.format(";%d;%d", action_number, GameController.getInstance().getGeneration());
         WebSocketHandler.sendMessage(message);
     }
 
     public static void sendTileEvent(TileEventPacket event) {
         String message = String.format("game_action;%s;%s;%s;tile_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);
-        message += String.format(";%d;%d", action_number, generation);
+        message += String.format(";%d;%d", action_number, GameController.getInstance().getGeneration());
         WebSocketHandler.sendMessage(message);
     }
 
     //Foldaamisen lähettäminen
     public static void sendFold() {
-        WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;fold;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, generation));
+        WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;fold;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
     }
 
     //Pelin luonut pelaaja määrittää pelin alussa vuorojärjestyksen ja se lähetetään tällä

@@ -180,7 +180,7 @@ public class InGameUI extends AppCompatActivity {
                         preludeRound();
                     }
                     GameController.getInstance().gameUpdate();
-                    //GameController.getInstance().onGenerationStart();
+                    GameController.getInstance().atGenerationStart();
                     return;
                 }
 
@@ -312,9 +312,23 @@ public class InGameUI extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), String.format("%s's turn", player_name), Toast.LENGTH_SHORT).show();
     }
 
-    public void cardPrompt(Integer amount) {
+    //https://stackoverflow.com/questions/5810084/android-alertdialog-single-button
+    public void cardDrawPrompt(Integer amount) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(String.format("Please draw %d card(s)", amount))
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //do things
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void cardSwapPrompt(Integer amount) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(String.format("Please swap up to %d card(s)", amount))
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

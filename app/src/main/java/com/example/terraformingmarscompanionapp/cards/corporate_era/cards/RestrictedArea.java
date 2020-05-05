@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -33,7 +34,7 @@ public final class RestrictedArea extends Card implements ActionCard {
         if (action_used | owner_player.getMoney() < 2) {
             return -1;
         } else {
-            //Todo UI-prompt ota kortti
+            ((InGameUI)GameController.getInstance().getContext()).cardDrawPrompt(1);
             owner_player.changeMoney(-2);
             owner_player.changeHandSize(1);
             action_used = true;

@@ -142,8 +142,6 @@ public class GameController
 
     public void endTurn()
     {
-        beforeTurnEnd();
-
         if(actions_used == 0)
             folding = true;
 
@@ -164,11 +162,6 @@ public class GameController
 
         ((InGameUI)context).onTurnChange(current_player.getName());
         atTurnStart();
-    }
-
-    private void beforeTurnEnd()
-    {
-        //TODO kaikki vuoron lopussa vuoron lopettavalle current_playerille tapahtuva
     }
 
     private void atTurnStart()
@@ -202,6 +195,12 @@ public class GameController
         ((InGameUI)context).onGenerationEnd();
 
         gameUpdate();
+    }
+
+    public void atGenerationStart() {
+        //TODO korttien kysyntä
+
+        atTurnStart();
     }
 
     public Player getDisplayPlayer()

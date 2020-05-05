@@ -15,7 +15,7 @@ public final class ArtificialPhotosynthesis extends Card {
 
     @Override
     public void onPlay(Player player) {
-        //TODO linkki päätös-UI
+        //TODO boolean valinta UI
     }
 
     @Override

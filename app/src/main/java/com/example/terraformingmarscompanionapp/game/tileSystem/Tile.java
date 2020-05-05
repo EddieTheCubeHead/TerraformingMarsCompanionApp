@@ -1,6 +1,8 @@
 package com.example.terraformingmarscompanionapp.game.tileSystem;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
@@ -71,7 +73,7 @@ public class Tile {
                             game.tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN);
                         }
                     case CARD:
-                        //TODO UI prompt -ota kortti
+                        ((InGameUI) GameController.getInstance().getContext()).cardDrawPrompt(1);
                         player.changeHandSize(1);
                 }
             }

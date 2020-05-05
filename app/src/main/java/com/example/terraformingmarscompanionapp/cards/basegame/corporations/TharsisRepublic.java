@@ -36,7 +36,7 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
 
     @Override
     public void firstAction() {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
         GameController.getInstance().executeNextEvent();
         first_action_used = true;
     }

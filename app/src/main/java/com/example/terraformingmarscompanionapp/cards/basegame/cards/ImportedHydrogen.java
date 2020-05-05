@@ -21,7 +21,7 @@ public final class ImportedHydrogen extends Card {
     @Override
     public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        //TODO valinta-UI
+        //TODO boolean valinta-UI
     }
 
     //TODO selvitä missä välissä mikrobit määritetään

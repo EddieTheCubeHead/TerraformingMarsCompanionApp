@@ -20,7 +20,7 @@ public final class Comet extends Card {
     @Override
     public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        //TODO kutsi pelaajan valinta -UI
+        //TODO pelaajan valinta -UI
     }
 
     @Override

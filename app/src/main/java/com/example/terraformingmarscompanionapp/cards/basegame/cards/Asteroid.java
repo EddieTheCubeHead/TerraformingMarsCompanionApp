@@ -17,7 +17,7 @@ public final class Asteroid extends Card {
 
     @Override
     public void onPlay(Player player) {
-        //TODO poista toiselta 3 kasvia
+        //TODO pelaajan valinta UI
     }
 
     @Override

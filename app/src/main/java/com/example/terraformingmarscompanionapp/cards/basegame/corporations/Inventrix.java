@@ -33,7 +33,7 @@ public final class Inventrix extends Card implements FirstAction {
 
     @Override
     public void firstAction() {
-        ((InGameUI)GameController.getInstance().getContext()).cardPrompt(3);
+        ((InGameUI)GameController.getInstance().getContext()).cardDrawPrompt(3);
         owner_player.changeHandSize(3);
         first_action_used = true;
     }

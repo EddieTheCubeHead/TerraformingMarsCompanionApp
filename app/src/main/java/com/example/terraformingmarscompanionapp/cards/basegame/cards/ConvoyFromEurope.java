@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -20,7 +21,8 @@ public final class ConvoyFromEurope extends Card {
     @Override
     public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        //TODO prompti yhden kortin nostoon
+        ((InGameUI)GameController.getInstance().getContext()).cardDrawPrompt(1);
+        super.onPlay(player);
     }
 
     @Override
