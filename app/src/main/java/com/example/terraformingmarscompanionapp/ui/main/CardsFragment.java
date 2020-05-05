@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -140,14 +141,32 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             Card card = adapter.getItemAtPosition(i);
             View cardview = layout_manager.findViewByPosition(i);
 
-            String resourceText;
+            String resourceText = "";
 
-            //resourcetextin muokkaus
+            if (card instanceof ResourceCard)
+            {
+                switch (((ResourceCard) card).getResourceType())
+                {
+                    case PET:
+                    case ANIMAL:
+                        resourceText = String.format("Animals: %s", ((ResourceCard) card).getResourceAmount());
+                        break;
+                    case FLOATER:
+                        resourceText = String.format("Floaters: %s", ((ResourceCard) card).getResourceAmount());
+                        break;
+                    case MICROBE:
+                        resourceText = String.format("Microbes: %s", ((ResourceCard) card).getResourceAmount());
+                        break;
+                    case SCIENCE:
+                        resourceText = String.format("Science resources: %s", ((ResourceCard) card).getResourceAmount());
+                        break;
+                    default:
+                        resourceText = String.format("Resources: %s", ((ResourceCard) card).getResourceAmount());
+                        break;
+                }
+            }
 
             ((TextView) cardview.findViewById(R.id.token_text)).setText(resourceText);
         }
-
-        /*käyttämättömät vihreiksi*/
-
     }
 }
