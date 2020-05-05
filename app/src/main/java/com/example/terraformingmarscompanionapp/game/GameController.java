@@ -147,6 +147,7 @@ public class GameController
 
     //Toiminnon käyttäminen
     public void useAction() {
+        gameUpdate();
         actions_used++;
         if (actions_used >= 2) {
             endTurn();
