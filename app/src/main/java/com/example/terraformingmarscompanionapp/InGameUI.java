@@ -23,6 +23,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.ui.main.CardsBoughtActivity;
 import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -291,9 +292,9 @@ public class InGameUI extends AppCompatActivity {
     }
 
     private void startTestingActivity() {
-        System.out.println("testing activity starting lmao");
-        Intent intent = new Intent(this, PlayerChoiceActivity.class);
+        Intent intent = new Intent(this, CardsBoughtActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra("player", controller.getCurrentPlayer().getName());
         startActivity(intent);
     }
 
