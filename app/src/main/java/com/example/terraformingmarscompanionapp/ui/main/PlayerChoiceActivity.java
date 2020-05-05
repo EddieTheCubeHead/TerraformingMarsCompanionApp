@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -27,6 +29,9 @@ public class PlayerChoiceActivity extends AppCompatActivity {
     GameController controller;
     Game game;
     Player player;
+
+    public static final String CARD_INTENT = "card";
+    public static final String TARGETS = "targets";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -44,9 +49,18 @@ public class PlayerChoiceActivity extends AppCompatActivity {
     private void displayDialog()
     {
         ArrayList<Player> targets = new ArrayList<>();
-        targets.addAll(controller.getPlayers());
 
-        targets.remove(player);
+        Intent intent = getIntent();
+
+        if (!(intent.getStringArrayExtra(TARGETS) == null)) {
+            for (String target : intent.getStringArrayExtra(TARGETS)) {
+                targets.add(game.getPlayer(target));
+            }
+        } else {
+            targets.addAll(controller.getPlayers());
+        }
+
+        Card card = game.getDeck().get(intent.getStringExtra(CARD_INTENT));
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -91,7 +105,8 @@ public class PlayerChoiceActivity extends AppCompatActivity {
         title.setText("Choose your target");
 
         view.findViewById(R.id.button_confirm).setOnClickListener(v -> {
-
+            Integer target_index = GameController.getInstance().getPlayerIndex((Player)spinner.getSelectedItem());
+            card.playWithMetadata(player, target_index);
             dialog.dismiss();
             PlayerChoiceActivity.super.onBackPressed();
         });
