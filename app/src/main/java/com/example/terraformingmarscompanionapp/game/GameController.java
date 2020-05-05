@@ -1,13 +1,16 @@
 package com.example.terraformingmarscompanionapp.game;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
+import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -142,6 +145,8 @@ public class GameController
 
     public void endTurn()
     {
+        beforeTurnEnd();
+
         if(actions_used == 0)
             folding = true;
 
@@ -162,6 +167,11 @@ public class GameController
 
         ((InGameUI)context).onTurnChange(current_player.getName());
         atTurnStart();
+    }
+
+    private void beforeTurnEnd()
+    {
+        //TODO kaikki vuoron lopussa vuoron lopettavalle current_playerille tapahtuva
     }
 
     private void atTurnStart()
@@ -194,17 +204,16 @@ public class GameController
         current_player = current_starter;
         ((InGameUI)context).onGenerationEnd();
 
+        atGenerationStart();
+
         gameUpdate();
     }
 
-    void endGame() {
-        
-    }
-
-    public void atGenerationStart() {
-        //TODO korttien kysyntä
-
-        atTurnStart();
+    private void atGenerationStart()
+    {
+        Intent intent = new Intent(context, PlayerChoiceActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        context.startActivity(intent);
     }
 
     public Player getDisplayPlayer()
