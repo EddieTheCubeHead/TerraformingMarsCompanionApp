@@ -2,12 +2,14 @@ package com.example.terraformingmarscompanionapp.game;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
+import com.example.terraformingmarscompanionapp.ui.main.CardsBoughtActivity;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -224,8 +226,7 @@ public class GameController
         generation++;
 
         //cardboughtactivityt activity stackkiin
-        /*
-        if (!server_multiplayer)
+        if (!server_multiplayer & generation > 0 & false)
         {
             do {
                 Intent intent = new Intent(context, CardsBoughtActivity.class);
@@ -235,8 +236,6 @@ public class GameController
                 queue.addFirst(queue.removeLast());
             } while (queue.getLast() != current_starter);
         }
-
-         */
 
         atTurnStart();
     }
