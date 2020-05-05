@@ -189,6 +189,8 @@ public class GameController
         current_starter = queue.getFirst();
         current_player = current_starter;
         ((InGameUI)context).onGenerationEnd();
+
+        gameUpdate();
     }
 
     public Player getDisplayPlayer()
