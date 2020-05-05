@@ -63,6 +63,10 @@ public final class WebSocketHandler {
                             GameActions.handleGameCreated(s);
                             break;
 
+                        case "check_code":
+                            UserActions.handleCodeCheck(s);
+                            break;
+
                         case "game_joined":
                             GameActions.handleGameJoined(s);
                             break;
