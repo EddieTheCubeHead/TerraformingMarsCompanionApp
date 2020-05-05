@@ -41,7 +41,10 @@ public class CardsBoughtActivity extends AppCompatActivity {
 
         controller = GameController.getInstance();
         game = controller.getGame();
-        player = controller.getCurrentPlayer();
+        player = controller.getPlayer((String) getIntent().getExtras().get("player"));
+
+        if (player == null)
+            super.onBackPressed();
 
         displayDialog();
     }
