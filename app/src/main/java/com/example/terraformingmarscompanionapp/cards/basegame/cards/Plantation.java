@@ -3,7 +3,10 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class Plantation extends Card {
     public Plantation(Game game) {
@@ -17,13 +20,7 @@ public final class Plantation extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        while (true) {
-            if (owner_game.tile_handler.placeGreenery(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua
-            }
-        }
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.GREENERY, owner_game));
         player.addGreenery();
         return super.onPlay(player);
     }

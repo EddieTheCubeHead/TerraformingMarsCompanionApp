@@ -2,13 +2,12 @@ package com.example.terraformingmarscompanionapp.game.tileSystem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.TilePlacementActivity;
-import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +38,7 @@ public class TileHandler {
         //Suosittelen minimoimaan
         switch (map) {
             case 0:
-                //Peruspelin kartta
+                //Tharsis/peruspeli
                 mars_tiles[4][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{4, 8});
                 mars_tiles[6][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), true, new Integer[]{6, 8});
                 mars_tiles[8][8] = new Tile(game, null, false, new Integer[]{8, 8});
@@ -109,6 +108,7 @@ public class TileHandler {
                 mars_tiles[8][0] = new Tile(game, null, false, new Integer[]{8, 0});
                 mars_tiles[10][0] = new Tile(game, null, false, new Integer[]{10, 0});
                 mars_tiles[12][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), true, new Integer[]{12, 0});
+                break;
 
 
             case 1:
@@ -182,6 +182,7 @@ public class TileHandler {
                 mars_tiles[8][0] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.OCEAN)), false, new Integer[]{8, 0});
                 mars_tiles[10][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{10, 0});
                 mars_tiles[12][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), false, new Integer[]{12, 0});
+                break;
 
 
             case 2:
@@ -255,6 +256,9 @@ public class TileHandler {
                 mars_tiles[8][0] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{8, 0});
                 mars_tiles[10][0] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{10, 0});
                 mars_tiles[12][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{12, 0});
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + map);
         }
 
         //Avaruustiilillä ei ole asettamisbonusta tai viereisyysbonuksia. Venus-lisäri lisää 4 avaruustiiltä
@@ -270,135 +274,6 @@ public class TileHandler {
         }
     }
 
-
-    /**************************************************************************
-     * Monta tiilen asettamisfunktiota. Jokaiselle tiilityypille omansa.
-     * Funktiot ottavat Player-luokan olion ja palauttavat totuusarvon asettamisen
-     * onnistumisesta
-     **************************************************************************/
-
-    public Boolean placeGreenery(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.GREENERY);
-
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-        if (placeTile(player, placing_tile, Placeable.GREENERY)) {
-            game.raiseOxygen(player);
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean placeCity(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.CITY);
-
-        for (Tile neighbour : getNeighbours(placing_tile)) {
-            if (neighbour.getPlacedHex() == Placeable.CITY | neighbour.getPlacedHex() == Placeable.CAPITAL) {
-                return false;
-            }
-        }
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-        if (placeTile(player, placing_tile, Placeable.CITY)) {
-            game.update_manager.onCityPlaced(player, true);
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean placeOcean(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.OCEAN);
-
-        if (!placing_tile.getIsOcean() | game.getOceansPlaced() >= 9) {
-            return false;
-        }
-        if (placeTile(player, placing_tile, Placeable.OCEAN)) {
-            player.changeTerraformingRating(1);
-            game.update_manager.onOceanPlaced(player);
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean placeLandOcean(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.OCEAN);
-
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-        if (placeTile(player, placing_tile, Placeable.OCEAN)) {
-            player.changeTerraformingRating(1);
-            game.update_manager.onOceanPlaced(player);
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean placeOceanGreenery(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.GREENERY);
-
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-        if (placeTile(player, placing_tile, Placeable.GREENERY)) {
-            game.raiseOxygen(player);
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean placeNoctis(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.NOCTIS);
-
-        if (map == 0 && (placing_tile.getX() != 4 | placing_tile.getY() != 4)) {
-            return false;
-        } else {
-            for (Tile neighbour : getNeighbours(placing_tile)) {
-                if (neighbour.getPlacedHex() == Placeable.CITY | neighbour.getPlacedHex() == Placeable.CAPITAL) {
-                    return false;
-                }
-            }
-            if (placing_tile.getIsOcean()) {
-                return false;
-            }
-        }
-        if (placeTile(player, placing_tile, Placeable.CITY)) {
-            game.update_manager.onCityPlaced(player, true);
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean placeLavaFlow(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.LAVA_FLOW);
-
-        if (map != 1 && !placing_tile.getIsVolcanic()) {
-            return false;
-        }
-        return placeTile(player, placing_tile, Placeable.LAVA_FLOW);
-    }
-
-    public Boolean placeCapital(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.CAPITAL);
-
-        for (Tile neighbour : getNeighbours(placing_tile)) {
-            if (neighbour.getPlacedHex() == Placeable.CITY | neighbour.getPlacedHex() == Placeable.CAPITAL) {
-                return false;
-            }
-        }
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-
-        if (placeTile(player, placing_tile, Placeable.CAPITAL)) {
-            game.update_manager.onCityPlaced(player, true);
-            return true;
-        }
-        return false;
-    }
-
     public void placeGanymede(Player player) {
         if (space_tiles[0] != null) {
             //TODO error handling
@@ -406,63 +281,6 @@ public class TileHandler {
         }
         game.update_manager.onCityPlaced(player, false);
         space_tiles[0].placeHex(player, Placeable.CITY);
-    }
-
-    public Boolean placeEcologicalZone(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.ECOLOGICAL_ZONE);
-        boolean has_greenery_neighbour = false;
-
-        for (Tile neighbour : getNeighbours(placing_tile)) {
-            if (neighbour.getPlacedHex() == Placeable.GREENERY) {
-                has_greenery_neighbour = true;
-                break;
-            }
-        }
-        if (placing_tile.getIsOcean() | !has_greenery_neighbour) {
-            return false;
-        }
-        return placeTile(player, placing_tile, Placeable.ECOLOGICAL_ZONE);
-    }
-
-    public Boolean placeMiningRights(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.MINING_AREA);
-
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-        if (placing_tile.getPlacementBonuses().contains(PlacementBonus.STEEL)) {
-            player.changeSteelProduction(1);
-        } else if (placing_tile.getPlacementBonuses().contains(PlacementBonus.TITANIUM)) {
-            player.changeTitaniumProduction(1);
-        } else {
-            return false;
-        }
-        return placeTile(player, placing_tile, Placeable.MINING_AREA);
-    }
-
-    public Boolean placeMohole(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.MOHOLE);
-
-        if (!placing_tile.getIsOcean()) {
-            return false;
-        }
-        return placeTile(player, placing_tile, Placeable.MOHOLE);
-    }
-
-    public Boolean placeNaturalReserve(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.NATURAL_RESERVE);
-
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-
-        for (Tile neighbour : getNeighbours(placing_tile)) {
-            if (neighbour.getPlacedHex() != null) {
-                return false;
-            }
-        }
-
-        return placeTile(player, placing_tile, Placeable.NATURAL_RESERVE);
     }
 
     public void placePhobos(Player player) {
@@ -474,101 +292,31 @@ public class TileHandler {
         space_tiles[1].placeHex(player, Placeable.CITY);
     }
 
-    public Boolean placeResearchOutpost(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.CITY);
+    public void placeTile(Player player, Tile to_place, Placeable tile_type) {
+        ArrayList<Placeable> to_city = new ArrayList<>(Arrays.asList(Placeable.CITY, Placeable.RESEARCH_OUTPOST, Placeable.NOCTIS, Placeable.VOLCANIC_CITY, Placeable.URBANIZED_AREA));
+        ArrayList<Placeable> to_ocean = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.LAND_OCEAN, Placeable.FLOOD_OCEAN));
+        ArrayList<Placeable> to_greenery = new ArrayList<>(Arrays.asList(Placeable.GREENERY, Placeable.OCEAN_GREENERY));
 
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
+        ArrayList<Player> flood_neighbours = new ArrayList<>();
+        Boolean flood = false;
 
-        for (Tile neighbour : getNeighbours(placing_tile)) {
-            if (neighbour.getPlacedHex() != null) {
-                return false;
-            }
-        }
-
-        game.update_manager.onCityPlaced(player, true);
-        return placeTile(player, placing_tile, Placeable.CITY);
-    }
-
-    public Boolean placeUrbanizedArea(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.CITY);
-
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-
-        int neighbour_cities = 0;
-        for (Tile neighbour : getNeighbours(placing_tile)) {
-            if (neighbour.getPlacedHex() == Placeable.CITY) {
-                neighbour_cities++;
-            }
-        }
-        if (neighbour_cities < 2) {
-            return false;
-        }
-
-        game.update_manager.onCityPlaced(player, true);
-        return placeTile(player, placing_tile, Placeable.CITY);
-    }
-
-    public Boolean placeNuclearZone(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.NUCLEAR_ZONE);
-
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-
-        return placeTile(player, placing_tile, Placeable.NUCLEAR_ZONE);
-    }
-
-    public Boolean placeRestrictedArea(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.RESTRICTED_AREA);
-
-        if (placing_tile.getIsOcean()) {
-            return false;
-        }
-
-        return placeTile(player, placing_tile, Placeable.RESTRICTED_AREA);
-    }
-
-    public ArrayList<String> placeFloodOcean(Player player) {
-        Tile placing_tile = getCoordinatesFromPlayer(Placeable.OCEAN);
-        ArrayList<String> neighbour_players = new ArrayList<>();
-
-        if (!placing_tile.getIsOcean() | game.getOceansPlaced() >= 9) {
-            //Pieni häkki, tätä voi käyttää falsen palauttamisen sijaan, koska pelaajanimet ovat vähintään 3 merkkiä pitkiä.
-            return new ArrayList<String>(Collections.singletonList("E"));
-        }
-        if (placeTile(player, placing_tile, Placeable.OCEAN)) {
-            player.changeTerraformingRating(1);
-            game.update_manager.onOceanPlaced(player);
-            for (Tile tile : getNeighbours(placing_tile)) {
+        if (tile_type.equals(Placeable.FLOOD_OCEAN)) {
+            flood = true;
+            for (Tile tile : getNeighbours(to_place)) {
                 if (tile.getOwner() != null) {
-                    neighbour_players.add(tile.getOwner().getName());
+                    flood_neighbours.add(tile.getOwner());
                 }
             }
-            return neighbour_players;
         }
-        return new ArrayList<String>(Collections.singletonList("E"));
-    }
 
-    public Boolean placeTile(Player player, Tile to_place, Placeable tile_type) {
+        if (to_city.contains(tile_type)) {
+            tile_type = Placeable.CITY;
+        } else if (to_ocean.contains(tile_type)) {
+            tile_type = Placeable.OCEAN;
+        } else if (to_greenery.contains(tile_type)) {
+            tile_type = Placeable.GREENERY;
+        }
 
-        //Erikoiskäsittely peruskartan noctis-city -tiilelle
-        if (map == 0 && to_place.getX() == 4 && to_place.getY() == 4) {
-            if (tile_type == Placeable.NOCTIS) {
-                tile_type = Placeable.CITY;
-            } else {
-                return false;
-            }
-        }
-        if (to_place == null) {
-            return false;
-        }
-        if (to_place.getPlacedHex() != null) {
-            return false;
-        }
         for (Tile neighbour : getNeighbours(to_place)) {
             if (neighbour != null) {
                 if (neighbour.getPlacedHex() != null && neighbour.getPlacedHex() == Placeable.OCEAN) {
@@ -578,10 +326,6 @@ public class TileHandler {
         }
         to_place.placeHex(player, tile_type);
         player.addTile(to_place);
-        if (game.getServerMultiplayer()) {
-            GameActions.sendTileEvent(new TileEventPacket(tile_type, player.getName(), to_place.getX(), to_place.getY()));
-        }
-        return true;
     }
 
 
@@ -591,35 +335,175 @@ public class TileHandler {
         Integer y = tile.getY();
 
         ArrayList<Tile> neighbours = new ArrayList<>();
-        if (mars_tiles[x+2][y] != null) {
-            neighbours.add(mars_tiles[x+2][y]);
+        try {
+            if (mars_tiles[x+2][y] != null) {
+                neighbours.add(mars_tiles[x+2][y]);
+            }
+        } catch (Exception ignored) {
         }
-        if (mars_tiles[x-2][y] != null) {
-            neighbours.add(mars_tiles[x-2][y]);
+
+        try {
+            if (mars_tiles[x - 2][y] != null) {
+                neighbours.add(mars_tiles[x - 2][y]);
+            }
+        } catch (Exception ignored) {
         }
-        if (mars_tiles[x+1][y+1] != null) {
-            neighbours.add(mars_tiles[x+1][y+1]);
+
+        try {
+            if (mars_tiles[x + 1][y + 1] != null) {
+                neighbours.add(mars_tiles[x + 1][y + 1]);
+            }
+        } catch (Exception ignored) {
         }
-        if (mars_tiles[x-1][y+1] != null) {
-            neighbours.add(mars_tiles[x-1][y+1]);
+
+        try {
+            if (mars_tiles[x - 1][y + 1] != null) {
+                neighbours.add(mars_tiles[x - 1][y + 1]);
+            }
+        } catch (Exception ignored) {
         }
-        if (mars_tiles[x+1][y-1] != null) {
-            neighbours.add(mars_tiles[x+1][y-1]);
+
+        try {
+            if (mars_tiles[x + 1][y - 1] != null) {
+                neighbours.add(mars_tiles[x + 1][y - 1]);
+            }
+        } catch (Exception ignored) {
         }
-        if (mars_tiles[x-1][y-1] != null) {
-            neighbours.add(mars_tiles[x-1][y-1]);
+
+        try {
+            if (mars_tiles[x - 1][y - 1] != null) {
+                neighbours.add(mars_tiles[x - 1][y - 1]);
+            }
+        } catch (Exception ignored) {
         }
+
         return neighbours;
     }
 
     //UI-hook funktio. Tulee kysymään GUI:n avulla mihin koordinaatteihin tiili asetetaan
-    private Tile getCoordinatesFromPlayer(Placeable tile_type) {
-        Tile tile = mars_tiles[8][4];
-        //TODO tänne UI tiilen asettamispaikan saamiseksi
+    public void getCoordinatesFromPlayer(Placeable tile_type) {
         Context context = GameController.getInstance().getContext();
         Intent intent = new Intent(context, TilePlacementActivity.class);
+        intent.putExtra("tile", tile_type.toString());
         context.startActivity(intent);
-        return tile;
+    }
+
+    public Boolean checkPlacementValidity(Placeable tile_type, Integer x, Integer y) {
+        ArrayList<Placeable> ocean_placement = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.OCEAN_GREENERY, Placeable.MOHOLE));
+
+        ArrayList<Placeable> volcanic_placement = new ArrayList<>(Arrays.asList(Placeable.LAVA_FLOW, Placeable.VOLCANIC_CITY));
+
+        Tile to_place = getTile(x, y);
+
+        if (map == 0 && x == 4 && y == 4) {
+            Log.i("Tile placement", "Noctis tile");
+            return tile_type.equals(Placeable.NOCTIS);
+        }
+
+        //Hellas ei sisällä tuliperäisiä tiiliä
+        if ((volcanic_placement.contains(tile_type) && (map != 1)) && !to_place.getIsVolcanic()) {
+            Log.i("Invalid tile placement", "Requires volcanic");
+            return false;
+        }
+
+        //Onko mereen vai maalle asetettava tiili
+        if (ocean_placement.contains(tile_type) && !to_place.getIsOcean()) {
+            Log.i("Invalid tile placement", "Requires ocean");
+            return false;
+        } else if (!ocean_placement.contains(tile_type) && to_place.getIsOcean()) {
+            Log.i("Invalid tile placement", "Requires land");
+            return false;
+        }
+
+        //Onko asetuspaikassa jo tiiltä
+        if (to_place.getPlacedHex() != null) {
+            Log.i("Invalid tile placement", "Hex reserved");
+            return false;
+        }
+
+        //Erikoistapaukset:
+        //Huomioitavaa, että viheriöt vaativat naapuriksi kyseisen pelaajan omistaman heksan JOS MAHDOLLISTA.
+        //Tämän implementointi olisi sellainen algoritmin sekasorto että jätettäköön herrasmiessäännöksi
+        switch (tile_type) {
+            //Tiilet jotka vaativat naapuritiilten olevan tyhjiä
+            case NATURAL_RESERVE:
+            case RESEARCH_OUTPOST:
+                for (Tile neighbour : getNeighbours(to_place)) {
+                    if (neighbour.getPlacedHex() != null) {
+                        Log.i("Invalid tile placement", "Requires empty neighbours");
+                        return false;
+                    }
+                }
+                break;
+
+            //Kaupunkeja ei saa asettaa vierekkäin
+            case NOCTIS:
+                //Jos kartta ei sisällä noctikselle varattua tiiltä, tippuu läpi normi kaupunkicheckkiin.
+                if (map == 0) {
+                    break;
+                }
+            case CITY:
+            case CAPITAL:
+                for (Tile neighbour : getNeighbours(to_place)) {
+                    if (neighbour.getPlacedHex() == Placeable.CITY | neighbour.getPlacedHex() == Placeable.CAPITAL) {
+                        Log.i("Invalid tile placement", "Requires non-city neighbours");
+                        return false;
+                    }
+                }
+                break;
+
+            //Ecological zone tarvitsee viheriön viereen
+            case ECOLOGICAL_ZONE:
+                boolean has_greenery = false;
+                for (Tile neighbour : getNeighbours(to_place)) {
+                    if (neighbour.getPlacedHex() == Placeable.GREENERY | neighbour.getPlacedHex() == Placeable.OCEAN_GREENERY) {
+                        has_greenery = true;
+                        break;
+                    }
+                }
+                if (!has_greenery) {
+                    Log.i("Invalid tile placement", "Requires greenery neighbours");
+                    return false;
+                }
+                break;
+
+            //Mining area ja mining rights. Areassa lisätarkistus, tippuu rightsin tarkistukseen
+            case MINING_AREA:
+                boolean has_owner = false;
+                for (Tile neighbour : getNeighbours(to_place)) {
+                    if (neighbour.getOwner() == GameController.getInstance().getCurrentPlayer()) {
+                        has_owner = true;
+                        break;
+                    }
+                }
+                if (!has_owner) {
+                    Log.i("Invalid tile placement", "Requires owned neighbour");
+                    return false;
+                }
+            case MINING_RIGHTS:
+                if (!to_place.getPlacementBonuses().contains(PlacementBonus.STEEL) | !to_place.getPlacementBonuses().contains(PlacementBonus.TITANIUM)) {
+                    Log.i("Invalid tile placement", "Requires placement bonus");
+                    return false;
+                }
+                break;
+
+            case URBANIZED_AREA:
+                int neighbour_cities = 0;
+                for (Tile neighbour : getNeighbours(to_place)) {
+                    if (neighbour.getPlacedHex() == Placeable.CITY | neighbour.getPlacedHex() == Placeable.CAPITAL) {
+                        neighbour_cities++;
+                    }
+                }
+                if (neighbour_cities < 2) {
+                    return false;
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        return true;
     }
 
     public Tile getTile(Integer x, Integer y) {

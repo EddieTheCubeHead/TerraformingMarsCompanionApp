@@ -5,8 +5,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-
-import java.util.ArrayList;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class Flooding extends Card {
     public Flooding(Game game) {
@@ -20,21 +20,8 @@ public final class Flooding extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        ArrayList<String> eligible_to_take;
-        Integer player_to_take_from = 0;
-        while (true) {
-            eligible_to_take = owner_game.tile_handler.placeFloodOcean(player);
-            if (eligible_to_take != null && !eligible_to_take.get(1).equals("E")) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
-            }
-        }
-        //TODO poista toiselta neljä rahaa UI eligible_to_take listan pohjalta
-        //Tämän voi kutsua suoraan UI:sta
-        playWithMetadata(player, player_to_take_from);
-
-        return player_to_take_from;
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.FLOOD_OCEAN, owner_game));
+        return super.onPlay(player);
     }
 
     @Override
@@ -42,6 +29,5 @@ public final class Flooding extends Card {
         if (!(data == 0)) {
             GameController.getInstance().getPlayer(data).takeMoney(4);
         }
-        super.onPlay(player);
     }
 }

@@ -3,7 +3,10 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class NuclearZone extends Card {
     public NuclearZone(Game game) {
@@ -17,13 +20,7 @@ public final class NuclearZone extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        while (true) {
-            if (owner_game.tile_handler.placeNuclearZone(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollinen peruminen
-            }
-        }
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.NUCLEAR_ZONE, owner_game));
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
         return super.onPlay(player);

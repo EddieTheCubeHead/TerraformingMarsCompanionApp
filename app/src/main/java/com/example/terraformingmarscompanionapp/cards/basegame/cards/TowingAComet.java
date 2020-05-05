@@ -3,7 +3,10 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class TowingAComet extends Card {
     public TowingAComet(Game game) {
@@ -17,13 +20,7 @@ public final class TowingAComet extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        while (true) {
-            if (owner_game.tile_handler.placeOcean(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
-            }
-        }
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
         player.changePlants(2);
         owner_game.raiseOxygen(player);
         return super.onPlay(player);

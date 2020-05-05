@@ -11,7 +11,7 @@
 		<area  coordinates="5;7" id="@+id/hex07" coords="461,327,55" shape="circle"/>
 		<area  coordinates="7;7" id="@+id/hex08" coords="584,325,56" shape="circle"/>
 		<area  coordinates="9;7" id="@+id/hex09" coords="702,325,57" shape="circle"/>
-		<area  coordinates="11:7" id="@+id/hex10" coords="826,324,58" shape="circle"/>
+		<area  coordinates="11;7" id="@+id/hex10" coords="826,324,58" shape="circle"/>
 		<area  coordinates="13;7" id="@+id/hex11" coords="946,325,55" shape="circle"/>
 
 		<area  coordinates="2;6" id="@+id/hex12" coords="279,430,57" shape="circle"/>

@@ -6,6 +6,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -170,7 +171,7 @@ public class Game implements Serializable {
         raising_player.changeTerraformingRating(1);
         global_temperature += 2;
         if (global_temperature == 0) {
-            tile_handler.placeOcean(raising_player);
+            tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN);
         }
         return true;
     }

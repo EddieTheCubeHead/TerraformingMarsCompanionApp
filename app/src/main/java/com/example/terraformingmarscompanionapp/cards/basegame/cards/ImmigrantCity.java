@@ -4,7 +4,10 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ImmigrantCity extends Card implements EffectCard {
     public ImmigrantCity(Game game) {
@@ -19,13 +22,7 @@ public final class ImmigrantCity extends Card implements EffectCard {
 
     @Override
     public Integer onPlay(Player player) {
-        while (true) {
-            if (owner_game.tile_handler.placeCity(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
-            }
-        }
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
         player.addCity();
         player.changeMoneyProduction(-2);
         player.changeEnergyProduction(-1);

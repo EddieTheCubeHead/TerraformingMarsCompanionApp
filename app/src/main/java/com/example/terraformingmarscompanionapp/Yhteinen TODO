@@ -36,7 +36,6 @@ TODO: Hotseat-peli kuntoon
 
 TODO: WebSocket serveripeli -Eetu
     Hotseat-peli toimii pohjana: pitää olla kunnossa
-    Pelin rakentaminen (Eli moninpelin pelinrakennusnäyttö -ks. UI-tehtävät)
     Hotseatista eroavat UI-toiminnot
         Serveripeli on tällä hetkellä optimoitu niin, että teoriassa eroavaisuudet hotseat-peliin ovat minimaaliset pelin rakentamisen jälkeen
         Kun ei ole oma vuoro, jonkinlainen indikaattori

@@ -3,7 +3,10 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ProtectedValley extends Card {
     public ProtectedValley(Game game) {
@@ -17,13 +20,7 @@ public final class ProtectedValley extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        while (true) {
-            if (owner_game.tile_handler.placeOceanGreenery(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalla ja mahdollisuus peruuttaa
-            }
-        }
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN_GREENERY, owner_game));
         player.addGreenery();
         player.changeMoneyProduction(2);
         return super.onPlay(player);
