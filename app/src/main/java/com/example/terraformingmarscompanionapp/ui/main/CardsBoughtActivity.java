@@ -98,8 +98,13 @@ public class CardsBoughtActivity extends AppCompatActivity {
 
         title.setText("Amount of cards bought:");
 
-        view.findViewById(R.id.button_confirm).setOnClickListener(v -> {
-            //TODO tähän
+        view.findViewById(R.id.button_confirm).setOnClickListener(v ->
+        {
+            Integer amount = (Integer) spinner.getSelectedItem();
+
+            player.changeHandSize(amount);
+            player.takeMoney(amount * 3);
+
             dialog.dismiss();
             super.onBackPressed();
         });
