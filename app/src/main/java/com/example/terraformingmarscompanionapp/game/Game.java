@@ -29,6 +29,8 @@ public class Game implements Serializable {
     private HashMap<String, Card> preludes = new HashMap<>();
     private final HashMap<String, Card> corporations;
     private final HashMap<String, Card> ghosts;
+    private final HashMap<String, Card> awards;
+    private final HashMap<String, Card> milestones;
 
     //Simppeli ArrayList pelaajia. Pelaajien tarkempi hallinta ylempänä GameController -luokassa
     private final ArrayList<Player> players = new ArrayList<>();
@@ -46,6 +48,9 @@ public class Game implements Serializable {
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return corporations;}
     public HashMap<String, Card> getGhosts() {return ghosts;}
+    public HashMap<String, Card> getAwards() {return awards;}
+    public HashMap<String, Card> getMilestones() {return milestones;}
+
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
 
     //Milestonet ja awardit
@@ -136,10 +141,12 @@ public class Game implements Serializable {
             players.add(new Player(this, player_name));
         }
 
-        GameConstructor constructor = new GameConstructor(this, corporate_era, prelude, colonies, venus, turmoil, extra_corporations);
+        GameConstructor constructor = new GameConstructor(this, corporate_era, prelude, colonies, venus, turmoil, extra_corporations, map);
         deck = constructor.createDeck();
         corporations = constructor.createCorporations();
         ghosts = constructor.createGhosts();
+        awards = constructor.createAwards();
+        milestones = constructor.createMilestones();
 
         if (prelude) {
             preludes = constructor.createPreludes();

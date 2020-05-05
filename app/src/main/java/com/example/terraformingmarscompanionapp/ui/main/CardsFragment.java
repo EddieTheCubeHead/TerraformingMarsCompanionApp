@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,6 +68,10 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
 
         game = controller.getGame();
         HashMap<String, Card>deck = game.getDeck();
+
+        for (Map.Entry entry : game.getCorporations().entrySet()) {
+            card_list.add((Card)entry.getValue());
+        }
 
         //korttien nouto
         for (Map.Entry<String, Card> entry : deck.entrySet())

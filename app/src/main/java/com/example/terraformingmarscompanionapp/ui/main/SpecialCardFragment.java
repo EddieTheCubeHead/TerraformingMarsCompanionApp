@@ -63,6 +63,14 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
             card_list.add(card);
         }
 
+        for (Map.Entry entry : game.getAwards().entrySet()) {
+            card_list.add((Card)entry.getValue());
+        }
+
+        for (Map.Entry entry : game.getMilestones().entrySet()) {
+            card_list.add((Card)entry.getValue());
+        }
+
         recyclerview = view.findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
 
@@ -105,7 +113,7 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
 
     @Override
     public void update() {
-        adapter.getPlayedFilter().filter("");
+        adapter.getSpecialFilter().filter("");
 
         if (adapter.getItemCount() == 0)
             return;
