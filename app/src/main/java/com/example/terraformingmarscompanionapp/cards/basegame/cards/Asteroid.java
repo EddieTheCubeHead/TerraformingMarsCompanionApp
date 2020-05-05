@@ -23,6 +23,7 @@ public final class Asteroid extends Card {
     public void onPlay(Player player) {
         Context context = GameController.getInstance().getContext();
         Intent intent = new Intent(context, PlayerChoiceActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
         context.startActivity(intent);
     }
@@ -34,6 +35,6 @@ public final class Asteroid extends Card {
         }
         owner_game.raiseTemperature(player);
         player.changeTitanium(2);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

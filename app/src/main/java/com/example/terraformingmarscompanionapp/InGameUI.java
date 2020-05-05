@@ -100,7 +100,6 @@ public class InGameUI extends AppCompatActivity {
         }
     }
 
-
     //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisiksi
     //tässä vaiheessa aika paljon toistoa
     //tehty toistaen alku koska kuitenkin niin paljon eri asioita että on järkevää tehdä erillisiksi

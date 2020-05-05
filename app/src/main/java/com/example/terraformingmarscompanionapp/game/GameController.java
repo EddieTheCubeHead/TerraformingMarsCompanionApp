@@ -2,15 +2,12 @@ package com.example.terraformingmarscompanionapp.game;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
-import com.example.terraformingmarscompanionapp.ui.main.CardsBoughtActivity;
-import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -61,6 +58,7 @@ public class GameController
     private Context context = null;
     public void setContext(Context context) {
         this.context = context;
+        System.out.println("Context set");
     }
 
     //Gettereitä yleisesti käytetyille muuttujille
