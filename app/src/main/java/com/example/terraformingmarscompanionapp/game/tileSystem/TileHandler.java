@@ -298,7 +298,7 @@ public class TileHandler {
         ArrayList<Placeable> to_greenery = new ArrayList<>(Arrays.asList(Placeable.GREENERY, Placeable.OCEAN_GREENERY));
 
         ArrayList<Player> flood_neighbours = new ArrayList<>();
-        Boolean flood = false;
+        boolean flood = false;
 
         if (tile_type.equals(Placeable.FLOOD_OCEAN)) {
             flood = true;
@@ -310,11 +310,19 @@ public class TileHandler {
         }
 
         if (to_city.contains(tile_type)) {
+            player.addCity();
+            game.update_manager.onCityPlaced(player, false);
             tile_type = Placeable.CITY;
         } else if (to_ocean.contains(tile_type)) {
             tile_type = Placeable.OCEAN;
+            game.update_manager.onOceanPlaced(player);
         } else if (to_greenery.contains(tile_type)) {
             tile_type = Placeable.GREENERY;
+            player.addGreenery();
+            game.update_manager.onGreeneryPlaced(player);
+        } else if (tile_type.equals(Placeable.CAPITAL)) {
+            game.update_manager.onCityPlaced(player, false);
+            player.addCity();
         }
 
         for (Tile neighbour : getNeighbours(to_place)) {
