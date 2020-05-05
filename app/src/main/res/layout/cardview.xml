@@ -1,97 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/AppTheme.NoActionBar"
-
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content">
 
-    app:cardCornerRadius="@dimen/round_corner_radius"
-    android:background="@color/colorBackground"
-    app:cardUseCompatPadding="true"
-    app:contentPadding="5dp"
-    app:cardBackgroundColor="@color/colorWindow">
 
-    <RelativeLayout
-        android:id="@+id/layout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="0dp">
+        android:layout_height="match_parent">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view"
 
-        <ImageView
-            android:id="@+id/card_credit_imageview"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
             android:padding="0dp"
-            app:srcCompat="@drawable/ic_credit"
-            android:scaleX="1.5"
-            android:scaleY="1.5" />
+            app:contentPadding="5dp"
 
-        <TextView
-            android:id="@+id/card_credit_text"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="420"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:textColor="@color/colorWindowText" />
+            app:cardCornerRadius="@dimen/round_corner_radius"
+            android:background="@color/colorBackground"
+            app:cardUseCompatPadding="true"
+
+            app:cardBackgroundColor="@color/colorWindow">
+
+            <RelativeLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp">
+
+                <FrameLayout
+                    android:id="@+id/info_frame"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    >
+
+                    <ImageView
+                        android:id="@+id/card_credit_imageview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/ic_credit"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        />
+
+                    <TextView
+                        android:id="@+id/card_credit_text"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text="420"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:textColor="@color/colorWindowText" />
+
+                </FrameLayout>
+
+
+
+                <ImageView
+                    android:id="@+id/requirement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/card_name"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/info_frame"
+                    android:layout_toRightOf="@+id/info_frame"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:id="@+id/token_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/card_name"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/requirement"
+                    android:layout_toRightOf="@+id/info_frame"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:id="@+id/card_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/info_frame"
+                    android:layout_toRightOf="@+id/info_frame"
+                    android:paddingLeft="5dp"
+                    android:text="Asteroid mining consortium"
+                    android:textColor="@color/colorWindowText"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/tag1"
+                    android:layout_width="@dimen/tag_icon_xy"
+                    android:layout_height="@dimen/tag_icon_xy"
+                    android:layout_alignParentRight="true" />
+
+                <ImageView
+                    android:id="@+id/tag2"
+                    android:layout_width="@dimen/tag_icon_xy"
+                    android:layout_height="@dimen/tag_icon_xy"
+                    android:layout_toLeftOf="@id/tag1" />
+
+                <ImageView
+                    android:id="@+id/tag3"
+                    android:layout_width="@dimen/tag_icon_xy"
+                    android:layout_height="@dimen/tag_icon_xy"
+                    android:layout_toLeftOf="@id/tag2" />
+
+                <ImageView
+                    android:id="@+id/tag4"
+                    android:layout_width="@dimen/tag_icon_xy"
+                    android:layout_height="@dimen/tag_icon_xy"
+                    android:layout_toLeftOf="@id/tag3" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="20dp"
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/requirement"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:paddingLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/card_credit_imageview"
-            android:layout_toRightOf="@+id/card_credit_imageview"
-            android:layout_below="@id/card_name"/>
-
-        <TextView
-            android:id="@+id/token_text"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_below="@id/card_name"
-            android:paddingLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_toEndOf="@+id/requirement"
-            android:layout_toRightOf="@+id/card_credit_imageview" />
-
-        <TextView
-            android:id="@+id/card_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Asteroid mining consortium"
-            android:textSize="15sp"
-            android:textColor="@color/colorWindowText"
-            android:textStyle="bold"
-            android:paddingLeft="5dp"
-            android:layout_toEndOf="@+id/card_credit_imageview"
-            android:layout_toRightOf="@+id/card_credit_imageview"/>
+            android:id="@+id/type_image_top"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_gravity="top"
+            />
 
         <ImageView
-            android:id="@+id/tag1"
-            android:layout_width="@dimen/tag_icon_xy"
-            android:layout_height="@dimen/tag_icon_xy"
-            android:layout_alignParentRight="true" />
+            android:id="@+id/type_image_mid"
+            app:srcCompat="@drawable/ic_remove_custom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:rotation="90"
+
+            android:scaleX="2.4"
+            android:scaleY="6.5"
+
+            android:layout_marginVertical="15dp"
+            />
 
         <ImageView
-            android:id="@+id/tag2"
-            android:layout_width="@dimen/tag_icon_xy"
-            android:layout_height="@dimen/tag_icon_xy"
-            android:layout_toLeftOf="@id/tag1" />
+            android:id="@+id/type_image_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_gravity="bottom"
+            />
 
-        <ImageView
-            android:id="@+id/tag3"
-            android:layout_width="@dimen/tag_icon_xy"
-            android:layout_height="@dimen/tag_icon_xy"
-            android:layout_toLeftOf="@id/tag2" />
+    </FrameLayout>
 
-        <ImageView
-            android:id="@+id/tag4"
-            android:layout_width="@dimen/tag_icon_xy"
-            android:layout_height="@dimen/tag_icon_xy"
-            android:layout_toLeftOf="@id/tag3" />
 
-    </RelativeLayout>
-</com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
