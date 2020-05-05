@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,7 +106,12 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
 
         try {
-            card.onPlay(GameController.getInstance().getCurrentPlayer());
+             CardCostPacket packet = game.getRecommendedCardCost(card);
+             if (!packet.isEligible()) {
+                 Toast.makeText(getContext(), "Invalid requirements!", Toast.LENGTH_SHORT).show();
+                 return;
+             }
+             game.playCard(card, packet);
         } catch (Exception ignored) {}
     }
 

@@ -15,6 +15,7 @@ import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPa
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -202,9 +203,15 @@ public class Game implements Serializable {
 
     public CardCostPacket getRecommendedCardCost(Card card)
     {
+        ArrayList<Card.Type> single_owner = new ArrayList<>(Arrays.asList(Card.Type.BLUE, Card.Type.RED, Card.Type.GREEN, Card.Type.CORPORATION, Card.Type.GHOST, Card.Type.AWARD, Card.Type.MILESTONE));
+
         /*hinta chekataan ensin koska siinä tapauksessa että se hylätään pelaaja
         * voi nähdä käyttöliittymästä helposti sen miten monta resurssia enemmän tarvitsee*/
         CardCostPacket resources_to_use = checkCardCost(card);
+
+        if (single_owner.contains(card.getType()) && card.getOwner() != null) {
+            resources_to_use.reject();
+        }
 
         if (!checkCardRequirements(card))
         {
