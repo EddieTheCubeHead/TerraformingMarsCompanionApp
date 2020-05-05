@@ -36,7 +36,7 @@
 		<area  coordinates="4;4" id="@+id/hex29" coords="400,640,54" shape="circle"/>
 		<area  coordinates="6;4" id="@+id/hex30" coords="521,640,55" shape="circle"/>
 		<area  coordinates="8;4" id="@+id/hex31" coords="642,640,55" shape="circle"/>
-		<area  coordinates="10:4" id="@+id/hex32" coords="763,640,56" shape="circle"/>
+		<area  coordinates="10;4" id="@+id/hex32" coords="763,640,56" shape="circle"/>
 		<area  coordinates="12;4" id="@+id/hex33" coords="884,640,58" shape="circle"/>
 		<area  coordinates="14;4" id="@+id/hex34" coords="1007,640,59" shape="circle"/>
 		<area  coordinates="16;4" id="@+id/hex35" coords="1127,639,57" shape="circle"/>
