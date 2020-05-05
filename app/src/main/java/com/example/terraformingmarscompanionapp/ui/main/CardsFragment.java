@@ -96,13 +96,11 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         searchview.setOnClickListener(v -> searchview.setIconified(false));
     }
 
-    /* kommentoitu pois sen varalta että update ei toimi
     @Override
     public void onResume() {
         super.onResume();
         update();
     }
-     */
 
 
     @Override public void onCardClick(int position)
@@ -141,5 +139,8 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             View cardview = layout_manager.findViewByPosition(i);
             /*todo visuaaliset muutokset yksittäisille korteille*/
         }
+
+        /*käyttämättömät vihreiksi*/
+
     }
 }
