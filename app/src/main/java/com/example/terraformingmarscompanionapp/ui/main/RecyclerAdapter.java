@@ -285,6 +285,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public int getItemCount() { return card_list.size(); }
 
+    public Card getItemAtPosition(int position){
+        return card_list.get(position);
+    }
+
     public Filter getFilter() { return filter; }
 
     public Filter getPlayedFilter() { return played_filter; }
