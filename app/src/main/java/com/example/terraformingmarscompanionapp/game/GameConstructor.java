@@ -1,6 +1,13 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import android.util.Log;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cards.basegame.awards.Banker;
+import com.example.terraformingmarscompanionapp.cards.basegame.awards.Landlord;
+import com.example.terraformingmarscompanionapp.cards.basegame.awards.Miner;
+import com.example.terraformingmarscompanionapp.cards.basegame.awards.Scientist;
+import com.example.terraformingmarscompanionapp.cards.basegame.awards.Thermalist;
 import com.example.terraformingmarscompanionapp.cards.basegame.cards.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Credicor;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Ecoline;
@@ -13,6 +20,11 @@ import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Thar
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.TharsisRepublicSecondEffect;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Thorgate;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.UnitedNationsMarsInitiative;
+import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Builder;
+import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Gardener;
+import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Mayor;
+import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Planner;
+import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Terraformer;
 import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardAquifer;
 import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardAsteroid;
 import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardCity;
@@ -34,6 +46,7 @@ class GameConstructor {
     private Boolean venus;
     private Boolean turmoil;
     private Boolean extra_corporations;
+    private Integer map;
 
     GameConstructor(Game game,
                     boolean corporate_era,
@@ -41,7 +54,8 @@ class GameConstructor {
                     boolean colonies,
                     boolean venus,
                     boolean turmoil,
-                    boolean extra_corporations) {
+                    boolean extra_corporations,
+                    Integer map) {
         deck = new HashMap<>();
         preludes = new HashMap<>();
         corporations = new HashMap<>();
@@ -52,6 +66,7 @@ class GameConstructor {
         this.venus = venus;
         this.turmoil = turmoil;
         this.extra_corporations = extra_corporations;
+        this.map = map;
     }
 
     HashMap<String, Card> createDeck() {
@@ -592,5 +607,66 @@ class GameConstructor {
         ghosts.put(tharsis_republic_second_effect.getName(), tharsis_republic_second_effect);
 
         return ghosts;
+    }
+
+    HashMap<String, Card> createAwards() {
+        HashMap<String, Card> deck = new HashMap<>();
+
+        switch (map) {
+            case 0:
+                Card banker = new Banker(game);
+                deck.put(banker.getName(), banker);
+
+                Card landlord = new Landlord(game);
+                deck.put(landlord.getName(), landlord);
+
+                Card miner = new Miner(game);
+                deck.put(miner.getName(), miner);
+
+                Card scientist = new Scientist(game);
+                deck.put(scientist.getName(), scientist);
+
+                Card thermalist = new Thermalist(game);
+                deck.put(thermalist.getName(), thermalist);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                Log.i("GameConstructor", "Invalid map value");
+        }
+
+        return deck;
+    }
+
+    HashMap<String, Card> createMilestones() {
+        HashMap<String, Card> deck = new HashMap<>();
+
+        switch (map) {
+            case 0:
+                Card builder = new Builder(game);
+                deck.put(builder.getName(), builder);
+
+                Card gardener = new Gardener(game);
+                deck.put(gardener.getName(), gardener);
+
+                Card mayor = new Mayor(game);
+                deck.put(mayor.getName(), mayor);
+
+                Card planner = new Planner(game);
+                deck.put(planner.getName(), planner);
+
+                Card terraformer = new Terraformer(game);
+                deck.put(terraformer.getName(), terraformer);
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            default:
+                Log.i("GameConstructor", "Invalid map value");
+        }
+        return deck;
     }
 }

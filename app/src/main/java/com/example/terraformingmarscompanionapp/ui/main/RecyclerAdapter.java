@@ -3,7 +3,6 @@ package com.example.terraformingmarscompanionapp.ui.main;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -167,6 +167,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             case BLUE:    color = 0xff6be1ff;  break;
             case PRELUDE: color = 0xffff66ff; break;
             case CORPORATION: color = 0xff222222; break;
+            case AWARD:   color = 0xffff9900; break;
+            case MILESTONE:
+            case STANDARD_PROJECT: color = 0xffd4d4d4; break;
             default: color = 0x80000000; break;
         }
 
@@ -218,6 +221,39 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     filtered_list.add(card);
                 }
             }
+            results.values = filtered_list;
+            return results;
+        }
+
+        //päivittää cardviewtä notifydatasetchangedillä
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results)
+        {
+            try {
+                card_list.clear();
+                card_list.addAll((List) results.values);
+                notifyDataSetChanged();
+            } catch (Exception e) { System.out.println("Alex,debug: virhe RecyclerAdapterin publishresults"); }
+        }
+    };
+
+    private Filter special_filter = new Filter() {
+
+        ArrayList<Card.Type> valid_types = new ArrayList<>(Arrays.asList(Card.Type.AWARD, Card.Type.MILESTONE, Card.Type.STANDARD_PROJECT));
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            Player display_player = GameController.getInstance().getDisplayPlayer();
+
+            List<Card> filtered_list = new ArrayList<>();
+            FilterResults results = new FilterResults();
+
+            for (Card card : card_list_full) {
+                if (valid_types.contains(card.getType())) {
+                    filtered_list.add(card);
+                }
+            }
+
             results.values = filtered_list;
             return results;
         }
@@ -290,4 +326,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public Filter getFilter() { return filter; }
 
     public Filter getPlayedFilter() { return played_filter; }
+
+    public Filter getSpecialFilter() {return special_filter;}
 }
