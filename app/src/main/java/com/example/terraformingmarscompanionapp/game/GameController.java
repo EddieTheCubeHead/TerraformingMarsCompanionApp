@@ -78,6 +78,17 @@ public class GameController
     }
 
     public Player getPlayer(Integer index) {return queue_full.get(index - 1);}
+
+    public Player getPlayer(String name)
+    {
+        for (Player p : queue_full)
+        {
+            if (p.getName() == name)
+                return p;
+        }
+        return null;
+    }
+
     public Integer getPlayerIndex(Player player) {return (queue_full.indexOf(player)+1);}
 
     private GameController(Game game){
