@@ -8,19 +8,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MiningGuild extends Card implements EffectCard {
     public MiningGuild(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "Mining guild";
         tags.add(Tag.BUILDING);
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoney(30);
         player.changeSteel(5);
         player.changeSteelProduction(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

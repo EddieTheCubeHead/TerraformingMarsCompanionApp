@@ -7,20 +7,19 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class TectonicStressPower extends Card {
     public TectonicStressPower(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Tectonic stress power";
         price = 18;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
         requirements.setMinScienceTags(2);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
         player.changeEnergyProduction(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

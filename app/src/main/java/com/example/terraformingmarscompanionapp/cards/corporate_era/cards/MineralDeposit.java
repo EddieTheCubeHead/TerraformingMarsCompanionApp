@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MineralDeposit extends Card {
     public MineralDeposit(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Mineral deposit";
         price = 5;
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_player.changeSteel(5);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

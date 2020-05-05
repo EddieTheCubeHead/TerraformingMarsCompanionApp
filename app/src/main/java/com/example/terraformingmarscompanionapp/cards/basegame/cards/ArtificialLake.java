@@ -10,19 +10,23 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ArtificialLake extends Card {
     public ArtificialLake(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Artificial lake";
         price = 15;
         tags.add(Tag.BUILDING);
         requirements.setMinTemperature(-6);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.LAND_OCEAN, owner_game));
+        super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

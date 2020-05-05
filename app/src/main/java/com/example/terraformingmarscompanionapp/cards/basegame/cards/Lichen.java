@@ -7,17 +7,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Lichen extends Card {
     public Lichen(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Lichen";
         price = 7;
         tags.add(Tag.PLANT);
         requirements.setMinTemperature(-24);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlantsProduction(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

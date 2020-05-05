@@ -10,7 +10,7 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class NuclearZone extends Card {
     public NuclearZone(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Nuclear zone";
         price = 10;
         tags.add(Tag.EARTH);
@@ -19,17 +19,15 @@ public final class NuclearZone extends Card {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.NUCLEAR_ZONE, owner_game));
-        owner_game.raiseTemperature(player);
-        owner_game.raiseTemperature(player);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

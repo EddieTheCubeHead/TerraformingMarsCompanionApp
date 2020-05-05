@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class RadChemFactory extends Card {
     public RadChemFactory(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Rad-chem factory";
         price = 8;
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(-1);
         player.changeTerraformingRating(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

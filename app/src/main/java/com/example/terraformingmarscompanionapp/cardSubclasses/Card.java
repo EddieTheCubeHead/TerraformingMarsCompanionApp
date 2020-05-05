@@ -7,6 +7,8 @@ import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 import java.util.ArrayList;
 
@@ -35,12 +37,27 @@ public abstract class Card {
         GHOST
     }
 
-    public Card(Type card_type) {
+    public Card(Type card_type, Game game) {
         type = card_type;
+        owner_game = game;
     }
 
-    //Palauttaa metadatan tarvittaessa, muuten palauttaa null. Palautusarvo huomioidaan vaan serveripelissä.
-    public Integer onPlay (Player player) {
+    /* Kortin pelaamisen datavirta: peli kutsuu kortin onPlay
+     * jos kortin onPlay tulee isäluokasta, kortti kutsuu playWithMetadataa arvolla 0
+     * onPlay voidaan uudelleenkirjoittaa kutsumaan jotakin metadatan määrittävää UI:ta
+     *
+     */
+    public void onPlay(Player player) {
+        playServerConnection(player, 0);
+    }
+
+    public void playServerConnection(Player player, Integer data) {
+        GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), 0));
+        playWithMetadata(player, data);
+    }
+
+    public void playWithMetadata(Player player, Integer data) {finishPlay(player);}
+    protected final void finishPlay (Player player) {
         owner_player = player;
 
         boolean is_event = (type == Type.RED);
@@ -173,15 +190,6 @@ public abstract class Card {
         if (this instanceof ActionCard) {
             player.addAction((ActionCard)this);
         }
-        return null;
-    }
-
-    /* Serveri-implementaatiossa on siirrettävä jotenkin kortin pelaamiseen liittyvät päätökset.
-     * Onneksi kaikki nämä päätökset ovat kuvattavissa yhdellä kokonaisluvulla. Tarvittaessa
-     * kortti voi override:aa tämän funktion, jotta sen pelaaminen muilla pelissä olevilla onnistuu
-     * ilman kortin sisällä tehtävää päätöstä. */
-    public void playWithMetadata(Player player, Integer data) {
-        onPlay(player);
     }
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}

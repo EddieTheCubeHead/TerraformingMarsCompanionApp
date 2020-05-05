@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class TollStation extends Card {
     public TollStation(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Toll station";
         price = 12;
         tags.add(Tag.SPACE);
@@ -15,13 +15,15 @@ public final class TollStation extends Card {
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        return super.onPlay(player);
-    }
-
-    @Override
     public void playWithMetadata(Player player, Integer data) {
-        //TODO Raha productionin nosto yhden verran jokaista vastustajien space tagia kohden
+        Integer tag_amount = 0;
+        for (Player opponent : owner_game.getPlayers()) {
+            if (opponent == player) {
+                continue;
+            }
+            tag_amount += opponent.getSpaceTags();
+        }
+        player.changeMoneyProduction(tag_amount);
         super.playWithMetadata(player, data);
     }
 }

@@ -10,25 +10,22 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ConvoyFromEurope extends Card {
     public ConvoyFromEurope(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Convoy from europe";
         price = 15;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
         //TODO prompti yhden kortin nostoon
-        player.changeHandSize(1);
-        return super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeHandSize(1);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

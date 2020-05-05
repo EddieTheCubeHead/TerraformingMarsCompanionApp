@@ -6,15 +6,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Loan extends Card {
     public Loan(Game game) {
-        super(Type.PRELUDE);
+        super(Type.PRELUDE, game);
         name = "Loan";
         owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(-2);
         player.changeMoney(30);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

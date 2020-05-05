@@ -8,19 +8,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Pets extends ResourceCard implements EffectCard {
     public Pets(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Pets";
         price = 10;
         tags.add(Tag.EARTH);
         tags.add(Tag.ANIMAL);
         resource_type = ResourceType.PET;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         resource_amount++;
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

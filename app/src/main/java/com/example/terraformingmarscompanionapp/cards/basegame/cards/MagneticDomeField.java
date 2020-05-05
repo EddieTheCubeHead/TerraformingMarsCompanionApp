@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MagneticDomeField extends Card {
     public MagneticDomeField(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Magnetic dome field";
         price = 5;
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(2);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(-2);
         player.changePlantsProduction(1);
         player.changeTerraformingRating(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

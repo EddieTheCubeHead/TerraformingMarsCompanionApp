@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class HousePrinting extends Card {
     public HousePrinting(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "House printing";
         price = 10;
         tags.add(Tag.BUILDING);
@@ -15,11 +15,10 @@ public final class HousePrinting extends Card {
         owner_game = game;
     }
 
-
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeSteelProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

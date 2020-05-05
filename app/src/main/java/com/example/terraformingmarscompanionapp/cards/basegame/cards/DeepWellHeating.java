@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class DeepWellHeating extends Card {
     public DeepWellHeating(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Deep well heating";
         price = 13;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(1);
         owner_game.raiseTemperature(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

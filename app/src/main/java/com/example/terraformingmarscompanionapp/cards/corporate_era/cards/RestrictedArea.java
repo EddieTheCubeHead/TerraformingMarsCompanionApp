@@ -11,17 +11,16 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class RestrictedArea extends Card implements ActionCard {
     public RestrictedArea(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Restricted area";
         price = 11;
         tags.add(Tag.SCIENCE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.RESTRICTED_AREA, owner_game));
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override

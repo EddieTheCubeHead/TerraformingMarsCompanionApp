@@ -7,12 +7,11 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class SpaceMirrors extends Card implements ActionCard {
     public SpaceMirrors(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Space mirrors";
         price = 3;
         tags.add(Tag.ENERGY);
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override

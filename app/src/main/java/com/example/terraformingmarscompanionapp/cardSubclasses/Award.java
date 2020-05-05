@@ -7,15 +7,15 @@ public abstract class Award extends Card {
     protected Boolean claimed = false;
 
     public Award(Game game) {
-        super(Type.AWARD);
+        super(Type.AWARD, game);
         owner_game = game;
         requirements.setMaxAwardsClaimed(2);
     }
 
     @Override
-    public final Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.claimAward();
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

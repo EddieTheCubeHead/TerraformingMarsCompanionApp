@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class NitrogenRichAsteroid extends Card {
     public NitrogenRichAsteroid(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Nitrogen-rich asteroid";
         price = 31;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onSpaceEvent(player);
         owner_game.raiseTemperature(player);
         player.changeTerraformingRating(2);
@@ -25,6 +24,6 @@ public final class NitrogenRichAsteroid extends Card {
         } else {
             player.changePlantsProduction(4);
         }
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

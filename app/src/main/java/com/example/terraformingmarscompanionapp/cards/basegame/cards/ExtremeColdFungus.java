@@ -7,12 +7,11 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class ExtremeColdFungus extends Card implements MetadataAction {
     public ExtremeColdFungus(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Extreme-cold fungus";
         price = 13;
         tags.add(Tag.MICROBE);
         requirements.setMaxTemperature(-10);
-        owner_game = game;
     }
 
     @Override

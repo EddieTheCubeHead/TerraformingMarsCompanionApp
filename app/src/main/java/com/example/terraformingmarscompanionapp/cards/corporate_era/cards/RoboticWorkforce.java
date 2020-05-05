@@ -7,19 +7,14 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class RoboticWorkforce extends Card {
     public RoboticWorkforce(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Robotic workforce";
         price = 9;
         tags.add(Tag.SCIENCE);
         requirements.setMinBuildingTags(1);
-        owner_game = game;
     }
 
-    @Override
-    public Integer onPlay(Player player) {
-
-        return super.onPlay(player);
-    }
+    //TODO tää koko juttu
 
     @Override
     public void playWithMetadata(Player player, Integer data) {

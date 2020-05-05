@@ -8,18 +8,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class NitriteReducingBacteria extends ResourceCard implements MetadataAction {
     public NitriteReducingBacteria(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Nitrite reducing bacteria";
         price = 11;
         tags.add(Tag.MICROBE);
         resource_type = ResourceType.MICROBE;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         resource_amount += 3;
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

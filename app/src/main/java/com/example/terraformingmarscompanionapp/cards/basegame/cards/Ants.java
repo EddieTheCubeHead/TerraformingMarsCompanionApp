@@ -4,23 +4,24 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 
 public final class Ants extends ResourceCard implements MetadataAction {
     public Ants(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Ants";
         price = 9;
         tags.add(Tag.MICROBE);
         requirements.setMinOxygen(4);
         resource_type = ResourceType.MICROBE;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override
@@ -28,7 +29,7 @@ public final class Ants extends ResourceCard implements MetadataAction {
         if (action_used) {
             return -1;
         } else {
-            //TODO poista resurssi toiselta kortilta
+            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceType.MICROBE, owner_game, -1));
             resource_amount++;
             return 0;
         }

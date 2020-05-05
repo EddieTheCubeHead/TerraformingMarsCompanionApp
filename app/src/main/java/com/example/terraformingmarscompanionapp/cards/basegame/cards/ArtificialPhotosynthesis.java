@@ -7,23 +7,24 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ArtificialPhotosynthesis extends Card {
     public ArtificialPhotosynthesis(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Artificial photosynthesis";
         price = 12;
         tags.add(Tag.SCIENCE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        boolean as_plant = true;
-        //TODO kysely otetaanko kasveina vai energiana
-        if (as_plant) {
+    public void onPlay(Player player) {
+        //TODO linkki päätös-UI
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
+        if (data == 0) {
             player.changePlantsProduction(1);
         } else {
             player.changeEnergyProduction(2);
         }
-        super.onPlay(player);
-        return as_plant ? 1 : 0;
+        super.playWithMetadata(player, data);
     }
 }

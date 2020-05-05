@@ -9,14 +9,13 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class GHGProducingBacteria extends ResourceCard implements MetadataAction {
     public GHGProducingBacteria(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "GHG producing bacteria";
         price = 8;
         tags.add(Tag.SCIENCE);
         tags.add(Tag.MICROBE);
         requirements.setMinOxygen(4);
         resource_type = ResourceType.MICROBE;
-        owner_game = game;
     }
 
     @Override

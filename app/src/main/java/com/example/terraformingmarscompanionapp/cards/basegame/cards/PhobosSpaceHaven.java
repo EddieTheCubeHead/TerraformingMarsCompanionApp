@@ -7,21 +7,19 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class PhobosSpaceHaven extends Card {
     public PhobosSpaceHaven(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "PhobosSpaceHaven";
         price = 25;
         tags.add(Tag.SPACE);
         tags.add(Tag.CITY);
         victory_points = 3;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        player.addCity();
+    public void playWithMetadata(Player player, Integer data) {
         player.changeTitaniumProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
         owner_game.tile_handler.placePhobos(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

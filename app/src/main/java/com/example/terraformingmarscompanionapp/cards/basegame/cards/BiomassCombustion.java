@@ -8,23 +8,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class BiomassCombustion extends Card {
     public BiomassCombustion(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Biomass combustion";
         price = 4;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
         requirements.setMinOxygen(6);
         victory_points = -1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        Integer player_to_take_from = 0;
-        //TODO UI kysy keneltä viedään
-        playWithMetadata(player, player_to_take_from);
-
-        return player_to_take_from;
+    public void onPlay(Player player) {
+        //TODO pelaajan valinta UI
     }
 
     @Override

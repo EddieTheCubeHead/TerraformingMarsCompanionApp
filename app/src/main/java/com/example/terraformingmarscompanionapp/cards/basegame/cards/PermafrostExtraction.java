@@ -10,17 +10,16 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class PermafrostExtraction extends Card {
     public PermafrostExtraction(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Permafrost extraction";
         price = 8;
         tags.add(Tag.EVENT);
         requirements.setMinTemperature(-8);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 }

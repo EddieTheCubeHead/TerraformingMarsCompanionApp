@@ -8,21 +8,20 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Livestock extends ResourceCard implements ActionCard {
     public Livestock(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Livestock";
         price = 13;
         tags.add(Tag.ANIMAL);
         requirements.setMinOxygen(9);
         requirements.setMinPlantProduction(1);
         resource_type = ResourceType.ANIMAL;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlantsProduction(-1);
         player.changeMoneyProduction(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

@@ -8,16 +8,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class UnitedNationsMarsInitiative extends Card implements ActionCard {
     public UnitedNationsMarsInitiative(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "UNMI";
         tags.add(Tag.EARTH);
         owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoney(40);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

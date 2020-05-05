@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ColonizerTrainingCamp extends Card {
     public ColonizerTrainingCamp(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Colonizer training camp";
         price = 8;
         tags.add(Tag.JOVIAN);
         tags.add(Tag.BUILDING);
         requirements.setMaxOxygen(5);
         victory_points = 2;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

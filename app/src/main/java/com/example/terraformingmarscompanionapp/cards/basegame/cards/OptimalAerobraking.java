@@ -8,11 +8,10 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class OptimalAerobraking extends Card implements EffectCard {
     public OptimalAerobraking(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Optimal aerobraking";
         price = 7;
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override

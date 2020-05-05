@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class GeneRepair extends Card {
     public GeneRepair(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Gene repair";
         price = 12;
         tags.add(Tag.SCIENCE);
         requirements.setMinScienceTags(3);
         victory_points = 2;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

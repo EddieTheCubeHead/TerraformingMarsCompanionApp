@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SolarReflectors extends Card {
     public SolarReflectors(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Solar reflectors";
         price = 23;
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeHeatProduction(5);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

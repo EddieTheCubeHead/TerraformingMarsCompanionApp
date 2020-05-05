@@ -4,16 +4,19 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
 public class CardEventPacket implements PlayablePacket {
     private String card_name;
     private String player_name;
+    private Integer metadata;
 
     public CardEventPacket(String card_name, String player_name, Integer metadata) {
         this.card_name = card_name;
         this.player_name = player_name;
+        this.metadata = metadata;
     }
 
     /* Saadut paketit pelataan. Onko kyseessä kortin pelaaminen vai toiminnan käyttö selviää kortin omistajasta:
@@ -24,7 +27,9 @@ public class CardEventPacket implements PlayablePacket {
         Game game = GameController.getInstance().getGame();
         Card card = game.getDeck().get(card_name);
         if (card.getOwner() == null) {
-            card.playWithMetadata(game.getPlayer(player_name), 0);
+            card.playWithMetadata(game.getPlayer(player_name), metadata);
+        } else if (card instanceof MetadataAction) {
+            ((MetadataAction) card).actionWithMetadata(metadata);
         } else if (card instanceof ActionCard) {
             ((ActionCard) card).cardAction();
         } else {

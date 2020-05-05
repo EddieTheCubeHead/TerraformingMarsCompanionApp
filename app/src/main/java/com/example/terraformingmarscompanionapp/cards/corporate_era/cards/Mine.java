@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Mine extends Card {
     public Mine(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Mine";
         price = 4;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeSteelProduction(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

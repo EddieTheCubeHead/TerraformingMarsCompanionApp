@@ -6,15 +6,14 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class BeginnerCorporation extends Card {
     public BeginnerCorporation(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "Beginner corporation";
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoney(42);
         //TODO beginner corporationin erikoishommat
-        return 0;
+        super.playWithMetadata(player, data);
     }
 }

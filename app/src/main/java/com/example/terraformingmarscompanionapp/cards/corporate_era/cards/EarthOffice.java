@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class EarthOffice extends Card {
     public EarthOffice(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Earth Office";
         price = 1;
         tags.add(Tag.EARTH);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEarthTagDiscount(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

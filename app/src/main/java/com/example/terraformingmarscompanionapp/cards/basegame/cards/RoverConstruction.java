@@ -8,18 +8,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class RoverConstruction extends Card implements EffectCard {
     public RoverConstruction(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Rover construction";
         price = 8;
         tags.add(Tag.BUILDING);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

@@ -7,7 +7,6 @@ import android.util.Log;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.game.events.MetadataEvent;
 import com.example.terraformingmarscompanionapp.ui.main.TilePlacementActivity;
 
 import java.util.ArrayList;
@@ -299,7 +298,7 @@ public class TileHandler {
         ArrayList<Placeable> to_greenery = new ArrayList<>(Arrays.asList(Placeable.GREENERY, Placeable.OCEAN_GREENERY));
 
         ArrayList<Player> flood_neighbours = new ArrayList<>();
-        Boolean flood = false;
+        boolean flood = false;
 
         if (tile_type.equals(Placeable.FLOOD_OCEAN)) {
             flood = true;
@@ -311,11 +310,19 @@ public class TileHandler {
         }
 
         if (to_city.contains(tile_type)) {
+            player.addCity();
+            game.update_manager.onCityPlaced(player, false);
             tile_type = Placeable.CITY;
         } else if (to_ocean.contains(tile_type)) {
             tile_type = Placeable.OCEAN;
+            game.update_manager.onOceanPlaced(player);
         } else if (to_greenery.contains(tile_type)) {
             tile_type = Placeable.GREENERY;
+            player.addGreenery();
+            game.update_manager.onGreeneryPlaced(player);
+        } else if (tile_type.equals(Placeable.CAPITAL)) {
+            game.update_manager.onCityPlaced(player, false);
+            player.addCity();
         }
 
         for (Tile neighbour : getNeighbours(to_place)) {
@@ -329,7 +336,7 @@ public class TileHandler {
         player.addTile(to_place);
 
         if (flood && flood_neighbours.size() > 0) {
-            GameController.getInstance().addUiEvent(new MetadataEvent(flood_neighbours, game.getDeck().get("Flooding")));
+            //TODO pelaajanvalintaUI tähän flood_neighbours -listalla
         }
     }
 
@@ -391,6 +398,7 @@ public class TileHandler {
         Intent intent = new Intent(context, TilePlacementActivity.class);
         intent.putExtra("tile", tile_type.toString());
         context.startActivity(intent);
+
     }
 
     public Boolean checkPlacementValidity(Placeable tile_type, Integer x, Integer y) {

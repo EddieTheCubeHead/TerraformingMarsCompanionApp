@@ -466,7 +466,6 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
         Bitmap bitmap = bitmapHelper.getBitmapFromMemCache(imageKey);
 
         // 1 is the default setting, powers of 2 used to decrease image quality (and memory consumption)
-        // TODO: enable variable inSampleSize for low-memory devices
         options = new BitmapFactory.Options();
         options.inSampleSize = 1;
 
@@ -1129,8 +1128,6 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
      */
     void onScreenTapped(int x, int y)
     {
-
-        System.out.println("taptest" + x + " " + y);
         boolean missed = true;
         boolean bubble = false;
         // adjust for scroll
@@ -1142,7 +1139,6 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
 			Seems that we need to divide by densityFactor only if the picture is larger than the screen.
 			When it is smaller than the screen, we don't need to do that.
 
-			TODO: investigate this in detail.
 		 */
 
         if (mResizeFactorX > 1)
@@ -1191,11 +1187,9 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
             {
                 if (a.isInArea((float)testx,(float)testy))
                 {
-                    System.out.println("true");
                     if (mCallbackList != null) {
                         for (OnImageMapClickedHandler h : mCallbackList)
                         {
-                            System.out.println("onimagemapclicked");
                             h.onImageMapClicked(a.getId(), this);
                         }
                     }
@@ -1310,14 +1304,11 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
      * on clicked handler add/remove support
      */
     public void addOnImageMapClickedHandler( OnImageMapClickedHandler h ) {
-        System.out.println("Starts to add onclicklis");
         if (h != null) {
             if (mCallbackList == null) {
                 mCallbackList = new ArrayList<OnImageMapClickedHandler>();
             }
             mCallbackList.add(h);
-            System.out.println("added");
-
         }
     }
 
@@ -1752,7 +1743,6 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
 
     /*
      * Misc getters
-     * TODO: setters for there?
      */
 
     public float getmMaxSize()

@@ -10,18 +10,17 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class Flooding extends Card {
     public Flooding(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Flooding";
         price = 7;
         tags.add(Tag.EVENT);
         victory_points = -1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.FLOOD_OCEAN, owner_game));
-        return super.onPlay(player);
+        GameController.getInstance().executeNextEvent();
     }
 
     @Override

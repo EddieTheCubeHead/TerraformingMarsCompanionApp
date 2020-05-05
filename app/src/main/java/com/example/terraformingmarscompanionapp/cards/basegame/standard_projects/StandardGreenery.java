@@ -15,10 +15,10 @@ public final class StandardGreenery extends StandardProject {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.GREENERY, owner_game));
         player.addGreenery();
         GameController.getInstance().executeNextEvent();
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

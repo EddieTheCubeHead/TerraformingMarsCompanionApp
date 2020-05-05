@@ -7,17 +7,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Helion extends Card {
     public Helion(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "Helion";
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoney(42);
         player.changeHeatProduction(3);
         player.setHeatIsMoney(true);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

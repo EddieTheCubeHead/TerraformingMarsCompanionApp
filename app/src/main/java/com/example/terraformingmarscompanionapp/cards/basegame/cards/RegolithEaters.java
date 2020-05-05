@@ -9,13 +9,12 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class RegolithEaters extends ResourceCard implements MetadataAction {
     public RegolithEaters(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Regolith eaters";
         price = 13;
         tags.add(Tag.SCIENCE);
         tags.add(Tag.MICROBE);
         resource_type = ResourceType.MICROBE;
-        owner_game = game;
     }
 
     @Override

@@ -8,19 +8,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Decomposers extends ResourceCard implements EffectCard {
     public Decomposers(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Decomposers";
         price = 5;
         tags.add(Tag.MICROBE);
         requirements.setMinOxygen(3);
         resource_type = ResourceType.MICROBE;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

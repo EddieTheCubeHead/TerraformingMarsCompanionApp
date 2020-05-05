@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ReleaseOfInertGases extends Card {
     public ReleaseOfInertGases(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Release of inert gases";
         price = 14;
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeTerraformingRating(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

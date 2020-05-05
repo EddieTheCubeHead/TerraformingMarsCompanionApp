@@ -9,24 +9,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Fish extends ResourceCard implements ActionCard {
     public Fish(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Fish";
         price = 9;
         tags.add(Tag.ANIMAL);
         requirements.setMinTemperature(2);
         resource_type = ResourceType.ANIMAL;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        Integer player_to_take_from = 0;
-
-        //TODO UI kysy keneltä otetaan
-        //Tämän voi kutsua suoraan UI:sta
-        playWithMetadata(player, player_to_take_from);
-
-        return player_to_take_from;
+    public void onPlay(Player player) {
+        //TODO pelaajan valinta UI
     }
 
     @Override
@@ -35,7 +28,7 @@ public final class Fish extends ResourceCard implements ActionCard {
             GameController.getInstance().getPlayer(data).takePlantsProduction(1);
         }
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

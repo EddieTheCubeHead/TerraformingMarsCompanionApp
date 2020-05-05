@@ -25,16 +25,9 @@ public class TileEventPacket implements PlayablePacket{
         switch (tile_type) {
             case OCEAN:
                 game.getPlayer(player_name).changeTerraformingRating(1);
-                game.update_manager.onOceanPlaced(game.getPlayer(player_name));
                 break;
             case GREENERY:
                 game.raiseOxygen(game.getPlayer(player_name));
-                game.getPlayer(player_name).addGreenery();
-                game.update_manager.onGreeneryPlaced(game.getPlayer(player_name));
-                break;
-            case CITY:
-                game.update_manager.onCityPlaced(game.getPlayer(player_name), true);
-                game.getPlayer(player_name).addCity();
                 break;
             case MINING_AREA:
                 if (game.tile_handler.getTile(x_coord, y_coord).getPlacementBonuses().contains(PlacementBonus.TITANIUM)) {

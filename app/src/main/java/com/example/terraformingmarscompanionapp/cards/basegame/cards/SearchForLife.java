@@ -8,19 +8,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SearchForLife extends ResourceCard implements MetadataAction {
     public SearchForLife(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Search for life";
         price = 3;
         tags.add(Tag.SCIENCE);
         requirements.setMaxOxygen(6);
         resource_type = ResourceType.MICROBE;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

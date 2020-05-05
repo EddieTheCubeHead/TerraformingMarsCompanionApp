@@ -10,24 +10,21 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ImportedHydrogen extends Card {
     public ImportedHydrogen(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Imported hydrogen";
         price = 16;
         tags.add(Tag.EARTH);
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        Integer choice = 0;
-        //TODO UI kasvin (0), mikrobin (1) tai eläimen (2) lisäys
-        playWithMetadata(player, choice);
-
-        return choice;
+        //TODO valinta-UI
     }
+
+    //TODO selvitä missä välissä mikrobit määritetään
 
     @Override
     public void playWithMetadata(Player player, Integer data) {

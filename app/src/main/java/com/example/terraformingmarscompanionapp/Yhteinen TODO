@@ -3,22 +3,19 @@ Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi 
 Kirjasin kaiken mikä on vielä tekemättä ennen harkkatyödedistä. Osassa kategorioista on samoja tehtäviä.
 
 TODO: Top priority
-    Korttilistan viimeistely
-    Heksa-UI
     Pelin lopetus
     Resurssitapahtumallisten korttien pelaaminen
     Metadatallisten korttien pelaaminen
+        Pelaajan valinta
+        Numeron valinta
+        Boolean valinta
 
 TODO: helppo mutta vaatii tietoa tehokkaaseen tekemiseen
     Pelaajan korttilista.
 
-TODO: Seuraavat UI-näkymät:
-    Heksan asettaminen -ville
-
 TODO: Kortteja kehiin, -Aapo
 
 TODO: Hotseat-peli kuntoon
-    Heksan asettaminen (UI)
     Korttiresurssitapahtuman kohteen valinta (UI)
     Pelin tekemisen viimeistely
         Pelaajien järjestyksen valinta tai prompti "anna nimet pelaamisjärjestyksessä"
@@ -44,12 +41,18 @@ TODO: WebSocket serveripeli -Eetu
 TODO: Corporate-era -korttien ja Prelude -lisäosan lisääminen
     Kaikki tarvittavat frameworkit valmiina, nyt vain kortteja pöytään
 
+TODO: Metadatallisten eventtien rewrite
+
 TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
     Metadatalliset effektit serveripelissä
 
 TODO: TESTAAMINEN
 
 Ennen palautusta jos kerkeää, palautuksen jälkeen jos ei kerkeä:
+
+TODO: Tiilen asettamisen bugikorjaukset
+
+TODO: Debugviestien poistaminen
 
 TODO: Muut lisäosat (esitetty tässä arvioidussa implementoimisen helppousjärjestyksessä):
     - Venus

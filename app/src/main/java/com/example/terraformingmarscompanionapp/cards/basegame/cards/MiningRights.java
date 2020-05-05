@@ -10,16 +10,15 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class MiningRights extends Card {
     public MiningRights(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Mining rights";
         price = 9;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.MINING_RIGHTS, owner_game));
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 }

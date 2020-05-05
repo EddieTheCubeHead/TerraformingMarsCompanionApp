@@ -6,17 +6,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class DustSeals extends Card {
     public DustSeals(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Dust seals";
         price = 2;
         requirements.setMaxOxygen(3);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

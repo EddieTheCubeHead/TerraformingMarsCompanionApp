@@ -7,20 +7,19 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class FoodFactory extends Card {
     public FoodFactory(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Food factory";
         price = 12;
         tags.add(Tag.BUILDING);
         requirements.setMinPlantProduction(1);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlants(-1);
         player.changeMoneyProduction(4);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

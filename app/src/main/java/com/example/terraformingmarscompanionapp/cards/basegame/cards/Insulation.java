@@ -6,25 +6,20 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Insulation extends Card {
     public Insulation(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Insulation";
         price = 2;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        Integer heat_reduction_amount = 0;
-        //TODO UI kysymään kuinka paljon lämmöntuotantoa poistetaan
-        player.changeHeatProduction(-heat_reduction_amount);
-        player.changeMoneyProduction(heat_reduction_amount);
-        return super.onPlay(player);
+    public void onPlay(Player player) {
+        //TODO luvun valinta UI
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeHeatProduction(-data);
         player.changeMoneyProduction(data);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

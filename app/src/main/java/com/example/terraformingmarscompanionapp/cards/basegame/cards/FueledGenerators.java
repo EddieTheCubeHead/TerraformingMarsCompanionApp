@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class FueledGenerators extends Card {
     public FueledGenerators(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Fueled generators";
         price = 1;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(-1);
         player.changeEnergyProduction(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

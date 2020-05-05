@@ -10,7 +10,7 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class DomedCrater extends Card {
     public DomedCrater(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Domed crater";
         price = 24;
         tags.add(Tag.BUILDING);
@@ -18,27 +18,21 @@ public final class DomedCrater extends Card {
         requirements.setMaxOxygen(7);
         requirements.setMinEnergyProduction(1);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
+        super.onPlay(player);
+    }
 
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
         player.addCity();
         player.changePlants(3);
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(3);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
-    }
-
-    @Override
-    public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(3);
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(3);
-        owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

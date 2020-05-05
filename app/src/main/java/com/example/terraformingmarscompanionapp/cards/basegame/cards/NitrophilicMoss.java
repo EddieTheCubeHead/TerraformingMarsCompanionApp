@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class NitrophilicMoss extends Card {
     public NitrophilicMoss(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Nitrophilic moss";
         price = 8;
         tags.add(Tag.PLANT);
         requirements.setMinOceans(3);
         requirements.setMinPlants(2);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlants(-2);
         player.changePlantsProduction(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

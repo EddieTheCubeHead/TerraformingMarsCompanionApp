@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MirandaResort extends Card {
     public MirandaResort(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Miranda resort";
         price = 12;
         tags.add(Tag.JOVIAN);
         tags.add(Tag.SPACE);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
         player.changeMoneyProduction(owner_player.getEarthTags());
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }
