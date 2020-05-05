@@ -10,7 +10,7 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class OpenCity extends Card {
     public OpenCity(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Open city";
         price = 23;
         tags.add(Tag.BUILDING);
@@ -22,22 +22,18 @@ public final class OpenCity extends Card {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
+        super.onPlay(player);
+    }
+
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
         player.addCity();
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(4);
         player.changePlants(2);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
-    }
-
-    @Override
-    public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(4);
-        player.changePlants(2);
-        owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

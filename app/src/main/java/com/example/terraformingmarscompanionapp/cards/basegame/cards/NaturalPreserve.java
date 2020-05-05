@@ -10,28 +10,25 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class NaturalPreserve extends Card {
     public NaturalPreserve(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Natural preserve";
         price = 9;
         tags.add(Tag.SCIENCE);
         tags.add(Tag.BUILDING);
         requirements.setMaxOxygen(4);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.NATURAL_RESERVE, owner_game));
-        player.changeMoneyProduction(1);
-        owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MassConverter extends Card {
     public MassConverter(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Mass conventer";
         price = 8;
         tags.add(Tag.SCIENCE);
         tags.add(Tag.ENERGY);
         requirements.setMinScienceTags(5);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(6);
         player.changeSpaceTagDiscount(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

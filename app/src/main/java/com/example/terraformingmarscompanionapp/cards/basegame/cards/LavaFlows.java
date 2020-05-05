@@ -10,25 +10,22 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class LavaFlows extends Card {
     public LavaFlows(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Lava flows";
         price = 18;
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.LAVA_FLOW, owner_game));
-        owner_game.raiseTemperature(player);
-        owner_game.raiseTemperature(player);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

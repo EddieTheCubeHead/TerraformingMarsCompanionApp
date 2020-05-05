@@ -7,21 +7,20 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class NoctisFarming extends Card {
     public NoctisFarming(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Noctis farming";
         price = 10;
         tags.add(Tag.PLANT);
         tags.add(Tag.BUILDING);
         requirements.setMinTemperature(-20);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(1);
         player.changePlants(2);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

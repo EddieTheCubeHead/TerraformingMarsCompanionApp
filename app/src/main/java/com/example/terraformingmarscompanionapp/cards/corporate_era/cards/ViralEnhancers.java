@@ -8,7 +8,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ViralEnhancers extends Card implements EffectCard {
     public ViralEnhancers(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Viral enhancers";
         price = 9;
         tags.add(Tag.SCIENCE);
@@ -17,13 +17,7 @@ public final class ViralEnhancers extends Card implements EffectCard {
     }
 
     @Override
-    public Integer onPlay(Player player) {
-
-        return super.onPlay(player);
-    }
-
-    @Override
     public void cardEffect(Player player) {
-        //TODO Kasvien Mikrobien ja eläinten suojaus
+        //TODO metadataeffect
     }
 }

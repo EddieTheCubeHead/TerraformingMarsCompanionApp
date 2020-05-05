@@ -7,20 +7,19 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class LightningHarvest extends Card {
     public LightningHarvest(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Lightning harvest";
         price = 8;
         tags.add(Tag.ENERGY);
         requirements.setMinScienceTags(3);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(1);
         player.changeEnergyProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

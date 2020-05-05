@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ImportOfAdvancedGHG extends Card {
     public ImportOfAdvancedGHG(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Import of advanced GHG";
         price = 9;
         tags.add(Tag.SPACE);
         tags.add(Tag.EARTH);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeHeatProduction(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

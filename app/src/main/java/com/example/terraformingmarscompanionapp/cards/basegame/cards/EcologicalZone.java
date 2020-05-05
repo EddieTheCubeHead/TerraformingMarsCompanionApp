@@ -11,7 +11,7 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class EcologicalZone extends ResourceCard implements EffectCard {
     public EcologicalZone(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Ecological zone";
         price = 12;
         tags.add(Tag.ANIMAL);
@@ -22,11 +22,15 @@ public final class EcologicalZone extends ResourceCard implements EffectCard {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.ECOLOGICAL_ZONE, owner_game));
+        super.onPlay(player);
+    }
 
+    @Override
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

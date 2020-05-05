@@ -6,15 +6,14 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MicroMills extends Card {
     public MicroMills(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Micro-mills";
         price = 3;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeHeatProduction(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

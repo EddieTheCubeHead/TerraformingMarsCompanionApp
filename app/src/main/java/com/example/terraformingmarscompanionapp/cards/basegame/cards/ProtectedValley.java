@@ -10,25 +10,22 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ProtectedValley extends Card {
     public ProtectedValley(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Protected valley";
         price = 23;
         tags.add(Tag.PLANT);
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN_GREENERY, owner_game));
-        player.addGreenery();
-        player.changeMoneyProduction(2);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(2);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

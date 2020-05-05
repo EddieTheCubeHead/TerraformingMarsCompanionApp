@@ -7,16 +7,19 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MediaArchives extends Card {
     public MediaArchives(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Media archives";
         price = 8;
         tags.add(Tag.EARTH);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        player.changeMoney(owner_player.getEventTags());
-        return super.onPlay(player);
+    public void playWithMetadata(Player player, Integer data) {
+        Integer event_count = 0;
+        for (Player game_player : owner_game.getPlayers()) {
+            event_count += game_player.getEventTags();
+        }
+        player.changeMoney(event_count);
+        super.playWithMetadata(player, data);
     }
 }

@@ -8,26 +8,22 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Asteroid extends Card {
     public Asteroid(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Asteroid";
         price = 14;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        owner_game.raiseTemperature(player);
-        player.changeTitanium(2);
+    public void onPlay(Player player) {
         //TODO poista toiselta 3 kasvia
-        return super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data != 0) {
-           GameController.getInstance().getPlayer(data).changePlants(3);
+           GameController.getInstance().getPlayer(data).takePlants(3);
         }
         owner_game.raiseTemperature(player);
         player.changeTitanium(2);

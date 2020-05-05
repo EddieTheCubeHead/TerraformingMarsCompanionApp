@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SpaceStation extends Card {
     public SpaceStation(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Space station";
         price = 10;
         tags.add(Tag.SPACE);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
         player.changeSpaceTagDiscount(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

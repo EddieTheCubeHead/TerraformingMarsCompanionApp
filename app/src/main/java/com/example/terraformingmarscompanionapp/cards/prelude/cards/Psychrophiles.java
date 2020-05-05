@@ -7,13 +7,12 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class Psychrophiles extends ResourceCard implements ActionCard {
     public Psychrophiles(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Psychrophiles";
         price = 2;
         tags.add(Tag.MICROBE);
         requirements.setMaxTemperature(-20);
         resource_type = ResourceType.MICROBE;
-        owner_game = game;
     }
 
     @Override

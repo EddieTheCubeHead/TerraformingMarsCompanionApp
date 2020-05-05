@@ -8,22 +8,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class BigAsteroid extends Card {
     public BigAsteroid(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Big asteroid";
         price = 27;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        Integer player_to_take_from = 0;
-        //TODO UI kysy keneltä poistetaan kasveja
-        //Tämän voi kutsua UI:sta
-        playWithMetadata(player, player_to_take_from);
-
-        return player_to_take_from;
+    public void onPlay(Player player) {
+        //TODO pelaajan valinta UI
     }
 
     @Override

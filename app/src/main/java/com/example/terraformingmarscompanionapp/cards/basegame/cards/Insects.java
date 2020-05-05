@@ -7,17 +7,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Insects extends Card {
     public Insects(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Insects";
         price = 9;
         tags.add(Tag.MICROBE);
         requirements.setMinOxygen(6);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlantsProduction(player.getPlantTags());
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

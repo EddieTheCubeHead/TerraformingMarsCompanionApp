@@ -7,17 +7,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Thorgate extends Card {
     public Thorgate(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "Thorgate";
         tags.add(Tag.ENERGY);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoney(48);
         player.changeEnergyProduction(1);
         player.changeEnergyTagDiscount(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -9,7 +8,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Tardigrades extends ResourceCard implements ActionCard {
     public Tardigrades(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Tardigrades";
         price = 4;
         tags.add(Tag.MICROBE);
@@ -18,9 +17,9 @@ public final class Tardigrades extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

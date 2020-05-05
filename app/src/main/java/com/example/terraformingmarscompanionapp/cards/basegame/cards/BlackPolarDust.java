@@ -9,24 +9,22 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class BlackPolarDust extends Card {
     public BlackPolarDust(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Black polar dust";
         price = 15;
         owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        player.changeMoneyProduction(-2);
-        player.changeHeatProduction(3);
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(-2);
         player.changeHeatProduction(3);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

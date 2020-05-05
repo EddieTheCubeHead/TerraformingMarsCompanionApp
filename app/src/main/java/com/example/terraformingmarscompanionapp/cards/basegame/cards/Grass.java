@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Grass extends Card {
     public Grass(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Grass";
         price = 11;
         tags.add(Tag.PLANT);
         requirements.setMinTemperature(-16);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlantsProduction(1);
         player.changePlants(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

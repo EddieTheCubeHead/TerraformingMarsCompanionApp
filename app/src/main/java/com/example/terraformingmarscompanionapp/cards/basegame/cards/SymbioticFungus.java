@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class SymbioticFungus extends Card implements MetadataAction {
     public SymbioticFungus(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Symbiotic fungus";
         price = 4;
         tags.add(Tag.MICROBE);

@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MagneticFieldGenerators extends Card {
     public MagneticFieldGenerators(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Magnetic field generators";
         price = 20;
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(4);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(-4);
         player.changePlantsProduction(2);
         player.changeTerraformingRating(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

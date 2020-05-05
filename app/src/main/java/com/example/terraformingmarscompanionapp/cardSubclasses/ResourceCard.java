@@ -1,10 +1,11 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
+import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public abstract class ResourceCard extends Card {
-    public ResourceCard(Type type) {
-        super(type);
+    public ResourceCard(Type type, Game game) {
+        super(type, game);
     }
 
     //Enum resurssityypin määrittämiseen
@@ -32,9 +33,8 @@ public abstract class ResourceCard extends Card {
         }
     }
 
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         player.addResourceHolder(this);
         super.onPlay(player);
-        return null;
     }
 }

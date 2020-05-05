@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SpecialDesign extends Card {
     public SpecialDesign(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Special design";
         price = 4;
         tags.add(Tag.SCIENCE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.setSpecialDesignEffect(true);
         player.changeBaseTrRequirementDiscount(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

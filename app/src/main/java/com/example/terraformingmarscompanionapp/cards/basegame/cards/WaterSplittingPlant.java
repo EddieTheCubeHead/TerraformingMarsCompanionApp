@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class WaterSplittingPlant extends Card implements ActionCard {
     public WaterSplittingPlant(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Water splitting plant";
         price = 12;
         tags.add(Tag.BUILDING);

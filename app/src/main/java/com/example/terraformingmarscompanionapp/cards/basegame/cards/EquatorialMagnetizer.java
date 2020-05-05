@@ -7,11 +7,10 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class EquatorialMagnetizer extends Card implements ActionCard {
     public EquatorialMagnetizer(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Equatorial magnetizer";
         price = 11;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override

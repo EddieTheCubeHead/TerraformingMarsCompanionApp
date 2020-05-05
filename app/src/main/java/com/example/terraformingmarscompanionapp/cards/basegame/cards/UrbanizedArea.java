@@ -10,28 +10,24 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class UrbanizedArea extends Card {
     public UrbanizedArea(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Urbanized area";
         price = 10;
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
-        player.addCity();
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(2);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(-1);
         player.changeMoneyProduction(2);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

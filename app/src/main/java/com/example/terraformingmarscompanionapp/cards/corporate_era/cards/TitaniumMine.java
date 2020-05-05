@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class TitaniumMine extends Card {
     public TitaniumMine(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Titanium mine";
         price = 7;
         tags.add(Tag.BUILDING);
@@ -15,8 +15,8 @@ public final class TitaniumMine extends Card {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_player.changeTitaniumProduction(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

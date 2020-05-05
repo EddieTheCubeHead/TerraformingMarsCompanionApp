@@ -7,18 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Ecoline extends Card {
     public Ecoline(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "Ecoline";
         tags.add(Tag.PLANT);
         owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeGreeneryPlantCostModifier(1);
         player.changePlantsProduction(2);
         player.changePlants(3);
         player.changeMoney(36);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

@@ -10,23 +10,21 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class MoholeArea extends Card {
     public MoholeArea(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Mohole area";
         price = 20;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.MOHOLE, owner_game));
-        player.changeHeatProduction(4);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeHeatProduction(4);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class FusionPower extends Card {
     public FusionPower(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Fusion power";
         price = 14;
         tags.add(Tag.SCIENCE);
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyTags(2);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

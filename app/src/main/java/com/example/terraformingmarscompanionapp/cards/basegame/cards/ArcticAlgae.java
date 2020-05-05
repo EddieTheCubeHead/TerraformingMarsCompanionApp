@@ -8,7 +8,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ArcticAlgae extends Card implements EffectCard {
     public ArcticAlgae(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Arctic algae";
         price = 12;
         tags.add(Tag.PLANT);
@@ -17,9 +17,9 @@ public final class ArcticAlgae extends Card implements EffectCard {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlants(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

@@ -10,26 +10,23 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ResearchOutpost extends Card {
     public ResearchOutpost(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Research outpost";
         price = 18;
         tags.add(Tag.SCIENCE);
         tags.add(Tag.BUILDING);
         tags.add(Tag.CITY);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        player.addCity();
-        player.changeCardDiscount(1);
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.RESEARCH_OUTPOST, owner_game));
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeCardDiscount(1);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

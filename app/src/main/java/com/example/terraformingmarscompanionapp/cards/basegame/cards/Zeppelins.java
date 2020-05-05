@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Zeppelins extends Card {
     public Zeppelins(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Zeppelins";
         price = 13;
         requirements.setMinOxygen(5);
@@ -14,9 +14,9 @@ public final class Zeppelins extends Card {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
         player.changeMoneyProduction(owner_game.getCitiesOnMars());
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

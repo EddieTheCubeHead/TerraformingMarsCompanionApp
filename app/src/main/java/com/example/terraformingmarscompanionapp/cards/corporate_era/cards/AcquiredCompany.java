@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class AcquiredCompany extends Card {
     public AcquiredCompany(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Acquired company";
         price = 10;
         tags.add(Tag.EARTH);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_player.changeMoneyProduction(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

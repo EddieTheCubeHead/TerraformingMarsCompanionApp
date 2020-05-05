@@ -7,21 +7,20 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class KelpFarming extends Card {
     public KelpFarming(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Kelp farming";
         price = 17;
         tags.add(Tag.PLANT);
         requirements.setMinOceans(6);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(2);
         player.changePlantsProduction(3);
         player.changePlants(2);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

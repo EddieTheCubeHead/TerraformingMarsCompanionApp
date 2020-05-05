@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class CarbonateProcessing extends Card {
     public CarbonateProcessing(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Carbonate processing";
         price = 6;
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(-1);
         player.changeHeatProduction(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

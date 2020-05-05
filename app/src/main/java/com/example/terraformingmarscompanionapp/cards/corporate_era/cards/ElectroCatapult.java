@@ -8,21 +8,20 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ElectroCatapult extends Card implements ActionCard {
     public ElectroCatapult(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Electro catapult";
         price = 17;
         tags.add(Tag.BUILDING);
         requirements.setMaxOxygen(8);
         requirements.setMinEnergyProduction(1);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(-1);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     public Integer cardAction() {

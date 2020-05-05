@@ -8,23 +8,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class HeatTrappers extends Card {
     public HeatTrappers(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Heat trappers";
         price = 6;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
         victory_points = -1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        Integer player_to_take_from = 0;
-        //TODO UI kysy keneltä viedään
-        //Tämäm voi kutsua suoraan UI:sta
-        playWithMetadata(player, player_to_take_from);
-
-        return player_to_take_from;
+    public void onPlay(Player player) {
+        //TODO pelaajan valinta UI
     }
 
     @Override
@@ -33,6 +27,6 @@ public final class HeatTrappers extends Card {
             GameController.getInstance().getPlayer(data).takeHeatProduction(2);
         }
         player.changeEnergyProduction(1);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

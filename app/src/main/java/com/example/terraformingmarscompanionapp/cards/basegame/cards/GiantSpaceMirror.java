@@ -7,17 +7,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class GiantSpaceMirror extends Card {
     public GiantSpaceMirror(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Giant space mirror";
         price = 17;
         tags.add(Tag.ENERGY);
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(3);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

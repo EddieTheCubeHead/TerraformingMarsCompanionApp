@@ -10,20 +10,22 @@ import com.example.terraformingmarscompanionapp.game.events.CostEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public final class WaterImportFromEurope extends Card implements MetadataAction {
     public WaterImportFromEurope(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Water import from europe";
         price = 25;
         tags.add(Tag.SPACE);
         tags.add(Tag.JOVIAN);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override
@@ -34,9 +36,9 @@ public final class WaterImportFromEurope extends Card implements MetadataAction 
             if ((owner_player.getMoney() + owner_player.getTitanium() * (3 + owner_player.getTitaniumValueModifier()) < 8)) {
                 return -2;
             }
-            GameController.getInstance().addUiEvent(new CostEvent());
-            action_used = true;
+            GameController.getInstance().addUiEvent(new CostEvent(new ArrayList<>(Collections.singletonList(Tag.SPACE)), 12));
             GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+            action_used = true;
             return 0;
         }
     }

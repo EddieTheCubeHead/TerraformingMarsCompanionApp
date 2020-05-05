@@ -7,11 +7,10 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class UndergroundDetonation extends Card implements ActionCard {
     public UndergroundDetonation(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Underground detonation";
         price = 6;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override

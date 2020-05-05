@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class IndustrialMicrobes extends Card {
     public IndustrialMicrobes(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Industrial microbes";
         price = 12;
         tags.add(Tag.MICROBE);
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeSteelProduction(1);
         player.changeEnergyProduction(1);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

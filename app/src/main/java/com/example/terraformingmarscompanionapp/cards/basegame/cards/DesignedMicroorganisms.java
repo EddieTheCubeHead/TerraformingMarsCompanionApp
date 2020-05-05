@@ -7,18 +7,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class DesignedMicroorganisms extends Card {
     public DesignedMicroorganisms(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Designed microorganisms";
         price = 16;
         tags.add(Tag.SCIENCE);
         tags.add(Tag.MICROBE);
         requirements.setMaxTemperature(-14);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlantsProduction(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

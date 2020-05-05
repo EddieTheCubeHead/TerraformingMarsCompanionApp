@@ -11,29 +11,26 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ImmigrantCity extends Card implements EffectCard {
     public ImmigrantCity(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Immigrant city";
         price = 13;
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
-        player.addCity();
-        player.changeMoneyProduction(-2);
-        player.changeEnergyProduction(-1);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
+        player.addCity();
         player.changeMoneyProduction(-2);
         player.changeEnergyProduction(-1);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

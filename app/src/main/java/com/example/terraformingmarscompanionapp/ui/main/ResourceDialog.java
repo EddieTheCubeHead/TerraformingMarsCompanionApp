@@ -184,13 +184,13 @@ public class ResourceDialog
 
         if (steel-amount <= 0)
         {
-            change -= steel * steel_value;
+            change -= (steel * steel_value);
             credit = 0;
             return;
         }
 
         steel -= amount;
-        change -= amount * steel_value;
+        change -= (amount * steel_value);
 
         //update ui
     }
@@ -198,13 +198,13 @@ public class ResourceDialog
     public void steelPlus(Integer amount) {
         if (steel+amount >= player.getSteel())
         {
-            change += (player.getSteel() - steel) * steel_value;
+            change += ((player.getSteel() - steel) * steel_value);
             steel = player.getSteel();
             return;
         }
 
         steel += amount;
-        change += amount * steel_value;
+        change += (amount * steel_value);
 
         //update ui
     }
@@ -212,12 +212,12 @@ public class ResourceDialog
     public void titaniumMinus(Integer amount) {
         if (titanium-amount <= 0)
         {
-            change -= titanium * titanium_value;
+            change -= (titanium * titanium_value);
             credit = 0;
             return;
         }
 
-        titanium -= amount;
+        titanium -= (amount * titanium_value);
         change -= amount;
 
         //update ui
@@ -226,12 +226,12 @@ public class ResourceDialog
     public void titaniumPlus(Integer amount) {
         if (titanium+amount >= player.getTitanium())
         {
-            change += (player.getTitanium() - titanium) * titanium_value;
+            change += ((player.getTitanium() - titanium) * titanium_value);
             titanium = player.getTitanium();
             return;
         }
 
-        titanium += amount;
+        titanium += (amount * titanium_value);
         change += amount;
 
         //update ui

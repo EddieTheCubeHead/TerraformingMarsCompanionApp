@@ -7,11 +7,10 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class MartianRails extends Card implements ActionCard {
     public MartianRails(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Martian rails";
         price = 13;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     public Integer cardAction() {

@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class InterstellarColonyShip extends Card {
     public InterstellarColonyShip(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Interstellar colony ship";
         price = 24;
         tags.add(Tag.EARTH);
@@ -15,12 +15,11 @@ public final class InterstellarColonyShip extends Card {
         tags.add(Tag.EVENT);
         requirements.setMinScienceTags(5);
         victory_points = 4;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

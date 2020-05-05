@@ -7,17 +7,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class GeothermalPower extends Card {
     public GeothermalPower(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Geothermal power";
         price = 11;
         tags.add(Tag.BUILDING);
         tags.add(Tag.ENERGY);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

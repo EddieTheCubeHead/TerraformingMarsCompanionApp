@@ -8,22 +8,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class DeimosDown extends Card {
     public DeimosDown(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Deimos down";
         price = 31;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        Integer player_to_take_from = 0;
-        //TODO UI kysy keneltä viedään kasvit
-        //Tämän voi kutsua UI:sta
-        playWithMetadata(player, player_to_take_from);
-
-        return player_to_take_from;
+    public void onPlay(Player player) {
+        //TODO pelaajan valinta UI
     }
 
     @Override
@@ -35,6 +29,6 @@ public final class DeimosDown extends Card {
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

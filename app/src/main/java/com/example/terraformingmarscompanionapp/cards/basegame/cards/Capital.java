@@ -10,31 +10,27 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class Capital extends Card {
     public Capital(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Capital";
         price = 26;
         tags.add(Tag.BUILDING);
         tags.add(Tag.CITY);
         requirements.setMinOceans(4);
         requirements.setMinEnergyProduction(2);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.CAPITAL, owner_game));
-        player.addCity();
-        player.changeEnergyProduction(-2);
-        player.changeMoneyProduction(5);
-        owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
+        player.addCity();
         player.changeEnergyProduction(-2);
         player.changeMoneyProduction(5);
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

@@ -10,16 +10,15 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class SubterraneanReservoir extends Card {
     public SubterraneanReservoir(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Subterranean reservoir";
         price = 11;
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 }

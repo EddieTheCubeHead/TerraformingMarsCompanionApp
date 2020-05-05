@@ -13,17 +13,16 @@ import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 
 public final class TharsisRepublic extends Card implements EffectCard, FirstAction {
     public TharsisRepublic(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "Tharsis republic";
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.playCard(owner_game.getGhosts().get("Tharsis republic ghost"), new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), 0, 0, 0, 0, 0, 0));
         player.changeMoney(40);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Soletta extends Card {
     public Soletta(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Soletta";
         price = 35;
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeHeatProduction(7);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

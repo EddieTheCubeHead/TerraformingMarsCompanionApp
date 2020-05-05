@@ -11,7 +11,6 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
 
 import java.io.Serializable;
@@ -233,15 +232,15 @@ public class Game implements Serializable {
         resources_to_use.playPacket();
 
         Log.i("Game", "OnPlay called");
-        Integer metadata = card.onPlay(player);
         if (card.getType() != Card.Type.GHOST) {
             GameController.getInstance().useAction();
         }
 
         if (server_multiplayer) {
             GameActions.sendCardCost(resources_to_use);
-            GameActions.sendCardEvent(new CardEventPacket(card.getName(), player.getName(), metadata));
         }
+
+        card.onPlay(player);
     }
 
     //Kortin pelaamisen ensimmäinen vaihe. Palautta hinnan CardCost -oliona

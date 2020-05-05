@@ -7,11 +7,10 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class OreProcessor extends Card implements ActionCard {
     public OreProcessor(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Ore processor";
         price = 13;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override

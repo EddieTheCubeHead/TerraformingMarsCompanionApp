@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class IoMiningIndustries extends Card {
     public IoMiningIndustries(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Io mining indrustries";
         price = 41;
         tags.add(Tag.JOVIAN);
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(2);
         player.changeTitaniumProduction(2);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

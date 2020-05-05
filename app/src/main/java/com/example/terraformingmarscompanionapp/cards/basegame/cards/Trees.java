@@ -7,20 +7,19 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Trees extends Card {
     public Trees(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Trees";
         price = 13;
         tags.add(Tag.PLANT);
         requirements.setMinTemperature(-4);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changePlantsProduction(3);
         player.changePlants(1);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

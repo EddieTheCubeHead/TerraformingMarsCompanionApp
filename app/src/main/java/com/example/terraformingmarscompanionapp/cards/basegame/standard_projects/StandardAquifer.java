@@ -15,9 +15,9 @@ public final class StandardAquifer extends StandardProject {
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
         GameController.getInstance().executeNextEvent();
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

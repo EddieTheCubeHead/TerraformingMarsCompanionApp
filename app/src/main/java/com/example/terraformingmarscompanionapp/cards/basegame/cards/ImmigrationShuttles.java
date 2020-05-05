@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ImmigrationShuttles extends Card {
     public ImmigrationShuttles(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Immigration shuttles";
         price = 31;
         tags.add(Tag.EARTH);
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeMoneyProduction(5);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

@@ -10,26 +10,23 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class TowingAComet extends Card {
     public TowingAComet(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Towing a comet";
         price = 23;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        player.changePlants(2);
-        owner_game.raiseOxygen(player);
-        return super.onPlay(player);
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changePlants(2);
         owner_game.raiseOxygen(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

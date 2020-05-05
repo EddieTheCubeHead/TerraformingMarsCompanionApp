@@ -8,17 +8,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class InterplanetaryCinematics extends Card implements EffectCard {
     public InterplanetaryCinematics(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "Interplanetary cinematics";
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeSteel(20);
         player.changeMoney(30);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

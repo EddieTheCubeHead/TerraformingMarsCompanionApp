@@ -7,16 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class EnergySaving extends Card {
     public EnergySaving(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Energy saving";
         price = 15;
         tags.add(Tag.ENERGY);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(owner_game.getCitiesOnMars() + owner_game.getCitiesInSpace());
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

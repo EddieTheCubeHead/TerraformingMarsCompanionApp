@@ -7,17 +7,16 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class PhoboLog extends Card {
     public PhoboLog(Game game) {
-        super(Type.CORPORATION);
+        super(Type.CORPORATION, game);
         name = "PhoboLog";
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeTitaniumValueModifier(1);
         player.changeMoney(23);
         player.changeTitanium(10);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

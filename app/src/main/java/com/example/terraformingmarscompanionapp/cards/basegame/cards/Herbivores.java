@@ -9,22 +9,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Herbivores extends ResourceCard implements EffectCard {
     public Herbivores(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Herbivores";
         price = 12;
         tags.add(Tag.ANIMAL);
         requirements.setMinOxygen(8);
         resource_type = ResourceType.ANIMAL;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        Integer player_to_take_from = 0;
-        //TODO UI kysy keneltä poistetaan kasvintuotanto
-        playWithMetadata(player, player_to_take_from);
-
-        return player_to_take_from;
+    public void onPlay(Player player) {
+        //TODO pelaajan valinta UI
     }
 
     @Override
@@ -33,7 +28,7 @@ public final class Herbivores extends ResourceCard implements EffectCard {
             GameController.getInstance().getPlayer(data).takePlantsProduction(1);
         }
         resource_amount++;
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

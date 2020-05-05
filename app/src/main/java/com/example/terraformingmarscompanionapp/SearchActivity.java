@@ -7,15 +7,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +31,6 @@ import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener
@@ -46,7 +42,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     private HashMap<String, Card> deck;
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
-    private ArrayList<Card.Type> valid_cards = new ArrayList<>(Arrays.asList(Card.Type.BLUE, Card.Type.RED, Card.Type.BLUE));
+    private ArrayList<Card.Type> valid_cards = new ArrayList<>(Arrays.asList(Card.Type.GREEN, Card.Type.RED, Card.Type.BLUE));
 
     //dialogimuuttujat
         //note: huono ratkaisu resurssien vaihtoon. ongelma geneerisyyden puutteessa.

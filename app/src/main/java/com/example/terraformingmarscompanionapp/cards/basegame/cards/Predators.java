@@ -8,19 +8,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Predators extends ResourceCard implements MetadataAction {
     public Predators(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Predators";
         price = 14;
         tags.add(Tag.ANIMAL);
         requirements.setMinOxygen(11);
         resource_type = ResourceType.ANIMAL;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     public Integer cardAction() {

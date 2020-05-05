@@ -1,32 +1,32 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 
 public final class AerobrakedAmmoniaAsteroid extends Card {
     public AerobrakedAmmoniaAsteroid(Game game) {
-        super(Type.RED);
+        super(Type.RED, game);
         name = "Aerobraked ammonia asteroid";
         price = 26;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        player.changeHeatProduction(3);
-        player.changePlantsProduction(1);
-        //TODO lisää 2 mikrobia toiselle kortille
-        return super.onPlay(player);
+    public void onPlay(Player player) {
+        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, owner_game, 2));
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeHeatProduction(3);
         player.changePlantsProduction(1);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

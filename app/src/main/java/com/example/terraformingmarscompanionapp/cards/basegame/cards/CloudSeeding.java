@@ -7,19 +7,15 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class CloudSeeding extends Card {
     public CloudSeeding(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Cloud seeding";
         price = 11;
         requirements.setMinOceans(3);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        player.changeMoneyProduction(-1);
-        //TODO poista toiselta pelaajalta lämmöntuotanto
-        player.changePlantsProduction(2);
-        return super.onPlay(player);
+    public void onPlay(Player player) {
+        //TODO pelaajan valinta UI
     }
 
     @Override
@@ -29,6 +25,6 @@ public final class CloudSeeding extends Card {
         }
         player.changeMoneyProduction(-1);
         player.changePlantsProduction(2);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

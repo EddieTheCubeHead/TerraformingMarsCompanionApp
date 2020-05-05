@@ -7,11 +7,10 @@ import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class Ironworks extends Card implements ActionCard {
     public Ironworks(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Ironworks";
         price = 11;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override

@@ -9,13 +9,15 @@ import com.example.terraformingmarscompanionapp.game.events.CostEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public final class AquiferPumping extends Card implements MetadataAction {
     public AquiferPumping(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Aquifer pumping";
         price = 18;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
@@ -26,7 +28,7 @@ public final class AquiferPumping extends Card implements MetadataAction {
             if ((owner_player.getMoney() + owner_player.getSteel() * (2 + owner_player.getSteelValueModifier()) < 8)) {
                 return -2;
             }
-            GameController.getInstance().addUiEvent(new CostEvent());
+            GameController.getInstance().addUiEvent(new CostEvent(new ArrayList<>(Collections.singletonList(Tag.BUILDING)), 8));
             GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
             action_used = true;
             return 0;

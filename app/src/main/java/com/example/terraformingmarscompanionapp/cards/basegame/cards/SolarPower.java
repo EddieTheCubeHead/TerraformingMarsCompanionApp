@@ -7,19 +7,18 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SolarPower extends Card {
     public SolarPower(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Solar power";
         price = 11;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.changeEnergyProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

@@ -11,12 +11,8 @@ public final class StandardSellPatents extends StandardProject {
     }
 
     @Override
-    public Integer onPlay(Player player) {
-        Integer cards_sold = 1;
-        //TODO UI kysy montako korttia myytiin
-        playWithMetadata(player, cards_sold);
-
-        return cards_sold;
+    public void onPlay(Player player) {
+        //TODO numeron valinta UI
     }
 
     @Override

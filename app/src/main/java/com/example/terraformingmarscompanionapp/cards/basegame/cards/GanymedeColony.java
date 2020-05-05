@@ -7,21 +7,20 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class GanymedeColony extends Card {
     public GanymedeColony(Game game) {
-        super(Type.GREEN);
+        super(Type.GREEN, game);
         name = "Ganymede colony";
         price = 20;
         tags.add(Tag.SPACE);
         tags.add(Tag.JOVIAN);
         tags.add(Tag.CITY);
-        owner_game = game;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         player.addCity();
         owner_game.update_manager.onVpCardPlayed(player);
         owner_game.tile_handler.placeGanymede(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override

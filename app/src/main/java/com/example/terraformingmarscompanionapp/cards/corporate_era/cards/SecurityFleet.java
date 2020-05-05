@@ -8,18 +8,17 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SecurityFleet extends ResourceCard implements ActionCard {
     public SecurityFleet(Game game) {
-        super(Type.BLUE);
+        super(Type.BLUE, game);
         name = "Security fleet";
         price = 12;
         tags.add(Tag.SPACE);
-        owner_game = game;
         resource_type = ResourceType.UNIQUE;
     }
 
     @Override
-    public Integer onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        return super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override
