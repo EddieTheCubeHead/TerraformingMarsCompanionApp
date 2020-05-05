@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 //TODO luokan sisällyttäminen cardiin kun tiedetään että ui toimii.
 public class CardView {
+    private String resource_info = "";
     private String card_name = null;
     private Integer requirement_image_resource = null;
     private Integer tag_image_resource_1 = null;
