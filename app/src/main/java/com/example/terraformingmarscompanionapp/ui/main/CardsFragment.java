@@ -121,9 +121,10 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             else if (action_metadata == -2)
                 Toast.makeText(getContext(), "Not enough resources.", Toast.LENGTH_SHORT).show();
 
-            else if (game.getServerMultiplayer())
+            else if (game.getServerMultiplayer()) {
                 GameActions.sendCardEvent(new CardEventPacket(card.getName(), card.getOwner().getName(), action_metadata));
-
+                Toast.makeText(getContext(), "Card action done.", Toast.LENGTH_SHORT).show();
+            }
             update();
         }
 
@@ -136,6 +137,9 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
     @Override
     public void update() {
         adapter.getPlayedFilter().filter("");
+
+        if (adapter.getItemCount() == 0)
+            return;
 
         for (int i = 0; i<adapter.getItemCount(); i++) {
             Card card = adapter.getItemAtPosition(i);
@@ -165,8 +169,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
                         break;
                 }
             }
-
-            ((TextView) cardview.findViewById(R.id.token_text)).setText(resourceText);
+            //((TextView) cardview.findViewById(R.id.token_text)).setText(resourceText);
         }
     }
 }
