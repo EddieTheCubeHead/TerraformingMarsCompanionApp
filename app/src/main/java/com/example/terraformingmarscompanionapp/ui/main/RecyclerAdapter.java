@@ -1,6 +1,10 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
@@ -48,12 +53,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ImageView tag3_view;
         public ImageView tag4_view;
 
+        public ImageView type_view_mid;
+
         //constructorissa tehdään kortille viittaukset
         public ViewHolder(@NonNull View card_inflated, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
         {
             super(card_inflated);
-
-            //card_inflated.findViewById(R.);
 
             card_credit_view = card_inflated.findViewById(R.id.card_credit_text);
             card_name_view = card_inflated.findViewById(R.id.card_name);
@@ -62,6 +67,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             tag2_view = card_inflated.findViewById(R.id.tag2);
             tag3_view = card_inflated.findViewById(R.id.tag3);
             tag4_view = card_inflated.findViewById(R.id.tag4);
+
+
+            //tinttaamalla tätä saadaan eri tyyppejä
+            type_view_mid = card_inflated.findViewById(R.id.type_image_mid);
 
             //klikkiominaisuus
             card_inflated.setOnClickListener(this);
@@ -111,6 +120,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return card_view_holder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int index)
     {
@@ -132,6 +143,50 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.card_name_view.setText(card_name);
         holder.card_credit_view.setText(card.getPrice().toString());
         holder.requirement_view.setImageResource(requirement);
+
+        //tyypin ilmaiseminen
+        Integer color;
+
+        /*
+        switch (card.getType())
+        {
+            case RED:     color = R.string.RED;   break;
+            case GREEN:   color = R.string.GREEN; break;
+            case BLUE:    color = R.string.BLUE;  break;
+            case PRELUDE: color = R.string.PRELUDE; break;
+            case CORPORATION: color = R.string.CORPORATION; break;
+            default: color = R.string.transparent; break;
+        }
+
+         */
+
+        switch (card.getType())
+        {
+            case RED:     color = 0xffff2800;   break;
+            case GREEN:   color = 0xff059c48; break;
+            case BLUE:    color = 0xff6be1ff;  break;
+            case PRELUDE: color = 0xffff66ff; break;
+            case CORPORATION: color = 0xff222222; break;
+            default: color = 0x80000000; break;
+        }
+
+        System.out.println(card.getName() +": "+ Color.red(color) + ", " +Color.green(color)+ ", " +Color.blue(color));
+
+        holder.type_view_mid.setColorFilter(Color.argb(Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color)));
+        //holder.type_view_mid.setBackgroundColor(color);
+        //holder.type_view_mid.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+
+
+        /*
+            <color name="RED">#db4129</color>
+            <color name="GREEN">#059c48</color>
+            <color name="BLUE">#2276B8</color>
+            <color name="PRELUDE">#ff66ff</color>
+            <color name="CORPORATION">#222222</color>
+
+            <color name="transparent">#80000000</color>
+        */
+
     }
 
     private Filter filter = new Filter()
@@ -229,6 +284,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() { return card_list.size(); }
+
+    public Card getItemAtPosition(int position){
+        return card_list.get(position);
+    }
 
     public Filter getFilter() { return filter; }
 

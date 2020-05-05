@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -136,8 +137,14 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         adapter.getPlayedFilter().filter("");
 
         for (int i = 0; i<adapter.getItemCount(); i++) {
+            Card card = adapter.getItemAtPosition(i);
             View cardview = layout_manager.findViewByPosition(i);
-            /*todo visuaaliset muutokset yksittäisille korteille*/
+
+            String resourceText;
+
+            //resourcetextin muokkaus
+
+            ((TextView) cardview.findViewById(R.id.token_text)).setText(resourceText);
         }
 
         /*käyttämättömät vihreiksi*/

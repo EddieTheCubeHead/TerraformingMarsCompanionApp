@@ -10,7 +10,12 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_title_screen">TitleScreen</string>
+    <!-- kustomoidut värit -->
+    <string name="RED">#ffdb4129</string>
+    <string name="GREEN">#ff059c48</string>
+    <string name="BLUE">#ff2276B8</string>
+    <string name="PRELUDE">#ffff66ff</string>
+    <string name="CORPORATION">#ff222222</string>
+    <string name="transparent">#80000000</string>
+
 </resources>
