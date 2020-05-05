@@ -7,12 +7,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener
@@ -112,7 +116,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     @Override public void onCardClick(int position) {
         Card card = card_list.get(position);
 
-        DisplayDialog(this, card);
+        displayDialog(this, card);
     }
 
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
@@ -120,7 +124,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
     //DIALOGILOGIIKKa (alunperin resourcedialog -luokassa)
     View view;
-    public void DisplayDialog(Context context, Card card)
+    public void displayDialog(Context context, Card card)
     {
         GameController controller = GameController.getInstance();
         Game game = controller.getGame();
@@ -233,21 +237,76 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             @Override
             public void onClick(View v)
             {
-                if (change < 0) {
-                    Toast.makeText(getApplicationContext(), String.format("Please add %d megacredits worth of resources.", -change), Toast.LENGTH_SHORT).show();
-                } else if (change > 0 &&
-                           (!(card.getTags().contains(Tag.BUILDING) && change < steel_value) ||
-                           !(card.getTags().contains(Tag.SPACE) && change < titanium_value))) {
-                    Toast.makeText(getApplicationContext(), String.format("Please remove %d megacredits worth of resources", change), Toast.LENGTH_SHORT).show();
-                } else {
-                    game.playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
-                    Toast.makeText(getApplicationContext(), String.format("Card '%s' played successfully!", card.getName()), Toast.LENGTH_SHORT).show();
-                    onBackPressed();
-                    dialog.dismiss();
-                }
+                confirmPlay(card, dialog);
             }
         });
+    }
 
+    private void confirmPlay(Card card, AlertDialog dialog)
+    {
+        if (change < 0) {
+            Toast.makeText(getApplicationContext(), String.format("Please add %d megacredits worth of resources.", -change), Toast.LENGTH_SHORT).show();
+        } else if (change > 0 &&
+                (!(card.getTags().contains(Tag.BUILDING) && change < steel_value) ||
+                        !(card.getTags().contains(Tag.SPACE) && change < titanium_value))) {
+            Toast.makeText(getApplicationContext(), String.format("Please remove %d megacredits worth of resources", change), Toast.LENGTH_SHORT).show();
+        } else {
+            game.playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
+            Toast.makeText(getApplicationContext(), String.format("Card '%s' played successfully!", card.getName()), Toast.LENGTH_SHORT).show();
+            dialog.dismiss();
+        }
+    }
+
+    //todo kaikkien dialogien yhdistäminen.
+    private void displayPlayerChoiceDialog()
+    {
+        ArrayList<Player> targets = new ArrayList<>();
+        targets.addAll(controller.getPlayers());
+
+        targets.remove(player);
+
+        //layoutin rakentaminen
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.activity_startchoices, null);
+
+        //visuaalinen muokkaus
+        view.setBackgroundColor(Color.TRANSPARENT);
+
+        LinearLayout linearLayout = view.findViewById(R.id.startchoices_linearlayout);
+        linearLayout.removeViewAt(2);
+        linearLayout.removeViewAt(2);
+
+        //findviewbyid't
+        TextView title = view.findViewById(R.id.first_round_title);
+        Spinner spinner = view.findViewById(R.id.first_round_spinner);
+
+        //spinnerin valmistaminen
+        //arrayadapter kutsuu toString -metodia kortissa.
+        ArrayAdapter<Player> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, targets);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(view)
+                .setCancelable(false)
+                .create();
+
+        dialog.show();
+
+        //dialogin koon muuttaminen
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
+        Window window = dialog.getWindow();
+
+        window.setLayout(2 * width / 3, WindowManager.LayoutParams.WRAP_CONTENT);
+
+        title.setText("Choose your target");
+
+        view.findViewById(R.id.first_round_confirm).setOnClickListener(v -> spinner.getSelectedItem());
     }
 
     //maksuvaihtofunktiot. päivittävät myös textviewtä.

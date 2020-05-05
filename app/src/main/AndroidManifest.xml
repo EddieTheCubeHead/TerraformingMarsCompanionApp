@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".GameCreationActivity" />
+        <activity android:name=".ui.main.PlayerChoiceActivity" android:theme = "@style/Theme.Transparent"/>
         <activity android:name=".InGameUI" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ui.main.LoginActivity" />

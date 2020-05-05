@@ -22,6 +22,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -44,6 +45,10 @@ public class InGameUI extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_game_u_i);
+
+        //korjaa näppäimistön satunnaisen ilmestymisen
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         controller = GameController.getInstance();
         controller.setContext(this);
@@ -74,9 +79,12 @@ public class InGameUI extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         });
 
-        findViewById(R.id.item_2).setOnClickListener(view ->
-                Toast.makeText(getApplicationContext(), "No functionality.", Toast.LENGTH_SHORT).show()
-        );
+        findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTestingActivity();
+            }
+        });
 
         findViewById(R.id.item_3).setOnClickListener(view -> startSearchActivity());
 
@@ -277,6 +285,13 @@ public class InGameUI extends AppCompatActivity {
             return;
         }
         Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    private void startTestingActivity() {
+        System.out.println("testing activity starting lmao");
+        Intent intent = new Intent(this, PlayerChoiceActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
 
