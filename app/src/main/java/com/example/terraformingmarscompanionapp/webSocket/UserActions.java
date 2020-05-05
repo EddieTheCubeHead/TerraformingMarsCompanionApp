@@ -18,6 +18,7 @@ public class UserActions {
     //ui:n kutsumat sisäänkirjautumisen onnistuneisuuden merkit.
     public static Boolean successful_login = false;
     public static String message = "";
+    public static Boolean game_code_valid = false;
 
     //Login, ottaa käyttäjänimen ja salasanan.
     public static void loginUser(String username, String password) {
@@ -43,12 +44,20 @@ public class UserActions {
                 session_id));
     }
 
+    public static void checkCode(String game_code) {
+        WebSocketHandler.sendMessage(String.format("check_code;%s", game_code));
+    }
+
     public static void joinGame(String game_code) {
         if (session_user == null | session_id == null) {
             //TODO error handling
             return;
         }
         WebSocketHandler.sendMessage(String.format("join_game;%s;%s;%s", session_user, session_id, game_code));
+    }
+
+    static void handleCodeCheck(String web_socket_message) {
+        game_code_valid = Boolean.valueOf(web_socket_message.split(Pattern.quote(";"))[1]);
     }
 
     static void handleLogin(String web_socket_message) {

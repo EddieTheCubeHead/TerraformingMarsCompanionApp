@@ -46,11 +46,9 @@ public final class WebSocketHandler {
                     switch (identifier) {
                         //Kirjautumisen ja uuden käyttäjän luomisen onnistumiset
                         case "user_creation_successful":
-                            Log.i("WebSocket", "User creation successful.");
                             UserActions.handleCreation(s);
                             break;
                         case "login_successful":
-                            Log.i("WebSocket", "Login successful!");
                             UserActions.handleLogin(s);
                             break;
 
@@ -63,12 +61,20 @@ public final class WebSocketHandler {
                             GameActions.handleGameCreated(s);
                             break;
 
+                        case "check_code":
+                            UserActions.handleCodeCheck(s);
+                            break;
+
                         case "game_joined":
                             GameActions.handleGameJoined(s);
                             break;
 
                         case "player_joined":
                             GameActions.handlePlayerJoined(s);
+                            break;
+
+                        case "game_setting":
+                            GameActions.handleSettingChanged(s);
                             break;
 
                         case "game_start":
@@ -82,18 +88,12 @@ public final class WebSocketHandler {
 
                         //Exceptioneiden käsittely
                         case "username_exception":
-                            Log.i("WebSocketException", "Invalid username: " + contents[1]);
                             UserActions.successful_login = false;
                             UserActions.message = "Invalid username.";
                             break;
                         case "password_exception":
-                            Log.i("WebSocketException", "Invalid password: " + contents[1]);
                             UserActions.successful_login = false;
                             UserActions.message = "Invalid password.";
-                            break;
-
-                        case "test":
-                            Log.i("WebSocket", "Successful test");
 
                         //Tunnistamattomien viestien loggaaminen
                         default:

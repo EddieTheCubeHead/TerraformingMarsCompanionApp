@@ -35,23 +35,35 @@ public class LoginActivity extends AppCompatActivity
         login_button.setText(state);
     }
 
-    public void loginFromData(View view)
-    {
+    public void loginFromData(View view) {
         String username =  username_field.getText().toString().trim();
         String password = password_field.getText().toString().trim();
 
-        if (state.equals("Log in")) {
+        if (!state.equals("Sign up")) {
             UserActions.loginUser(username, password);
         } else {
             UserActions.createUser(username, password);
         }
 
-        if (UserActions.successful_login)
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (UserActions.successful_login) {
             super.onBackPressed(); //ei-overridattu back-napin painallus
+            Intent intent = new Intent(this, TitleScreen.class);
+            startActivity(intent);
+        } else {
+            String login_message = UserActions.message;
+            toast(login_message);
+        }
 
-        String login_message = UserActions.message;
-        toast(login_message);
 
+    }
+
+    public void cancelActivity(View view) {
         Intent intent = new Intent(this, TitleScreen.class);
         startActivity(intent);
     }
