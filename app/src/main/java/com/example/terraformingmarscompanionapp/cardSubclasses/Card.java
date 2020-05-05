@@ -52,7 +52,9 @@ public abstract class Card {
     }
 
     public void playServerConnection(Player player, Integer data) {
-        GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), 0));
+        if (GameController.getInstance().getGame().getServerMultiplayer()) {
+            GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), 0));
+        }
         playWithMetadata(player, data);
     }
 
