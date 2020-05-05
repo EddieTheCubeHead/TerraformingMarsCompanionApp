@@ -3,6 +3,7 @@ package com.example.terraformingmarscompanionapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,11 +61,33 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
         Switch switch_extra_corporations = findViewById(R.id.switch_extra_corporations);
 
         //switchien listenerit, vaihtaa booleaneja
-        switch_corporate_era.setOnCheckedChangeListener((buttonView, isChecked) -> corporate_era = isChecked);
-        switch_prelude.setOnCheckedChangeListener((buttonView, isChecked) -> prelude = isChecked);
-        switch_colonies.setOnCheckedChangeListener((buttonView, isChecked) -> colonies = isChecked);
-        switch_venus.setOnCheckedChangeListener((buttonView, isChecked) -> venus = isChecked);
-        switch_turmoil.setOnCheckedChangeListener((buttonView, isChecked) -> turmoil = isChecked);
+
+        //(buttonView, isChecked) -> (corporate_era = isChecked; GameActions.sendSettingChange(GameSetting.CORPORATE_ERA, corporate_era))
+
+        switch_corporate_era.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            corporate_era = isChecked;
+            GameActions.sendSettingChange(GameSetting.CORPORATE_ERA, corporate_era);
+        });
+
+        switch_prelude.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            prelude = isChecked;
+            GameActions.sendSettingChange(GameSetting.PRELUDE, prelude);
+        });
+        switch_colonies.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            colonies = isChecked;
+            GameActions.sendSettingChange(GameSetting.COLONIES, colonies);
+        });
+        switch_venus.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            venus = isChecked;
+            GameActions.sendSettingChange(GameSetting.VENUS, venus);
+        });
+        switch_turmoil.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                turmoil = isChecked;
+                GameActions.sendSettingChange(GameSetting.TURMOIL, turmoil);
+            }
+        });
         switch_extra_corporations.setOnCheckedChangeListener((buttonView, isChecked) -> extra_corporations = isChecked);
 
         //buttonit

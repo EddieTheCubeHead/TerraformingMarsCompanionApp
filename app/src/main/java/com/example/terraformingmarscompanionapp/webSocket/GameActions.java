@@ -83,10 +83,22 @@ public class GameActions {
         ((ServerSetupScreen)setup_screen).playerJoined(joined_user);
     }
 
+    //Asetuksen muuttuminen
+    static void handleSettingChanged(String web_socket_message) {
+        GameSetting setting = GameSetting.valueOf(web_socket_message.split(Pattern.quote(";"))[1]);
+        Boolean value = Boolean.valueOf(web_socket_message.split(Pattern.quote(";"))[2]);
+        ((ServerSetupScreen)setup_screen).settingChanged(setting, value);
+    }
+
     //Pelin aloittaminen
     static void handleGameStart() {
         Log.i("WebSocketGame", "Starting game");
         ((ServerSetupScreen)setup_screen).startGame();
+    }
+
+    public static void sendSettingChange(GameSetting setting, Boolean value) {
+        String message = String.format("game_setting;%s;%s;%s;%s;%b", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, setting.toString(), value.toString());
+        WebSocketHandler.sendMessage(message);
     }
 
     public static void sendGameStart() {
@@ -120,12 +132,6 @@ public class GameActions {
         String message = String.format("game_action;%s;%s;%s;tile_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);
         message += String.format(";%d;%d", action_number, generation);
-        WebSocketHandler.sendMessage(message);
-    }
-
-    public static void sendSettingChange(String setting, Boolean value) {
-        Integer setting_as_int = value ? 1 : 0;
-        String message = String.format("game_setting;%s;%s;%s;%s;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, setting, value);
         WebSocketHandler.sendMessage(message);
     }
 
