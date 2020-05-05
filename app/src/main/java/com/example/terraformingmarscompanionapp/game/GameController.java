@@ -80,6 +80,7 @@ public class GameController
     }
 
     public Player getPlayer(Integer index) {return queue_full.get(index - 1);}
+    public Integer getPlayerIndex(Player player) {return queue_full.indexOf(player);}
 
     private GameController(Game game){
         this.game = game;
