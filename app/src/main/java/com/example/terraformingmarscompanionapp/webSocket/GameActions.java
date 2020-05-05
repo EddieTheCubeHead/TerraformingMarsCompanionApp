@@ -66,14 +66,26 @@ public class GameActions {
 
     //Peliin liittyminen, tallentaa pelikoodin
     static void handleGameJoined(String join_data) {
-        game_code = join_data.split(Pattern.quote(";"))[1];
+        String[] data_points = join_data.split(Pattern.quote(";"));
+        game_code = data_points[1];
         Log.i("WebSocket", "Game '" + game_code + "' joined.");
-        for (int i = 2; i < join_data.split(Pattern.quote(";")).length ; i++) {
+        for (int i = 2; i < data_points.length-10 ; i++) {
             //Jos pelaajia on vähemmän kuin viisi, tämä heittää errorin. Otetaan kiinni hiljaa.
-            String player_name = join_data.split(Pattern.quote(";"))[i];
+            String player_name = data_points[i];
             Log.i("WebSocketJoin", player_name);
             ((ServerSetupScreen)setup_screen).playerJoined(player_name);
         }
+        Integer first_setting = (data_points.length - 10);
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.CORPORATE_ERA, data_points[first_setting].equals("1"));
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.PRELUDE, data_points[first_setting+1].equals("1"));
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.VENUS, data_points[first_setting+2].equals("1"));
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.COLONIES, data_points[first_setting+3].equals("1"));
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.TURMOIL, data_points[first_setting+4].equals("1"));
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.EXTRA_CORPORATIONS, data_points[first_setting+5].equals("1"));
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.WORLD_GOVERNMENT_TERRAFORMING, data_points[first_setting+6].equals("1"));
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.MUST_MAX_VENUS, data_points[first_setting+7].equals("1"));
+        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.TURMOIL_TERRAFORMING_REVISION, data_points[first_setting+8].equals("1"));
+        ((ServerSetupScreen)setup_screen).mapChanged(Integer.valueOf(data_points[first_setting+9]));
     }
 
     //Toisen liittyminen peliin, käytännössä käyttäjänimen kirjaaminen
@@ -97,7 +109,7 @@ public class GameActions {
     }
 
     public static void sendSettingChange(GameSetting setting, Boolean value) {
-        String message = String.format("game_setting;%s;%s;%s;%s;%b", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, setting.toString(), value.toString());
+        String message = String.format("game_setting;%s;%s;%s;%s;%b", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, setting.toString(), value);
         WebSocketHandler.sendMessage(message);
     }
 
@@ -144,11 +156,4 @@ public class GameActions {
     public static void sendTurnOrder(String[] order_list) {
 
     }
-
-    /*Gson:
-      CardEventPacket test = new CardEventPacket("Adaptation technology", "Eddie", 0);
-      GsonBuilder test_builder = new GsonBuilder();
-      Gson gson = test_builder.create();
-      Log.i("GSON", gson.toJson(test));
-     */
 }

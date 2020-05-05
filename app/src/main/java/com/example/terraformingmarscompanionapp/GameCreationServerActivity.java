@@ -66,6 +66,7 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
 
         switch_corporate_era.setOnCheckedChangeListener((buttonView, isChecked) -> {
             corporate_era = isChecked;
+            System.out.println("Corporate era value: " + corporate_era + ", " + corporate_era);
             GameActions.sendSettingChange(GameSetting.CORPORATE_ERA, corporate_era);
         });
 
