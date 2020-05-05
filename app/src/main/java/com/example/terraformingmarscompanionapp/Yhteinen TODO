@@ -2,17 +2,30 @@ Tähän tiedostoon voi laittaa kaikki ei-paikkakohtaiset tehtävät. Kohtia voi 
 
 Kirjasin kaiken mikä on vielä tekemättä ennen harkkatyödedistä. Osassa kategorioista on samoja tehtäviä.
 
+TODO: Eetu
+    Metadatatoimintojen rewrite
+    Aleksanterin kirjoittamien UI-näkymien yhdistäminen toiminnallisuuksiin
+    Pelin lopettamisen logiikka (ehkä UI)
+    Pelin aloittamisen logiikan päivitystö
+
+TODO: Aleksanteri
+    Metadatakorttien dialogit:
+        Boolean valinta (kaksi stringiä sisään, valitse toinen)
+        Integer valinta
+        Resurssitapahtuman kohteen valinta:
+            Saa resurssityypin (esim MICROBE), määrän (int) ja boolean "vaikuttaa vain omiin kortteihin"
+            Näyttää pelaajalle kaikki OMISTETUT kortit, joiden resurssityyppi on annettu tyyppi (filteröi booleanin avulla)
+            Resourcecard.Resourcetype
+            Valitse näytetyistä korteista yksi
+    Grafiikka: Tagit ja heksatyypit yms.
+
 TODO: Top priority
     Pelin lopetus
-    Standardiprojektien, saavutusten ja palkintojen pelaaminen
     Resurssitapahtumallisten korttien pelaaminen
     Metadatallisten korttien pelaaminen
         Numeron valinta
         Boolean valinta
     Grafiikka: Tagit ja heksatyypit
-
-TODO: helppo mutta vaatii tietoa tehokkaaseen tekemiseen
-    Pelaajan korttilista.
 
 TODO: Kortteja kehiin, -Aapo
 
@@ -42,7 +55,7 @@ TODO: WebSocket serveripeli -Eetu
 TODO: Corporate-era -korttien ja Prelude -lisäosan lisääminen
     Kaikki tarvittavat frameworkit valmiina, nyt vain kortteja pöytään
 
-TODO: Metadatallisten eventtien rewrite
+TODO: Metadatallisten eventtien rewrite -Eetu
 
 TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
     Metadatalliset effektit serveripelissä

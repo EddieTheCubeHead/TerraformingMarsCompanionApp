@@ -237,7 +237,7 @@ public abstract class Card {
 
     public String getResourceText() {
         String resource_text = "";
-        if (this instanceof ResourceCard) {
+        if (this instanceof ResourceCard && this.owner_player != null) {
             switch (((ResourceCard) this).getResourceType())
             {
                 case PET:
