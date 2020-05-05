@@ -76,12 +76,12 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private ImageButton button_heat_production_minus;
     private ImageButton button_heat_production_plus;
 
-        private Button button_multiplier_1;
-        private Button button_multiplier_5;
-        private Button button_multiplier_10;
+    private Button button_multiplier_1;
+    private Button button_multiplier_5;
+    private Button button_multiplier_10;
 
-        private Button button_save_resources;
-        private Button button_editcancel_resources;
+    private Button button_save_resources;
+    private Button button_editcancel_resources;
 
     private TextView textview_temperature;
     private TextView textview_tfr;
@@ -98,8 +98,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private TextView textview_plants_production;
     private TextView textview_energy_production;
     private TextView textview_heat_production;
-
-//TODO Ville: tee minukselle menemisen esto
+    
 
     @Override public View onCreateView(
             LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
@@ -181,6 +180,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
             if (v == button_temperature_minus) {
                 temperature = changeResourceAmount(temperature, textview_temperature, true);
                 textview_temperature.setText(temperature + "°C");
+
             }
 
             if (v == button_temperature_plus) {
@@ -190,119 +190,227 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
             if (v == button_tfr_minus) {
                 terraformingRating = changeResourceAmount(terraformingRating, textview_tfr, true);
+
+                if (terraformingRating == 0) {
+                    setMinusClickable(button_tfr_minus, false);
+                }
             }
 
             if (v == button_tfr_plus) {
                 terraformingRating = changeResourceAmount(terraformingRating, textview_tfr, false);
+
+                if(!button_tfr_minus.isClickable()) {
+                    setMinusClickable(button_tfr_minus, true);
+                }
+
+
             }
 
             if (v == button_oxygen_minus) {
                 oxygen = changeResourceAmount(oxygen, textview_oxygen, true);
-                textview_oxygen.setText(temperature + "%");
+                textview_oxygen.setText(oxygen + "%");
+
+                if (oxygen == 0) {
+                    setMinusClickable(button_oxygen_minus, false);
+                }
             }
 
             if (v == button_oxygen_plus) {
                 oxygen = changeResourceAmount(oxygen, textview_oxygen, false);
-                textview_oxygen.setText(temperature + "%");
+                textview_oxygen.setText(oxygen + "%");
+
+                if(!button_oxygen_minus.isClickable()) {
+                    setMinusClickable(button_oxygen_minus, true);
+                }
             }
 
             if (v == button_money_minus) {
                 money = changeResourceAmount(money, textview_money, true);
+
+                if (money == 0) {
+                    setMinusClickable(button_money_minus, false);
+                }
             }
+
 
             if (v == button_money_plus) {
                 money = changeResourceAmount(money, textview_money, false);
+
+                if(!button_money_minus.isClickable()) {
+                    setMinusClickable(button_money_minus, true);
+                }
             }
 
             if (v == button_steel_minus) {
                 steel = changeResourceAmount(steel, textview_steel, true);
+
+                if (steel == 0) {
+                    setMinusClickable(button_steel_minus, false);
+                }
             }
 
             if (v == button_steel_plus) {
                 steel = changeResourceAmount(steel, textview_steel, false);
+
+                if(!button_steel_minus.isClickable()) {
+                    setMinusClickable(button_steel_minus, true);
+                }
             }
 
             if (v == button_titanium_minus) {
                 titanium = changeResourceAmount(titanium, textview_titanium, true);
+
+                if (titanium == 0) {
+                    setMinusClickable(button_titanium_minus, false);
+                }
             }
 
             if (v == button_titanium_plus) {
                 titanium = changeResourceAmount(titanium, textview_titanium, false);
+
+                if(!button_titanium_minus.isClickable()) {
+                    setMinusClickable(button_titanium_minus, true);
+                }
             }
 
             if (v == button_plants_minus) {
                 plants = changeResourceAmount(plants, textview_plants, true);
+
+                if (plants == 0) {
+                    setMinusClickable(button_plants_minus, false);
+                }
             }
 
             if (v == button_plants_plus) {
                 plants = changeResourceAmount(plants, textview_plants, false);
-            }
 
+                if(!button_plants_minus.isClickable()) {
+                    setMinusClickable(button_plants_minus, true);
+                }
+            }
 
             if (v == button_energy_minus) {
                 energy = changeResourceAmount(energy, textview_energy, true);
+
+                if (energy == 0) {
+                    setMinusClickable(button_energy_minus, false);
+                }
             }
 
             if (v == button_energy_plus) {
                 energy = changeResourceAmount(energy, textview_energy, false);
+
+                if(!button_energy_minus.isClickable()) {
+                    setMinusClickable(button_energy_minus, true);
+                }
             }
 
             if (v == button_heat_minus) {
                 heat = changeResourceAmount(heat, textview_heat, true);
+
+                if (heat == 0) {
+                    setMinusClickable(button_heat_minus, false);
+                }
             }
 
             if (v == button_heat_plus) {
                 heat = changeResourceAmount(heat, textview_heat, false);
+
+                if(!button_heat_minus.isClickable()) {
+                    setMinusClickable(button_heat_minus, true);
+                }
             }
 
             if (v == button_money_production_minus) {
-                moneyProduction = changeResourceAmount(moneyProduction, textview_money_production , true);
+                moneyProduction = changeResourceAmount(moneyProduction, textview_money_production, true);
             }
 
+
             if (v == button_money_production_plus) {
-                moneyProduction = changeResourceAmount(moneyProduction, textview_money_production , false);
+                moneyProduction = changeResourceAmount(moneyProduction, textview_money_production, false);
             }
 
             if (v == button_steel_production_minus) {
-                steelProduction = changeResourceAmount(steelProduction, textview_steel_production , true);
+                steelProduction = changeResourceAmount(steelProduction, textview_steel_production, true);
+
+                if (steelProduction == 0) {
+                    setMinusClickable(button_steel_production_minus, false);
+                }
             }
 
             if (v == button_steel_production_plus) {
-                steelProduction = changeResourceAmount(steelProduction, textview_steel_production , false);
+                steelProduction = changeResourceAmount(steelProduction, textview_steel_production, false);
+
+                if(!button_steel_production_minus.isClickable()) {
+                    setMinusClickable(button_steel_production_minus, true);
+                }
             }
 
             if (v == button_titanium_production_minus) {
-                titaniumProduction = changeResourceAmount(titaniumProduction, textview_titanium_production , true);
+                titaniumProduction = changeResourceAmount(titaniumProduction, textview_titanium_production, true);
+
+                if (titaniumProduction == 0) {
+                    setMinusClickable(button_titanium_production_minus, false);
+                }
             }
 
             if (v == button_titanium_production_plus) {
-                titaniumProduction = changeResourceAmount(titaniumProduction, textview_titanium_production , false);
+                titaniumProduction = changeResourceAmount(titaniumProduction, textview_titanium_production, false);
+
+                if(!button_titanium_production_minus.isClickable()) {
+                    setMinusClickable(button_titanium_production_minus, true);
+                }
             }
 
             if (v == button_plants_production_minus) {
-                plantsProduction = changeResourceAmount(plantsProduction, textview_plants_production , true);
+                plantsProduction = changeResourceAmount(plantsProduction, textview_plants_production, true);
+
+                if (plantsProduction == 0) {
+                    setMinusClickable(button_plants_production_minus, false);
+                }
             }
 
             if (v == button_plants_production_plus) {
-                plantsProduction = changeResourceAmount(plantsProduction, textview_plants_production , false);
+                plantsProduction = changeResourceAmount(plantsProduction, textview_plants_production, false);
+
+                if(!button_plants_production_minus.isClickable()) {
+                    setMinusClickable(button_plants_production_minus, true);
+                }
             }
 
-
             if (v == button_energy_production_minus) {
-                energyProduction = changeResourceAmount(energyProduction, textview_energy_production , true);
+                energyProduction = changeResourceAmount(energyProduction, textview_energy_production, true);
+
+                if (energyProduction == 0) {
+                    setMinusClickable(button_energy_production_minus, false);
+                }
             }
 
             if (v == button_energy_production_plus) {
-                energyProduction = changeResourceAmount(energyProduction, textview_energy_production , false);
+                energyProduction = changeResourceAmount(energyProduction, textview_energy_production, false);
+
+                if(!button_energy_production_minus.isClickable()) {
+                    setMinusClickable(button_energy_production_minus, true);
+                }
             }
 
             if (v == button_heat_production_minus) {
-                heatProduction = changeResourceAmount(heatProduction, textview_heat_production , true);
+                heatProduction = changeResourceAmount(heatProduction, textview_heat_production, true);
+
+                if (heatProduction == 0) {
+                    setMinusClickable(button_heat_production_minus, false);
+                }
             }
 
             if (v == button_heat_production_plus) {
-                heatProduction = changeResourceAmount(heatProduction, textview_heat_production , false);
+                heatProduction = changeResourceAmount(heatProduction, textview_heat_production, false);
+
+                if(!button_heat_production_minus.isClickable()) {
+                    setMinusClickable(button_heat_production_minus, true);
+                }
             }
+
+
 
 
             if (v == button_multiplier_1)
@@ -355,8 +463,9 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                 player.changeEnergyProduction(energyProduction - player.getEnergyProduction());
                 player.changeHeat(heat - player.getHeatProduction());
                 player.changeHeatProduction(heatProduction - player.getHeatProduction());
-
-                //TODO Ville: lämpötilan, tfr ja happi muutos päivitysjuttu
+                player.changeTerraformingRating(terraformingRating - player.getTerraformingRating());
+                game.rawChangeTemperature(temperature - game.getGlobalTemperature());
+                game.rawChangeOxygen(oxygen - game.getGlobalOxygen());
 
                 changeMode(false, 0);
                 button_editcancel_resources.setText("Edit");
@@ -374,10 +483,50 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                     changeMode(true, 1);
 
                     button_editcancel_resources.setText("Cancel");
+
+                    if (terraformingRating == 0) {
+                            setMinusClickable(button_tfr_minus, false);
+                    }
+                    if (oxygen == 0) {
+                            setMinusClickable(button_oxygen_minus, false);
+                    }
+                    if (money == 0) {
+                            setMinusClickable(button_money_minus, false);
+                    }
+                    if (steel == 0) {
+                            setMinusClickable(button_steel_minus, false);
+                    }
+                    if (titanium == 0) {
+                            setMinusClickable(button_titanium_minus, false);
+                    }
+                    if (plants == 0) {
+                            setMinusClickable(button_plants_minus, false);
+                    }
+                    if (energy == 0) {
+                            setMinusClickable(button_energy_minus, false);
+                    }
+                    if (heat == 0) {
+                            setMinusClickable(button_heat_minus, false);
+                    }
+                    if (steelProduction == 0) {
+                            setMinusClickable(button_steel_production_minus, false);
+                    }
+                    if (titaniumProduction == 0) {
+                            setMinusClickable(button_titanium_production_minus, false);
+                    }
+                    if (plantsProduction == 0) {
+                            setMinusClickable(button_plants_production_minus, false);
+                    }
+                    if (energyProduction == 0) {
+                            setMinusClickable(button_energy_production_minus, false);
+                    }
+                    if (heatProduction == 0) {
+                            setMinusClickable(button_heat_production_minus, false);
+                    }
                 }
 
                 //Cancel painikkeen painaminen
-                else if (editmode)
+                else
                 {
                     editmode = false;
 
@@ -422,11 +571,11 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_heat_production_minus.setOnClickListener(listener);
         button_heat_production_plus.setOnClickListener(listener);
 
-            button_multiplier_1.setOnClickListener(listener);
-            button_multiplier_5.setOnClickListener(listener);
-            button_multiplier_10.setOnClickListener(listener);
+        button_multiplier_1.setOnClickListener(listener);
+        button_multiplier_5.setOnClickListener(listener);
+        button_multiplier_10.setOnClickListener(listener);
 
-            button_save_resources.setOnClickListener(listener);
+        button_save_resources.setOnClickListener(listener);
 
         button_editcancel_resources.setOnClickListener(listener);
 
@@ -468,11 +617,11 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_heat_production_minus.setClickable(mode);
         button_heat_production_plus.setClickable(mode);
 
-            button_multiplier_1.setClickable(mode);
-            button_multiplier_5.setClickable(mode);
-            button_multiplier_10.setClickable(mode);
+        button_multiplier_1.setClickable(mode);
+        button_multiplier_5.setClickable(mode);
+        button_multiplier_10.setClickable(mode);
 
-            button_save_resources.setClickable(mode);
+        button_save_resources.setClickable(mode);
 
         button_temperature_minus.setAlpha(alpha);
         button_temperature_plus.setAlpha(alpha);
@@ -505,11 +654,11 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         button_heat_production_minus.setAlpha(alpha);
         button_heat_production_plus.setAlpha(alpha);
 
-            button_multiplier_1.setAlpha(alpha);
-            button_multiplier_5.setAlpha(alpha);
-            button_multiplier_10.setAlpha(alpha);
+        button_multiplier_1.setAlpha(alpha);
+        button_multiplier_5.setAlpha(alpha);
+        button_multiplier_10.setAlpha(alpha);
 
-            button_save_resources.setAlpha(alpha);
+        button_save_resources.setAlpha(alpha);
     }
 
     private Integer changeResourceAmount(Integer resourceType, TextView textView, boolean isMinus)
@@ -517,9 +666,24 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         if (isMinus) {resourceType -= multiplier;}
         if (!isMinus) {resourceType += multiplier;}
 
+        if (resourceType < 0 && textView != textview_money_production && textView != textview_temperature) { resourceType = 0; }
+
         textView.setText(String.valueOf(resourceType));
 
         return resourceType;
+    }
+
+    private void setMinusClickable(ImageButton minusButton, boolean clickable) {
+
+        if (!clickable) {
+            minusButton.setAlpha(0.5f);
+            minusButton.setClickable(false);
+        }
+
+        if (clickable) {
+            minusButton.setAlpha(1f);
+            minusButton.setClickable(true);
+        }
     }
 
     //Pelin tapahtumien kuuntelu
@@ -541,13 +705,13 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     }
 
     //Asettaa arvot nykyisen pelaajan arvoista
-    public boolean setResourceAmounts()
+    private void setResourceAmounts()
     {
         player = GameController.getInstance().getCurrentPlayer();
 
         try {
-            textview_temperature.setText(String.valueOf(game.getGlobalTemperature()));
-            textview_oxygen.setText(String.valueOf(game.getGlobalOxygen()));
+            textview_temperature.setText(String.valueOf(game.getGlobalTemperature() + "°C"));
+            textview_oxygen.setText(game.getGlobalOxygen() + "%");
             textview_tfr.setText(String.valueOf(player.getTerraformingRating()));
             textview_money.setText(String.valueOf(player.getMoney()));
             textview_money_production.setText(String.valueOf(player.getMoneyProduction()));
@@ -561,10 +725,8 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
             textview_energy_production.setText(String.valueOf(player.getEnergyProduction()));
             textview_heat.setText(String.valueOf(player.getHeat()));
             textview_heat_production.setText(String.valueOf(player.getHeatProduction()));
-        } catch (NullPointerException e) {
-            return false;
+        } catch (NullPointerException ignored) {
         }
-        return true;
     }
 
     private void refreshEditVariables() {
