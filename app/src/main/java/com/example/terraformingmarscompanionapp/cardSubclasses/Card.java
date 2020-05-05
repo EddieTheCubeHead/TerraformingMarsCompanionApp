@@ -235,6 +235,34 @@ public abstract class Card {
         return tag_integers;
     }
 
+    public String getResourceText() {
+        String resource_text = "";
+        if (this instanceof ResourceCard) {
+            switch (((ResourceCard) this).getResourceType())
+            {
+                case PET:
+                case ANIMAL:
+                    resource_text = "Animals: ";
+                    break;
+                case FLOATER:
+                    resource_text = "Floaters: ";
+                    break;
+                case MICROBE:
+                    resource_text = "Microbes: ";
+                    break;
+                case SCIENCE:
+                    resource_text = "Science resources: ";
+                    break;
+                default:
+                    resource_text = "Resources: ";
+                    break;
+            }
+
+            resource_text += ((ResourceCard) this).getResourceAmount().toString();
+        }
+        return resource_text;
+    }
+
     //Tarkistaa onko kortilla olemassa vaatimuksia jotka lasketaan specialist (tms, en muista nimeaä) -saavutukseen
     public final Boolean getHasRequirement() {
         return requirements.getDrawableRequrement() != 0;
