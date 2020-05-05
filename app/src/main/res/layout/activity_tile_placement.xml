@@ -30,10 +30,11 @@
         android:layout_height="50dp">
 
         <Button
-            android:text="decline"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="exit"
+            android:text="decline" />
 
         <FrameLayout
             android:layout_weight="1"
@@ -41,10 +42,11 @@
             android:layout_height="match_parent"/>
 
         <Button
-            android:text="place"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="placeTile"
+            android:text="place" />
 
     </LinearLayout>
 

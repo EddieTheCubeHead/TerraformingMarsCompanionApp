@@ -4,7 +4,10 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class RestrictedArea extends Card implements ActionCard {
     public RestrictedArea(Game game) {
@@ -17,13 +20,7 @@ public final class RestrictedArea extends Card implements ActionCard {
 
     @Override
     public Integer onPlay(Player player) {
-        while (true) {
-            if (owner_game.tile_handler.placeRestrictedArea(player)) {
-                break;
-            } else {
-                //TODO UI feedback ja prompti haluaako keskeyttää asettamisen
-            }
-        }
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.RESTRICTED_AREA, owner_game));
         return super.onPlay(player);
     }
 

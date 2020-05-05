@@ -5,6 +5,9 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.MetadataEvent;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class Comet extends Card {
     public Comet(Game game) {
@@ -18,18 +21,8 @@ public final class Comet extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        while (true) {
-            if (owner_game.tile_handler.placeOcean(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
-            }
-        }
-        Integer player_to_take_from = 0;
-        //TODO UI kysy keneltä poistetaan kasvit
-        //Tämän voi kutsua UI:sta
-        playWithMetadata(player, player_to_take_from);
-
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        GameController.getInstance().addUiEvent(new MetadataEvent(MetadataEvent.MetadataType.PLAYER, this));
         return super.onPlay(player);
     }
 
@@ -37,6 +30,5 @@ public final class Comet extends Card {
     public void playWithMetadata(Player player, Integer data) {
         GameController.getInstance().getPlayer(data).takePlants(3);
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
     }
 }

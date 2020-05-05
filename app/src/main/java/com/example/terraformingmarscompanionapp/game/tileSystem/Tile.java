@@ -68,7 +68,7 @@ public class Tile {
                         break;
                     case OCEAN:
                         if (player.changeMoney(-6)) {
-                            game.tile_handler.placeOcean(player);
+                            game.tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN);
                         }
                     case CARD:
                         //TODO UI prompt -ota kortti

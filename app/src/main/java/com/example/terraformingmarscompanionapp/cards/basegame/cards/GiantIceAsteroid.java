@@ -5,6 +5,9 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.MetadataEvent;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class GiantIceAsteroid extends Card {
     public GiantIceAsteroid(Game game) {
@@ -18,28 +21,12 @@ public final class GiantIceAsteroid extends Card {
 
     @Override
     public Integer onPlay(Player player) {
-        while (true) {
-            if (owner_game.tile_handler.placeOcean(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
-            }
-        }
-        while (true) {
-            if (owner_game.tile_handler.placeOcean(player)) {
-                break;
-            } else {
-                //TODO feedback pelaajalle ja mahdollisuus perua asettaminen
-            }
-        }
-        Integer player_to_take_from = 0;
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
 
-        //TODO UI kysy keneltä kasveja viedään
+        GameController.getInstance().addUiEvent(new MetadataEvent(MetadataEvent.MetadataType.PLAYER, this));
 
-        //Tämän voi kutsua suoraan UI:sta
-        playWithMetadata(player, player_to_take_from);
-
-        return player_to_take_from;
+        return super.onPlay(player);
     }
 
     @Override

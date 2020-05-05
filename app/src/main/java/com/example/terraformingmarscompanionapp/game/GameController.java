@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -36,6 +37,17 @@ public class GameController
     //Controllerin pitää tietää onko peli serverin välityksellä pelattu, ja jos on, kuka pelaajista on kyseisen clientin omistaja
     private Boolean server_multiplayer = false;
     private Player self_player;
+
+    private Deque<GameEvent> ui_events = new LinkedList<>();
+    public void addUiEvent(GameEvent event) {ui_events.addLast(event);}
+    public Boolean executeNextEvent() {
+        if (ui_events.size() == 0) {
+            return false;
+        }
+        GameEvent event = ui_events.removeFirst();
+        event.playEvent();
+        return true;
+    }
 
     //Context ingameui:n löytämiseen ja setteri
     private Context context = null;

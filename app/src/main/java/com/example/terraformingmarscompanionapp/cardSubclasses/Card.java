@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
@@ -135,6 +136,7 @@ public abstract class Card {
                 default:
                     System.out.println("Tag error in card " + getName());
             }
+            GameController.getInstance().executeNextEvent();
         }
 
 
