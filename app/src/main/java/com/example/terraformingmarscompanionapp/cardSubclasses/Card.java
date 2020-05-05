@@ -56,7 +56,11 @@ public abstract class Card {
         playWithMetadata(player, data);
     }
 
-    public void playWithMetadata(Player player, Integer data) {finishPlay(player);}
+    public void playWithMetadata(Player player, Integer data) {
+        finishPlay(player);
+        GameController.getInstance().useAction();
+    }
+
     protected final void finishPlay (Player player) {
         owner_player = player;
 
