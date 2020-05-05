@@ -12,6 +12,8 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 
 public final class TharsisRepublic extends Card implements EffectCard, FirstAction {
+    private Boolean first_action_used = false;
+
     public TharsisRepublic(Game game) {
         super(Type.CORPORATION, game);
         name = "Tharsis republic";
@@ -35,7 +37,12 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
     @Override
     public void firstAction() {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        owner_player.addCity();
         GameController.getInstance().executeNextEvent();
+        first_action_used = true;
+    }
+
+    @Override
+    public Boolean firstActionUsed() {
+        return first_action_used;
     }
 }

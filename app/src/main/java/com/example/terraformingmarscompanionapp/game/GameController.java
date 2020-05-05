@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ public class GameController
     //dequessa vuorojärjestys. ensimmäinen jäsen on aina nykyinen
     //queue sisältää kaikki jotka eivät ole foldannu
     static GameController instance = null;
+
+    private Integer generation = 0;
+
+    public Integer getGeneration() {return generation;}
 
     private Game game;
     private List<Player> queue_full = new ArrayList<>(); //double ended queue
@@ -170,7 +175,13 @@ public class GameController
     {
         actions_used = 0;
         gameUpdate();
-        //TODO kaikki vuoron alussa vuoron aloittavalle current_playerille tapahtuva
+        if (current_player.getCorporation() instanceof FirstAction) {
+            FirstAction action = (FirstAction)current_player.getCorporation();
+            if (!action.firstActionUsed()) {
+                action.firstAction();
+                useAction();
+            }
+        }
     }
 
     public void endGeneration()

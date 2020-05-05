@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 
 public interface FirstAction {
     void firstAction();
+    Boolean firstActionUsed();
 }
 
 /* Rajapinnan käyttö pelin alussa:
