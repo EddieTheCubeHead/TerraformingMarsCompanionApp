@@ -54,6 +54,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ImageView tag4_view;
 
         public ImageView type_view_mid;
+        public TextView token_view;
 
         //constructorissa tehdään kortille viittaukset
         public ViewHolder(@NonNull View card_inflated, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
@@ -71,6 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
             //tinttaamalla tätä saadaan eri tyyppejä
             type_view_mid = card_inflated.findViewById(R.id.type_image_mid);
+            token_view = card_inflated.findViewById(R.id.token_text);
 
             //klikkiominaisuus
             card_inflated.setOnClickListener(this);
@@ -144,21 +146,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.card_credit_view.setText(card.getPrice().toString());
         holder.requirement_view.setImageResource(requirement);
 
-        //tyypin ilmaiseminen
+
+        /*  xml värit
+            <color name="RED">#db4129</color>
+            <color name="GREEN">#059c48</color>
+            <color name="BLUE">#2276B8</color>
+            <color name="PRELUDE">#ff66ff</color>
+            <color name="CORPORATION">#222222</color>
+
+            <color name="transparent">#80000000</color>
+        */
+
+        //tyypin ilmaiseminen värillä
         Integer color;
-
-        /*
-        switch (card.getType())
-        {
-            case RED:     color = R.string.RED;   break;
-            case GREEN:   color = R.string.GREEN; break;
-            case BLUE:    color = R.string.BLUE;  break;
-            case PRELUDE: color = R.string.PRELUDE; break;
-            case CORPORATION: color = R.string.CORPORATION; break;
-            default: color = R.string.transparent; break;
-        }
-
-         */
 
         switch (card.getType())
         {
@@ -174,20 +174,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
 
         holder.type_view_mid.setColorFilter(Color.argb(Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color)));
-        //holder.type_view_mid.setBackgroundColor(color);
-        //holder.type_view_mid.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 
-
-        /*
-            <color name="RED">#db4129</color>
-            <color name="GREEN">#059c48</color>
-            <color name="BLUE">#2276B8</color>
-            <color name="PRELUDE">#ff66ff</color>
-            <color name="CORPORATION">#222222</color>
-
-            <color name="transparent">#80000000</color>
-        */
-
+        //resurssitekstin laitto
+        holder.token_view.setText(card.getResourceText());
     }
 
     private Filter filter = new Filter()
