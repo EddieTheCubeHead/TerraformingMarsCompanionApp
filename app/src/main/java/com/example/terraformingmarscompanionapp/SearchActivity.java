@@ -95,8 +95,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         RecyclerView.LayoutManager layout_manager = new LinearLayoutManager(this);
         recyclerview.setLayoutManager(layout_manager);
 
-        recyclerview.setAdapter(adapter);
-
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) { return false; }
             @Override public boolean onQueryTextChange(String search_string) {
