@@ -33,7 +33,6 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
 
     private SearchView searchview;
 
-    private HashMap<String, Card> deck;
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
     private ArrayList<Card.Type> valid_types = new ArrayList<>(Arrays.asList(Card.Type.GREEN, Card.Type.RED, Card.Type.BLUE));
@@ -51,7 +50,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
 
         GameController controller = GameController.getInstance();
         Game game = controller.getGame();
-        deck = game.getDeck();
+        HashMap<String, Card> deck = game.getDeck();
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
