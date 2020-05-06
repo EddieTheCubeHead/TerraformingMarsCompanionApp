@@ -83,6 +83,9 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private Button button_save_resources;
     private Button button_editcancel_resources;
 
+    private TextView textview_current_player_name;
+    private TextView textview_current_player_actions_remaining;
+
     private TextView textview_temperature;
     private TextView textview_tfr;
     private TextView textview_oxygen;
@@ -155,6 +158,9 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
         button_save_resources = getView().findViewById(R.id.button_save_resources);
         button_editcancel_resources = getView().findViewById(R.id.button_editcancel_resources);
+
+        textview_current_player_name = getView().findViewById(R.id.textview_current_player_name);
+        textview_current_player_actions_remaining = getView().findViewById(R.id.textview_current_player_actions_remaining);
 
         textview_temperature = getView().findViewById(R.id.textview_temperature);
         textview_tfr = getView().findViewById(R.id.textview_tfr);
@@ -710,6 +716,8 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         player = GameController.getInstance().getDisplayPlayer();
 
         try {
+            textview_current_player_name.setText(player.getName());
+            textview_current_player_actions_remaining.setText(String.valueOf(controller.getDisplayActions()));
             textview_temperature.setText(game.getGlobalTemperature() + "°C");
             textview_oxygen.setText(game.getGlobalOxygen() + "%");
             textview_tfr.setText(String.valueOf(player.getTerraformingRating()));
@@ -730,6 +738,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     }
 
     private void refreshEditVariables() {
+
         money = player.getMoney();
         moneyProduction = player.getMoneyProduction();
         steel = player.getSteel();
