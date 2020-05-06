@@ -203,8 +203,6 @@ public class InGameUI extends AppCompatActivity {
             //korporaation asettaminen
             ((Card) spinner.getSelectedItem()).onPlay(self);
 
-            GameController.getInstance().endTurn();
-
             dialog.dismiss();
             return;
             }

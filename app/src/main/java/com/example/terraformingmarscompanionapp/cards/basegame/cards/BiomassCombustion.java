@@ -19,6 +19,7 @@ public final class BiomassCombustion extends Card {
         tags.add(Tag.BUILDING);
         requirements.setMinOxygen(6);
         victory_points = -1;
+        wait_for_server = true;
     }
 
     @Override

@@ -16,6 +16,7 @@ public final class ArtificialLake extends Card {
         tags.add(Tag.BUILDING);
         requirements.setMinTemperature(-6);
         victory_points = 1;
+        wait_for_server = true;
     }
 
     @Override

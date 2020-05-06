@@ -17,6 +17,7 @@ public final class BigAsteroid extends Card {
         price = 27;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

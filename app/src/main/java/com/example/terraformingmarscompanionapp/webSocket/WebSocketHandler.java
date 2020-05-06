@@ -40,7 +40,7 @@ public final class WebSocketHandler {
 
             @Override
             public void onTextReceived(String s) {
-                Log.i("WebSocket", "Message received");
+                Log.i("WebSocket", "Message received: " + s);
                 final String[] contents = s.split(Pattern.quote(";"));
                 final String identifier = contents[0];
                     switch (identifier) {

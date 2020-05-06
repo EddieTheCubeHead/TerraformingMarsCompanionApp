@@ -19,6 +19,7 @@ public final class Birds extends ResourceCard implements ActionCard {
         tags.add(Tag.ANIMAL);
         requirements.setMinOxygen(13);
         resource_type = ResourceType.ANIMAL;
+        wait_for_server = true;
     }
 
     @Override

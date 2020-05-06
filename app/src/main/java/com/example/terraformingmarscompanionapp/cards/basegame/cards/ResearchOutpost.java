@@ -16,6 +16,7 @@ public final class ResearchOutpost extends Card {
         tags.add(Tag.SCIENCE);
         tags.add(Tag.BUILDING);
         tags.add(Tag.CITY);
+        wait_for_server = true;
     }
 
     @Override

@@ -716,7 +716,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         player = GameController.getInstance().getDisplayPlayer();
 
         try {
-            textview_current_player_name.setText(player.getName());
+            textview_current_player_name.setText(GameController.getInstance().getCurrentPlayer().getName());
             textview_current_player_actions_remaining.setText(String.valueOf(controller.getDisplayActions()));
             textview_temperature.setText(game.getGlobalTemperature() + "°C");
             textview_oxygen.setText(game.getGlobalOxygen() + "%");

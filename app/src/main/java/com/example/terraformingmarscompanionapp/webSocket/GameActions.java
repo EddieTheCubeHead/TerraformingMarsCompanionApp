@@ -48,6 +48,9 @@ public class GameActions {
                 case "fold":
                     GameController.getInstance().endTurn();
                     break;
+                case "use_action":
+                    GameController.getInstance().useActionServer();
+                    break;
                 default:
                     Log.i("GameActions", "Unrecognized game action: " + event_data);
             }
@@ -147,6 +150,10 @@ public class GameActions {
     //Foldaamisen lähettäminen
     public static void sendFold() {
         WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;fold;empty;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
+    }
+
+    public static void sendUseAction() {
+        WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;use_action;empty;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
     }
 
     //Pelin luonut pelaaja määrittää pelin alussa vuorojärjestyksen ja se lähetetään tällä

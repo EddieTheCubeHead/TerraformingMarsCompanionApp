@@ -15,6 +15,7 @@ public final class AerobrakedAmmoniaAsteroid extends Card {
         price = 26;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

@@ -11,6 +11,7 @@ public final class ArtificialPhotosynthesis extends Card {
         name = "Artificial photosynthesis";
         price = 12;
         tags.add(Tag.SCIENCE);
+        wait_for_server = true;
     }
 
     @Override

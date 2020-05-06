@@ -13,6 +13,7 @@ public final class BlackPolarDust extends Card {
         name = "Black polar dust";
         price = 15;
         owner_game = game;
+        wait_for_server = true;
     }
 
     @Override

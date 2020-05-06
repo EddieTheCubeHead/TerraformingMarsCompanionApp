@@ -15,6 +15,8 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
 
 import java.util.regex.Pattern;
 
@@ -144,7 +146,11 @@ public class TilePlacementActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Current placement is not valid!", Toast.LENGTH_SHORT).show();
         }
         else {
-            handler.placeTile(GameController.getInstance().getCurrentPlayer(), handler.getTile(x, y), tile);
+            GameController controller = GameController.getInstance();
+            if (controller.getGame().getServerMultiplayer()) {
+                GameActions.sendTileEvent(new TileEventPacket(tile, controller.getCurrentPlayer().getName(), x, y));
+            }
+            handler.placeTile(controller.getCurrentPlayer(), handler.getTile(x, y), tile);
             exit(view);
         }
     }

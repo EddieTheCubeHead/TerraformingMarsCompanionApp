@@ -9,6 +9,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 import com.example.terraformingmarscompanionapp.ui.main.CardsBoughtActivity;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -55,6 +56,8 @@ public class GameController
         if (ui_events.size() == 0) {
             return false;
         }
+        System.out.println("Delay action use set");
+        delay_action_use = true;
         GameEvent event = ui_events.removeFirst();
         event.playEvent();
         return true;
@@ -74,7 +77,6 @@ public class GameController
     //Gettereitä yleisesti käytetyille muuttujille
     public Game getGame() { return game; }
     public Player getCurrentPlayer()  { return current_player; }
-    public Player getCurrentStarter() { return current_starter; }
     public Context getContext() { return context; }
 
     //Serveripeliä varten tarkistus onko clientin vuoro, vai jonkun muun
@@ -149,19 +151,28 @@ public class GameController
     //vuorojen hallitseminen
     private Boolean folding = false;
     public void setPlayerIsFolding(Boolean currentIsFolding) { folding = currentIsFolding; }
-    public void foldOnTurnEnd() { folding = true; }
 
     //Toiminnon käyttäminen
     public Boolean useAction() {
         if (executeNextEvent()) {
+            gameUpdate();
             return false;
         }
-        gameUpdate();
+        if (delay_action_use) {
+            delay_action_use = false;
+            GameActions.sendUseAction();
+        }
         actions_used++;
         if (actions_used >= 2) {
             endTurn();
         }
+        gameUpdate();
         return true;
+    }
+
+    public void useActionServer() {
+        ui_events.clear();
+        useAction();
     }
 
     public void endTurn()
@@ -205,7 +216,7 @@ public class GameController
             }
         }
 
-        if (generation == 1 && current_player.getCorporation() instanceof FirstAction)
+        if (generation == 1 && current_player == self_player && current_player.getCorporation() instanceof FirstAction)
         {
             FirstAction action = (FirstAction)current_player.getCorporation();
 
@@ -255,6 +266,8 @@ public class GameController
 
         atTurnStart();
     }
+
+    public Player getSelfPlayer() {return self_player;}
 
     public Player getDisplayPlayer()
     {

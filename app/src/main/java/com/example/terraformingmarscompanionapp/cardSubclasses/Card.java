@@ -26,6 +26,7 @@ public abstract class Card {
     protected ProductionBox production_box = new ProductionBox();
     public static ArrayList<Type> ownables = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST));
     public static ArrayList<Type> tag_holders = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
+    protected Boolean wait_for_server = false;
 
     //Enum kortin tyyppiin
     public enum Type {
@@ -65,8 +66,14 @@ public abstract class Card {
     public void playWithMetadata(Player player, Integer data) {
         production_box.playProductionBox(player, data);
         finishPlay(player);
+        if (wait_for_server && owner_game.getServerMultiplayer() && GameController.getInstance().getCurrentPlayer() != GameController.getInstance().getSelfPlayer()) {
+            return;
+        }
+        if (type == Type.CORPORATION) {
+            GameController.getInstance().useAction();
+        }
+
         if (type != Type.GHOST) {
-            System.out.println("Toiminnon käyttö kutsuttu kortin playWithMetadatasta");
             GameController.getInstance().useAction();
         }
     }
