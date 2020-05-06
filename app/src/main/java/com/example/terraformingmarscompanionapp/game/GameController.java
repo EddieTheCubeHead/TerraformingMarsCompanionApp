@@ -218,13 +218,14 @@ public class GameController
             }
         }
 
-        if (generation == 1 && current_player == self_player && current_player.getCorporation() instanceof FirstAction)
+        if (generation == 1 && (self_player == null || current_player == self_player) && current_player.getCorporation() instanceof FirstAction)
         {
             FirstAction action = (FirstAction)current_player.getCorporation();
 
             if (!action.firstActionUsed())
             {
                 action.firstAction();
+                System.out.println("Using first action");
                 useAction();
             }
         }
