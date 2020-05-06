@@ -21,10 +21,9 @@
     >
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -33,17 +32,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:paddingRight="5dp"
-            >
+            android:paddingRight="5dp">
 
             <TextView
                 android:id="@+id/title"
-                android:text="Teksti tässä: "
-
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
 
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+
+                android:text="Teksti tässä: "
 
                 android:textSize="20sp"
 
@@ -53,11 +51,11 @@
                 android:id="@+id/edittext_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+
                 android:layout_weight="1"
 
                 android:inputType="number"
-
-                android:layout_marginLeft="5dp"
 
                 android:textSize="20sp"
 
@@ -69,12 +67,11 @@
         <LinearLayout
             android:id="@+id/button_frame"
 
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_margin="5dp"
-            >
+
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button_negative"
@@ -83,12 +80,11 @@
 
                 android:layout_weight="1"
 
-                android:text="decline"
-                />
+                android:text="decline" />
 
             <FrameLayout
                 android:layout_width="50dp"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
             <Button
                 android:id="@+id/button_positive"
@@ -96,8 +92,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_weight="1"
-                android:text="confirm"
-                />
+                android:text="confirm" />
 
         </LinearLayout>
 

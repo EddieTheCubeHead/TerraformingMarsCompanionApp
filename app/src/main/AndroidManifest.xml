@@ -30,6 +30,7 @@
         <activity android:name=".GameJoiningActivity" />
         <activity android:name=".ui.main.CardsBoughtActivity" />
         <activity android:name=".ui.main.ActivityDialogSearch" />
+        <activity android:name=".ui.main.IntegerDialogActivity" />
     </application>
 
 </manifest>
