@@ -87,13 +87,33 @@ public class InGameUI extends AppCompatActivity {
         findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
+                 * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
+                if (!controller.checkTurnEligibility()) {
+                    Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 startTestingActivity();
             }
         });
 
-        findViewById(R.id.item_3).setOnClickListener(view -> startSearchActivity());
+        findViewById(R.id.item_3).setOnClickListener(view ->  {
+            /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
+             * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
+            if (!controller.checkTurnEligibility()) {
+                Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            startSearchActivity();
+        });
 
         findViewById(R.id.item_4).setOnClickListener(view -> {
+            /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
+             * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
+            if (!controller.checkTurnEligibility()) {
+                Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             controller.endTurn();
             if (game.getServerMultiplayer()) {
                 GameActions.sendFold();

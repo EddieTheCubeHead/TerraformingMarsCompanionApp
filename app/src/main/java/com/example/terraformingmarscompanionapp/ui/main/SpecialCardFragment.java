@@ -103,6 +103,12 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
 
     @Override public void onCardClick(int position)
     {
+        /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
+         * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
+        if (!controller.checkTurnEligibility()) {
+            Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
 
         try {

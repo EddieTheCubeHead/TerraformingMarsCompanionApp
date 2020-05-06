@@ -110,6 +110,10 @@ public class GameController
 
         current_player = queue.getFirst();
         current_starter = current_player;
+
+        if (game.getServerMultiplayer()) {
+            server_multiplayer = true;
+        }
         //oletuksena:
         // ensimmäisen sukupolven aloittaja on laittanut nimensä ekana.
         // tästä jatketaan nimien laittamisjärjestyksessä.
@@ -126,11 +130,6 @@ public class GameController
         }
         instance = new GameController(game);
         return instance;
-    }
-
-    public void makeMultiplayer(Player player) {
-        server_multiplayer=true;
-        self_player = player;
     }
 
     public static GameController getInstance()
@@ -196,14 +195,16 @@ public class GameController
         System.out.println("Turn start called!");
         gameUpdate();
 
-        if (self_player == null || current_player == self_player) {
-            if (generation == 0 && current_player.getCorporation() == null) {
-                ((InGameUI) context).playCorporation();
-            } else if (generation == 0 && game.modifiers.getPrelude() && current_player.getPreludes().size() == 0) {
-                ((InGameUI) context).playPreludes();
+        if (generation == 0) {
+            if (self_player == null || current_player == self_player) {
+                if (current_player.getCorporation() == null) {
+                    ((InGameUI) context).playCorporation();
+                } else if (game.modifiers.getPrelude() && current_player.getPreludes().size() == 0) {
+                    ((InGameUI) context).playPreludes();
+                } else {
+                    atGenerationStart();
+                }
             }
-        } else {
-            System.out.println(self_player.getName());
         }
 
         if (generation == 1 && current_player.getCorporation() instanceof FirstAction)
@@ -244,7 +245,7 @@ public class GameController
         generation++;
 
         //cardboughtactivityt activity stackkiin
-        if (!server_multiplayer & generation > 0 & false)
+        if (!server_multiplayer && generation > 0 && false)
         {
             do {
                 Intent intent = new Intent(context, CardsBoughtActivity.class);
@@ -312,7 +313,6 @@ public class GameController
     }
 
     public void gameUpdate() {
-        Log.i("Game", "Update called");
         for (GameUpdateListener listener : game_listeners) {
             listener.update();
         }
