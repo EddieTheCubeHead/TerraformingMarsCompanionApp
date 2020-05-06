@@ -24,7 +24,7 @@ public class CardEventPacket implements PlayablePacket {
     @Override
     public void playPacket() {
         Game game = GameController.getInstance().getGame();
-        Card card = game.getDeck().get(card_name);
+        Card card = game.getAllCards().get(card_name);
         if (card.getOwner() == null) {
             card.playWithMetadata(game.getPlayer(player_name), metadata);
         } else if (card instanceof ActionCard) {

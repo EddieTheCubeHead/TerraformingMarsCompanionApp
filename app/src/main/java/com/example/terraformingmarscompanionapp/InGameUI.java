@@ -24,13 +24,12 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.CardsBoughtActivity;
-import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class InGameUI extends AppCompatActivity {
@@ -90,23 +89,22 @@ public class InGameUI extends AppCompatActivity {
 
         findViewById(R.id.item_3).setOnClickListener(view -> startSearchActivity());
 
-        findViewById(R.id.item_4).setOnClickListener(view -> controller.endTurn());
+        findViewById(R.id.item_4).setOnClickListener(view -> {
+            controller.endTurn();
+            if (game.getServerMultiplayer()) {
+                GameActions.sendFold();
+            }
+        });
 
-        //tehdään vain kerran
-        if (is_first_run)
-        {
-            is_first_run = false;
-
-            corporationRound();
-        }
+        GameController.getInstance().atTurnStart();
     }
 
     //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisiksi
     //tässä vaiheessa aika paljon toistoa
     //tehty toistaen alku koska kuitenkin niin paljon eri asioita että on järkevää tehdä erillisiksi
-    private void corporationRound()
+    public void playCorporation()
     {
-        List<Player> players = controller.getPlayers();
+        Player self = controller.getCurrentPlayer();
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -156,7 +154,13 @@ public class InGameUI extends AppCompatActivity {
 
         window.setLayout(2*width/3, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        title.setText("Choose " + players.get(0).getName() + "'s corporation.");
+        String player_string = (self.getName() + "'s");
+
+        if (game.getServerMultiplayer()) {
+            player_string = "your";
+        }
+
+        title.setText("Choose " + player_string + " corporation.");
 
         //eri pelaajien läpi menemisen logiikka onclicklistenerissä
         //voi uudelleenkirjottaa
@@ -166,32 +170,23 @@ public class InGameUI extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                //korporaation asettaminen
-                ((Card) spinner.getSelectedItem()).onPlay(players.get(player_index));
+            //korporaation asettaminen
+            ((Card) spinner.getSelectedItem()).onPlay(self);
 
-                //seuraavaan pelaajaan siirtyminen
-                spinner.setSelection(0);
-                player_index++;
+            //seuraavaan pelaajaan siirtyminen
+            spinner.setSelection(0);
+            player_index++;
 
-                //viimeisen valinnan ohessa dialogi suljetaan
-                if (player_index == players.size()) {
-                    dialog.dismiss();
-                    if (game.modifiers.getPrelude()) {
-                        preludeRound();
-                    }
-                    GameController.getInstance().gameUpdate();
-                    GameController.getInstance().atGenerationStart();
-                    return;
-                }
-
-                title.setText("Choose " + players.get(player_index).getName() + "'s corporation.");
+            GameController.getInstance().gameUpdate();
+            dialog.dismiss();
+            return;
             }
         });
     }
 
-    private void preludeRound()
+    public void playPreludes()
     {
-        List<Player> players = controller.getPlayers();
+        Player self = controller.getCurrentPlayer();
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -239,10 +234,14 @@ public class InGameUI extends AppCompatActivity {
 
         window.setLayout(2*width/3, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        title.setText("Choose " + players.get(0).getName() + "'s preludes.");
+        String player_string = (self.getName() + "'s");
 
-        //eri pelaajien läpi menemisen logiikka onclicklistenerissä
-        //voi uudelleenkirjottaa
+        if (game.getServerMultiplayer()) {
+            player_string = "your";
+        }
+
+        title.setText("Choose " + player_string + " preludes.");
+
         view.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
             private int player_index = 0;
 
@@ -261,21 +260,15 @@ public class InGameUI extends AppCompatActivity {
                 }
 
                 //preludien asettaminen
-                players.get(player_index).addPrelude((Card) spinner1.getSelectedItem());
-                players.get(player_index).addPrelude((Card) spinner2.getSelectedItem());
+                self.addPrelude((Card) spinner1.getSelectedItem());
+                self.addPrelude((Card) spinner2.getSelectedItem());
 
                 //seuraavaan pelaajaan siirtyminen
                 spinner1.setSelection(0);
                 spinner2.setSelection(1);
 
-                player_index++;
-
-                //viimeisen valinnan ohessa dialogi suljetaan
-                if (player_index == players.size()) {
-                    dialog.dismiss();
-                    return;
-                }
-                title.setText("Choose " + players.get(player_index).getName() + "'s corporation.");
+                dialog.dismiss();
+                return;
             }
         });
     }
@@ -309,7 +302,9 @@ public class InGameUI extends AppCompatActivity {
     }
 
     public void onTurnChange(String player_name) {
-        Toast.makeText(getApplicationContext(), String.format("%s's turn", player_name), Toast.LENGTH_SHORT).show();
+        if (!game.getServerMultiplayer()) {
+            Toast.makeText(getApplicationContext(), String.format("%s's turn", player_name), Toast.LENGTH_SHORT).show();
+        }
     }
 
     //https://stackoverflow.com/questions/5810084/android-alertdialog-single-button

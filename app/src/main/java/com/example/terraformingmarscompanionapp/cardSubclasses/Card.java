@@ -66,6 +66,9 @@ public abstract class Card {
         production_box.playProductionBox(player, data);
         finishPlay(player);
         GameController.getInstance().useAction();
+        if (type.equals(Type.CORPORATION)) {
+            GameController.getInstance().useAction();
+        }
     }
 
     protected final void finishPlay (Player player) {

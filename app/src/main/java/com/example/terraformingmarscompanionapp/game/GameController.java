@@ -63,6 +63,11 @@ public class GameController
         System.out.println("Context set");
     }
 
+    //Serveripeliä varten instanssin omistaja
+    public void setSelfPlayer(Player player) {
+        self_player = player;
+    }
+
     //Gettereitä yleisesti käytetyille muuttujille
     public Game getGame() { return game; }
     public Player getCurrentPlayer()  { return current_player; }
@@ -147,6 +152,7 @@ public class GameController
 
     //Toiminnon käyttäminen
     public void useAction() {
+        Log.i("Vuoronhallinta", "toiminto käytetty");
         gameUpdate();
         actions_used++;
         if (actions_used >= 2) {
@@ -185,10 +191,18 @@ public class GameController
         //TODO kaikki vuoron lopussa vuoron lopettavalle current_playerille tapahtuva
     }
 
-    private void atTurnStart()
+    public void atTurnStart()
     {
         actions_used = 0;
         gameUpdate();
+
+        if (self_player == null || current_player == self_player) {
+            if (generation == 0 && current_player.getCorporation() == null) {
+                ((InGameUI) context).playCorporation();
+            } else if (generation == 0 && game.modifiers.getPrelude() && current_player.getPreludes().size() == 0) {
+                ((InGameUI) context).playPreludes();
+            }
+        }
 
         if (generation == 1 && current_player.getCorporation() instanceof FirstAction)
         {
@@ -224,6 +238,7 @@ public class GameController
 
     public void atGenerationStart()
     {
+        Log.i("Vuoronhallinta", "sukupolvi päätetty");
         generation++;
 
         //cardboughtactivityt activity stackkiin
@@ -296,9 +311,11 @@ public class GameController
 
     public void gameUpdate() {
         Log.i("Game", "Update called");
-        for (GameUpdateListener listener : game_listeners) {
-            listener.update();
-        }
+        new Thread(() -> ((InGameUI)context).runOnUiThread(() -> {
+            for (GameUpdateListener listener : game_listeners) {
+                listener.update();
+            }
+        })).start();
     }
 
     //Kaikkien pelaajien getteri

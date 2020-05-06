@@ -75,7 +75,7 @@ public class GameJoiningActivity extends AppCompatActivity implements ServerSetu
                 true,
                 map);
 
-        GameController.makeInstance(game);
+        GameController.makeInstance(game).setSelfPlayer(game.getPlayer(UserActions.getUser()));
 
         Intent intent = new Intent(this, InGameUI.class);
         startActivity(intent);

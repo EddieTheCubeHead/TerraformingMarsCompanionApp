@@ -118,6 +118,7 @@ public final class WebSocketHandler {
             @Override
             public void onException(Exception e) {
                 Log.i("WebSocket",  "exception on message: " + e.getMessage());
+                e.printStackTrace();
             }
 
             @Override

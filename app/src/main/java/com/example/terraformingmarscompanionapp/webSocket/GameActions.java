@@ -44,11 +44,7 @@ public class GameActions {
                 gson.fromJson(event, TileEventPacket.class).playPacket();
                 break;
             case "fold":
-                GameController.getInstance().setPlayerIsFolding(true);
                 GameController.getInstance().endTurn();
-                break;
-            case "end_generation":
-                GameController.getInstance().endGeneration();
                 break;
             default:
                 Log.i("GameActions", "Unrecognized game action: " + event_data);
@@ -147,7 +143,7 @@ public class GameActions {
 
     //Foldaamisen lähettäminen
     public static void sendFold() {
-        WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;fold;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
+        WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;fold;empty;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
     }
 
     //Pelin luonut pelaaja määrittää pelin alussa vuorojärjestyksen ja se lähetetään tällä
