@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
@@ -39,18 +41,20 @@ public final class ImportedHydrogen extends Card {
 
     @Override
     public void playServerConnection(Player player, Integer data) {
-        if (data != 0) {
-
+        if (data == 1) {
+            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 3));
+        } else if (data == 2) {
+            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2));
         }
+        super.playServerConnection(player, data);
     }
 
-    //TODO selvitä missä välissä mikrobit määritetään
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data == 0) {
             player.changePlants(3);
         }
-        super.onPlay(player);
+        super.finishPlay(player);
     }
 }

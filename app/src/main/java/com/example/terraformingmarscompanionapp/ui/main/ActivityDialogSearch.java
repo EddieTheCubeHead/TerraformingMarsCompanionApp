@@ -19,6 +19,7 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cards.basegame.cards.Pets;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -51,6 +52,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
     private ArrayList<Card.Type> valid_types = new ArrayList<>(Arrays.asList(Card.Type.GREEN, Card.Type.RED, Card.Type.BLUE, Card.Type.CORPORATION));
+    private ArrayList<ResourceCard.ResourceType> organics = new ArrayList<>(Arrays.asList(ResourceCard.ResourceType.ANIMAL, ResourceCard.ResourceType.MICROBE));
     //todo tarkat valid types
 
     View view;
@@ -104,7 +106,6 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
             owner_required = true;
         } else {
             //korttien haku
-            System.out.println("Searching for valid cards, deck size: " + deck.size() + " Required resource: " + type);
             for (Map.Entry<String, Card> entry : deck.entrySet()) {
                 Card card = entry.getValue();
 
@@ -117,7 +118,15 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
                 }
 
                 if (card instanceof ResourceCard) {
+                    if (card.getOwner().getOrganicsProtected() && organics.contains(type)) {
+                        if (amount < 0 && card.getOwner().getName() != player) {
+                            continue;
+                        }
+                    }
+
                     if (((ResourceCard) card).getResourceType().equals(type)) {
+                        card_list.add(card);
+                    } else if (((ResourceCard) card).getResourceType() == ResourceCard.ResourceType.PET && type == ResourceCard.ResourceType.ANIMAL) {
                         card_list.add(card);
                     } else {
                         System.out.println(((ResourceCard) card).getResourceType() + " : " + type);

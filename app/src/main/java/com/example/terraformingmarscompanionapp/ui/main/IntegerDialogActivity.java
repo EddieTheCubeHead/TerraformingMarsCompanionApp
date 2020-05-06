@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -116,6 +117,8 @@ public class IntegerDialogActivity extends AppCompatActivity {
 
     private void exit() {
         dialog.dismiss();
-        IntegerDialogActivity.super.onBackPressed();
+        Intent inGameUi = new Intent(this, InGameUI.class);
+        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        startActivity(inGameUi);
     }
 }

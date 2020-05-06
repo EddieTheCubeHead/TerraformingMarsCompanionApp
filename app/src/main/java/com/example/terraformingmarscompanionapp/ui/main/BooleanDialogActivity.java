@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -81,7 +82,6 @@ public class BooleanDialogActivity extends AppCompatActivity {
         LinearLayout root = view.findViewById(R.id.button_frame_lower);
 
         if (extra_text_1 != null) {
-            extra_first.setVisibility(View.VISIBLE);
             extra_first.setText(extra_text_1);
             extra_first.setOnClickListener(v -> {
                 executeWithData(2);
@@ -91,9 +91,8 @@ public class BooleanDialogActivity extends AppCompatActivity {
         }
 
         if (extra_text_2 != null) {
-            extra_first.setVisibility(View.VISIBLE);
-            extra_first.setText(extra_text_2);
-            extra_first.setOnClickListener(v -> {
+            extra_second.setText(extra_text_2);
+            extra_second.setOnClickListener(v -> {
                 executeWithData(3);
             });
         }else {
@@ -139,11 +138,11 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
     private void executeWithData(Integer data) {
         if (card.getOwner() == null) {
-            card.playWithMetadata(GameController.getInstance().getCurrentPlayer(), 1);
+            card.playServerConnection(GameController.getInstance().getCurrentPlayer(), data);
             exit();
         } else {
             if (card instanceof ActionCard) {
-                ((ActionCard) card).actionWithMetadata(1);
+                ((ActionCard) card).actionServerHook(card.getOwner(), data);
             }
         }
         exit();
@@ -151,6 +150,8 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
     private void exit() {
         dialog.dismiss();
-        BooleanDialogActivity.super.onBackPressed();
+        Intent inGameUi = new Intent(this, InGameUI.class);
+        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        startActivity(inGameUi);
     }
 }
