@@ -12,13 +12,18 @@ public final class StandardCity extends StandardProject {
         super(game);
         name = "Standard project: City";
         price = 25;
+        wait_for_server = true;
+    }
+
+    @Override
+    public void onPlay(Player player) {
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
         player.changeMoneyProduction(1);
-        player.addCity();
         super.playWithMetadata(player, data);
     }
 }

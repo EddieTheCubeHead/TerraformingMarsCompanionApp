@@ -18,6 +18,7 @@ public final class LargeConvoy extends Card {
         tags.add(Tag.EARTH);
         tags.add(Tag.EVENT);
         victory_points = 2;
+        wait_for_server = true;
     }
 
     @Override

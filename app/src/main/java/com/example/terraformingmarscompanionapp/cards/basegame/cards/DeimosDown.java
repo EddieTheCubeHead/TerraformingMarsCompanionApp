@@ -17,6 +17,7 @@ public final class DeimosDown extends Card {
         price = 31;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

@@ -17,6 +17,7 @@ public final class ImmigrantCity extends Card implements EffectCard {
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
+        wait_for_server = true;
     }
 
     @Override

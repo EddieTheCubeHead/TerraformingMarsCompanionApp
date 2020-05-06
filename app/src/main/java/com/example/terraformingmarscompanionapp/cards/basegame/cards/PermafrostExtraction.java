@@ -15,6 +15,7 @@ public final class PermafrostExtraction extends Card {
         price = 8;
         tags.add(Tag.EVENT);
         requirements.setMinTemperature(-8);
+        wait_for_server = true;
     }
 
     @Override

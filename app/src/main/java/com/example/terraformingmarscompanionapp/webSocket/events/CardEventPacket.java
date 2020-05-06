@@ -11,11 +11,21 @@ public class CardEventPacket implements PlayablePacket {
     private String card_name;
     private String player_name;
     private Integer metadata;
+    private String extra_card;
 
     public CardEventPacket(String card_name, String player_name, Integer metadata) {
         this.card_name = card_name;
         this.player_name = player_name;
         this.metadata = metadata;
+        extra_card = "";
+    }
+
+    //Ihan vaan robotic workforcea varten
+    public CardEventPacket(String card_name, String player_name, Integer metadata, String extra_card) {
+        this.card_name = card_name;
+        this.player_name = player_name;
+        this.metadata = metadata;
+        this.extra_card = extra_card;
     }
 
     /* Saadut paketit pelataan. Onko kyseessä kortin pelaaminen vai toiminnan käyttö selviää kortin omistajasta:
@@ -31,6 +41,9 @@ public class CardEventPacket implements PlayablePacket {
             ((ActionCard) card).actionWithMetadata(metadata);
         } else {
             Log.i("WebSocket", "CardEffectPacket lähetetty omistetusta kortista, jolla ei ole toimintaa. Huomauta Eetua. Kortin nimi: " + card_name);
+        }
+        if (!extra_card.equals("")) {
+            game.getAllCards().get(extra_card).playProductionBox();
         }
     }
 }

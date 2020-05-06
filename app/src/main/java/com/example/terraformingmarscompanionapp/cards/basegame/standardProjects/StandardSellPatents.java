@@ -8,6 +8,7 @@ public final class StandardSellPatents extends StandardProject {
     public StandardSellPatents(Game game) {
         super(game);
         name = "Standard project: Sell patents";
+        wait_for_server = true;
     }
 
     @Override

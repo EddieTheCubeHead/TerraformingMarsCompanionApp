@@ -14,6 +14,7 @@ public final class LavaFlows extends Card {
         name = "Lava flows";
         price = 18;
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

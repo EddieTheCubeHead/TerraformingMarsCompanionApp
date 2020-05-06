@@ -19,6 +19,7 @@ public final class EcologicalZone extends ResourceCard implements EffectCard {
         requirements.setMinPersonalGreeneries(1);
         resource_type = ResourceType.ANIMAL;
         owner_game = game;
+        wait_for_server = true;
     }
 
     @Override

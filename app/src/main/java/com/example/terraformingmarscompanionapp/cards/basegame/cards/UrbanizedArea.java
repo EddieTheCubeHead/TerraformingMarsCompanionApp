@@ -16,11 +16,12 @@ public final class UrbanizedArea extends Card {
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
+        wait_for_server = true;
     }
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.URBANIZED_AREA, owner_game));
         super.onPlay(player);
     }
 

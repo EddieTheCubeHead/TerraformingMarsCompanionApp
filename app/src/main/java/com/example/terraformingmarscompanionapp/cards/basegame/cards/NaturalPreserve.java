@@ -17,6 +17,7 @@ public final class NaturalPreserve extends Card {
         tags.add(Tag.BUILDING);
         requirements.setMaxOxygen(4);
         victory_points = 1;
+        wait_for_server = true;
     }
 
     @Override

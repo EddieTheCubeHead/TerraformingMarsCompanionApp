@@ -14,6 +14,7 @@ public final class LakeMarineris extends Card {
         price = 18;
         requirements.setMinTemperature(0);
         victory_points = 2;
+        wait_for_server = true;
     }
 
     @Override

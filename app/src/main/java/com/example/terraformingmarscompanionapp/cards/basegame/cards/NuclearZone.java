@@ -16,6 +16,7 @@ public final class NuclearZone extends Card {
         tags.add(Tag.EARTH);
         victory_points = -2;
         owner_game = game;
+        wait_for_server = true;
     }
 
     @Override

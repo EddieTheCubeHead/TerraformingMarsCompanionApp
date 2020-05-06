@@ -18,6 +18,7 @@ public final class DomedCrater extends Card {
         requirements.setMaxOxygen(7);
         requirements.setMinEnergyProduction(1);
         victory_points = 1;
+        wait_for_server = true;
     }
 
     @Override

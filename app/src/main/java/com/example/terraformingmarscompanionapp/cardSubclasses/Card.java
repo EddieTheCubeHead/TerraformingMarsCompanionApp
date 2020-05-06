@@ -3,6 +3,7 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -57,7 +58,7 @@ public abstract class Card {
     }
 
     public void playServerConnection(Player player, Integer data) {
-        if (GameController.getInstance().getGame().getServerMultiplayer()) {
+        if (GameController.getInstance().getGame().getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), 0));
         }
         playWithMetadata(player, data);

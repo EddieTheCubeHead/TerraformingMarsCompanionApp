@@ -15,6 +15,7 @@ public final class Flooding extends Card {
         price = 7;
         tags.add(Tag.EVENT);
         victory_points = -1;
+        wait_for_server = true;
     }
 
     @Override

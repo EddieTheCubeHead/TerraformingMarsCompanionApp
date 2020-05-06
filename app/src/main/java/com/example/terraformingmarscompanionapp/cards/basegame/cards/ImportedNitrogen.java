@@ -16,6 +16,7 @@ public final class ImportedNitrogen extends Card {
         tags.add(Tag.EARTH);
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

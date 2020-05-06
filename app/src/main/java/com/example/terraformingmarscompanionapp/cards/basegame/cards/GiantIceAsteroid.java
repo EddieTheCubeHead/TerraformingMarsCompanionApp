@@ -19,6 +19,7 @@ public final class GiantIceAsteroid extends Card {
         price = 36;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

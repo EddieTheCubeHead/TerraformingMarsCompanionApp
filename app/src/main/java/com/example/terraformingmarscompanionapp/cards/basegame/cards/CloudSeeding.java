@@ -15,6 +15,7 @@ public final class CloudSeeding extends Card {
         name = "Cloud seeding";
         price = 11;
         requirements.setMinOceans(3);
+        wait_for_server = true;
     }
 
     @Override

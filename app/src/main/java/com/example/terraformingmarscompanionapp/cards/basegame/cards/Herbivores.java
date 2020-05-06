@@ -14,6 +14,7 @@ public final class Herbivores extends ResourceCard implements EffectCard {
         tags.add(Tag.ANIMAL);
         requirements.setMinOxygen(8);
         resource_type = ResourceType.ANIMAL;
+        wait_for_server = true;
     }
 
     @Override

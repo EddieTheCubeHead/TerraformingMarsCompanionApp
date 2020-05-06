@@ -12,11 +12,12 @@ public final class StandardAquifer extends StandardProject {
         super(game);
         name = "Standard project: Aquifer";
         price = 18;
+        wait_for_server = true;
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        super.playWithMetadata(player, data);
+        super.onPlay(player);
     }
 }

@@ -19,6 +19,7 @@ public final class Comet extends Card {
         price = 21;
         tags.add(Tag.EVENT);
         tags.add(Tag.SPACE);
+        wait_for_server = true;
     }
 
     @Override

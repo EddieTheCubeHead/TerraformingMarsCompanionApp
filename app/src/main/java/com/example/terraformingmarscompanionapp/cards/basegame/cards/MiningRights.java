@@ -14,6 +14,7 @@ public final class MiningRights extends Card {
         name = "Mining rights";
         price = 9;
         tags.add(Tag.BUILDING);
+        wait_for_server = true;
     }
 
     @Override

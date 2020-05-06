@@ -12,12 +12,17 @@ public final class StandardGreenery extends StandardProject {
         super(game);
         name = "Standard project: Greenery";
         price = 23;
+        wait_for_server = true;
+    }
+
+    @Override
+    public void onPlay(Player player) {
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.GREENERY, owner_game));
+        super.onPlay(player);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.GREENERY, owner_game));
-        player.addGreenery();
         super.playWithMetadata(player, data);
     }
 }

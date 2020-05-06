@@ -15,6 +15,7 @@ public final class Plantation extends Card {
         price = 15;
         tags.add(Tag.PLANT);
         requirements.setMinScienceTags(2);
+        wait_for_server = true;
     }
 
     @Override

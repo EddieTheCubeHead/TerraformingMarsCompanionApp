@@ -22,6 +22,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
 
 import java.util.ArrayList;
@@ -174,6 +175,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         Card card = card_list.get(position);
         if (special_case.equals("Robotic workforce")) {
             card.playProductionBox();
+            GameActions.sendCardEvent(new CardEventPacket("Robotic workforce", GameController.getInstance().getCurrentPlayer().getName(), 0, card.getName()));
         } else {
             if (GameController.getInstance().getGame().getServerMultiplayer()) {
                 GameActions.sendResourceEvent(new ResourceEventPacket(card.getName(), amount));

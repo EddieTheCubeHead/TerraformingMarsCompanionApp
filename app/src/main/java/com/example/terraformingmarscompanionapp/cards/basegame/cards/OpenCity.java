@@ -19,6 +19,7 @@ public final class OpenCity extends Card {
         requirements.setMinEnergyProduction(1);
         victory_points = 1;
         owner_game = game;
+        wait_for_server = true;
     }
 
     @Override

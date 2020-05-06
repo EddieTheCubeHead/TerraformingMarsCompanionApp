@@ -17,6 +17,7 @@ public final class MiningExpedition extends Card {
         price = 12;
         tags.add(Tag.EVENT);
         owner_game = game;
+        wait_for_server = true;
     }
 
     @Override

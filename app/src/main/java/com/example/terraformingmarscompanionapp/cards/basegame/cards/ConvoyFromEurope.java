@@ -16,6 +16,7 @@ public final class ConvoyFromEurope extends Card {
         price = 15;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

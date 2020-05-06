@@ -15,6 +15,7 @@ public final class ProtectedValley extends Card {
         price = 23;
         tags.add(Tag.PLANT);
         tags.add(Tag.BUILDING);
+        wait_for_server = true;
     }
 
     @Override

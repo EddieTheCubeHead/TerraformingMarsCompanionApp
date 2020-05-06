@@ -14,6 +14,7 @@ public final class MoholeArea extends Card {
         name = "Mohole area";
         price = 20;
         tags.add(Tag.BUILDING);
+        wait_for_server = true;
     }
 
     @Override

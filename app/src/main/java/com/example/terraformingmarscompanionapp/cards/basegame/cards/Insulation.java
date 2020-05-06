@@ -14,6 +14,7 @@ public final class Insulation extends Card {
         super(Type.GREEN, game);
         name = "Insulation";
         price = 2;
+        wait_for_server = true;
     }
 
     @Override

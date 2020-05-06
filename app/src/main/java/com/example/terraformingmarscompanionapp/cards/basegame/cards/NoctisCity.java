@@ -16,6 +16,7 @@ public final class NoctisCity extends Card {
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
+        wait_for_server = true;
     }
 
     @Override

@@ -12,6 +12,7 @@ public final class LocalHeatTrapping extends Card {
         price = 1;
         tags.add(Tag.EVENT);
         requirements.setMinHeat(5);
+        wait_for_server = true;
     }
 
     @Override

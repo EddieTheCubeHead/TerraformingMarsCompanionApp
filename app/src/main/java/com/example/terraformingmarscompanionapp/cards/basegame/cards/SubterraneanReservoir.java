@@ -14,6 +14,7 @@ public final class SubterraneanReservoir extends Card {
         name = "Subterranean reservoir";
         price = 11;
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

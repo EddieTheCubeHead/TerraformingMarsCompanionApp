@@ -19,6 +19,7 @@ public final class Fish extends ResourceCard implements ActionCard {
         tags.add(Tag.ANIMAL);
         requirements.setMinTemperature(2);
         resource_type = ResourceType.ANIMAL;
+        wait_for_server = true;
     }
 
     @Override

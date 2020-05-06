@@ -16,6 +16,7 @@ public final class Mangrove extends Card {
         tags.add(Tag.PLANT);
         requirements.setMinTemperature(4);
         victory_points = 1;
+        wait_for_server = true;
     }
 
     @Override

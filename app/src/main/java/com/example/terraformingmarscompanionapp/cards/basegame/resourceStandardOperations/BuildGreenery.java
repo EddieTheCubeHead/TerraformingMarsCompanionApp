@@ -12,6 +12,7 @@ public final class BuildGreenery extends ResourceStandardOperation {
         super(game);
         name = "Build greenery";
         requirements.setPlantsForGreenery(true);
+        wait_for_server = true;
     }
 
     @Override

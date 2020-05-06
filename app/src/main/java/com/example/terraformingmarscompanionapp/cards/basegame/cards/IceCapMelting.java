@@ -15,6 +15,7 @@ public final class IceCapMelting extends Card {
         price = 5;
         tags.add(Tag.EVENT);
         requirements.setMinTemperature(2);
+        wait_for_server = true;
     }
 
     @Override

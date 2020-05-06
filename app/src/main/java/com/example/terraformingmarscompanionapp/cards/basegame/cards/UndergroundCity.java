@@ -16,6 +16,7 @@ public final class UndergroundCity extends Card {
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(2);
+        wait_for_server = true;
     }
 
     @Override

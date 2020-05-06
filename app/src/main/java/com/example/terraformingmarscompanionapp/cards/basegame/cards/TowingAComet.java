@@ -15,6 +15,7 @@ public final class TowingAComet extends Card {
         price = 23;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

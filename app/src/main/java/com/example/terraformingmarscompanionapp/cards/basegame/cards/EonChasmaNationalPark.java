@@ -17,6 +17,7 @@ public final class EonChasmaNationalPark extends Card {
         tags.add(Tag.BUILDING);
         requirements.setMinTemperature(-12);
         victory_points = 1;
+        wait_for_server = true;
     }
 
     @Override
