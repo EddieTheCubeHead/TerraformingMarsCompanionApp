@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class Livestock extends ResourceCard implements ActionCard {
@@ -32,6 +33,7 @@ public final class Livestock extends ResourceCard implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         resource_amount++;
+        GameController.getInstance().useAction();
     }
 
     @Override

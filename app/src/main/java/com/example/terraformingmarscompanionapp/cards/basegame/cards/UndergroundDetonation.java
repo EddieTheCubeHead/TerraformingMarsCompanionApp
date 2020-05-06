@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class UndergroundDetonation extends Card implements ActionCard {
     public UndergroundDetonation(Game game) {
@@ -22,6 +23,7 @@ public final class UndergroundDetonation extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeMoney(-10);
         owner_player.changeHeatProduction(2);
+        GameController.getInstance().useAction();
     }
 
     @Override

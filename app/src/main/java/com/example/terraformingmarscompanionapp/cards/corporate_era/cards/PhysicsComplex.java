@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class PhysicsComplex extends ResourceCard implements ActionCard {
     public PhysicsComplex(Game game) {
@@ -26,6 +27,7 @@ public final class PhysicsComplex extends ResourceCard implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-6);
         resource_amount++;
+        GameController.getInstance().useAction();
     }
 
     @Override

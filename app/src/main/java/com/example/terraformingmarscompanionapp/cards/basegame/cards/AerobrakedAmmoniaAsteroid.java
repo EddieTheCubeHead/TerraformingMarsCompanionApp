@@ -19,7 +19,7 @@ public final class AerobrakedAmmoniaAsteroid extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, owner_game, 2));
+        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2));
         super.onPlay(player);
     }
 

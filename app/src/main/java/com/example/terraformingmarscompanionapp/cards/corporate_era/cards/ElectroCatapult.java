@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class ElectroCatapult extends Card implements ActionCard {
@@ -37,6 +38,7 @@ public final class ElectroCatapult extends Card implements ActionCard {
             owner_player.takeSteel(1);
         }
         owner_player.changeMoney(7);
+        GameController.getInstance().useAction();
     }
 
     @Override

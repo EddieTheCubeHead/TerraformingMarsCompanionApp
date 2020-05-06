@@ -14,11 +14,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,16 +34,18 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
     public static final String OWNER_ONLY = "owner_required";
     public static final String SPECIAL_CASE = "special";
     public static final String AMOUNT = "amount";
-    public static final String CARD_OWNER_NAME = "owner_player";
+    public static final String PLAYER_NAME = "owner_player";
+    public static final String RESOURCE_TYPE = "resource_type";
 
     AlertDialog dialog;
 
     private SearchView searchview;
 
     private Integer amount;
-    private Player player;
+    private String player;
     private String special_case;
     private Boolean owner_required;
+    private ResourceCard.ResourceType type;
 
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
@@ -58,6 +64,9 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
 
         special_case = intent.getStringExtra(SPECIAL_CASE);
         owner_required = intent.getBooleanExtra(OWNER_ONLY, false);
+        player =intent.getStringExtra(PLAYER_NAME);
+        amount = intent.getIntExtra(AMOUNT, 0);
+        type = ResourceCard.ResourceType.valueOf(intent.getStringExtra(RESOURCE_TYPE));
 
         GameController controller = GameController.getInstance();
         Game game = controller.getGame();
@@ -72,9 +81,6 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         RecyclerView recyclerview = view.findViewById(R.id.result_recyclerview);
 
         if (special_case.equals("Robotic workforce")) {
-            //TODO robotic workforce erikoistapaus
-            owner_required = true;
-        } else {
             //korttien haku
             for (Map.Entry<String, Card> entry : deck.entrySet()) {
                 Card card = entry.getValue();
@@ -82,11 +88,42 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
                 if (card.getOwner() == null)
                     continue;
 
+                if (!card.getOwner().getName().equals(player)) {
+                    continue;
+                }
+
+                if (!card.getTags().contains(Tag.BUILDING))
+                    continue;
+
                 if (!valid_types.contains(card.getType()))
                     continue;
 
                 card_list.add(card);
             }
+            owner_required = true;
+        } else {
+            //korttien haku
+            System.out.println("Searching for valid cards, deck size: " + deck.size() + " Required resource: " + type);
+            for (Map.Entry<String, Card> entry : deck.entrySet()) {
+                Card card = entry.getValue();
+
+                if (card.getOwner() == null) {
+                    continue;
+                }
+
+                if (owner_required && !card.getOwner().getName().equals(player)) {
+                    continue;
+                }
+
+                if (card instanceof ResourceCard) {
+                    if (((ResourceCard) card).getResourceType().equals(type)) {
+                        card_list.add(card);
+                    } else {
+                        System.out.println(((ResourceCard) card).getResourceType() + " : " + type);
+                    }
+                }
+            }
+            System.out.println("Found " + card_list.size() + " valid cards");
         }
 
         //recyclerviewn setup
@@ -135,8 +172,18 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
 
     @Override public void onCardClick(int position) {
         Card card = card_list.get(position);
-        //todo se mitä pitää tehdä.
-        finish();
+        if (special_case.equals("Robotic workforce")) {
+            card.playProductionBox();
+        } else {
+            if (GameController.getInstance().getGame().getServerMultiplayer()) {
+                GameActions.sendResourceEvent(new ResourceEventPacket(card.getName(), amount));
+            }
+            ((ResourceCard)card).changeResourceAmount(amount);
+        }
+        dialog.dismiss();
+        Intent inGameUi = new Intent(this, InGameUI.class);
+        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        startActivity(inGameUi);
     }
 
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.

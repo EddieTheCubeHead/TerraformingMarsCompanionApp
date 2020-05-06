@@ -6,6 +6,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class RegolithEaters extends ResourceCard implements ActionCard {
     public RegolithEaters(Game game) {
@@ -32,6 +33,7 @@ public final class RegolithEaters extends ResourceCard implements ActionCard {
         } else {
             Log.i("Card", "Error in regolith eater checks!");
         }
+        GameController.getInstance().useAction();
     }
 
     @Override

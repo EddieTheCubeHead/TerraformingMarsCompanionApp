@@ -183,9 +183,10 @@ public class Game implements Serializable {
         tile_handler = new TileHandler(this, map, venus);
         update_manager =  new UpdateManager(this, corporate_era, prelude, colonies, venus, turmoil);
 
-        global_temperature = -30;
-        global_oxygen = 0;
+        global_temperature = 4;
+        global_oxygen = 12;
         oceans_placed = 0;
+
         cities_in_space = 0;
         cities_on_mars = 0;
         venus_terraform = 0;

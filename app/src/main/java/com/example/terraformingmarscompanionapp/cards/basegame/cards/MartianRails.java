@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class MartianRails extends Card implements ActionCard {
     public MartianRails(Game game) {
@@ -21,6 +22,7 @@ public final class MartianRails extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-1);
         owner_player.changeMoney(owner_game.getCitiesOnMars());
+        GameController.getInstance().useAction();
     }
 
     @Override

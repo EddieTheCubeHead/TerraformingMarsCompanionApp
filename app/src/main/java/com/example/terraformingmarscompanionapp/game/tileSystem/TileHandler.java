@@ -321,7 +321,7 @@ public class TileHandler {
             player.addGreenery();
             game.update_manager.onGreeneryPlaced(player);
         } else if (tile_type.equals(Placeable.CAPITAL)) {
-            game.update_manager.onCityPlaced(player, false);
+            game.update_manager.onCityPlaced(player, true);
             player.addCity();
         }
 

@@ -26,7 +26,7 @@ public final class Ants extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceType.MICROBE, owner_game, -1));
+        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceType.MICROBE, owner_player, -1));
         actionServerHook(owner_player);
     }
 
@@ -38,6 +38,7 @@ public final class Ants extends ResourceCard implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         resource_amount++;
+        GameController.getInstance().useAction();
     }
 
     @Override

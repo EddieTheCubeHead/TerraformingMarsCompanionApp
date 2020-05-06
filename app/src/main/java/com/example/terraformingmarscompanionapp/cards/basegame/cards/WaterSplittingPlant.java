@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class WaterSplittingPlant extends Card implements ActionCard {
     public WaterSplittingPlant(Game game) {
@@ -24,6 +25,7 @@ public final class WaterSplittingPlant extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-3);
         owner_game.raiseOxygen(owner_player);
+        GameController.getInstance().useAction();
     }
 
     @Override
