@@ -332,6 +332,7 @@ public class TileHandler {
                 }
             }
         }
+
         to_place.placeHex(player, tile_type);
         player.addTile(to_place);
 
@@ -397,8 +398,8 @@ public class TileHandler {
         Context context = GameController.getInstance().getContext();
         Intent intent = new Intent(context, TilePlacementActivity.class);
         intent.putExtra("tile", tile_type.toString());
+        System.out.println("Starting tile placement activity");
         context.startActivity(intent);
-
     }
 
     public Boolean checkPlacementValidity(Placeable tile_type, Integer x, Integer y) {

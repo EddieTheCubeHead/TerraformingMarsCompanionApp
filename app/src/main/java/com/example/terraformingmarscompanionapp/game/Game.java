@@ -1,7 +1,5 @@
 package com.example.terraformingmarscompanionapp.game;
 
-import android.util.Log;
-
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
@@ -240,19 +238,8 @@ public class Game implements Serializable {
 
         if (!checkCardRequirements(card))
         {
-            Log.i("Game", "Requirements deemed invalid for card " + card.getName());
             resources_to_use.reject();
             resources_to_use.setRejectanceMessage("You don't meet the requirements for playing this card.");
-        }
-        else if (!resources_to_use.isEligible())
-        {
-            Log.i("Game", "Resources deemed invalid for card " + card.getName());
-        }
-        else
-        {
-            Log.i("Game", "Requirements and cost checks valid for card " + card.getName());
-            Log.i("Game", String.format("Cost packet aquired, money: %d, steel: %d, titanium: %d heat: %d.",
-                    resources_to_use.getMoney(), resources_to_use.getSteel(), resources_to_use.getTitanium(), resources_to_use.getHeat()));
         }
 
         return resources_to_use;
@@ -264,7 +251,6 @@ public class Game implements Serializable {
 
         if (!resources_to_use.isEligible())
         {
-            Log.i("Game", "CARD THAT COULDN'T BE PLAYED CALLED FROM UI, TALK TO ME -Alex");
             return;
         }
 
@@ -282,7 +268,6 @@ public class Game implements Serializable {
     {
         Player player = GameController.getInstance().getCurrentPlayer();
 
-        Log.i("Game", "Checking card cost");
         //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
 
         Integer actual_price = card.getPrice();
@@ -328,13 +313,9 @@ public class Game implements Serializable {
             actual_price = 0;
         }
 
-        Log.i("Game", "Actual price for card '" + card.getName() + "' played by player '" + player.getName() + "': " + actual_price);
-
-
         //Mikäli raaka raha ei riitä, tarkistetaan voiko korvata muilla resursseilla
         if (actual_price <= player.getMoney())
         {
-            Log.i("Game", "Cost packet created");
             return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
         else
@@ -354,7 +335,6 @@ public class Game implements Serializable {
             //titanium lisäys
             if (card_tags.contains(Tag.SPACE))
             {
-                Log.i("Game", "Player titanium amount: " + player.getTitanium());
 
                 if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money)
                 {
@@ -376,7 +356,6 @@ public class Game implements Serializable {
             //steel lisäys
             if (card_tags.contains(Tag.BUILDING))
             {
-                Log.i("Game", "Player steel amount: " + player.getSteel());
 
                 if (player.getSteel() * (2 + player.getSteelValueModifier()) >= needed_money)
                 {
@@ -412,7 +391,6 @@ public class Game implements Serializable {
                 cardCostPacket = new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 cardCostPacket.reject();
                 cardCostPacket.setRejectanceMessage("Invalid funds");
-                Log.i("Game", "Invalid funds");
             }
 
             return cardCostPacket;
@@ -423,7 +401,6 @@ public class Game implements Serializable {
     private Boolean checkCardRequirements(Card card) {
 
         Player player = GameController.getInstance().getCurrentPlayer();
-        Log.i("Game", "Checking card requirements");
 
         //Erittäin tylsä if-hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
         //Suosittelen lämpimästi minimoimaan tämän.

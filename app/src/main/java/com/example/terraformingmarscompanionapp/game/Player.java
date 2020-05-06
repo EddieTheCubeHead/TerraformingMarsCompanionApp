@@ -36,6 +36,11 @@ public class Player {
     //Omistetut tiilet
     private ArrayList<Tile> owned_tiles = new ArrayList<>();
 
+    //Vuoronhallintalogiikan avuksi
+    private Boolean drew_cards_this_gen = false;
+    public void setDrewCardsThisGen(Boolean value) {drew_cards_this_gen = value;}
+    public Boolean getDrewCardsThisGen() {return drew_cards_this_gen;}
+
     //Korttien lisääminen vastaavaan säilytyspaikkaan
     private final ArrayList<ResourceCard> resource_holders = new ArrayList<>();
     public void setCorporation(Card card) {corporation=card;}

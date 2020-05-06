@@ -120,7 +120,9 @@ public class InGameUI extends AppCompatActivity {
             }
         });
 
-        GameController.getInstance().atTurnStart();
+        if (controller.getGeneration() == 0) {
+            controller.atTurnStart();
+        }
     }
 
     //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisiksi
@@ -197,11 +199,8 @@ public class InGameUI extends AppCompatActivity {
             //korporaation asettaminen
             ((Card) spinner.getSelectedItem()).onPlay(self);
 
-            //seuraavaan pelaajaan siirtyminen
-            spinner.setSelection(0);
-            player_index++;
+            GameController.getInstance().endTurn();
 
-            GameController.getInstance().gameUpdate();
             dialog.dismiss();
             return;
             }

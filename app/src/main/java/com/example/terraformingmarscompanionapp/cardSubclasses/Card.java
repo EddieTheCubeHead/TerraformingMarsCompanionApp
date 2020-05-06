@@ -65,8 +65,8 @@ public abstract class Card {
     public void playWithMetadata(Player player, Integer data) {
         production_box.playProductionBox(player, data);
         finishPlay(player);
-        GameController.getInstance().useAction();
-        if (type.equals(Type.CORPORATION)) {
+        if (type != Type.GHOST) {
+            System.out.println("Toiminnon käyttö kutsuttu kortin playWithMetadatasta");
             GameController.getInstance().useAction();
         }
     }
@@ -169,7 +169,6 @@ public abstract class Card {
                 default:
                     System.out.println("Tag error in card " + getName());
             }
-            GameController.getInstance().executeNextEvent();
         }
 
 

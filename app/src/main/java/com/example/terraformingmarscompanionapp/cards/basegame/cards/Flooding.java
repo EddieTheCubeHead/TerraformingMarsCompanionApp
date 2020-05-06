@@ -20,7 +20,7 @@ public final class Flooding extends Card {
     @Override
     public void onPlay(Player player) {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.FLOOD_OCEAN, owner_game));
-        GameController.getInstance().executeNextEvent();
+        GameController.getInstance().useAction();
     }
 
     @Override

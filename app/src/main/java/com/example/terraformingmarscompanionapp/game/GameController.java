@@ -45,9 +45,11 @@ public class GameController
     private Boolean server_multiplayer = false;
     private Player self_player;
 
+    //UI-event jono asynkronisesti kutsuttaviin UI-tapahtumiin (tile, resource, cost(?) ja cardprompt)
     private Deque<GameEvent> ui_events = new LinkedList<>();
+    private Boolean delay_action_use = false;
     public void addUiEvent(GameEvent event) {ui_events.addLast(event);}
-    public Boolean executeNextEvent() {
+    private Boolean executeNextEvent() {
         if (ui_events.size() == 0) {
             return false;
         }
@@ -149,18 +151,23 @@ public class GameController
     public void foldOnTurnEnd() { folding = true; }
 
     //Toiminnon käyttäminen
-    public void useAction() {
-        Log.i("Vuoronhallinta", "toiminto käytetty");
+    public Boolean useAction() {
+        System.out.println("Toiminnan käyttö kutsuttu");
+        if (executeNextEvent()) {
+            return false;
+        }
         gameUpdate();
         actions_used++;
+        Log.i("Vuoronhallinta", "toiminto käytetty:" + actions_used);
         if (actions_used >= 2) {
             endTurn();
         }
+        return true;
     }
 
     public void endTurn()
     {
-        beforeTurnEnd();
+        System.out.println("Vuoro päätetty");
 
         if(actions_used == 0)
             folding = true;
@@ -184,15 +191,11 @@ public class GameController
         atTurnStart();
     }
 
-    private void beforeTurnEnd()
-    {
-        //TODO kaikki vuoron lopussa vuoron lopettavalle current_playerille tapahtuva
-    }
-
     public void atTurnStart()
     {
+        System.out.println("Vuoron aloitus kutsuttu");
+
         actions_used = 0;
-        System.out.println("Turn start called!");
         gameUpdate();
 
         if (generation == 0) {
@@ -213,6 +216,7 @@ public class GameController
 
             if (!action.firstActionUsed())
             {
+                System.out.println("Calling first action.");
                 action.firstAction();
                 useAction();
             }
