@@ -3,7 +3,6 @@ package com.example.terraformingmarscompanionapp.game;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -80,7 +79,6 @@ public class GameController
         if (!server_multiplayer) {
             return true;
         } else if (self_player == null) {
-            Log.i("GameController", "Moninpelilogiikkavirhe vuorojen tarkkailussa, huomauta Eetua.");
             return false;
         }
         return current_player==self_player;
@@ -152,14 +150,11 @@ public class GameController
 
     //Toiminnon käyttäminen
     public Boolean useAction() {
-        System.out.println("Toiminnan käyttö kutsuttu");
         if (executeNextEvent()) {
-            System.out.println("Suoritetaan UI-toimintoa");
             return false;
         }
         gameUpdate();
         actions_used++;
-        Log.i("Vuoronhallinta", "toiminto käytetty:" + actions_used);
         if (actions_used >= 2) {
             endTurn();
         }
@@ -168,7 +163,6 @@ public class GameController
 
     public void endTurn()
     {
-        System.out.println("Vuoro päätetty");
 
         if(actions_used == 0)
             folding = true;
@@ -194,8 +188,6 @@ public class GameController
 
     public void atTurnStart()
     {
-        System.out.println("Vuoron aloitus kutsuttu");
-
         actions_used = 0;
         gameUpdate();
 
@@ -217,7 +209,6 @@ public class GameController
 
             if (!action.firstActionUsed())
             {
-                System.out.println("Calling first action.");
                 action.firstAction();
                 useAction();
             }
@@ -246,7 +237,6 @@ public class GameController
 
     public void atGenerationStart()
     {
-        Log.i("Vuoronhallinta", "sukupolvi päätetty");
         generation++;
 
         //cardboughtactivityt activity stackkiin
@@ -334,7 +324,6 @@ public class GameController
     }
 
     public void promptUser(String text) {
-        System.out.println("Prompting user with text: " + text);
         ((InGameUI)context).displayPrompt(text);
     }
 
