@@ -19,7 +19,7 @@ public final class TectonicStressPower extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.changeEnergyProduction(3);
+        production_box.setEnergyProduction(3);
         super.playWithMetadata(player, data);
     }
 }

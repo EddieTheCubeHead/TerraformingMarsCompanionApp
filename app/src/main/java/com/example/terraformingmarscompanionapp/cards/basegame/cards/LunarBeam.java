@@ -16,9 +16,9 @@ public final class LunarBeam extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(-2);
-        player.changeHeatProduction(2);
-        player.changeEnergyProduction(2);
+        production_box.setMoneyProduction(-2);
+        production_box.setHeatProduction(2);
+        production_box.setEnergyProduction(2);
         super.playWithMetadata(player, data);
     }
 }

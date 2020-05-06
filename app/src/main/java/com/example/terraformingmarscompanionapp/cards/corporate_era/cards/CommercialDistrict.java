@@ -25,14 +25,8 @@ public final class CommercialDistrict extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(4);
+        production_box.setEnergyProduction(-1);
+        production_box.setMoneyProduction(4);
         super.playWithMetadata(player, data);
-    }
-
-    @Override
-    public void onGameEnd() {
-        //TODO Pisteiden lasku
-        super.onGameEnd();
     }
 }

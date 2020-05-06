@@ -16,8 +16,8 @@ public final class GHGFactories extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-1);
-        player.changeHeatProduction(4);
+        production_box.setEnergyProduction(-1);
+        production_box.setHeatProduction(4);
         super.playWithMetadata(player, data);
     }
 }

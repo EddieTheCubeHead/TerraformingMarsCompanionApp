@@ -15,7 +15,7 @@ public final class Thorgate extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeMoney(48);
-        player.changeEnergyProduction(1);
+        production_box.setEnergyProduction(1);
         player.changeEnergyTagDiscount(3);
         super.playWithMetadata(player, data);
     }

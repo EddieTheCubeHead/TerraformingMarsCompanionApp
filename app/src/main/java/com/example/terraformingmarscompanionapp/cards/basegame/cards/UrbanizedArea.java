@@ -26,8 +26,8 @@ public final class UrbanizedArea extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(2);
+        production_box.setEnergyProduction(-1);
+        production_box.setMoneyProduction(2);
         super.playWithMetadata(player, data);
     }
 }

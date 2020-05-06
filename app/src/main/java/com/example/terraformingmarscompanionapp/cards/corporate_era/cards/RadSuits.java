@@ -15,7 +15,7 @@ public final class RadSuits extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(1);
+        production_box.setMoneyProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

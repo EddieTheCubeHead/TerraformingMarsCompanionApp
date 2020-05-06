@@ -16,7 +16,7 @@ public final class RadChemFactory extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-1);
+        production_box.setEnergyProduction(-1);
         player.changeTerraformingRating(2);
         super.playWithMetadata(player, data);
     }

@@ -32,6 +32,8 @@ public class PlayerChoiceActivity extends AppCompatActivity {
 
     public static final String CARD_INTENT = "card";
     public static final String TARGETS = "targets";
+    public static final String SPECIAL_CASE = "case";
+    public static final String CASE_PRODCUTION = "production";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -51,6 +53,8 @@ public class PlayerChoiceActivity extends AppCompatActivity {
         ArrayList<Player> targets = new ArrayList<>();
 
         Intent intent = getIntent();
+
+        String special_case = intent.getStringExtra(SPECIAL_CASE);
 
         if (!(intent.getStringArrayExtra(TARGETS) == null)) {
             for (String target : intent.getStringArrayExtra(TARGETS)) {
@@ -106,7 +110,14 @@ public class PlayerChoiceActivity extends AppCompatActivity {
 
         view.findViewById(R.id.button_confirm).setOnClickListener(v -> {
             Integer target_index = GameController.getInstance().getPlayerIndex((Player)spinner.getSelectedItem());
-            card.playServerConnection(player, target_index);
+            if (special_case != null) {
+                switch (special_case) {
+                    case CASE_PRODCUTION:
+                        card.getProductionBox().playProductionBox(player, target_index);
+                }
+            } else {
+                card.playServerConnection(player, target_index);
+            }
             dialog.dismiss();
             PlayerChoiceActivity.super.onBackPressed();
         });

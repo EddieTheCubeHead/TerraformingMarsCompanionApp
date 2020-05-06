@@ -26,8 +26,8 @@ public final class UndergroundCity extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-2);
-        player.changeSteelProduction(2);
+        production_box.setEnergyProduction(-2);
+        production_box.setSteelProduction(2);
         super.playWithMetadata(player, data);
     }
 }

@@ -19,8 +19,8 @@ public final class Livestock extends ResourceCard implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlantsProduction(-1);
-        player.changeMoneyProduction(2);
+        production_box.setPlantsProduction(-1);
+        production_box.setMoneyProduction(2);
         super.playWithMetadata(player, data);
     }
 

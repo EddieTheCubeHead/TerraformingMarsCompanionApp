@@ -28,11 +28,9 @@ public final class CloudSeeding extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        if (data != 0) {
-            GameController.getInstance().getPlayer(data).takeHeatProduction(1);
-        }
-        player.changeMoneyProduction(-1);
-        player.changePlantsProduction(2);
+        production_box.setStealHeatProduction(1);
+        production_box.setMoneyProduction(-1);
+        production_box.setPlantsProduction(2);
         super.playWithMetadata(player, data);
     }
 }

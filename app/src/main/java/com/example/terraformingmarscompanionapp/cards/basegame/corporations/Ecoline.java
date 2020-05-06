@@ -16,7 +16,7 @@ public final class Ecoline extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeGreeneryPlantCostModifier(1);
-        player.changePlantsProduction(2);
+        production_box.setPlantsProduction(2);
         player.changePlants(3);
         player.changeMoney(36);
         super.playWithMetadata(player, data);

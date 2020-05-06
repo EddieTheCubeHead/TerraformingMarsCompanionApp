@@ -16,7 +16,7 @@ public final class PowerPlant extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(1);
+        production_box.setEnergyProduction(1);
         super.playWithMetadata(player, data);
     }
 }

@@ -16,8 +16,8 @@ public final class MagneticDomeField extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-2);
-        player.changePlantsProduction(1);
+        production_box.setEnergyProduction(-2);
+        production_box.setPlantsProduction(1);
         player.changeTerraformingRating(1);
         super.playWithMetadata(player, data);
     }

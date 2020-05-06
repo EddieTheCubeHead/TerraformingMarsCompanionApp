@@ -27,9 +27,8 @@ public final class CupolaCity extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.addCity();
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(3);
+        production_box.setEnergyProduction(-1);
+        production_box.setMoneyProduction(3);
         super.playWithMetadata(player, data);
     }
 }

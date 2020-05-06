@@ -15,7 +15,7 @@ public final class Sponsors extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_player.changeMoneyProduction(2);
+        production_box.setMoneyProduction(2);
         super.playWithMetadata(player, data);
     }
 }

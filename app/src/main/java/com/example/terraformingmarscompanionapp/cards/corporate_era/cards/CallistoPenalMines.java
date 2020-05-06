@@ -17,7 +17,7 @@ public final class CallistoPenalMines extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_player.changeMoneyProduction(3);
+        production_box.setMoneyProduction(3);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

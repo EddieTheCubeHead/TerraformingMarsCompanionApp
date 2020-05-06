@@ -16,8 +16,8 @@ public final class IoMiningIndustries extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(2);
-        player.changeTitaniumProduction(2);
+        production_box.setMoneyProduction(2);
+        production_box.setTitaniumProduction(2);
         super.playWithMetadata(player, data);
     }
 

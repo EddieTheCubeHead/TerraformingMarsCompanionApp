@@ -19,7 +19,7 @@ public final class ElectroCatapult extends Card implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-1);
+        production_box.setEnergyProduction(-1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

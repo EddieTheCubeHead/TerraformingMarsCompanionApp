@@ -31,9 +31,8 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
         setActionToUsed();
         if (data == 0) {
             //TODO korttiresurssi UI
-        } else {
-            actionWithMetadata(data);
         }
+        actionWithMetadata(data);
     }
 
     @Override

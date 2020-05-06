@@ -16,9 +16,9 @@ public final class StripMine extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-2);
-        player.changeSteelProduction(2);
-        player.changeTitaniumProduction(1);
+        production_box.setEnergyProduction(-2);
+        production_box.setSteelProduction(2);
+        production_box.setTitaniumProduction(1);
         owner_game.raiseOxygen(player);
         owner_game.raiseOxygen(player);
         super.playWithMetadata(player, data);

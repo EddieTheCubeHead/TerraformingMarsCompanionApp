@@ -16,8 +16,8 @@ public final class BuildingIndustries extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeSteelProduction(2);
-        player.changeEnergyProduction(-1);
+        production_box.setSteelProduction(2);
+        production_box.setEnergyProduction(-1);
         super.playWithMetadata(player, data);
     }
 }

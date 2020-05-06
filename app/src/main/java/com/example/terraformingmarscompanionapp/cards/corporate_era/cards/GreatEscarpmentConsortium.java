@@ -28,9 +28,7 @@ public final class GreatEscarpmentConsortium extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        if (data != 0) {
-            GameController.getInstance().getPlayer(data).takeSteelProduction(1);
-        }
+        production_box.setStealSteelProduction(1);
         player.changeSteelProduction(1);
         super.playWithMetadata(player, data);
     }

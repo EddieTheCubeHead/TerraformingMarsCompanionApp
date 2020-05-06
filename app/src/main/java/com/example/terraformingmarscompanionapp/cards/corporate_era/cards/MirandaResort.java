@@ -18,7 +18,13 @@ public final class MirandaResort extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.changeMoneyProduction(owner_player.getEarthTags());
+        production_box.setMoneyProduction(player.getEarthTags());
         super.playWithMetadata(player, data);
+    }
+
+    @Override
+    public void playProductionBox() {
+        production_box.setMoneyProduction(owner_player.getEarthTags());
+        super.playProductionBox();
     }
 }

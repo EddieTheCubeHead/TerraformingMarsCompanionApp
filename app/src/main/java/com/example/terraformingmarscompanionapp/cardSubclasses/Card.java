@@ -209,6 +209,15 @@ public abstract class Card {
     public final CardRequirements getRequirements() {return requirements;}
     public final void resetActionUsed() {action_used = false;}
 
+    // Robotic workforcen pelaamista varten. Mahdollista overwrite:aa jos tarvitaan metadataa
+    // tai dynaamista tuotannon tarkistamista
+    public void playProductionBox() {
+        production_box.playProductionBox(owner_player, 0);
+    }
+    public final ProductionBox getProductionBox() {
+        return production_box;
+    }
+
     public final ArrayList<Integer> getTagIntegers() {
         ArrayList<Integer> tag_integers = new ArrayList<>();
 

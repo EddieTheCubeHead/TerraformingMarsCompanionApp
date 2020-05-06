@@ -31,10 +31,8 @@ public final class HeatTrappers extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        if (data != 0) {
-            GameController.getInstance().getPlayer(data).takeHeatProduction(2);
-        }
-        player.changeEnergyProduction(1);
+        production_box.setStealHeatProduction(2);
+        production_box.setEnergyProduction(1);
         super.playWithMetadata(player, data);
     }
 }

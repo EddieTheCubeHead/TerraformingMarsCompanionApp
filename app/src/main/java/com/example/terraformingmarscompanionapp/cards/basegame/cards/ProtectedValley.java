@@ -25,7 +25,7 @@ public final class ProtectedValley extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(2);
+        production_box.setMoneyProduction(2);
         super.playWithMetadata(player, data);
     }
 }

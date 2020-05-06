@@ -18,7 +18,7 @@ public final class SpaceElevator extends Card implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeTitaniumProduction(1);
+        production_box.setTitaniumProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

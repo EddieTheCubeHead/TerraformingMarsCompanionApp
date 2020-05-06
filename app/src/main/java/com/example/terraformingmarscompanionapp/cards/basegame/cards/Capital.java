@@ -27,9 +27,8 @@ public final class Capital extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.addCity();
-        player.changeEnergyProduction(-2);
-        player.changeMoneyProduction(5);
+        production_box.setEnergyProduction(-2);
+        production_box.setMoneyProduction(5);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

@@ -26,7 +26,7 @@ public final class EquatorialMagnetizer extends Card implements ActionCard {
 
     @Override
     public void setActionToUsed() {
-
+        action_used = true;
     }
 
     @Override

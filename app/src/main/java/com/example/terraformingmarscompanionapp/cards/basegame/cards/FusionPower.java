@@ -18,7 +18,7 @@ public final class FusionPower extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(3);
+        production_box.setEnergyProduction(3);
         super.playWithMetadata(player, data);
     }
 }

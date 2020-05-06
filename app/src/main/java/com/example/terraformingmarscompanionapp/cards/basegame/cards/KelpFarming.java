@@ -17,8 +17,8 @@ public final class KelpFarming extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(2);
-        player.changePlantsProduction(3);
+        production_box.setMoneyProduction(2);
+        production_box.setPlantsProduction(3);
         player.changePlants(2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
