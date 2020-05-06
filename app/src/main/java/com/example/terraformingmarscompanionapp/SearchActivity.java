@@ -218,13 +218,11 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
         window.setLayout(4*width/5, WindowManager.LayoutParams.WRAP_CONTENT);
 
-
         //window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //window.setGravity(Gravity.CENTER);
 
-        view.findViewById(R.id.resource_decline_button).setOnClickListener(v -> {
-            dialog.dismiss();
-        });
+        view.findViewById(R.id.resource_decline_button) .setOnClickListener(v -> dialog.dismiss());
+        view.findViewById(R.id.popup_exit_image)        .setOnClickListener(v -> dialog.dismiss());
 
         view.findViewById(R.id.resource_confirm_button).setOnClickListener(new View.OnClickListener() {
             @SuppressLint("DefaultLocale")
