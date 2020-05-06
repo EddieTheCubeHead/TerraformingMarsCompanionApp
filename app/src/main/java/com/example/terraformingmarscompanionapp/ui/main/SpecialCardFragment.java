@@ -130,16 +130,5 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
 
         if (adapter.getItemCount() == 0)
             return;
-
-        for (int i = 0; i<adapter.getItemCount(); i++)
-        {
-            Card card = adapter.getItemAtPosition(i);
-            View cardview = layout_manager.findViewByPosition(i+1);
-
-            if(cardview == null) {
-                System.out.println("position: " + i + ", card: " + card.getName());
-                return;
-            }
-        }
     }
 }
