@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
 import android.app.AlertDialog;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SearchView;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +18,8 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.Player;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,16 +27,23 @@ import java.util.Map;
 
 public class ActivityDialogSearch extends AppCompatActivity implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener
 {
-    public static final String CARD_INTENT = "filter_by_player";
-    public static final String FILTER_NAME = "card_owner";
+    public static final String OWNER_ONLY = "owner_required";
+    public static final String SPECIAL_CASE = "special";
+    public static final String AMOUNT = "amount";
+    public static final String CARD_OWNER_NAME = "owner_player";
 
     AlertDialog dialog;
 
     private SearchView searchview;
 
+    private Integer amount;
+    private Player player;
+    private String special_case;
+    private Boolean owner_required;
+
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
-    private ArrayList<Card.Type> valid_types = new ArrayList<>(Arrays.asList(Card.Type.GREEN, Card.Type.RED, Card.Type.BLUE));
+    private ArrayList<Card.Type> valid_types = new ArrayList<>(Arrays.asList(Card.Type.GREEN, Card.Type.RED, Card.Type.BLUE, Card.Type.CORPORATION));
     //todo tarkat valid types
 
     View view;
@@ -46,11 +54,14 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empty);
 
+        Intent intent = getIntent();
 
+        special_case = intent.getStringExtra(SPECIAL_CASE);
+        owner_required = intent.getBooleanExtra(OWNER_ONLY, false);
 
         GameController controller = GameController.getInstance();
         Game game = controller.getGame();
-        HashMap<String, Card> deck = game.getDeck();
+        HashMap<String, Card> deck = game.getAllCards();
 
         //layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -60,18 +71,22 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         searchview = view.findViewById(R.id.searchview);
         RecyclerView recyclerview = view.findViewById(R.id.result_recyclerview);
 
-        //korttien haku
-        for (Map.Entry<String, Card> entry : deck.entrySet())
-        {
-            Card card = entry.getValue();
+        if (special_case.equals("Robotic workforce")) {
+            //TODO robotic workforce erikoistapaus
+            owner_required = true;
+        } else {
+            //korttien haku
+            for (Map.Entry<String, Card> entry : deck.entrySet()) {
+                Card card = entry.getValue();
 
-            if (card.getOwner() == null)
-                continue;
+                if (card.getOwner() == null)
+                    continue;
 
-            if (!valid_types.contains(card.getType()))
-                continue;
+                if (!valid_types.contains(card.getType()))
+                    continue;
 
-            card_list.add(card);
+                card_list.add(card);
+            }
         }
 
         //recyclerviewn setup
@@ -115,6 +130,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         Window window = dialog.getWindow();
 
         window.setLayout(3 * width / 4, WindowManager.LayoutParams.WRAP_CONTENT);
+
     }
 
     @Override public void onCardClick(int position) {

@@ -30,6 +30,9 @@ public class GameController
     private Integer generation = 0;
 
     public Integer getGeneration() {return generation;}
+    public Integer getDisplayActions() {
+        return 2 - actions_used;
+    }
 
     private Game game;
     private List<Player> queue_full = new ArrayList<>(); //double ended queue
