@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -31,10 +32,14 @@ public class BooleanDialogActivity extends AppCompatActivity {
     public static final String TRUE_TEXT = "true_text";
     public static final String TITLE_TEXT = "title";
     public static final String CARD_NAME = "card";
+    public static final String EXTRA_TEXT_1 = "extra1";
+    public static final String EXTRA_TEXT_2 = "extra2";
 
     private String false_text;
     private String true_text;
     private String title_text;
+    private String extra_text_1;
+    private String extra_text_2;
     private Card card;
 
     View view;
@@ -54,6 +59,8 @@ public class BooleanDialogActivity extends AppCompatActivity {
         false_text = intent.getStringExtra(FALSE_TEXT);
         true_text = intent.getStringExtra(TRUE_TEXT);
         title_text = intent.getStringExtra(TITLE_TEXT);
+        extra_text_1 = intent.getStringExtra(EXTRA_TEXT_1);
+        extra_text_2 = intent.getStringExtra(EXTRA_TEXT_2);
 
         card = deck.get(intent.getStringExtra(CARD_NAME));
 
@@ -68,6 +75,30 @@ public class BooleanDialogActivity extends AppCompatActivity {
         title.setText(title_text);
         Button button_negative = view.findViewById(R.id.button_negative);
         Button button_positive = view.findViewById(R.id.button_positive);
+        Button extra_first = view.findViewById(R.id.button_negative_hidden);
+        Button extra_second = view.findViewById(R.id.button_positive_hidden);
+
+        LinearLayout root = view.findViewById(R.id.button_frame_lower);
+
+        if (extra_text_1 != null) {
+            extra_first.setVisibility(View.VISIBLE);
+            extra_first.setText(extra_text_1);
+            extra_first.setOnClickListener(v -> {
+                executeWithData(2);
+            });
+        } else {
+            root.removeView(root.findViewById(R.id.button_negative_hidden));
+        }
+
+        if (extra_text_2 != null) {
+            extra_first.setVisibility(View.VISIBLE);
+            extra_first.setText(extra_text_2);
+            extra_first.setOnClickListener(v -> {
+                executeWithData(3);
+            });
+        }else {
+            root.removeView(root.findViewById(R.id.button_positive_hidden));
+        }
 
         //dialogin rakentaminen ja näyttäminen
             //kulmien läpinäkyvyys
@@ -98,14 +129,24 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
         //listenerit
         button_negative.setOnClickListener(v -> {
-            card.playWithMetadata(controller.getCurrentPlayer(), 0);
-            exit();
+            executeWithData(0);
         });
 
         button_positive.setOnClickListener(v -> {
-            card.playWithMetadata(controller.getCurrentPlayer(), 1);
-            exit();
+            executeWithData(1);
         });
+    }
+
+    private void executeWithData(Integer data) {
+        if (card.getOwner() == null) {
+            card.playWithMetadata(GameController.getInstance().getCurrentPlayer(), 1);
+            exit();
+        } else {
+            if (card instanceof ActionCard) {
+                ((ActionCard) card).actionWithMetadata(1);
+            }
+        }
+        exit();
     }
 
     private void exit() {

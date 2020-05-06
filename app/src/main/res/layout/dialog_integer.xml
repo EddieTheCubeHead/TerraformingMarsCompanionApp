@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
 
     android:layout_width="match_parent"
@@ -22,7 +23,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="161dp"
         android:orientation="vertical">
 
 
@@ -94,6 +95,39 @@
                 android:layout_weight="1"
                 android:text="confirm" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_frame_lower"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_negative_hidden"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+
+                android:text="decline"
+                tools:visibility="visible" />
+
+            <FrameLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/button_positive_hidden"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:text="confirm"
+                tools:visibility="visible" />
         </LinearLayout>
 
 
