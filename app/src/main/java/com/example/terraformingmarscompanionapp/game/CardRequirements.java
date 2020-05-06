@@ -40,6 +40,9 @@ public class CardRequirements {
     private Integer min_polar_tiles;
     private Integer min_building_tags;
 
+    //Erikoistapaus Ecolinea varten
+    private Boolean plants_for_greenery = false;
+
     private Integer max_temperature;
     private Integer max_oceans;
     private Integer max_oxygen;
@@ -152,6 +155,10 @@ public class CardRequirements {
 
     Integer getMinBuildingTags() {return min_building_tags;}
     public void setMinBuildingTags(Integer value) {min_building_tags = value;}
+
+
+    Boolean getPlantsForGreenery() {return plants_for_greenery;}
+    public void setPlantsForGreenery(Boolean value) {plants_for_greenery = value;}
 
 
     Integer getMaxTemperature() {return max_temperature;}

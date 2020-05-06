@@ -11,6 +11,7 @@ import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Card {
     protected Game owner_game;
@@ -23,6 +24,8 @@ public abstract class Card {
     protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
     protected ProductionBox production_box = new ProductionBox();
+    public static ArrayList<Type> ownables = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST));
+    public static ArrayList<Type> tag_holders = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
 
     //Enum kortin tyyppiin
     public enum Type {
@@ -66,7 +69,9 @@ public abstract class Card {
     }
 
     protected final void finishPlay (Player player) {
-        owner_player = player;
+        if (ownables.contains(type)) {
+            owner_player = player;
+        }
 
         boolean is_event = (type == Type.RED);
 
@@ -165,7 +170,7 @@ public abstract class Card {
         }
 
 
-        if (tags.size() == 0 && type != Type.GHOST && type != Type.STANDARD_PROJECT && type != Type.AWARD && type != Type.MILESTONE && type != Type.OTHER) {
+        if (tags.size() == 0 && tag_holders.contains(type)) {
             player.addNullTag();
         }
 

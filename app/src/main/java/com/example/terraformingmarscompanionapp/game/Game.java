@@ -510,6 +510,12 @@ public class Game implements Serializable {
             }
         }
 
+        if (requirements.getPlantsForGreenery()) {
+            if (player.getPlants() < (8 + player.getGreeneryPlantCostModifier())) {
+                return false;
+            }
+        }
+
         if (requirements.getMinPersonalColonies() != null && player.getColonies() < requirements.getMinPersonalColonies()) {
             return false;
         }

@@ -25,12 +25,12 @@ import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Garden
 import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Mayor;
 import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Planner;
 import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Terraformer;
-import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardAquifer;
-import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardAsteroid;
-import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardCity;
-import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardGreenery;
-import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardPowerPlant;
-import com.example.terraformingmarscompanionapp.cards.basegame.standard_projects.StandardSellPatents;
+import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardAquifer;
+import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardAsteroid;
+import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardCity;
+import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardGreenery;
+import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardPowerPlant;
+import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardSellPatents;
 
 import java.util.HashMap;
 
