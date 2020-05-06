@@ -34,7 +34,7 @@ public final class Virus extends Card {
     @Override
     public void playServerConnection(Player player, Integer data) {
         if (data == 0) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, owner_game, -2));
+            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, -2));
         } else if (data == 1) {
             //TODO pelaajan valinta UI
             return;

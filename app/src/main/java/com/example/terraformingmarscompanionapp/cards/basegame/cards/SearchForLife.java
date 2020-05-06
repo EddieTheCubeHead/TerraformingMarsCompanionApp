@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class SearchForLife extends ResourceCard implements ActionCard {
@@ -36,6 +37,7 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
         if (data >= 0) {
             resource_amount++;
         }
+        GameController.getInstance().useAction();
     }
 
     @Override

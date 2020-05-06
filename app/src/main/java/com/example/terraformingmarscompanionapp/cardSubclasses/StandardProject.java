@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public abstract class StandardProject extends Card {
@@ -10,5 +11,7 @@ public abstract class StandardProject extends Card {
 
     //Superin onPlayn override ettei vahingossakaan käytetä Card.onPlayta vakioprojektia luotaessa
     @Override
-    public void playWithMetadata(Player player, Integer data) {}
+    public void playWithMetadata(Player player, Integer data) {
+        GameController.getInstance().useAction();
+    }
 }

@@ -3,7 +3,6 @@ package com.example.terraformingmarscompanionapp.game;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -31,6 +30,9 @@ public class GameController
     private Integer generation = 0;
 
     public Integer getGeneration() {return generation;}
+    public Integer getDisplayActions() {
+        return 2 - actions_used;
+    }
 
     private Game game;
     private List<Player> queue_full = new ArrayList<>(); //double ended queue
@@ -45,9 +47,11 @@ public class GameController
     private Boolean server_multiplayer = false;
     private Player self_player;
 
+    //UI-event jono asynkronisesti kutsuttaviin UI-tapahtumiin (tile, resource, cost(?) ja cardprompt)
     private Deque<GameEvent> ui_events = new LinkedList<>();
+    private Boolean delay_action_use = false;
     public void addUiEvent(GameEvent event) {ui_events.addLast(event);}
-    public Boolean executeNextEvent() {
+    private Boolean executeNextEvent() {
         if (ui_events.size() == 0) {
             return false;
         }
@@ -78,7 +82,6 @@ public class GameController
         if (!server_multiplayer) {
             return true;
         } else if (self_player == null) {
-            Log.i("GameController", "Moninpelilogiikkavirhe vuorojen tarkkailussa, huomauta Eetua.");
             return false;
         }
         return current_player==self_player;
@@ -149,18 +152,20 @@ public class GameController
     public void foldOnTurnEnd() { folding = true; }
 
     //Toiminnon käyttäminen
-    public void useAction() {
-        Log.i("Vuoronhallinta", "toiminto käytetty");
+    public Boolean useAction() {
+        if (executeNextEvent()) {
+            return false;
+        }
         gameUpdate();
         actions_used++;
         if (actions_used >= 2) {
             endTurn();
         }
+        return true;
     }
 
     public void endTurn()
     {
-        beforeTurnEnd();
 
         if(actions_used == 0)
             folding = true;
@@ -184,15 +189,9 @@ public class GameController
         atTurnStart();
     }
 
-    private void beforeTurnEnd()
-    {
-        //TODO kaikki vuoron lopussa vuoron lopettavalle current_playerille tapahtuva
-    }
-
     public void atTurnStart()
     {
         actions_used = 0;
-        System.out.println("Turn start called!");
         gameUpdate();
 
         if (generation == 0) {
@@ -241,7 +240,6 @@ public class GameController
 
     public void atGenerationStart()
     {
-        Log.i("Vuoronhallinta", "sukupolvi päätetty");
         generation++;
 
         //cardboughtactivityt activity stackkiin
@@ -326,6 +324,10 @@ public class GameController
 
     public void endGame() {
 
+    }
+
+    public void promptUser(String text) {
+        ((InGameUI)context).displayPrompt(text);
     }
 
     //TODO tokenien sijoittaminen

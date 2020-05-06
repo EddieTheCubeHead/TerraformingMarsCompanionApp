@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class SymbioticFungus extends Card implements ActionCard {
     public SymbioticFungus(Game game) {
@@ -35,5 +36,7 @@ public final class SymbioticFungus extends Card implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {}
+    public void actionWithMetadata(Integer data) {
+        GameController.getInstance().useAction();
+    }
 }

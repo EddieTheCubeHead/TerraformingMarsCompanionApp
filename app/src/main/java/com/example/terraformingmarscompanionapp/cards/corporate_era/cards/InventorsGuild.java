@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class InventorsGuild extends Card implements ActionCard {
     public InventorsGuild(Game game) {
@@ -29,6 +30,7 @@ public final class InventorsGuild extends Card implements ActionCard {
             owner_player.takeMoney(3);
             owner_player.changeHandSize(1);
         }
+        GameController.getInstance().useAction();
     }
 
     @Override

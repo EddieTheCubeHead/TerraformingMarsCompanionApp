@@ -31,6 +31,8 @@ public class TilePlacementActivity extends AppCompatActivity {
 
     ImageView tileicon;
 
+    public static final String TILE = "tile";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,11 +150,8 @@ public class TilePlacementActivity extends AppCompatActivity {
     }
 
     public void exit(View view) {
-        if (!GameController.getInstance().executeNextEvent()) {
-            Intent intent = new Intent(this, InGameUI.class);
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplicationContext(), "Please place your tile", Toast.LENGTH_SHORT).show();
-        }
+        Intent intent = new Intent(this, InGameUI.class);
+        intent.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        startActivity(intent);
     }
 }

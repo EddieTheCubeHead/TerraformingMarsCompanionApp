@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class InGameUI extends AppCompatActivity {
 
-    static boolean is_first_run = true;
+    public static final String UI_QUEUE_CHECK = "ui";
 
     Game game;
     GameController controller;
@@ -57,6 +57,10 @@ public class InGameUI extends AppCompatActivity {
 
         if (game.getServerMultiplayer()) {
             GameActions.setContext(null);
+        }
+
+        if (getIntent().getBooleanExtra(UI_QUEUE_CHECK, false)) {
+            controller.useAction();
         }
 
         //default ui-juttuja
@@ -120,7 +124,9 @@ public class InGameUI extends AppCompatActivity {
             }
         });
 
-        GameController.getInstance().atTurnStart();
+        if (controller.getGeneration() == 0) {
+            controller.atTurnStart();
+        }
     }
 
     //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisiksi
@@ -197,11 +203,8 @@ public class InGameUI extends AppCompatActivity {
             //korporaation asettaminen
             ((Card) spinner.getSelectedItem()).onPlay(self);
 
-            //seuraavaan pelaajaan siirtyminen
-            spinner.setSelection(0);
-            player_index++;
+            GameController.getInstance().endTurn();
 
-            GameController.getInstance().gameUpdate();
             dialog.dismiss();
             return;
             }
@@ -330,31 +333,16 @@ public class InGameUI extends AppCompatActivity {
     }
 
     //https://stackoverflow.com/questions/5810084/android-alertdialog-single-button
-    public void cardDrawPrompt(Integer amount) {
+    public void displayPrompt(String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(String.format("Please draw %d card(s)", amount))
+        builder.setMessage(text)
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //do things
+                        controller.useAction();
                     }
                 });
         AlertDialog alert = builder.create();
         alert.show();
-    }
-
-    public void cardSwapPrompt(Integer amount) {
-        new Thread(() -> runOnUiThread(() -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(String.format("Please swap up to %d card(s)", amount))
-                    .setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //do things
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-        })).start();
     }
 }

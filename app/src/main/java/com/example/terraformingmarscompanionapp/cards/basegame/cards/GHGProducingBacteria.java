@@ -6,6 +6,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class GHGProducingBacteria extends ResourceCard implements ActionCard {
     public GHGProducingBacteria(Game game) {
@@ -32,6 +33,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
         } else {
             resource_amount -= 2;
         }
+        GameController.getInstance().useAction();
     }
 
     @Override

@@ -24,14 +24,7 @@ public abstract class ResourceCard extends Card {
     public final ResourceType getResourceType() {return resource_type;}
     public final Integer getResourceAmount() {return resource_amount;}
 
-    public final boolean changeResourceAmount(Integer change_amount) {
-        if (resource_amount + change_amount < 0) {
-            return false;
-        } else {
-            resource_amount += change_amount;
-            return true;
-        }
-    }
+    public final void changeResourceAmount(Integer change_amount) {resource_amount += change_amount;}
 
     public void onPlay(Player player) {
         player.addResourceHolder(this);

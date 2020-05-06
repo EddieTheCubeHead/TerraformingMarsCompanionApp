@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class Ironworks extends Card implements ActionCard {
     public Ironworks(Game game) {
@@ -23,6 +24,7 @@ public final class Ironworks extends Card implements ActionCard {
         owner_player.changeEnergy(-4);
         owner_game.raiseOxygen(owner_player);
         owner_player.changeSteel(1);
+        GameController.getInstance().useAction();
     }
 
     @Override

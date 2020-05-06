@@ -19,7 +19,6 @@ public final class StandardCity extends StandardProject {
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
         player.changeMoneyProduction(1);
         player.addCity();
-        GameController.getInstance().executeNextEvent();
         super.playWithMetadata(player, data);
     }
 }

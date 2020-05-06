@@ -31,7 +31,7 @@ public final class AquiferPumping extends Card implements ActionCard {
 
     @Override
     public void actionWithMetadata(Integer data) {
-        GameController.getInstance().executeNextEvent();
+        GameController.getInstance().useAction();
     }
 
     @Override
