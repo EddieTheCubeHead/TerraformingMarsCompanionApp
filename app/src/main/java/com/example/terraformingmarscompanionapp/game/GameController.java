@@ -160,7 +160,9 @@ public class GameController
         }
         if (delay_action_use) {
             delay_action_use = false;
-            GameActions.sendUseAction();
+            if (server_multiplayer) {
+                GameActions.sendUseAction();
+            }
         }
         actions_used++;
         if (actions_used >= 2) {

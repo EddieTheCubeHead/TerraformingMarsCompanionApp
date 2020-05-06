@@ -31,6 +31,7 @@
         <activity android:name=".ui.main.CardsBoughtActivity" />
         <activity android:name=".ui.main.ActivityDialogSearch" />
         <activity android:name=".ui.main.IntegerDialogActivity" />
+        <activity android:name=".ui.main.BooleanDialogActivity" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp.ui.main;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -26,7 +27,15 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
     AlertDialog dialog;
 
-    //todo tarkat valid types
+    public static final String FALSE_TEXT = "false_text";
+    public static final String TRUE_TEXT = "true_text";
+    public static final String TITLE_TEXT = "title";
+    public static final String CARD_NAME = "card";
+
+    private String false_text;
+    private String true_text;
+    private String title_text;
+    private Card card;
 
     View view;
 
@@ -38,7 +47,15 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
         GameController controller = GameController.getInstance();
         Game game = controller.getGame();
-        HashMap<String, Card> deck = game.getDeck();
+        HashMap<String, Card> deck = game.getAllCards();
+
+        Intent intent = getIntent();
+
+        false_text = intent.getStringExtra(FALSE_TEXT);
+        true_text = intent.getStringExtra(TRUE_TEXT);
+        title_text = intent.getStringExtra(TITLE_TEXT);
+
+        card = deck.get(intent.getStringExtra(CARD_NAME));
 
         //dialogin layoutin rakentaminen
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -48,6 +65,7 @@ public class BooleanDialogActivity extends AppCompatActivity {
         TextView title = view.findViewById(R.id.title);
         EditText number_field = view.findViewById(R.id.edittext_number);
 
+        title.setText(title_text);
         Button button_negative = view.findViewById(R.id.button_negative);
         Button button_positive = view.findViewById(R.id.button_positive);
 
@@ -56,8 +74,8 @@ public class BooleanDialogActivity extends AppCompatActivity {
         view.setBackgroundColor(Color.TRANSPARENT);
 
             //nappien tekstit
-        button_negative.setText("negative");
-        button_positive.setText("positive");
+        button_negative.setText(false_text);
+        button_positive.setText(true_text);
 
         //textviewn poisto
         ((LinearLayout) view.findViewById(R.id.root_linearlayout)).removeView(number_field);
@@ -76,17 +94,22 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
         Window window = dialog.getWindow();
 
-        window.setLayout(  2*width / 3, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout(  4*width / 5, WindowManager.LayoutParams.WRAP_CONTENT);
 
         //listenerit
         button_negative.setOnClickListener(v -> {
-            finish();
+            card.playWithMetadata(controller.getCurrentPlayer(), 0);
+            exit();
         });
 
         button_positive.setOnClickListener(v -> {
-            //Integer.parseInt(number_field.getText().toString().trim());
-            //todo tähän asioita
-            finish();
+            card.playWithMetadata(controller.getCurrentPlayer(), 1);
+            exit();
         });
+    }
+
+    private void exit() {
+        dialog.dismiss();
+        BooleanDialogActivity.super.onBackPressed();
     }
 }
