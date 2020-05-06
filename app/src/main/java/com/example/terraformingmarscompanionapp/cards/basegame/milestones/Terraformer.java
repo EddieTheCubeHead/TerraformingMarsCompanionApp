@@ -7,7 +7,6 @@ public final class Terraformer extends Milestone {
     public Terraformer(Game game) {
         super(game);
         name = "Terraformer";
-        requirements.setMinTr(35);
-        //TODO turmoil-muutos
+        requirements.setMinTr(owner_game.modifiers.getTurmoil() ? 25 : 35);
     }
 }

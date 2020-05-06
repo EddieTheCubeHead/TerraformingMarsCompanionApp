@@ -14,9 +14,8 @@ public abstract class Milestone extends Card {
     }
 
     @Override
-    public final void onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         owner_game.claimMilestone();
-        owner_player = player;
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

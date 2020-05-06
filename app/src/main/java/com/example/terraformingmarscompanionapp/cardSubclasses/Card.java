@@ -25,7 +25,7 @@ public abstract class Card {
     protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
     protected ProductionBox production_box = new ProductionBox();
-    private final static ArrayList<Type> OWNABLES = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST));
+    private final static ArrayList<Type> OWNABLES = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST, Type.MILESTONE));
     private final static ArrayList<Type> TAG_HOLDERS = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
     protected Boolean wait_for_server = false;
     private Boolean override_play_action_call = false;
