@@ -293,7 +293,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             return results;
         }
 
-        //päivittää cardviewtä notifydatasetchangedillä
+        //päivittää recyclerviewssä näkyvät kortit.
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results)
         {
@@ -316,5 +316,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public Filter getPlayedFilter() { return played_filter; }
 
-    public Filter getSpecialFilter() {return special_filter;}
+    public Filter getSpecialFilter() { return special_filter; }
 }
