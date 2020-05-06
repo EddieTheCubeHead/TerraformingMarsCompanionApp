@@ -1,11 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 public final class NitriteReducingBacteria extends ResourceCard implements ActionCard {
     public NitriteReducingBacteria(Game game) {
@@ -24,19 +30,27 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
 
     @Override
     public void cardAction() {
-        //TODO boolean valinta UI
+        if (resource_amount < 3) {
+            playServerConnection(owner_player, 0);
+        }
+        Context context = GameController.getInstance().getContext();
+        Intent intent = new Intent(context, BooleanDialogActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
+        intent.putExtra(BooleanDialogActivity.TITLE_TEXT, "Add a microbe or raise TR?");
+        intent.putExtra(BooleanDialogActivity.FALSE_TEXT, "Microbe");
+        intent.putExtra(BooleanDialogActivity.TRUE_TEXT, "TR");
+        context.startActivity(intent);
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
         if (data == 0) {
             resource_amount++;
-        } else if (resource_amount < 3) {
-            resource_amount -= 3;
         } else {
+            resource_amount -= 3;
             owner_player.changeTerraformingRating(1);
         }
-        GameController.getInstance().useAction();
     }
 
     @Override

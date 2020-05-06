@@ -22,7 +22,7 @@ public final class EonChasmaNationalPark extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 1));
+        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 1, true));
         super.onPlay(player);
     }
 

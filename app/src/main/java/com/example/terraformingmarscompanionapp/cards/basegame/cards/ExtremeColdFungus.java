@@ -5,10 +5,12 @@ import android.content.Intent;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
@@ -41,7 +43,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
         }
         setActionToUsed();
         if (data == 0) {
-            //TODO korttiresurssi UI
+            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2, true));
         }
         actionWithMetadata(data);
     }
