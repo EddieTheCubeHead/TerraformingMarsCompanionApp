@@ -35,9 +35,4 @@ public final class Insulation extends Card {
         production_box.setMoneyProduction(data);
         super.playWithMetadata(player, data);
     }
-
-    @Override
-    public void playProductionBox() {
-        //TODO luvun valinta UI
-    }
 }

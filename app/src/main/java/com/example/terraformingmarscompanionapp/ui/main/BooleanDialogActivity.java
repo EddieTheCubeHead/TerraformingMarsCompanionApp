@@ -151,7 +151,6 @@ public class BooleanDialogActivity extends AppCompatActivity {
     private void exit() {
         dialog.dismiss();
         Intent inGameUi = new Intent(this, InGameUI.class);
-        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
         startActivity(inGameUi);
     }
 }
