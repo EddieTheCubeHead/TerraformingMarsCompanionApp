@@ -41,10 +41,7 @@
                         android:id="@+id/card_credit_imageview"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:srcCompat="@drawable/ic_credit"
-                        android:scaleX="1.5"
-                        android:scaleY="1.5"
-                        />
+                        app:srcCompat="@drawable/credit" />
 
                     <TextView
                         android:id="@+id/card_credit_text"
@@ -53,7 +50,7 @@
                         android:text="420"
                         android:textSize="20sp"
                         android:gravity="center"
-                        android:textColor="@color/colorWindowText" />
+                        android:textColor="#000000" />
 
                 </FrameLayout>
 
