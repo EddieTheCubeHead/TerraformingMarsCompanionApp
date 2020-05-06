@@ -40,7 +40,7 @@ public class GameJoiningActivity extends AppCompatActivity implements ServerSetu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_joining);
 
-        GameActions.setSetupScreen(this);
+        GameActions.setContext(this);
 
         //textview
         textview_names = findViewById(R.id.name_textview);

@@ -55,6 +55,10 @@ public class InGameUI extends AppCompatActivity {
         controller.setContext(this);
         game = controller.getGame();
 
+        if (game.getServerMultiplayer()) {
+            GameActions.setContext(null);
+        }
+
         //default ui-juttuja
         sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         viewPager = findViewById(R.id.view_pager);
@@ -302,9 +306,7 @@ public class InGameUI extends AppCompatActivity {
     }
 
     public void onTurnChange(String player_name) {
-        if (!game.getServerMultiplayer()) {
-            Toast.makeText(getApplicationContext(), String.format("%s's turn", player_name), Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(getApplicationContext(), String.format("%s's turn", player_name), Toast.LENGTH_SHORT).show();
     }
 
     //https://stackoverflow.com/questions/5810084/android-alertdialog-single-button
@@ -322,15 +324,17 @@ public class InGameUI extends AppCompatActivity {
     }
 
     public void cardSwapPrompt(Integer amount) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(String.format("Please swap up to %d card(s)", amount))
-                .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //do things
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
+        new Thread(() -> runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(String.format("Please swap up to %d card(s)", amount))
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //do things
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        })).start();
     }
 }

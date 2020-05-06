@@ -60,7 +60,6 @@ public class GameController
     private Context context = null;
     public void setContext(Context context) {
         this.context = context;
-        System.out.println("Context set");
     }
 
     //Serveripeliä varten instanssin omistaja
@@ -194,6 +193,7 @@ public class GameController
     public void atTurnStart()
     {
         actions_used = 0;
+        System.out.println("Turn start called!");
         gameUpdate();
 
         if (self_player == null || current_player == self_player) {
@@ -202,6 +202,8 @@ public class GameController
             } else if (generation == 0 && game.modifiers.getPrelude() && current_player.getPreludes().size() == 0) {
                 ((InGameUI) context).playPreludes();
             }
+        } else {
+            System.out.println(self_player.getName());
         }
 
         if (generation == 1 && current_player.getCorporation() instanceof FirstAction)
@@ -311,11 +313,9 @@ public class GameController
 
     public void gameUpdate() {
         Log.i("Game", "Update called");
-        new Thread(() -> ((InGameUI)context).runOnUiThread(() -> {
-            for (GameUpdateListener listener : game_listeners) {
-                listener.update();
-            }
-        })).start();
+        for (GameUpdateListener listener : game_listeners) {
+            listener.update();
+        }
     }
 
     //Kaikkien pelaajien getteri
