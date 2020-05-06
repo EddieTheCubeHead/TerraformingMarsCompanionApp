@@ -185,7 +185,6 @@ public class GameController
 
         current_player = queue.getFirst();
 
-        ((InGameUI)context).onTurnChange(current_player.getName());
         atTurnStart();
     }
 

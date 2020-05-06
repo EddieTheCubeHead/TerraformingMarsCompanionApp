@@ -328,10 +328,6 @@ public class InGameUI extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Generation ended.", Toast.LENGTH_SHORT).show();
     }
 
-    public void onTurnChange(String player_name) {
-        Toast.makeText(getApplicationContext(), String.format("%s's turn", player_name), Toast.LENGTH_SHORT).show();
-    }
-
     //https://stackoverflow.com/questions/5810084/android-alertdialog-single-button
     public void displayPrompt(String text) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
