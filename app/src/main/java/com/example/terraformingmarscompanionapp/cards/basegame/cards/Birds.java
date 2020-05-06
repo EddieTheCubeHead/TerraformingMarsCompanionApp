@@ -32,21 +32,19 @@ public final class Birds extends ResourceCard implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        if (data != 0) {
-            GameController.getInstance().getPlayer(data).takePlantsProduction(2);
-        }
+        production_box.setStealPlantsProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.onPlay(player);
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        } else {
-            resource_amount++;
-            return 0;
-        }
+    public void cardAction() {
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        resource_amount++;
     }
 
     @Override
@@ -60,7 +58,12 @@ public final class Birds extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 }

@@ -22,6 +22,7 @@ public abstract class Card {
     protected Player owner_player = null; //Omistava pelaaja, null jos pelaamaton
     protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
+    protected ProductionBox production_box = new ProductionBox();
 
     //Enum kortin tyyppiin
     public enum Type {
@@ -59,6 +60,7 @@ public abstract class Card {
     }
 
     public void playWithMetadata(Player player, Integer data) {
+        production_box.playProductionBox(player, data);
         finishPlay(player);
         GameController.getInstance().useAction();
     }

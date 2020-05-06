@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,11 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,25 +109,21 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
 
         //jos kortti implementtaa actioncard-interfacen
-        if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard)
-        {
-            Game game = GameController.getInstance().getGame();
-            Integer action_metadata = ((ActionCard) card).cardAction();
+        if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard) {
+            Boolean validity = ((ActionCard) card).getActionValidity();
+            String action_name = ((ActionCard) card).getActionName();
 
-            if (action_metadata == -1)
-                Toast.makeText(getContext(), "Already used this.", Toast.LENGTH_SHORT).show();
-
-            else if (action_metadata == -2)
-                Toast.makeText(getContext(), "Not enough resources.", Toast.LENGTH_SHORT).show();
-
-            else if (game.getServerMultiplayer()) {
-                GameActions.sendCardEvent(new CardEventPacket(card.getName(), card.getOwner().getName(), action_metadata));
-                Toast.makeText(getContext(), "Card action done.", Toast.LENGTH_SHORT).show();
+            if (validity) {
+                System.out.println(((ActionCard) card).getActionValidity());
+                Toast.makeText(getContext(), "Action '%s' not valid", Toast.LENGTH_SHORT).show();
+            } else {
+                ((ActionCard) card).cardAction();
+                Toast.makeText(getContext(), String.format("Action '%s' used", action_name), Toast.LENGTH_SHORT).show();
             }
             update();
         }
 
-        else Log.i("non-interactable card","Pelaajan korttilistassa kortilla ei ollut CardActionia eikä CardEffectiä");
+        else Log.i("non-interactable card","Pelaajan korttilistassa kortilla ei ollut CardActionia");
     }
 
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.

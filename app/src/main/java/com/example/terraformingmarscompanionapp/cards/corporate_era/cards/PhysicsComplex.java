@@ -15,15 +15,22 @@ public final class PhysicsComplex extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used | owner_player.getEnergy() < 6) {
-            return -1;
-        } else {
-            owner_player.changeEnergy(-6);
-            resource_amount++;
-            action_used = true;
-            return 0;
+    public void cardAction() {
+        if (owner_player.getEnergy() < 6) {
+            return;
         }
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        owner_player.changeEnergy(-6);
+        resource_amount++;
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -32,8 +39,8 @@ public final class PhysicsComplex extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
+    public Boolean getActionValidity() {
+        return (action_used || (owner_player.getEnergy() < 6));
     }
 
     @Override

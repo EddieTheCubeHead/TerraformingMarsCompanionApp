@@ -14,16 +14,23 @@ public final class OreProcessor extends Card implements ActionCard {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used | owner_player.getEnergy() < 4) {
-            return -1;
-        } else {
-            owner_player.changeEnergy(-4);
-            owner_player.changeTitanium(1);
-            owner_game.raiseOxygen(owner_player);
-            action_used = true;
-            return 0;
+    public void cardAction() {
+        if (owner_player.getEnergy() < 4) {
+            return;
         }
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        owner_player.changeEnergy(-4);
+        owner_player.changeTitanium(1);
+        owner_game.raiseOxygen(owner_player);
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -32,7 +39,7 @@ public final class OreProcessor extends Card implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
+    public Boolean getActionValidity() {
+        return (action_used || (owner_player.getEnergy() < 4));
     }
 }

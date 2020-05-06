@@ -106,7 +106,7 @@ public class PlayerChoiceActivity extends AppCompatActivity {
 
         view.findViewById(R.id.button_confirm).setOnClickListener(v -> {
             Integer target_index = GameController.getInstance().getPlayerIndex((Player)spinner.getSelectedItem());
-            card.playWithMetadata(player, target_index);
+            card.playServerConnection(player, target_index);
             dialog.dismiss();
             PlayerChoiceActivity.super.onBackPressed();
         });

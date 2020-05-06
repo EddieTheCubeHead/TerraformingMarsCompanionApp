@@ -25,8 +25,8 @@ public final class AerobrakedAmmoniaAsteroid extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeHeatProduction(3);
-        player.changePlantsProduction(1);
+        production_box.setHeatProduction(3);
+        production_box.setPlantsProduction(1);
         super.playWithMetadata(player, data);
     }
 }

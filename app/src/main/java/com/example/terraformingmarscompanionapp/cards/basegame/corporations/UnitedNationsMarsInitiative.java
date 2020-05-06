@@ -21,15 +21,22 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used | !owner_player.getRaisedTrThisGeneration() | owner_player.getMoney() < 3) {
-            return -1;
-        } else {
-            owner_player.changeMoney(-3);
-            owner_player.changeTerraformingRating(1);
-            action_used = true;
-            return 0;
+    public void cardAction() {
+        if (!owner_player.getRaisedTrThisGeneration() || owner_player.getMoney() < 3) {
+            return;
         }
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        owner_player.changeMoney(-3);
+        owner_player.changeTerraformingRating(1);
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -38,7 +45,7 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
     }
 }

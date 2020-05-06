@@ -23,8 +23,8 @@ public final class BlackPolarDust extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(-2);
-        player.changeHeatProduction(3);
+        production_box.setMoneyProduction(-2);
+        production_box.setHeatProduction(3);
         super.playWithMetadata(player, data);
     }
 }

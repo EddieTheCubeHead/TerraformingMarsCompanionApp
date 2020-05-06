@@ -21,9 +21,9 @@ public final class ArtificialPhotosynthesis extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data == 0) {
-            player.changePlantsProduction(1);
+            production_box.setPlantsProduction(1);
         } else {
-            player.changeEnergyProduction(2);
+            production_box.setEnergyProduction(2);
         }
         super.playWithMetadata(player, data);
     }

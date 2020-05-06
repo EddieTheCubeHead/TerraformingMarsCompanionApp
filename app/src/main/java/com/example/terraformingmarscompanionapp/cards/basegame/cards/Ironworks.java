@@ -14,16 +14,20 @@ public final class Ironworks extends Card implements ActionCard {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used | owner_player.getEnergy() < 4) {
-            return -1;
-        } else {
-            owner_player.changeEnergy(-4);
-            owner_player.changeSteel(1);
-            owner_game.raiseOxygen(owner_player);
-            action_used = true;
-            return 0;
-        }
+    public void cardAction() {
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        owner_player.changeEnergy(-4);
+        owner_game.raiseOxygen(owner_player);
+        owner_player.changeSteel(1);
+    }
+
+    @Override
+    public void setActionToUsed() {
+
     }
 
     @Override
@@ -32,7 +36,7 @@ public final class Ironworks extends Card implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
+    public Boolean getActionValidity() {
+        return (action_used || (owner_player.getEnergy() < 4));
     }
 }

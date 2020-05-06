@@ -1,9 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class DevelopmentCenter extends Card implements ActionCard {
     public DevelopmentCenter(Game game) {
@@ -15,14 +17,19 @@ public final class DevelopmentCenter extends Card implements ActionCard {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used || owner_player.getEnergy() == 0) {
-            return -1;
-        } else {
-            //TODO Kortin veto
-            action_used = true;
-            return 0;
-        }
+    public void cardAction() {
+        ((InGameUI) GameController.getInstance().getContext()).cardDrawPrompt(1);
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        owner_player.changeEnergy(-1);
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -31,8 +38,8 @@ public final class DevelopmentCenter extends Card implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
+    public Boolean getActionValidity() {
+        return (action_used || (owner_player.getEnergy() < 1));
     }
 
 }

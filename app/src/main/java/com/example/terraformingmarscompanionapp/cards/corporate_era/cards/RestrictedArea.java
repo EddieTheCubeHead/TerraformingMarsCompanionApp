@@ -30,16 +30,20 @@ public final class RestrictedArea extends Card implements ActionCard {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used | owner_player.getMoney() < 2) {
-            return -1;
-        } else {
-            ((InGameUI)GameController.getInstance().getContext()).cardDrawPrompt(1);
-            owner_player.changeMoney(-2);
-            owner_player.changeHandSize(1);
-            action_used = true;
-            return 0;
-        }
+    public void cardAction() {
+        ((InGameUI)GameController.getInstance().getContext()).cardDrawPrompt(1);
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        owner_player.changeMoney(-2);
+        owner_player.changeHandSize(1);
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -48,7 +52,7 @@ public final class RestrictedArea extends Card implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
+    public Boolean getActionValidity() {
+        return (action_used || (owner_player.getMoney() < 2));
     }
 }

@@ -32,22 +32,14 @@ public final class Fish extends ResourceCard implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        if (data != 0) {
-            GameController.getInstance().getPlayer(data).takePlantsProduction(1);
-        }
+        production_box.setStealPlantsProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        } else {
-            resource_amount++;
-            action_used = true;
-            return 0;
-        }
+    public void cardAction() {
+        actionServerHook(owner_player);
     }
 
     @Override
@@ -61,7 +53,17 @@ public final class Fish extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        resource_amount++;
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 }
