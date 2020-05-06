@@ -137,9 +137,9 @@ public class BooleanDialogActivity extends AppCompatActivity {
     }
 
     private void executeWithData(Integer data) {
+        card.overridePlayActionCall();
         if (card.getOwner() == null) {
             card.playServerConnection(GameController.getInstance().getCurrentPlayer(), data);
-            exit();
         } else {
             if (card instanceof ActionCard) {
                 ((ActionCard) card).actionServerHook(card.getOwner(), data);
@@ -151,6 +151,7 @@ public class BooleanDialogActivity extends AppCompatActivity {
     private void exit() {
         dialog.dismiss();
         Intent inGameUi = new Intent(this, InGameUI.class);
+        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
         startActivity(inGameUi);
     }
 }

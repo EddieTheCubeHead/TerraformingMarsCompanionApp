@@ -28,6 +28,8 @@ public abstract class Card {
     public static ArrayList<Type> ownables = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST));
     public static ArrayList<Type> tag_holders = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
     protected Boolean wait_for_server = false;
+    private Boolean override_play_action_call = false;
+    public final void overridePlayActionCall() {override_play_action_call = true;}
 
     //Enum kortin tyyppiin
     public enum Type {
@@ -67,6 +69,12 @@ public abstract class Card {
     public void playWithMetadata(Player player, Integer data) {
         production_box.playProductionBox(player, data);
         finishPlay(player);
+
+        if (override_play_action_call) {
+            override_play_action_call = false;
+            return;
+        }
+
         if (wait_for_server && owner_game.getServerMultiplayer() && GameController.getInstance().getCurrentPlayer() != GameController.getInstance().getSelfPlayer()) {
             return;
         }
@@ -75,6 +83,7 @@ public abstract class Card {
         }
 
         if (type != Type.GHOST) {
+            System.out.println("Calling use action from card row 86");
             GameController.getInstance().useAction();
         }
     }
