@@ -15,6 +15,7 @@ public final class CommercialDistrict extends Card {
         price = 16;
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
+        wait_for_server = true;
     }
 
     @Override

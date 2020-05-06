@@ -12,6 +12,7 @@ public final class RoboticWorkforce extends Card {
         price = 9;
         tags.add(Tag.SCIENCE);
         requirements.setMinBuildingTags(1);
+        wait_for_server = true;
     }
 
     @Override

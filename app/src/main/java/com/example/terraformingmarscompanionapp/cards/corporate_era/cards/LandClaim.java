@@ -14,6 +14,7 @@ public final class LandClaim extends Card {
         name = "Asteroid mining consortium";
         price = 1;
         tags.add(Tag.EVENT);
+        wait_for_server = true;
     }
 
     @Override

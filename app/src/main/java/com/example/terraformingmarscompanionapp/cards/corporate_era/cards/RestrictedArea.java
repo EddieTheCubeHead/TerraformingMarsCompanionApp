@@ -16,6 +16,7 @@ public final class RestrictedArea extends Card implements ActionCard {
         name = "Restricted area";
         price = 11;
         tags.add(Tag.SCIENCE);
+        wait_for_server = true;
     }
 
     @Override

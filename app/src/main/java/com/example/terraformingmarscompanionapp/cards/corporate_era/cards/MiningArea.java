@@ -14,6 +14,7 @@ public final class MiningArea extends Card {
         name = "Mining area";
         price = 4;
         tags.add(Tag.BUILDING);
+        wait_for_server = true;
     }
 
     @Override

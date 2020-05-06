@@ -20,6 +20,7 @@ public final class Virus extends Card {
         tags.add(Tag.MICROBE);
         tags.add(Tag.EVENT);
         owner_game = game;
+        wait_for_server = true;
     }
 
     @Override

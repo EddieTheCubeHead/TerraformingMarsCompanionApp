@@ -18,6 +18,7 @@ public final class AsteroidMiningConsortium extends Card {
         tags.add(Tag.JOVIAN);
         requirements.setMinTitaniumProduction(1);
         victory_points = 1;
+        wait_for_server = true;
     }
 
     @Override

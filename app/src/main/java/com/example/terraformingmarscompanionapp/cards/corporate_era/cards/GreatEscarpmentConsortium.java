@@ -15,6 +15,7 @@ public final class GreatEscarpmentConsortium extends Card {
         name = "Great escarpment consortium";
         price = 6;
         requirements.setMinSteelProduction(1);
+        wait_for_server = true;
     }
 
     @Override
