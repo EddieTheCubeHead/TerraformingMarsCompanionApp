@@ -16,8 +16,8 @@ public final class PeroxidePower extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(-1);
-        player.changeEnergyProduction(2);
+        production_box.setMoneyProduction(-1);
+        production_box.setEnergyProduction(2);
         super.playWithMetadata(player, data);
     }
 }

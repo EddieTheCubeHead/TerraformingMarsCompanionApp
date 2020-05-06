@@ -19,8 +19,8 @@ public final class Shuttles extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeSpaceTagDiscount(2);
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(2);
+        production_box.setEnergyProduction(-1);
+        production_box.setMoneyProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

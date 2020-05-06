@@ -14,7 +14,10 @@ public final class RoboticWorkforce extends Card {
         requirements.setMinBuildingTags(1);
     }
 
-    //TODO tää koko juttu
+    @Override
+    public void onPlay(Player player) {
+        //TODO korttiresurssi UI kutsuminen custom intentillä
+    }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {

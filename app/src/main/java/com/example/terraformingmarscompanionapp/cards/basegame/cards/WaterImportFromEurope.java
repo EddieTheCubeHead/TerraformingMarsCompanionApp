@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -13,7 +13,7 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public final class WaterImportFromEurope extends Card implements MetadataAction {
+public final class WaterImportFromEurope extends Card implements ActionCard {
     public WaterImportFromEurope(Game game) {
         super(Type.BLUE, game);
         name = "Water import from europe";
@@ -29,18 +29,15 @@ public final class WaterImportFromEurope extends Card implements MetadataAction 
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        } else {
-            if ((owner_player.getMoney() + owner_player.getTitanium() * (3 + owner_player.getTitaniumValueModifier()) < 8)) {
-                return -2;
-            }
-            GameController.getInstance().addUiEvent(new CostEvent(new ArrayList<>(Collections.singletonList(Tag.SPACE)), 12));
-            GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-            action_used = true;
-            return 0;
-        }
+    public void cardAction() {
+        GameController.getInstance().addUiEvent(new CostEvent(new ArrayList<>(Collections.singletonList(Tag.SPACE)), 12));
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -54,12 +51,10 @@ public final class WaterImportFromEurope extends Card implements MetadataAction 
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
+    public Boolean getActionValidity() {
+        return (action_used || ((owner_player.getMoney() + owner_player.getTitanium() * (3 + owner_player.getTitaniumValueModifier())) < 12));
     }
 
     @Override
-    public boolean actionWithMetadata(Integer data) {
-        return true;
-    }
+    public void actionWithMetadata(Integer data) {}
 }

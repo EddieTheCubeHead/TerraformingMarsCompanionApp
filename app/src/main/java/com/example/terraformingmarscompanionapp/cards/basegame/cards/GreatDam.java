@@ -18,7 +18,7 @@ public final class GreatDam extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(2);
+        production_box.setEnergyProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

@@ -18,7 +18,7 @@ public final class MiningGuild extends Card implements EffectCard {
     public void playWithMetadata(Player player, Integer data) {
         player.changeMoney(30);
         player.changeSteel(5);
-        player.changeSteelProduction(1);
+        production_box.setSteelProduction(1);
         super.playWithMetadata(player, data);
     }
 

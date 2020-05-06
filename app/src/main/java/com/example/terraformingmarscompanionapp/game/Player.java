@@ -61,6 +61,7 @@ public class Player {
     public ArrayList<ActionCard> getActions() {return action_cards;}
     public ArrayList<Card> getBlue() {return blue_cards;}
     public ArrayList<ResourceCard> getResourceHolders() {return resource_holders;}
+    public ArrayList<Card> getPreludes() {return preludes;}
 
     //Käsikoon asettaminen
     public Boolean changeHandSize(Integer change_amount) {

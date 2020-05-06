@@ -1,6 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -8,7 +8,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 
-public final class Ants extends ResourceCard implements MetadataAction {
+public final class Ants extends ResourceCard implements ActionCard {
     public Ants(Game game) {
         super(Type.BLUE, game);
         name = "Ants";
@@ -25,14 +25,9 @@ public final class Ants extends ResourceCard implements MetadataAction {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        } else {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceType.MICROBE, owner_game, -1));
-            resource_amount++;
-            return 0;
-        }
+    public void cardAction() {
+        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceType.MICROBE, owner_game, -1));
+        actionServerHook(owner_player);
     }
 
     @Override
@@ -41,9 +36,8 @@ public final class Ants extends ResourceCard implements MetadataAction {
     }
 
     @Override
-    public boolean actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) {
         resource_amount++;
-        return true;
     }
 
     @Override
@@ -52,7 +46,10 @@ public final class Ants extends ResourceCard implements MetadataAction {
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
     }
+
+    @Override
+    public void setActionToUsed() {action_used = true;}
 }

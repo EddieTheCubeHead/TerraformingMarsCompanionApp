@@ -17,8 +17,8 @@ public final class FoodFactory extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(-1);
-        player.changeMoneyProduction(4);
+        production_box.setPlantsProduction(-1);
+        production_box.setMoneyProduction(4);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

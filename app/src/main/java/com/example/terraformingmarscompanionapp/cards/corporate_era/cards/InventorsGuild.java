@@ -19,14 +19,21 @@ public final class InventorsGuild extends Card implements ActionCard {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        } else {
-            //TODO Kortin nosto ja valinta ostaako
-            action_used = true;
-            return 0;
+    public void cardAction() {
+        //TODO boolean valinta UI
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        if (data != 0) {
+            owner_player.takeMoney(3);
+            owner_player.changeHandSize(1);
         }
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -35,7 +42,7 @@ public final class InventorsGuild extends Card implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
     }
 }

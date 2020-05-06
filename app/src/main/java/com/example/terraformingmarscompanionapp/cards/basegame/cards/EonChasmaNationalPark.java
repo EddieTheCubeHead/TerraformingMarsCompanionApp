@@ -28,7 +28,7 @@ public final class EonChasmaNationalPark extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changePlants(3);
-        player.changeMoneyProduction(2);
+        production_box.setMoneyProduction(2);
         super.playWithMetadata(player, data);
     }
 }

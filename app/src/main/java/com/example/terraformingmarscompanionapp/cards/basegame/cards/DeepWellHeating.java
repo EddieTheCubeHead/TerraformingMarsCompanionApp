@@ -16,7 +16,7 @@ public final class DeepWellHeating extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(1);
+        production_box.setEnergyProduction(1);
         owner_game.raiseTemperature(player);
         super.playWithMetadata(player, data);
     }

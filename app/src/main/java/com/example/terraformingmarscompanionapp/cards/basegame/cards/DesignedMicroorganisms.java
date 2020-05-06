@@ -17,7 +17,7 @@ public final class DesignedMicroorganisms extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlantsProduction(2);
+        production_box.setPlantsProduction(2);
         super.playWithMetadata(player, data);
     }
 }

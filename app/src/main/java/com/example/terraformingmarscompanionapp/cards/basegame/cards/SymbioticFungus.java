@@ -1,11 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 
-public final class SymbioticFungus extends Card implements MetadataAction {
+public final class SymbioticFungus extends Card implements ActionCard {
     public SymbioticFungus(Game game) {
         super(Type.BLUE, game);
         name = "Symbiotic fungus";
@@ -15,13 +15,13 @@ public final class SymbioticFungus extends Card implements MetadataAction {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        }
-        //TODO lisää toiminto jahka korttiresurssijärjestelmä implementoitu
+    public void cardAction() {
+        //TODO korttiresurssi UI
+    }
+
+    @Override
+    public void setActionToUsed() {
         action_used = true;
-        return 0;
     }
 
     @Override
@@ -30,12 +30,10 @@ public final class SymbioticFungus extends Card implements MetadataAction {
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
     }
 
     @Override
-    public boolean actionWithMetadata(Integer data) {
-        return true;
-    }
+    public void actionWithMetadata(Integer data) {}
 }

@@ -16,7 +16,13 @@ public final class Zeppelins extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.changeMoneyProduction(owner_game.getCitiesOnMars());
+        production_box.setMoneyProduction(owner_game.getCitiesOnMars());
         super.playWithMetadata(player, data);
+    }
+
+    @Override
+    public void playProductionBox() {
+        production_box.setMoneyProduction(owner_game.getCitiesOnMars());
+        super.playProductionBox();
     }
 }

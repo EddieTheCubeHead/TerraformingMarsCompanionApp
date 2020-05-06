@@ -15,7 +15,7 @@ public final class AcquiredCompany extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_player.changeMoneyProduction(3);
+        production_box.setMoneyProduction(3);
         super.playWithMetadata(player, data);
     }
 }

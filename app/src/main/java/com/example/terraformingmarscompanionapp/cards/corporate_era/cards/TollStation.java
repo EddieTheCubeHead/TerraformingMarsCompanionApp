@@ -23,7 +23,20 @@ public final class TollStation extends Card {
             }
             tag_amount += opponent.getSpaceTags();
         }
-        player.changeMoneyProduction(tag_amount);
+        production_box.setMoneyProduction(tag_amount);
         super.playWithMetadata(player, data);
+    }
+
+    @Override
+    public void playProductionBox() {
+        Integer tag_amount = 0;
+        for (Player opponent : owner_game.getPlayers()) {
+            if (opponent == owner_player) {
+                continue;
+            }
+            tag_amount += opponent.getSpaceTags();
+        }
+        production_box.setMoneyProduction(tag_amount);
+        super.playProductionBox();
     }
 }

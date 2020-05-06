@@ -16,7 +16,7 @@ public final class TitaniumMine extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_player.changeTitaniumProduction(1);
+        production_box.setTitaniumProduction(1);
         super.playWithMetadata(player, data);
     }
 }

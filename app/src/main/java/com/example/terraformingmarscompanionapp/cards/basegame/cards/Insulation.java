@@ -18,8 +18,13 @@ public final class Insulation extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeHeatProduction(-data);
-        player.changeMoneyProduction(data);
+        production_box.setHeatProduction(-data);
+        production_box.setMoneyProduction(data);
         super.playWithMetadata(player, data);
+    }
+
+    @Override
+    public void playProductionBox() {
+        //TODO luvun valinta UI
     }
 }

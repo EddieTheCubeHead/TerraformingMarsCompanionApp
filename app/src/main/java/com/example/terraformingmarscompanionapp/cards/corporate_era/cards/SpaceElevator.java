@@ -18,23 +18,25 @@ public final class SpaceElevator extends Card implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeTitaniumProduction(1);
+        production_box.setTitaniumProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used | owner_player.getSteel() < 1) {
-            return -1;
-        }
-        else {
-            owner_player.changeSteel(-1);
-            owner_player.changeMoney(5);
-            action_used = true;
-            return 0;
-        }
+    public void cardAction() {
+        actionServerHook(owner_player);
+    }
 
+    @Override
+    public void actionWithMetadata(Integer data) {
+        owner_player.changeSteel(-1);
+        owner_player.changeMoney(5);
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -43,7 +45,7 @@ public final class SpaceElevator extends Card implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
+    public Boolean getActionValidity() {
+        return (action_used || (owner_player.getSteel() < 1));
     }
 }

@@ -15,7 +15,7 @@ public final class Mine extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeSteelProduction(1);
+        production_box.setSteelProduction(1);
         super.playWithMetadata(player, data);
     }
 }

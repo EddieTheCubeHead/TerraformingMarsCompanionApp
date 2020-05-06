@@ -17,7 +17,7 @@ public final class PhobosSpaceHaven extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeTitaniumProduction(1);
+        production_box.setTitaniumProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
         owner_game.tile_handler.placePhobos(player);
         super.playWithMetadata(player, data);

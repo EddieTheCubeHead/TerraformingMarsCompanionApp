@@ -16,8 +16,8 @@ public final class MagneticFieldGenerators extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-4);
-        player.changePlantsProduction(2);
+        production_box.setEnergyProduction(-4);
+        production_box.setPlantsProduction(2);
         player.changeTerraformingRating(3);
         super.playWithMetadata(player, data);
     }

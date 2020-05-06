@@ -27,9 +27,8 @@ public final class ImmigrantCity extends Card implements EffectCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.addCity();
-        player.changeMoneyProduction(-2);
-        player.changeEnergyProduction(-1);
+        production_box.setMoneyProduction(-2);
+        production_box.setEnergyProduction(-1);
         super.playWithMetadata(player, data);
     }
 

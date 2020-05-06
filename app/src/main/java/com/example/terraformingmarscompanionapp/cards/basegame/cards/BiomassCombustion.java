@@ -32,10 +32,8 @@ public final class BiomassCombustion extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        if (data != 0) {
-            GameController.getInstance().getPlayer(data).takePlantsProduction(1);
-        }
-        player.changeEnergyProduction(2);
+        production_box.setStealPlantsProduction(1);
+        production_box.setEnergyProduction(2);
         super.onPlay(player);
     }
 }

@@ -15,7 +15,7 @@ public final class Soletta extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeHeatProduction(7);
+        production_box.setHeatProduction(7);
         super.playWithMetadata(player, data);
     }
 }

@@ -17,7 +17,7 @@ public final class GeneRepair extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(2);
+        production_box.setMoneyProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

@@ -18,8 +18,8 @@ public final class MethaneFromTitan extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeHeatProduction(2);
-        player.changePlantsProduction(2);
+        production_box.setHeatProduction(2);
+        production_box.setPlantsProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

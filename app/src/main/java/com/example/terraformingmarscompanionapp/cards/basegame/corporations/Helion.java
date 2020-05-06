@@ -15,7 +15,7 @@ public final class Helion extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeMoney(42);
-        player.changeHeatProduction(3);
+        production_box.setHeatProduction(3);
         player.setHeatIsMoney(true);
         super.playWithMetadata(player, data);
     }

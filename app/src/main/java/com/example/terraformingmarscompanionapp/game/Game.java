@@ -32,6 +32,7 @@ public class Game implements Serializable {
     private final HashMap<String, Card> ghosts;
     private final HashMap<String, Card> awards;
     private final HashMap<String, Card> milestones;
+    private final HashMap<String, Card> all_cards;
 
     //Simppeli ArrayList pelaajia. Pelaajien tarkempi hallinta ylempänä GameController -luokassa
     private final ArrayList<Player> players = new ArrayList<>();
@@ -51,6 +52,7 @@ public class Game implements Serializable {
     public HashMap<String, Card> getGhosts() {return ghosts;}
     public HashMap<String, Card> getAwards() {return awards;}
     public HashMap<String, Card> getMilestones() {return milestones;}
+    public HashMap<String, Card> getAllCards() {return all_cards;}
 
     ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
 
@@ -148,6 +150,29 @@ public class Game implements Serializable {
         ghosts = constructor.createGhosts();
         awards = constructor.createAwards();
         milestones = constructor.createMilestones();
+
+        all_cards = new HashMap<>();
+
+        //Streamien käyttäminen tähän vaatisi API tasoa 24. Näin taso pysyy alhaalla
+        for (Map.Entry<String, Card> entry : deck.entrySet()) {
+            all_cards.put(entry.getKey(), entry.getValue());
+        }
+
+        for (Map.Entry<String, Card> entry : corporations.entrySet()) {
+            all_cards.put(entry.getKey(), entry.getValue());
+        }
+
+        for (Map.Entry<String, Card> entry : ghosts.entrySet()) {
+            all_cards.put(entry.getKey(), entry.getValue());
+        }
+
+        for (Map.Entry<String, Card> entry : awards.entrySet()) {
+            all_cards.put(entry.getKey(), entry.getValue());
+        }
+
+        for (Map.Entry<String, Card> entry : milestones.entrySet()) {
+            all_cards.put(entry.getKey(), entry.getValue());
+        }
 
         if (prelude) {
             preludes = constructor.createPreludes();
@@ -506,6 +531,12 @@ public class Game implements Serializable {
                 }
             }
             if (floaters < requirements.getMinFloaters()) {
+                return false;
+            }
+        }
+
+        if (requirements.getPlantsForGreenery()) {
+            if (player.getPlants() < (8 + player.getGreeneryPlantCostModifier())) {
                 return false;
             }
         }

@@ -16,7 +16,7 @@ public final class Lichen extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlantsProduction(1);
+        production_box.setPlantsProduction(1);
         super.playWithMetadata(player, data);
     }
 }

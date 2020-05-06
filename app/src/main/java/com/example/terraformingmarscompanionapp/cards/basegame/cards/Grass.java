@@ -16,7 +16,7 @@ public final class Grass extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlantsProduction(1);
+        production_box.setPlantsProduction(1);
         player.changePlants(3);
         super.playWithMetadata(player, data);
     }

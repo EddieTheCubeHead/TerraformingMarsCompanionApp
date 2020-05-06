@@ -20,6 +20,14 @@ public final class LocalHeatTrapping extends Card {
     }
 
     @Override
+    public void playServerConnection(Player player, Integer data) {
+        if (data != 0) {
+            //TODO korttiresurssi UI
+        }
+        super.playServerConnection(player, data);
+    }
+
+    @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeHeat(-5);
         if (data == 0) {

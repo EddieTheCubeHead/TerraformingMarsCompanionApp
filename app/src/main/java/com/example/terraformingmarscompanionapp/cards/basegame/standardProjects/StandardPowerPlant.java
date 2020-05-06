@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cards.basegame.standard_projects;
+package com.example.terraformingmarscompanionapp.cards.basegame.standardProjects;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.StandardProject;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;

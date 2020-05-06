@@ -29,9 +29,8 @@ public final class OpenCity extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.addCity();
-        player.changeEnergyProduction(-1);
-        player.changeMoneyProduction(4);
+        production_box.setEnergyProduction(-1);
+        production_box.setMoneyProduction(4);
         player.changePlants(2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);

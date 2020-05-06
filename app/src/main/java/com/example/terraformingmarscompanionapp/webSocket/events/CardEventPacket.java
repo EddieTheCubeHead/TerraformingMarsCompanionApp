@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
@@ -25,13 +24,11 @@ public class CardEventPacket implements PlayablePacket {
     @Override
     public void playPacket() {
         Game game = GameController.getInstance().getGame();
-        Card card = game.getDeck().get(card_name);
+        Card card = game.getAllCards().get(card_name);
         if (card.getOwner() == null) {
             card.playWithMetadata(game.getPlayer(player_name), metadata);
-        } else if (card instanceof MetadataAction) {
-            ((MetadataAction) card).actionWithMetadata(metadata);
         } else if (card instanceof ActionCard) {
-            ((ActionCard) card).cardAction();
+            ((ActionCard) card).actionWithMetadata(metadata);
         } else {
             Log.i("WebSocket", "CardEffectPacket lähetetty omistetusta kortista, jolla ei ole toimintaa. Huomauta Eetua. Kortin nimi: " + card_name);
         }

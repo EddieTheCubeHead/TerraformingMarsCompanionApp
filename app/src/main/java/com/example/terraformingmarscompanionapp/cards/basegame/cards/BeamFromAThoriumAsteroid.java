@@ -20,8 +20,8 @@ public final class BeamFromAThoriumAsteroid extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.changeHeatProduction(3);
-        player.changeEnergyProduction(3);
+        production_box.setHeatProduction(3);
+        production_box.setEnergyProduction(3);
         super.playWithMetadata(player, data);
     }
 }

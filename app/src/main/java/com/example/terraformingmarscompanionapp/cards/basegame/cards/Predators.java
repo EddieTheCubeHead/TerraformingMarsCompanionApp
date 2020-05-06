@@ -1,12 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-public final class Predators extends ResourceCard implements MetadataAction {
+public final class Predators extends ResourceCard implements ActionCard {
     public Predators(Game game) {
         super(Type.BLUE, game);
         name = "Predators";
@@ -22,14 +22,14 @@ public final class Predators extends ResourceCard implements MetadataAction {
         super.playWithMetadata(player, data);
     }
 
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        } else {
-            //TODO poista toiselta eläin
-            resource_amount++;
-            return 0;
-        }
+    public void cardAction() {
+        //TODO korttiresurssi UI
+        actionServerHook(owner_player);
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     @Override
@@ -43,13 +43,12 @@ public final class Predators extends ResourceCard implements MetadataAction {
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
     }
 
     @Override
-    public boolean actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) {
         resource_amount++;
-        return true;
     }
 }

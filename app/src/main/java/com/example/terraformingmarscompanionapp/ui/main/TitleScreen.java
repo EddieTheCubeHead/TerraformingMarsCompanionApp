@@ -30,8 +30,6 @@ public class TitleScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_screen);
 
-        WebSocketHandler.createWebSocketClient();
-
         TextView user_name = findViewById(R.id.textView);
         user_name.setText("Not logged in!");
 
@@ -109,6 +107,7 @@ public class TitleScreen extends AppCompatActivity {
     }
 
     public void logIn(View view) {
+        initializeWebSocket();
         intent = new Intent(this, LoginActivity.class);
         if (UserActions.getUser() == null) {
             intent.putExtra(EXTRA_MESSAGE, "Log in");
@@ -119,6 +118,7 @@ public class TitleScreen extends AppCompatActivity {
     }
 
     public void signUp(View view) {
+        initializeWebSocket();
         if (UserActions.getUser() == null) {
             intent = new Intent(this, LoginActivity.class);
             intent.putExtra(EXTRA_MESSAGE, "Sign up");
@@ -134,5 +134,9 @@ public class TitleScreen extends AppCompatActivity {
             sign_up.setText("Sign up");
             log_in.setText("Log in");
         }
+    }
+
+    private void initializeWebSocket() {
+        WebSocketHandler.createWebSocketClient();
     }
 }

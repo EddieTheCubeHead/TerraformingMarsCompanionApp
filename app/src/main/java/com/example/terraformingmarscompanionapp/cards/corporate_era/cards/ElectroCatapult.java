@@ -19,28 +19,36 @@ public final class ElectroCatapult extends Card implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(-1);
+        production_box.setEnergyProduction(-1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
+    public void cardAction() {
+        //TODO boolean valinta UI
+    }
+
+
+    @Override
+    public void actionWithMetadata(Integer data) {
+        if (data == 0) {
+            owner_player.takePlants(1);
+        } else {
+            owner_player.takeSteel(1);
         }
-        else {
-            //TODO Valitse kasvi/teräs
-            owner_player.changeMoney(7);
-            action_used = true;
-            return 0;
-        }
+        owner_player.changeMoney(7);
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 
     public String getActionName() {
         return getName();
     }
 
-    public Boolean getActionUsed() {
-        return action_used;
+    public Boolean getActionValidity() {
+        return (action_used || (owner_player.getSteel() < 1 && owner_player.getPlants() < 1));
     }
 }

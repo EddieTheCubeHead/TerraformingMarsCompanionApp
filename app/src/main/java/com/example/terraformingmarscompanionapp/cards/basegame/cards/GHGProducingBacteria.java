@@ -2,12 +2,12 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import android.util.Log;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 
-public final class GHGProducingBacteria extends ResourceCard implements MetadataAction {
+public final class GHGProducingBacteria extends ResourceCard implements ActionCard {
     public GHGProducingBacteria(Game game) {
         super(Type.BLUE, game);
         name = "GHG producing bacteria";
@@ -19,39 +19,18 @@ public final class GHGProducingBacteria extends ResourceCard implements Metadata
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        } else {
-            Boolean added_microbes = true;
-            //TODO UI kysymään tämä
-            if (added_microbes) {
-                resource_amount++;
-            } else if (resource_amount < 2) {
-                return -1;
-            } else {
-                resource_amount -= 2;
-            }
-            action_used = true;
-            return added_microbes ? 1 : 0;
-        }
+    public void cardAction() {
+        //TODO boolean valinta UI
     }
 
     @Override
-    public boolean actionWithMetadata(Integer data) {
-        if (action_used) {
-            return false;
+    public void actionWithMetadata(Integer data) {
+        if (data == 0) {
+            resource_amount++;
+        } else if (resource_amount < 2) {
+            Log.i("Card", "Error in GHG producing bacteria checks!");
         } else {
-            if (data == 0) {
-                resource_amount++;
-            } else if (resource_amount < 2) {
-                Log.i("Card", "Error in GHG producing bacteria checks!");
-                return false;
-            } else {
-                resource_amount -= 2;
-            }
-            action_used = true;
-            return true;
+            resource_amount -= 2;
         }
     }
 
@@ -61,7 +40,12 @@ public final class GHGProducingBacteria extends ResourceCard implements Metadata
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 }

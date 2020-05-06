@@ -17,7 +17,7 @@ public final class AsteroidMining extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeTitaniumProduction(2);
+        production_box.setTitaniumProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

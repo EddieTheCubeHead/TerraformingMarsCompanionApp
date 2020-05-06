@@ -17,7 +17,7 @@ public final class ImportedGHG extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeHeatProduction(1);
+        production_box.setHeatProduction(1);
         player.changeHeat(3);
         super.playWithMetadata(player, data);
     }

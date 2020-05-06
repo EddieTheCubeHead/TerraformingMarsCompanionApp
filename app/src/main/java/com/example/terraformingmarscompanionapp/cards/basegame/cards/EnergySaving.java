@@ -15,7 +15,13 @@ public final class EnergySaving extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(owner_game.getCitiesOnMars() + owner_game.getCitiesInSpace());
+        production_box.setEnergyProduction(owner_game.getCitiesOnMars() + owner_game.getCitiesInSpace());
         super.playWithMetadata(player, data);
+    }
+
+    @Override
+    public void playProductionBox() {
+        production_box.setEnergyProduction(owner_game.getCitiesOnMars() + owner_game.getCitiesInSpace());
+        super.playProductionBox();
     }
 }

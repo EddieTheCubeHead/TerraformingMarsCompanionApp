@@ -1,11 +1,15 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.MetadataAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
-public final class ExtremeColdFungus extends Card implements MetadataAction {
+public final class ExtremeColdFungus extends Card implements ActionCard {
     public ExtremeColdFungus(Game game) {
         super(Type.BLUE, game);
         name = "Extreme-cold fungus";
@@ -15,29 +19,27 @@ public final class ExtremeColdFungus extends Card implements MetadataAction {
     }
 
     @Override
-    public Integer cardAction() {
-        if (action_used) {
-            return -1;
-        } else {
-            Boolean chose_microbes = true;
-            //TODO UI kasveja vai mikrobeja UI
-            if (chose_microbes) {
-                //TODO lisää toiselle kortilla kaksi mikrobia
-            } else {
-                owner_player.changePlants(1);
-            }
-            action_used = true;
-            return chose_microbes ? 0 : 1;
-        }
+    public void cardAction() {
+        //TODO boolean valinta UI
     }
 
     @Override
-    public boolean actionWithMetadata(Integer data) {
+    public void actionServerHook(Player player, Integer data) {
+        if (GameController.getInstance().getGame().getServerMultiplayer()) {
+            GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), 0));
+        }
+        setActionToUsed();
+        if (data == 0) {
+            //TODO korttiresurssi UI
+        }
+        actionWithMetadata(data);
+    }
+
+    @Override
+    public void actionWithMetadata(Integer data) {
         if (data != 0) {
             owner_player.changePlants(1);
         }
-        action_used = true;
-        return true;
     }
 
     @Override
@@ -46,7 +48,12 @@ public final class ExtremeColdFungus extends Card implements MetadataAction {
     }
 
     @Override
-    public Boolean getActionUsed() {
+    public Boolean getActionValidity() {
         return action_used;
+    }
+
+    @Override
+    public void setActionToUsed() {
+        action_used = true;
     }
 }

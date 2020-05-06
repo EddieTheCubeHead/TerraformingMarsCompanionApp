@@ -16,7 +16,7 @@ public final class GeothermalPower extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(2);
+        production_box.setEnergyProduction(2);
         super.playWithMetadata(player, data);
     }
 }

@@ -17,8 +17,8 @@ public final class TropicalResort extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(3);
-        player.changeHeatProduction(-2);
+        production_box.setMoneyProduction(3);
+        production_box.setHeatProduction(-2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

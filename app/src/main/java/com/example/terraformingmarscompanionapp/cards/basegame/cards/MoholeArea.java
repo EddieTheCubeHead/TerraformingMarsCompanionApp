@@ -24,7 +24,7 @@ public final class MoholeArea extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeHeatProduction(4);
+        production_box.setHeatProduction(4);
         super.playWithMetadata(player, data);
     }
 }

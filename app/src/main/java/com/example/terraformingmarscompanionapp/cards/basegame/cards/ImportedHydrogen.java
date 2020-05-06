@@ -24,6 +24,13 @@ public final class ImportedHydrogen extends Card {
         //TODO boolean valinta-UI
     }
 
+    @Override
+    public void playServerConnection(Player player, Integer data) {
+        if (data != 0) {
+            //TODO resurssi-UI
+        }
+    }
+
     //TODO selvitä missä välissä mikrobit määritetään
 
     @Override
