@@ -216,9 +216,10 @@ public class GameController
                     atGenerationStart();
                 }
             }
-        }
-
-        if (generation == 1 && (self_player == null || current_player == self_player) && current_player.getCorporation() instanceof FirstAction)
+        } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
+            System.out.println("Round start draw");
+            game.getDeck().get("Round start draw").onPlay(current_player);
+        } else if (generation == 1 && (self_player == null || current_player == self_player) && current_player.getCorporation() instanceof FirstAction)
         {
             FirstAction action = (FirstAction)current_player.getCorporation();
 

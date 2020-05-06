@@ -44,14 +44,16 @@ public final class ProductionBox {
         player.changePlantsProduction(plants_production);
         player.changeHeatProduction(heat_production);
 
-        if (target_index != 0) {
-            Player target_player = GameController.getInstance().getPlayer(target_index);
-            target_player.changeMoneyProduction(-steal_money_production);
-            target_player.takeSteelProduction(steal_steel_production);
-            target_player.takeTitaniumProduction(steal_titanium_production);
-            target_player.takePlantsProduction(steal_plants_production);
-            target_player.takeEnergyProduction(steal_energy_production);
-            target_player.takeHeatProduction(steal_heat_production);
-        }
+        try {
+            if (target_index != 0) {
+                Player target_player = GameController.getInstance().getPlayer(target_index);
+                target_player.changeMoneyProduction(-steal_money_production);
+                target_player.takeSteelProduction(steal_steel_production);
+                target_player.takeTitaniumProduction(steal_titanium_production);
+                target_player.takePlantsProduction(steal_plants_production);
+                target_player.takeEnergyProduction(steal_energy_production);
+                target_player.takeHeatProduction(steal_heat_production);
+            }
+        } catch (Exception ignored) {}
     }
 }

@@ -25,8 +25,8 @@ public abstract class Card {
     protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
     protected ProductionBox production_box = new ProductionBox();
-    public static ArrayList<Type> ownables = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST));
-    public static ArrayList<Type> tag_holders = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
+    private final static ArrayList<Type> OWNABLES = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST));
+    private final static ArrayList<Type> TAG_HOLDERS = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
     protected Boolean wait_for_server = false;
     private Boolean override_play_action_call = false;
     public final void overridePlayActionCall() {override_play_action_call = true;}
@@ -79,6 +79,7 @@ public abstract class Card {
             return;
         }
         if (type == Type.CORPORATION) {
+            System.out.println("Calling use action from card row 84");
             GameController.getInstance().useAction();
         }
 
@@ -89,7 +90,7 @@ public abstract class Card {
     }
 
     protected final void finishPlay (Player player) {
-        if (ownables.contains(type)) {
+        if (OWNABLES.contains(type)) {
             owner_player = player;
         }
 
@@ -189,7 +190,7 @@ public abstract class Card {
         }
 
 
-        if (tags.size() == 0 && tag_holders.contains(type)) {
+        if (tags.size() == 0 && TAG_HOLDERS.contains(type)) {
             player.addNullTag();
         }
 

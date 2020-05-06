@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cards.basegame.resourceStandardOperations;
+package com.example.terraformingmarscompanionapp.cards.basegame.utilityCards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceStandardOperation;
 import com.example.terraformingmarscompanionapp.game.Game;

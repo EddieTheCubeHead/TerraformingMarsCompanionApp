@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.RoundStartDraw;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
@@ -72,6 +74,12 @@ public class IntegerDialogActivity extends AppCompatActivity {
         Button button_negative = view.findViewById(R.id.button_negative);
         Button button_positive = view.findViewById(R.id.button_positive);
 
+        LinearLayout root = view.findViewById(R.id.button_frame_lower);
+
+        root.removeView(root.findViewById(R.id.button_negative_hidden));
+        root.removeView(root.findViewById(R.id.button_positive_hidden));
+
+
         //dialogin rakentaminen ja näyttäminen
         view.setBackgroundColor(Color.TRANSPARENT);
 
@@ -101,6 +109,10 @@ public class IntegerDialogActivity extends AppCompatActivity {
         });
 
         button_positive.setOnClickListener(v -> {
+            if (number_field.getText().toString().equals("")) {
+                return;
+            }
+
             result = Integer.parseInt(number_field.getText().toString().trim());
 
             if (result < min) {
@@ -119,7 +131,11 @@ public class IntegerDialogActivity extends AppCompatActivity {
         dialog.dismiss();
         Intent inGameUi = new Intent(this, InGameUI.class);
         inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
-        card.overridePlayActionCall();
+
+        if (!(card instanceof RoundStartDraw)) {
+            card.overridePlayActionCall();
+        }
+
         startActivity(inGameUi);
     }
 }

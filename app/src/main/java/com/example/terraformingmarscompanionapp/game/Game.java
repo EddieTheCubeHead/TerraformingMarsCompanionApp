@@ -679,20 +679,6 @@ public class Game implements Serializable {
         return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
     }
 
-    //Kutsutaan resurssimuutoksia kortteihin tekevistä UI:sta
-    public void changeCardResources(Card card, Integer amount) {
-
-        if (!(card instanceof ResourceCard)) {
-            return;
-        }
-        ResourceCard resource_holder = (ResourceCard)card;
-        resource_holder.changeResourceAmount(amount);
-
-        if (server_multiplayer) {
-            GameActions.sendResourceEvent(new ResourceEventPacket(resource_holder.getName(), amount));
-        }
-    }
-
     //Sukupolven päättäminen
     public void onGenerationEnd() {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {

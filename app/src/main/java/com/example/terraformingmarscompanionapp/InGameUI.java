@@ -60,6 +60,7 @@ public class InGameUI extends AppCompatActivity {
         }
 
         if (getIntent().getBooleanExtra(UI_QUEUE_CHECK, false)) {
+            System.out.println("Using action from UI check");
             controller.useAction();
         }
 

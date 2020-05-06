@@ -89,6 +89,7 @@ public class Player {
                 card.resetActionUsed();
             }
         }
+        drew_cards_this_gen = false;
     }
 
     /* Seuraavana luokassa on valtava määrä datan säilömiseen tarvittavia muuttujia, sekä
