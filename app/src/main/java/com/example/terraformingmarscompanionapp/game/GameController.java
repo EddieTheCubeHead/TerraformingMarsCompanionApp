@@ -154,6 +154,7 @@ public class GameController
     public Boolean useAction() {
         System.out.println("Toiminnan käyttö kutsuttu");
         if (executeNextEvent()) {
+            System.out.println("Suoritetaan UI-toimintoa");
             return false;
         }
         gameUpdate();
@@ -330,6 +331,11 @@ public class GameController
 
     public void endGame() {
 
+    }
+
+    public void promptUser(String text) {
+        System.out.println("Prompting user with text: " + text);
+        ((InGameUI)context).displayPrompt(text);
     }
 
     //TODO tokenien sijoittaminen

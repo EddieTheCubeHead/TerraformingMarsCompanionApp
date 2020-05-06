@@ -1,12 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class Inventrix extends Card implements FirstAction {
     private Boolean first_action_used = false;
@@ -33,7 +33,7 @@ public final class Inventrix extends Card implements FirstAction {
 
     @Override
     public void firstAction() {
-        ((InGameUI)GameController.getInstance().getContext()).cardDrawPrompt(3);
+        GameController.getInstance().addUiEvent(new PromptEvent("Please draw 3 cards"));
         owner_player.changeHandSize(3);
         first_action_used = true;
     }

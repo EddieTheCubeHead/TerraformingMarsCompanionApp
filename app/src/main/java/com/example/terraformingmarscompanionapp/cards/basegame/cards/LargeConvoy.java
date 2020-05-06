@@ -1,11 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
@@ -41,7 +41,7 @@ public final class LargeConvoy extends Card {
         if (data == 0) {
             player.changePlants(5);
         }
-        ((InGameUI) GameController.getInstance().getContext()).cardDrawPrompt(2);
+        GameController.getInstance().addUiEvent(new PromptEvent("Please draw 2 cards"));
         player.changeHandSize(2);
         super.playWithMetadata(player, data);
     }

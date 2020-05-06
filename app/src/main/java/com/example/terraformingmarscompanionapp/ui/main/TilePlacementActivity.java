@@ -150,12 +150,8 @@ public class TilePlacementActivity extends AppCompatActivity {
     }
 
     public void exit(View view) {
-        System.out.println("UI-jonoa kutsuttu tiilenasettamisluokasta");
-        if (GameController.getInstance().useAction()) {
-            Intent intent = new Intent(this, InGameUI.class);
-            startActivity(intent);
-        } else {
-            Toast.makeText(getApplicationContext(), "Please place your tile", Toast.LENGTH_SHORT).show();
-        }
+        Intent intent = new Intent(this, InGameUI.class);
+        intent.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        startActivity(intent);
     }
 }

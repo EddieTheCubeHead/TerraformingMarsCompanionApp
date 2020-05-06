@@ -1,11 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class DevelopmentCenter extends Card implements ActionCard {
     public DevelopmentCenter(Game game) {
@@ -18,7 +18,7 @@ public final class DevelopmentCenter extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        ((InGameUI) GameController.getInstance().getContext()).cardDrawPrompt(1);
+        GameController.getInstance().addUiEvent(new PromptEvent("Please draw a card"));
         actionServerHook(owner_player);
     }
 
