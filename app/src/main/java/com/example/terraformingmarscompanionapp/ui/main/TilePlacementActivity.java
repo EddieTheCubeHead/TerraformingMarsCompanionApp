@@ -2,9 +2,11 @@ package com.example.terraformingmarscompanionapp.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -44,6 +46,16 @@ public class TilePlacementActivity extends AppCompatActivity {
 
         mImageMap = findViewById(R.id.map);
         mImageMap.setImageResource(R.drawable.hexamap);
+
+        /*
+            //koon vaihtaminen
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int width = displayMetrics.widthPixels;
+
+        mImageMap.setLayoutParams(new ViewGroup.LayoutParams(width, width));
+
+         */
 
         tileicon = findViewById(R.id.imageView_tiletype);
 
