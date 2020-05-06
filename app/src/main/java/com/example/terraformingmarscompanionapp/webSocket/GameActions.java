@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
@@ -21,34 +22,36 @@ public class GameActions {
     private static String game_code;
     private static Integer action_number = 0;
 
-    private static Context setup_screen;
-    public static void setSetupScreen(Context screen) {setup_screen = screen;}
+    private static Context context;
+    public static void setContext(Context screen) {context = screen;}
 
     public static String getGameCode() {return game_code;}
 
     static void handleGameEvent(String event_data) {
         String event_type = event_data.split(Pattern.quote(";"))[1];
         String event = event_data.split(Pattern.quote(";"))[2];
-        switch (event_type) {
-            case "card_event":
-                gson.fromJson(event, CardEventPacket.class).playPacket();
-                action_number++;
-                break;
-            case "card_cost":
-                gson.fromJson(event, CardCostPacket.class).playPacket();
-                break;
-            case "resource_event":
-                gson.fromJson(event, ResourceEventPacket.class).playPacket();
-                break;
-            case "tile_event":
-                gson.fromJson(event, TileEventPacket.class).playPacket();
-                break;
-            case "fold":
-                GameController.getInstance().endTurn();
-                break;
-            default:
-                Log.i("GameActions", "Unrecognized game action: " + event_data);
-        }
+        new Thread(() -> ((InGameUI)GameController.getInstance().getContext()).runOnUiThread(() -> {
+            switch (event_type) {
+                case "card_event":
+                    gson.fromJson(event, CardEventPacket.class).playPacket();
+                    action_number++;
+                    break;
+                case "card_cost":
+                    gson.fromJson(event, CardCostPacket.class).playPacket();
+                    break;
+                case "resource_event":
+                    gson.fromJson(event, ResourceEventPacket.class).playPacket();
+                    break;
+                case "tile_event":
+                    gson.fromJson(event, TileEventPacket.class).playPacket();
+                    break;
+                case "fold":
+                    GameController.getInstance().endTurn();
+                    break;
+                default:
+                    Log.i("GameActions", "Unrecognized game action: " + event_data);
+            }
+        })).start();
     }
 
     //Pelin luominen, tallentaa pelikoodin
@@ -67,39 +70,39 @@ public class GameActions {
             //Jos pelaajia on vähemmän kuin viisi, tämä heittää errorin. Otetaan kiinni hiljaa.
             String player_name = data_points[i];
             Log.i("WebSocketJoin", player_name);
-            ((ServerSetupScreen)setup_screen).playerJoined(player_name);
+            ((ServerSetupScreen) context).playerJoined(player_name);
         }
         Integer first_setting = (data_points.length - 10);
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.CORPORATE_ERA, data_points[first_setting].equals("1"));
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.PRELUDE, data_points[first_setting+1].equals("1"));
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.VENUS, data_points[first_setting+2].equals("1"));
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.COLONIES, data_points[first_setting+3].equals("1"));
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.TURMOIL, data_points[first_setting+4].equals("1"));
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.EXTRA_CORPORATIONS, data_points[first_setting+5].equals("1"));
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.WORLD_GOVERNMENT_TERRAFORMING, data_points[first_setting+6].equals("1"));
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.MUST_MAX_VENUS, data_points[first_setting+7].equals("1"));
-        ((ServerSetupScreen)setup_screen).settingChanged(GameSetting.TURMOIL_TERRAFORMING_REVISION, data_points[first_setting+8].equals("1"));
-        ((ServerSetupScreen)setup_screen).mapChanged(Integer.valueOf(data_points[first_setting+9]));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.CORPORATE_ERA, data_points[first_setting].equals("1"));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.PRELUDE, data_points[first_setting+1].equals("1"));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.VENUS, data_points[first_setting+2].equals("1"));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.COLONIES, data_points[first_setting+3].equals("1"));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.TURMOIL, data_points[first_setting+4].equals("1"));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.EXTRA_CORPORATIONS, data_points[first_setting+5].equals("1"));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.WORLD_GOVERNMENT_TERRAFORMING, data_points[first_setting+6].equals("1"));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.MUST_MAX_VENUS, data_points[first_setting+7].equals("1"));
+        ((ServerSetupScreen) context).settingChanged(GameSetting.TURMOIL_TERRAFORMING_REVISION, data_points[first_setting+8].equals("1"));
+        ((ServerSetupScreen) context).mapChanged(Integer.valueOf(data_points[first_setting+9]));
     }
 
     //Toisen liittyminen peliin, käytännössä käyttäjänimen kirjaaminen
     static void handlePlayerJoined(String join_data) {
         String joined_user = join_data.split(Pattern.quote(";"))[1];
         Log.i("WebSocket", "User '" + joined_user + "' joined the game.");
-        ((ServerSetupScreen)setup_screen).playerJoined(joined_user);
+        ((ServerSetupScreen) context).playerJoined(joined_user);
     }
 
     //Asetuksen muuttuminen
     static void handleSettingChanged(String web_socket_message) {
         GameSetting setting = GameSetting.valueOf(web_socket_message.split(Pattern.quote(";"))[1]);
         Boolean value = Boolean.valueOf(web_socket_message.split(Pattern.quote(";"))[2]);
-        ((ServerSetupScreen)setup_screen).settingChanged(setting, value);
+        ((ServerSetupScreen) context).settingChanged(setting, value);
     }
 
     //Pelin aloittaminen
     static void handleGameStart() {
         Log.i("WebSocketGame", "Starting game");
-        ((ServerSetupScreen)setup_screen).startGame();
+        ((ServerSetupScreen) context).startGame();
     }
 
     public static void sendSettingChange(GameSetting setting, Boolean value) {

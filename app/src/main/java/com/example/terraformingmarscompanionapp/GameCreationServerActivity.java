@@ -50,7 +50,7 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
 
         game_code.setText("Waiting for server");
 
-        GameActions.setSetupScreen(this);
+        GameActions.setContext(this);
 
         //Switchit
         Switch switch_corporate_era = findViewById(R.id.switch_corporate_era);

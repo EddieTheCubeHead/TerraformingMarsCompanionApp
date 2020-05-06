@@ -22,7 +22,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 public class ResourcesFragment extends Fragment implements GameController.GameUpdateListener {
 
     private GameController controller = GameController.getInstance();
-    private Player player = controller.getCurrentPlayer();
+    private Player player = controller.getDisplayPlayer();
     private Game game = controller.getGame();
 
     //Paikalliset muuttujat muutosmoodiin
@@ -707,10 +707,10 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     //Asettaa arvot nykyisen pelaajan arvoista
     private void setResourceAmounts()
     {
-        player = GameController.getInstance().getCurrentPlayer();
+        player = GameController.getInstance().getDisplayPlayer();
 
         try {
-            textview_temperature.setText(String.valueOf(game.getGlobalTemperature() + "°C"));
+            textview_temperature.setText(game.getGlobalTemperature() + "°C");
             textview_oxygen.setText(game.getGlobalOxygen() + "%");
             textview_tfr.setText(String.valueOf(player.getTerraformingRating()));
             textview_money.setText(String.valueOf(player.getMoney()));
