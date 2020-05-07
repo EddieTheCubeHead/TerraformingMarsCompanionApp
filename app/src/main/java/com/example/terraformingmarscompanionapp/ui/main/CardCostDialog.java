@@ -75,12 +75,12 @@ public class CardCostDialog {
         plant = cost.getPlantResources();
         floater = cost.getFloaterResources();
 
-        //layoutin rakentaminen
+        //inflating layout
         LayoutInflater inflater = LayoutInflater.from(context);
         view = inflater.inflate(R.layout.dialog_resource, null);
 
-        //visuaalinen muokkaus
-            //for clear edges
+        //visual editing
+            //for clear corners, probably not the best way to do this
             view.setBackgroundColor(Color.TRANSPARENT);
 
             //opens to recommended costs
@@ -90,7 +90,7 @@ public class CardCostDialog {
         ((TextView) view.findViewById(R.id.heat_chosen)).setText(heat.toString());
         ((TextView) view.findViewById(R.id.plant_chosen)).setText(plant.toString());
 
-        //onclicklistenerit resurssien vaihdoille, bracketit minimoimisen takia
+        //onclicklisteners for changing payment resources
         {
             view.findViewById(R.id.credit_minus5).setOnClickListener(v -> creditMinus(5));
             view.findViewById(R.id.credit_minus1).setOnClickListener(v -> creditMinus(1));
@@ -124,7 +124,7 @@ public class CardCostDialog {
             */
         }
 
-        //linearlayoutin juttujen poistaminen
+        //removing resources that can't be used.
         LinearLayout root = view.findViewById(R.id.dialog_root_layout);
 
         if(!card.getTags().contains(Tag.BUILDING))
