@@ -75,16 +75,16 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         Game game = controller.getGame();
         HashMap<String, Card> deck = game.getAllCards();
 
-        //layoutin rakentaminen
+        //inflating layout
         LayoutInflater inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.dialog_search, null);
 
-        //findviewbyid't
+        //findviews
         searchview = view.findViewById(R.id.searchview);
         RecyclerView recyclerview = view.findViewById(R.id.result_recyclerview);
 
         if (special_case.equals("Robotic workforce")) {
-            //korttien haku
+            //filtering casrds
             for (Map.Entry<String, Card> entry : deck.entrySet()) {
                 Card card = entry.getValue();
 
@@ -105,7 +105,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
             }
             owner_required = true;
         } else {
-            //korttien haku
+            //filtering cards
             for (Map.Entry<String, Card> entry : deck.entrySet()) {
                 Card card = entry.getValue();
 
@@ -136,7 +136,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
             System.out.println("Found " + card_list.size() + " valid cards");
         }
 
-        //recyclerviewn setup
+        //recyclerview setup
         recyclerview.setHasFixedSize(true);
 
         adapter = new RecyclerAdapter(card_list, this, this); //this koska tämä luokka implementoi metodit
@@ -157,10 +157,10 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
             }
         });
 
-            //aloittaa kirjoittamisen aina kun klikataan eikä vain suurennuslasista.
+            //starts text input on click
         searchview.setOnClickListener(v -> searchview.setIconified(false));
 
-        //dialogin rakentaminen ja näyttäminen
+        //setting up dialog
 
         dialog = new AlertDialog.Builder(this)
                 .setView(view)
@@ -169,7 +169,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
 
         dialog.show();
 
-        //dialogin koon muuttaminen
+            //changing dialog size
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
@@ -199,5 +199,13 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
 
     //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) { return false; }
+
+    @Override
+    public void onBackPressed() {
+        dialog.dismiss();
+        Intent inGameUi = new Intent(this, InGameUI.class);
+        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        startActivity(inGameUi);
+    }
 }
 
