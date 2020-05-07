@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:ctc="http://schemas.android.com/apk/res-auto"
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#000000"
     android:orientation="vertical"
 
@@ -22,14 +23,23 @@
         android:src="@drawable/hexamap" /-->
 
 
-    <com.example.terraformingmarscompanionapp.ui.main.ImageMap
-        android:id="@+id/map"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:layout_width="fill_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/hexamap"
-        ctc:map="hexamap" />
+        android:layout_weight="1">
+
+        <com.example.terraformingmarscompanionapp.ui.main.ImageMap
+            android:id="@+id/map"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:src="@drawable/hexamap"
+            app:layout_constraintDimensionRatio="1:1"
+            ctc:layout_constraintBottom_toBottomOf="parent"
+            ctc:layout_constraintEnd_toEndOf="parent"
+            ctc:layout_constraintStart_toStartOf="parent"
+            ctc:layout_constraintTop_toTopOf="parent"
+            ctc:map="hexamap" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
