@@ -28,7 +28,6 @@
         <activity android:name=".ui.main.LoginActivity" />
         <activity android:name=".GameCreationServerActivity" />
         <activity android:name=".GameJoiningActivity" />
-        <activity android:name=".ui.main.CardsBoughtActivity" />
         <activity android:name=".ui.main.ActivityDialogSearch" />
         <activity android:name=".ui.main.IntegerDialogActivity" />
         <activity android:name=".ui.main.BooleanDialogActivity" />

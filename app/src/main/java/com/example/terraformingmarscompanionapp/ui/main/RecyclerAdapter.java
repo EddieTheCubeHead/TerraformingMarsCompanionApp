@@ -53,7 +53,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ImageView type_view_mid;
         public TextView token_view;
 
-        //constructorissa tehdään kortille viittaukset
         public ViewHolder(@NonNull View card_inflated, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
         {
             super(card_inflated);
@@ -161,7 +160,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.type_view_mid.setColorFilter(Color.argb(Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color)));
 
-        //resurssitekstin laitto
         holder.token_view.setText(card.getResourceText());
     }
 
@@ -184,7 +182,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             String[] keywords = search_string.toString().toLowerCase().trim().split(" ");
             for (Card card : card_list_full)
             {
-                //Poistetaan omistetut kortit ostohausta
+                //removing owned cards from the buy menu
                 if (card.getOwner() != null) {
                     continue;
                 }
@@ -250,7 +248,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     };
 
-    //filtteröi display playerin mukaiseksi
+    //filters to GameController.displayplayer 's cards.
     private Filter played_filter = new Filter()
     {
         @Override

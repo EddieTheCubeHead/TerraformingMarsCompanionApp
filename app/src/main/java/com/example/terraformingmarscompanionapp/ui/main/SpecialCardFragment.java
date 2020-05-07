@@ -50,7 +50,6 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
     {
         super.onViewCreated(view, savedInstanceState);
 
-        //tästä eteenpäin noin sama koodi kuin searchactivityn oncreate:ssa
         searchview = view.findViewById(R.id.searchview);
 
         controller = GameController.getInstance();
@@ -59,7 +58,7 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
         game = controller.getGame();
         HashMap<String, Card> deck = game.getDeck();
 
-        //korttien nouto
+        //cards into arraylist
         for (Map.Entry<String, Card> entry : deck.entrySet())
         {
             Card card = entry.getValue();
@@ -77,10 +76,10 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
         recyclerview = view.findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
 
-        adapter = new RecyclerAdapter(card_list, this, this); //this koska tämä luokka implementoi metodit
+        adapter = new RecyclerAdapter(card_list, this, this);
         recyclerview.setAdapter(adapter);
 
-        layout_manager = new LinearLayoutManager(getContext()); //en tiedä onko oikea konteksti
+        layout_manager = new LinearLayoutManager(getContext());
         recyclerview.setLayoutManager(layout_manager);
 
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -91,7 +90,7 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
             }
         });
 
-        //aloittaa kirjoittamisen aina kun klikataan eikä vain suurennuslasista.
+        //starts text input on click
         searchview.setOnClickListener(v -> searchview.setIconified(false));
     }
 
@@ -104,8 +103,6 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
 
     @Override public void onCardClick(int position)
     {
-        /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
-         * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
         if (!controller.checkTurnEligibility()) {
             Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
@@ -128,7 +125,6 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
         } catch (Exception ignored) {}
     }
 
-    //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) { return false; }
 
     @Override

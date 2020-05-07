@@ -66,7 +66,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             }
         });
 
-        //aloittaa text input on click of searchview
+        //starts text input on click of searchview
         searchview.setOnClickListener(v -> searchview.setIconified(false));
     }
 

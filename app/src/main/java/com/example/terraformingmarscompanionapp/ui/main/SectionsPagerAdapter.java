@@ -27,16 +27,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter
     @Override
     public Fragment getItem(int position)
     {
-        //annetut ohjeet:
+        // default instructional comment:
         // "getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below)."
 
-        //kaikki eri päänäkymän täbit tähän.
+        // main view pages go here.
         switch (position)
         {
             case 0:
                 return new ResourcesFragment();
-                //return PlaceholderFragment.newInstance(position + 1);
             case 1:
                 return new CardsFragment();
             case 2:
