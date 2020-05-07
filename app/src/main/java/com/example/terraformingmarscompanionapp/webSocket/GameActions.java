@@ -27,6 +27,7 @@ public class GameActions {
 
     private static Context context;
     public static void setContext(Context screen) {context = screen;}
+    private static void resetContext() {context = null;}
 
     public static String getGameCode() {return game_code;}
 
@@ -105,6 +106,7 @@ public class GameActions {
     //Starting the game
     static void handleGameStart() {
         ((ServerSetupScreen) context).startGame();
+        resetContext();
     }
 
     public static void sendSettingChange(GameSetting setting, Boolean value) {

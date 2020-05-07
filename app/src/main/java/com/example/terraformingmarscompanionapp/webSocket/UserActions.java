@@ -5,9 +5,12 @@ import android.util.Log;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+/**
+ * Handler for websocket data while outside a game
+ */
 public class UserActions {
 
-    //Session tunnistamiseen. Vakavammassa toteutetussa tarvittaisiin syvällisempi järjestelmä.
+    //For storing the session data
     private static String session_id = null;
     private static String session_user = null;
     static String getSessionId() {return session_id;}
@@ -15,18 +18,16 @@ public class UserActions {
 
     public static String getUser() {return session_user;}
 
-    //ui:n kutsumat sisäänkirjautumisen onnistuneisuuden merkit.
+    //Inform the UI of a succesful login
     public static Boolean successful_login = false;
     public static String message = "";
     public static Boolean game_code_valid = false;
 
-    //Login, ottaa käyttäjänimen ja salasanan.
     public static void loginUser(String username, String password) {
         WebSocketHandler.sendMessage(String.format("login;%s;%s", username, password));
         session_user = username;
     }
 
-    //Uuden käyttäjän luonti, ottaa käyttäjänimen ja salasanan.
     public static void createUser(String username, String password) {
         WebSocketHandler.sendMessage(String.format("new_user;%s;%s", username, password));
         session_user = username;
@@ -50,7 +51,6 @@ public class UserActions {
 
     public static void joinGame(String game_code) {
         if (session_user == null | session_id == null) {
-            //TODO error handling
             return;
         }
         WebSocketHandler.sendMessage(String.format("join_game;%s;%s;%s", session_user, session_id, game_code));
@@ -72,6 +72,5 @@ public class UserActions {
 
     private static void getSessionId(String web_socket_message) {
         session_id = web_socket_message.split(Pattern.quote(";"))[1];
-        Log.i("WebSocket", "Session id recieved: " + session_id);
     }
 }

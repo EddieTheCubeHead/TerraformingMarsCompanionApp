@@ -8,16 +8,21 @@ import java.util.regex.Pattern;
 
 import tech.gusavila92.websocketclient.WebSocketClient;
 
+/**
+ * Handler for the websocket data
+ */
 //https://www.pubnub.com/blog/java-websocket-programming-with-android-and-spring-boot/
 public final class WebSocketHandler {
     private static WebSocketClient webSocketClient = null;
     private static Boolean is_initialized = false;
 
-    //Aseta serverin ip tänne testauksessa
-    private static final String WEBSOCKET_URI = null;
+    //For rapid changing of server ip in development. Leave to null for localhost6
+    private static final String WEBSOCKET_URI = "ws://168.61.98.65:8080/tfmca";
+
+    //Azure server ip
     //"ws://168.61.98.65:8080/tfmca"
 
-    //WebSocketin sydän. Vastaanottaa serverin viestit. Käsittelyyn oltava funktio muualla logia lukuunottamatta.
+    //The heart of the WebSocket implementation
     public static void createWebSocketClient() {
         if (is_initialized) {
             return;
@@ -25,6 +30,7 @@ public final class WebSocketHandler {
         is_initialized = true;
         URI uri;
         try {
+            //Setting the ip to localhost if public ip not set
             uri = new URI(WEBSOCKET_URI == null ? "ws://10.0.2.2:8080/tfmca" : WEBSOCKET_URI);
             System.out.println("WebSocket: URI set.");
         } catch (URISyntaxException e) {
@@ -35,12 +41,10 @@ public final class WebSocketHandler {
         webSocketClient = new WebSocketClient(uri) {
             @Override
             public void onOpen() {
-                Log.i("WebSocket", "Session is starting");
             }
 
             @Override
             public void onTextReceived(String s) {
-                Log.i("WebSocket", "Message received: " + s);
                 final String[] contents = s.split(Pattern.quote(";"));
                 final String identifier = contents[0];
                     switch (identifier) {
@@ -53,10 +57,10 @@ public final class WebSocketHandler {
                             break;
 
                         case "logout_successful":
-                            //TODO tarkista tarvitseeko tähän mitään
+                            //Just catching this to prevent logging it as unrecognized
                             break;
 
-                        //Pelin luominen ja liittyminen
+                        //Creating and joining the game
                         case "game_created":
                             GameActions.handleGameCreated(s);
                             break;
@@ -81,12 +85,12 @@ public final class WebSocketHandler {
                             GameActions.handleGameStart();
                             break;
 
-                        //Pelin toiminnot
+                        //During game
                         case "game_action":
                             GameActions.handleGameEvent(s);
                             break;
 
-                        //Exceptioneiden käsittely
+                        //Exceptions
                         case "username_exception":
                             UserActions.successful_login = false;
                             UserActions.message = "Invalid username.";
@@ -95,7 +99,7 @@ public final class WebSocketHandler {
                             UserActions.successful_login = false;
                             UserActions.message = "Invalid password.";
 
-                        //Tunnistamattomien viestien loggaaminen
+                        //Logging unrecognized messages
                         default:
                             Log.i("WebSocket" ,"Unrecognized message: " + contents[1]);
                     }
@@ -123,7 +127,6 @@ public final class WebSocketHandler {
 
             @Override
             public void onCloseReceived() {
-                Log.i("WebSocket", "Closed");
             }
         };
 
@@ -133,9 +136,8 @@ public final class WebSocketHandler {
         webSocketClient.connect();
     }
 
-    //Kutsutaan GameActions- ja UserActions -luokista.
+    //Called from GameActions and UserActions -classes
     static void sendMessage(String message) {
-        Log.i("WebSocket", "Sending message: " + message);
         webSocketClient.send(message);
     }
 }
