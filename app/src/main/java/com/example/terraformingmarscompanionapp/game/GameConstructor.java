@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.game;
 
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cards.basegame.awards.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.cards.*;
@@ -480,6 +481,8 @@ class GameConstructor {
         Card standard_sell_patents = new StandardSellPatents(game);
         deck.put(standard_sell_patents.getName(), standard_sell_patents);
 
+
+        //Utility-kortit
         Card build_greenery = new BuildGreenery(game);
         deck.put(build_greenery.getName(), build_greenery);
 
@@ -488,6 +491,12 @@ class GameConstructor {
 
         Card round_start_draw = new RoundStartDraw(game);
         deck.put(round_start_draw.getName(), round_start_draw);
+
+        Card aquifer_pumping_ghost = new AquiferPumpingGhost(game);
+        deck.put(aquifer_pumping_ghost.getName(), aquifer_pumping_ghost);
+
+        Card water_import_from_europe_ghost = new WaterImportFromEuropeGhost(game);
+        deck.put(water_import_from_europe_ghost.getName(), water_import_from_europe_ghost);
 
         //Corporate eran kortit:
         if (corporate_era) {
@@ -599,24 +608,24 @@ class GameConstructor {
         return ghosts;
     }
 
-    HashMap<String, Card> createAwards() {
-        HashMap<String, Card> deck = new HashMap<>();
+    HashMap<String, Award> createAwards() {
+        HashMap<String, Award> deck = new HashMap<>();
 
         switch (map) {
             case 0:
-                Card banker = new Banker(game);
+                Award banker = new Banker(game);
                 deck.put(banker.getName(), banker);
 
-                Card landlord = new Landlord(game);
+                Award landlord = new Landlord(game);
                 deck.put(landlord.getName(), landlord);
 
-                Card miner = new Miner(game);
+                Award miner = new Miner(game);
                 deck.put(miner.getName(), miner);
 
-                Card scientist = new Scientist(game);
+                Award scientist = new Scientist(game);
                 deck.put(scientist.getName(), scientist);
 
-                Card thermalist = new Thermalist(game);
+                Award thermalist = new Thermalist(game);
                 deck.put(thermalist.getName(), thermalist);
                 break;
             case 1:

@@ -15,6 +15,7 @@ public abstract class Award extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.claimAward();
+        claimed = true;
         super.playWithMetadata(player, data);
     }
 
@@ -27,6 +28,8 @@ public abstract class Award extends Card {
 
     @Override
     public final void onGameEnd() {
-        getAwardResult();
+        if (claimed) {
+            getAwardResult();
+        }
     }
 }

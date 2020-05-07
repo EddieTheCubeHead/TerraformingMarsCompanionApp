@@ -17,6 +17,7 @@ public final class SpaceMirrors extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -24,12 +25,11 @@ public final class SpaceMirrors extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.takeMoney(7);
         owner_player.changeEnergyProduction(1);
-        GameController.getInstance().useAction();
     }
 
     @Override
     public void setActionToUsed() {
-
+        action_used = true;
     }
 
     @Override

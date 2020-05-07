@@ -33,6 +33,7 @@ public final class RestrictedArea extends Card implements ActionCard {
     @Override
     public void cardAction() {
         GameController.getInstance().addUiEvent(new PromptEvent("Please draw a card"));
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -40,7 +41,6 @@ public final class RestrictedArea extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeMoney(-2);
         owner_player.changeHandSize(1);
-        GameController.getInstance().useAction();
     }
 
     @Override

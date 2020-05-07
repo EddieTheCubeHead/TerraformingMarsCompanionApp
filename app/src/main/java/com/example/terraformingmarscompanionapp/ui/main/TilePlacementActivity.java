@@ -67,6 +67,11 @@ public class TilePlacementActivity extends AppCompatActivity {
         tile = Placeable.valueOf(getIntent().getStringExtra("tile"));
         handler = GameController.getInstance().getGame().tile_handler;
 
+        //There can only be nine oceans:
+        if (tile == Placeable.OCEAN && GameController.getInstance().getGame().getOceansPlaced() == 9) {
+            exit(view);
+        }
+
         switch (tile) {
 
             case CITY:

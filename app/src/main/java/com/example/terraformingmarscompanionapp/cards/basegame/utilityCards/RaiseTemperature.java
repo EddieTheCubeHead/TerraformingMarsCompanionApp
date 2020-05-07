@@ -14,7 +14,7 @@ public final class RaiseTemperature extends ResourceStandardOperation {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.raiseTemperature(player);
-        player.changeHeat(8);
+        player.changeHeat(-8);
         super.playWithMetadata(player, data);
     }
 }

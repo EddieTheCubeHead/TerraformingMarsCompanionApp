@@ -78,6 +78,8 @@ public class InGameUI extends AppCompatActivity {
             if (!controller.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (controller.getGreeneryRound()) {
+                Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
             }
             Player current_player = controller.getCurrentPlayer();
 
@@ -96,6 +98,8 @@ public class InGameUI extends AppCompatActivity {
                 if (!controller.checkTurnEligibility()) {
                     Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                     return;
+                } else if (controller.getGreeneryRound()) {
+                    Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
                 }
                 startTestingActivity();
             }
@@ -107,6 +111,8 @@ public class InGameUI extends AppCompatActivity {
             if (!controller.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (controller.getGreeneryRound()) {
+                Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
             }
             startSearchActivity();
         });
@@ -302,7 +308,7 @@ public class InGameUI extends AppCompatActivity {
         });
     }
 
-    private void startSearchActivity() {
+    public void startSearchActivity() {
         /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
          * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
         if (!controller.checkTurnEligibility()) {
@@ -326,7 +332,7 @@ public class InGameUI extends AppCompatActivity {
         }
     }
 
-    public void onGenerationEnd() {
+    public void generationEndPrompt() {
         Toast.makeText(getApplicationContext(), "Generation ended.", Toast.LENGTH_SHORT).show();
     }
 

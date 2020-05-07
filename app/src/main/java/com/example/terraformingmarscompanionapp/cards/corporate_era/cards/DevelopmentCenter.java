@@ -19,13 +19,13 @@ public final class DevelopmentCenter extends Card implements ActionCard {
     @Override
     public void cardAction() {
         GameController.getInstance().addUiEvent(new PromptEvent("Please draw a card"));
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-1);
-        GameController.getInstance().useAction();
     }
 
     @Override

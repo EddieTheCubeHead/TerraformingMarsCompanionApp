@@ -5,12 +5,10 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.events.CostEvent;
+import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.GhostCardCostEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public final class AquiferPumping extends Card implements ActionCard {
     public AquiferPumping(Game game) {
@@ -22,17 +20,14 @@ public final class AquiferPumping extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        if (owner_player != null) {
-            GameController.getInstance().addUiEvent(new CostEvent(new ArrayList<>(Collections.singletonList(Tag.BUILDING)), 8));
-            GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-            actionServerHook(owner_player);
-        }
+        GameController.getInstance().addUiEvent(new GhostCardCostEvent(owner_game.getDeck().get("Aquifer pumping ghost")));
+        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        GameController.getInstance().useAction();
+        actionServerHook(owner_player);
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
-        GameController.getInstance().useAction();
-    }
+    public void actionWithMetadata(Integer data) {}
 
     @Override
     public String getActionName() {

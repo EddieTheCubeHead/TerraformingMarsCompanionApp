@@ -2,8 +2,10 @@ package com.example.terraformingmarscompanionapp.game;
 
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
@@ -17,17 +19,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Olio jonka pitäisi sisältää kaikki UI-luokkien kutsuma joka liittyy pelilogiikkaan.
- * -Hallinnoi vuoroja, sukupolvia.
+ * The main logic class of the app. Responsible mainly for managing players' turn order and
+ * queueing up UI-events based on committed  actions.
  */
 
 
 public class GameController
 {
-    //dequessa vuorojärjestys. ensimmäinen jäsen on aina nykyinen
-    //queue sisältää kaikki jotka eivät ole foldannu
+    //Horrible but deadline came too soon.
     static GameController instance = null;
 
+    //Generation info
     private Integer generation = 0;
 
     public Integer getGeneration() {return generation;}
@@ -40,50 +42,39 @@ public class GameController
     private Deque<Player> queue = new LinkedList<>();
     private Player current_player;
     private Player current_starter;
+    private Boolean greenery_round = false;
 
-    //Seuraa käytettyjen toimintojen määrää, nollataan aina kun pelaaja vaihtuu
     private Integer actions_used = 0;
 
-    //Controllerin pitää tietää onko peli serverin välityksellä pelattu, ja jos on, kuka pelaajista on kyseisen clientin omistaja
+    //Controller needs to know if the game is played via a server and if so, which player is the one playing on this instance
     private Boolean server_multiplayer = false;
     private Player self_player;
 
-    //Pelejä ei sinällään hostata yhdellä clientillä, mutta "host" synkronoi sukupolvenvaihdot GameActions.sendGenerationChange() avulla
+    //Games aren't hosted on a single client. The "host" merely sends generation end messages to keep that in sync.
     private Boolean is_host = false;
     public void makeHost() {is_host = true;}
 
-    //UI-event jono asynkronisesti kutsuttaviin UI-tapahtumiin (tile, resource, cost(?) ja cardprompt)
+    //UI-event queu for asyncronous UI-events (tile, resource, cost and cardprompt)
     private Deque<GameEvent> ui_events = new LinkedList<>();
     private Boolean delay_action_use = false;
-    public void addUiEvent(GameEvent event) {ui_events.addLast(event);}
-    private Boolean executeNextEvent() {
-        if (ui_events.size() == 0) {
-            return false;
-        }
-        System.out.println("Delay action use set");
-        delay_action_use = true;
-        GameEvent event = ui_events.removeFirst();
-        event.playEvent();
-        return true;
-    }
 
-    //Context ingameui:n löytämiseen ja setteri
+    //Context for InGameUI to use with t.ex prompts
     private Context context = null;
     public void setContext(Context context) {
         this.context = context;
     }
 
-    //Serveripeliä varten instanssin omistaja
+    //Setting the instance owner
     public void setSelfPlayer(Player player) {
         self_player = player;
     }
 
-    //Gettereitä yleisesti käytetyille muuttujille
+
     public Game getGame() { return game; }
     public Player getCurrentPlayer()  { return current_player; }
     public Context getContext() { return context; }
 
-    //Serveripeliä varten tarkistus onko clientin vuoro, vai jonkun muun
+    //Checking if it is client's turn in a server game
     public Boolean checkTurnEligibility() {
         if (!server_multiplayer) {
             return true;
@@ -107,6 +98,7 @@ public class GameController
 
     public Integer getPlayerIndex(Player player) {return (queue_full.indexOf(player)+1);}
 
+    //Main constructor
     private GameController(Game game){
         this.game = game;
 
@@ -123,12 +115,9 @@ public class GameController
         if (game.getServerMultiplayer()) {
             server_multiplayer = true;
         }
-        //oletuksena:
-        // ensimmäisen sukupolven aloittaja on laittanut nimensä ekana.
-        // tästä jatketaan nimien laittamisjärjestyksessä.
-        //voi muuttaa vapaasti.
     }
 
+    
     public static GameController makeInstance(Game game)
     {
         if (instance != null)
@@ -152,7 +141,7 @@ public class GameController
         return instance;
     }
 
-    //Toiminnon käyttäminen
+    //Vuoronhallintafunktiot:
     public Boolean useAction() {
         if (executeNextEvent()) {
             gameUpdate();
@@ -170,10 +159,10 @@ public class GameController
         }
 
         gameUpdate();
-
         return true;
     }
 
+    //Kutsu vain GameActions-luokasta. Rikkoo vuoronhallinnan muuten
     public void useActionServer() {
         ui_events.clear();
         useAction();
@@ -199,7 +188,6 @@ public class GameController
 
     public void atTurnStart()
     {
-        System.out.println("Calling turn start function, GameController row 205");
         actions_used = 0;
         gameUpdate();
 
@@ -207,7 +195,6 @@ public class GameController
 
         //Aloituskierroksen toimenpiteet
         if (generation == 0) {
-            System.out.println("Generation 0 actions, GameController row 211");
             if (self_player == null || current_player == self_player) {
                 if (current_player.getCorporation() == null) {
                     ((InGameUI) context).playCorporation();
@@ -220,7 +207,6 @@ public class GameController
 
         //Kierroksen alun kortinnosto
         } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
-            System.out.println("Card draw, GameController row 224");
 
             //Beginner corporation nostaa ensimmäisellä kierroksella kymmenen korttia ilmaiseksi
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
@@ -251,8 +237,12 @@ public class GameController
         }
     }
 
-    public void endGeneration()
+    private void endGeneration()
     {
+        if (greenery_round) {
+            countPoints();
+            return;
+        }
         game.onGenerationEnd();
 
         //epäfoldaus
@@ -266,12 +256,10 @@ public class GameController
 
         current_starter = queue.getFirst();
         current_player = current_starter;
-        ((InGameUI)context).onGenerationEnd();
-
-        changeGeneration();
+        ((InGameUI)context).generationEndPrompt();
     }
 
-    public void changeGeneration()
+    void changeGeneration()
     {
         if (!server_multiplayer) {
             atGenerationStart();
@@ -285,13 +273,15 @@ public class GameController
         generation += 1;
         atTurnStart();
     }
+
+    //Vuoronhallintaan liittyviä pelaajagettereitä
     public Player getSelfPlayer() {return self_player;}
 
     public Player getDisplayPlayer()
     {
         Player display_player;
 
-        //display_player on se jonka kortit näytetään päänäytöllä.
+        //Pelaaja, jonka kortit näytetään päänäytöllä.
         if (server_multiplayer)
             display_player = self_player;
         else
@@ -300,28 +290,43 @@ public class GameController
         return display_player;
     }
 
-    public ArrayList<Card> getCards(Player player)
-    {
-        ArrayList<Card> deck = new ArrayList<>();
-
-        deck.addAll(player.getBlue());
-        deck.addAll(player.getGreen());
-        deck.addAll(player.getRed());
-
-        return deck;
+    //Pelin lopetuksen logiikka
+    void gameEndPreparation() {
+        greenery_round = true;
     }
 
-    public ArrayList<Card> getCards()
-    {
-        ArrayList<Card> deck = new ArrayList<>();
+    private void countPoints() {
+        for (Award award : game.getAwards().values()) {
+            award.onGameEnd();
+        }
 
-        Player subject = getDisplayPlayer();
+        for (Card card : game.getAllCards().values()) {
+            if (card.getOwner() != null) {
+                card.onGameEnd();
+            }
+        }
 
-        deck.addAll(subject.getBlue());
-        deck.addAll(subject.getGreen());
-        deck.addAll(subject.getRed());
+        for (Player player : queue_full) {
+            player.countPoints();
+            System.out.println(player.getName() + ", points: " + player.getVictoryPoints());
+        }
+    }
 
-        return deck;
+    public Boolean getGreeneryRound() {return greenery_round;}
+
+    //UI-jonon hallinnointi
+    public void addUiEvent(GameEvent event) {ui_events.addLast(event);}
+
+    public Boolean uiIsEmpty() {return ui_events.size() == 0;}
+
+    public Boolean executeNextEvent() {
+        if (ui_events.size() == 0) {
+            return false;
+        }
+        delay_action_use = true;
+        GameEvent event = ui_events.removeFirst();
+        event.playEvent();
+        return true;
     }
 
     //https://stackoverflow.com/questions/37759734/dynamically-updating-a-fragment/37761276#37761276
@@ -350,10 +355,6 @@ public class GameController
     public List<Player> getPlayers()
     {
         return queue_full;
-    }
-
-    public void endGame() {
-
     }
 
     public void promptUser(String text) {

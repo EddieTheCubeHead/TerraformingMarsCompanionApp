@@ -40,6 +40,7 @@ public final class Fish extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -61,7 +62,6 @@ public final class Fish extends ResourceCard implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         resource_amount++;
-        GameController.getInstance().useAction();
     }
 
     @Override

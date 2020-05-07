@@ -195,6 +195,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             String[] keywords = search_string.toString().toLowerCase().trim().split(" ");
             for (Card card : card_list_full)
             {
+                //Poistetaan omistetut kortit ostohausta
+                if (card.getOwner() != null) {
+                    continue;
+                }
+
                 String card_name = card.getName();
                 String regex = ".*";
                 for (String word : keywords)

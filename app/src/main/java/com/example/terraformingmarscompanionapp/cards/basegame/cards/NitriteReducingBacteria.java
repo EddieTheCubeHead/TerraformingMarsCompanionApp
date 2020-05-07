@@ -32,6 +32,7 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
     public void cardAction() {
         if (resource_amount < 3) {
             playServerConnection(owner_player, 0);
+            return;
         }
         Context context = GameController.getInstance().getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);

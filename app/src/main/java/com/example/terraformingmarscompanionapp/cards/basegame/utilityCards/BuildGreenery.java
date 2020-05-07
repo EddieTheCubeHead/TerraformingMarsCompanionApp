@@ -23,8 +23,7 @@ public final class BuildGreenery extends ResourceStandardOperation {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.raiseOxygen(player);
-        player.changePlants(8 + player.getGreeneryPlantCostModifier());
+        player.takePlants(8 + player.getGreeneryPlantCostModifier());
         super.playWithMetadata(player, data);
     }
 }

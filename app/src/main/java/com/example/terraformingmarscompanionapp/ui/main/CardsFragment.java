@@ -111,7 +111,10 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         if (!controller.checkTurnEligibility()) {
             Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
+        } else if (controller.getGreeneryRound()) {
+            Toast.makeText(getContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
         }
+
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
 
         //jos kortti implementtaa actioncard-interfacen
@@ -121,7 +124,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
 
             if (validity) {
                 System.out.println(((ActionCard) card).getActionValidity());
-                Toast.makeText(getContext(), "Action '%s' not valid", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), String.format("Action '%s' not usable.\nInsufficient requirements or already used", action_name), Toast.LENGTH_SHORT).show();
             } else {
                 ((ActionCard) card).cardAction();
                 Toast.makeText(getContext(), String.format("Action '%s' used", action_name), Toast.LENGTH_SHORT).show();

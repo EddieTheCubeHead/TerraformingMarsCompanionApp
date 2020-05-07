@@ -29,18 +29,17 @@ public final class Tardigrades extends ResourceCard implements ActionCard {
             return;
         }
         owner_player.changeVictoryPoints(resource_amount/4);
-        super.onGameEnd();
     }
 
     @Override
     public void cardAction() {
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
         resource_amount++;
-        GameController.getInstance().useAction();
     }
 
     @Override

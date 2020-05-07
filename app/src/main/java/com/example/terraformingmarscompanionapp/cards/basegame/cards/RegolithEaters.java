@@ -24,7 +24,9 @@ public final class RegolithEaters extends ResourceCard implements ActionCard {
     @Override
     public void cardAction() {
         if (resource_amount < 2) {
+            GameController.getInstance().useAction();
             playServerConnection(owner_player, 0);
+            return;
         }
         Context context = GameController.getInstance().getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);

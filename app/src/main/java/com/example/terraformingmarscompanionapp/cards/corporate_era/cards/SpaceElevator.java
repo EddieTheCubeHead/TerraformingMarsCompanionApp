@@ -26,6 +26,7 @@ public final class SpaceElevator extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -33,7 +34,6 @@ public final class SpaceElevator extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeSteel(-1);
         owner_player.changeMoney(5);
-        GameController.getInstance().useAction();
     }
 
     @Override

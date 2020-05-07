@@ -1,15 +1,16 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class Game implements Serializable {
     private HashMap<String, Card> preludes = new HashMap<>();
     private final HashMap<String, Card> corporations;
     private final HashMap<String, Card> ghosts;
-    private final HashMap<String, Card> awards;
+    private final HashMap<String, Award> awards;
     private final HashMap<String, Card> milestones;
     private final HashMap<String, Card> all_cards;
 
@@ -48,7 +49,7 @@ public class Game implements Serializable {
     public HashMap<String, Card> getPreludes() {return preludes;}
     public HashMap<String, Card> getCorporations() {return corporations;}
     public HashMap<String, Card> getGhosts() {return ghosts;}
-    public HashMap<String, Card> getAwards() {return awards;}
+    public HashMap<String, Award> getAwards() {return awards;}
     public HashMap<String, Card> getMilestones() {return milestones;}
     public HashMap<String, Card> getAllCards() {return all_cards;}
 
@@ -107,8 +108,7 @@ public class Game implements Serializable {
     public Integer getGlobalOxygen() {return global_oxygen;}
     public void rawChangeOxygen(Integer value) {global_oxygen += value;}
 
-    private final Integer oceans_placed;
-    public Integer getOceansPlaced() {return oceans_placed;}
+    private Integer oceans_placed;
 
     private Integer venus_terraform;
     public Integer getVenusTerraform() {return venus_terraform;}
@@ -166,7 +166,7 @@ public class Game implements Serializable {
             all_cards.put(entry.getKey(), entry.getValue());
         }
 
-        for (Map.Entry<String, Card> entry : awards.entrySet()) {
+        for (Map.Entry<String, Award> entry : awards.entrySet()) {
             all_cards.put(entry.getKey(), entry.getValue());
         }
 
@@ -190,9 +190,10 @@ public class Game implements Serializable {
         cities_in_space = 0;
         cities_on_mars = 0;
         venus_terraform = 0;
-
-        //TODO viimeistele constructor
     }
+
+    public void placeOcean() {oceans_placed++;}
+    public Integer getOceansPlaced() {return oceans_placed;}
 
     //Terraformaus-sliderien manipulaatio
     public boolean raiseTemperature(Player raising_player) {
@@ -203,6 +204,8 @@ public class Game implements Serializable {
         global_temperature += 2;
         if (global_temperature == 0) {
             tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN);
+        } else if (global_temperature == -20 || global_temperature == -24) {
+            raising_player.changeHeatProduction(1);
         }
         return true;
     }
@@ -213,6 +216,10 @@ public class Game implements Serializable {
         }
         raising_player.changeTerraformingRating(1);
         global_oxygen++;
+        if (global_oxygen == 8) {
+            raiseTemperature(raising_player);
+        }
+
         return true;
     }
 
@@ -282,31 +289,31 @@ public class Game implements Serializable {
         ArrayList<Tag> card_tags = card.getTags();
 
         //If -tarkistukset tagialennuksille
-        if (card.getType() != Card.Type.STANDARD_PROJECT) {
+        if (card.getType() != Card.Type.STANDARD_PROJECT && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getCardDiscount();
         }
 
-        if (card_tags.contains(Tag.BUILDING)) {
+        if (card_tags.contains(Tag.BUILDING) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getBuildingTagDiscount();
         }
 
-        if (card_tags.contains(Tag.SPACE)) {
+        if (card_tags.contains(Tag.SPACE) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getSpaceTagDiscount();
         }
 
-        if (card_tags.contains(Tag.EARTH)) {
+        if (card_tags.contains(Tag.EARTH) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getEarthTagDiscount();
         }
 
-        if (card_tags.contains(Tag.SCIENCE)) {
+        if (card_tags.contains(Tag.SCIENCE) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getScienceTagDiscount();
         }
 
-        if (card_tags.contains(Tag.ENERGY)) {
+        if (card_tags.contains(Tag.ENERGY) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getEnergyTagDiscount();
         }
 
-        if (card_tags.contains(Tag.VENUS)) {
+        if (card_tags.contains(Tag.VENUS) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getVenusTagDiscount();
         }
 
@@ -400,6 +407,10 @@ public class Game implements Serializable {
 
     //Kortin pelaamisen toinen vaihe. Palauttaa totuusarvon, täyttääkö pelaajan nykytilanne kortin vaatimukset.
     private Boolean checkCardRequirements(Card card) {
+
+        if (GameController.getInstance().getGreeneryRound() && !(card instanceof BuildGreenery)) {
+            return false;
+        }
 
         Player player = GameController.getInstance().getCurrentPlayer();
 
@@ -682,7 +693,7 @@ public class Game implements Serializable {
     //Sukupolven päättäminen
     public void onGenerationEnd() {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
-            GameController.getInstance().endGame();
+            GameController.getInstance().gameEndPreparation();
         }
         for (Player player : players) {
             player.changeMoney(player.getMoneyProduction() + player.getTerraformingRating());
@@ -697,5 +708,7 @@ public class Game implements Serializable {
             player.resetActions();
         }
         //TODO turmoil-hommat tähän
+
+        GameController.getInstance().changeGeneration();
     }
 }
