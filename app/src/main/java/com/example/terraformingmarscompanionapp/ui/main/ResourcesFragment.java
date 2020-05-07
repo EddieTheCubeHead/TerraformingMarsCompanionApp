@@ -590,6 +590,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     }
 
 
+    // Changing the buttons when exiting or entering editmode
     private void changeMode(boolean mode, float alpha)
     {
         button_temperature_minus.setClickable(mode);
@@ -710,7 +711,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         GameController.getInstance().unregisterGameUpdateListener(this);
     }
 
-    //Asettaa arvot nykyisen pelaajan arvoista
+    //Setting the numbers to the current player's resources, used for updating the view
     private void setResourceAmounts()
     {
         player = GameController.getInstance().getDisplayPlayer();
@@ -737,6 +738,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         }
     }
 
+    //refreshing the local variables for editmode
     private void refreshEditVariables() {
 
         money = player.getMoney();

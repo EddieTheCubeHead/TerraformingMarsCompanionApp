@@ -47,6 +47,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//An HTML map like widget in an Android view
+//To see more information, check https://github.com/catchthecows/AndroidImageMap
+
 public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
 {
     // mFitImageToScreen
@@ -65,7 +68,7 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
     // does not blur or loose quality, set mScaleFromOriginal to false
 
     // by default, this is false
-    private boolean mScaleFromOriginal=false;
+    private boolean mScaleFromOriginal=true;
 
     // mMaxSize controls the maximum zoom size as a multiplier of the initial size.
     // Allowing size to go too large may result in memory problems.
@@ -188,7 +191,7 @@ public class ImageMap extends androidx.appcompat.widget.AppCompatImageView
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.ImageMap);
 
         this.mFitImageToScreen = a.getBoolean(R.styleable.ImageMap_fitImageToScreen, true);
-        this.mScaleFromOriginal = a.getBoolean(R.styleable.ImageMap_scaleFromOriginal, false);
+        this.mScaleFromOriginal = a.getBoolean(R.styleable.ImageMap_scaleFromOriginal, true);
         this.mMaxSize = a.getFloat(R.styleable.ImageMap_maxSizeFactor, defaultMaxSize);
 
         this.mapName = "hexamap";

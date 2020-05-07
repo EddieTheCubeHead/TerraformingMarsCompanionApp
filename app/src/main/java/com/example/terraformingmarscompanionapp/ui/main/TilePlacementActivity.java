@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -49,11 +48,12 @@ public class TilePlacementActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "Please place your tile", Toast.LENGTH_SHORT).show();
 
+        //Adding a clickable image see ImageMap for more information
         mImageMap = findViewById(R.id.map);
         mImageMap.setImageResource(R.drawable.hexamap);
 
         /*
-            //koon vaihtaminen
+            //changing the size
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
@@ -67,6 +67,7 @@ public class TilePlacementActivity extends AppCompatActivity {
         tile = Placeable.valueOf(getIntent().getStringExtra("tile"));
         handler = GameController.getInstance().getGame().tile_handler;
 
+        //Setting the image for the tile type that is currently being placed
         switch (tile) {
 
             case CITY:
