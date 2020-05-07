@@ -72,6 +72,6 @@ public class LoginActivity extends AppCompatActivity
 
     public void loginFailure(String message)
     {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        new Thread(() -> runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show()));
     }
 }

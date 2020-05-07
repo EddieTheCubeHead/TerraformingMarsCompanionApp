@@ -34,4 +34,5 @@ public interface ActionCard {
     // development to realise the use of the function would change drastically.
     Boolean getActionValidity();
     void setActionToUsed();
+    default Boolean getActionRequiresWait() {return false;}
 }
