@@ -13,15 +13,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="5dp"
 
-        android:layout_marginBottom="20dp"
         android:orientation="horizontal"
 
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
-
-
 
         <LinearLayout
             android:layout_width="0dp"
@@ -109,12 +106,20 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="5dp"
+
+        android:alpha="0.5"
+        android:background="@color/colorWindowText"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginHorizontal="5dp"
-
-        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
 
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
@@ -316,6 +321,48 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="5dp"
+
+        android:alpha="0.5"
+        android:background="@color/colorWindowText"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginHorizontal="5dp"
+
+        android:orientation="horizontal"
+
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
+
+        <FrameLayout
+            android:layout_width="50dp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Resource"
+            android:gravity="center"/>
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Production"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
     <!-- array nappeja jms -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -342,7 +389,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/credit" />
 
             <ImageButton
                 android:id="@+id/button_money_minus"
@@ -458,7 +505,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/steel_square" />
 
             <ImageButton
                 android:id="@+id/button_steel_minus"
@@ -574,7 +621,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/titanium_square" />
 
             <ImageButton
                 android:id="@+id/button_titanium_minus"
@@ -690,7 +737,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/plant_square" />
 
             <ImageButton
                 android:id="@+id/button_plants_minus"
@@ -804,7 +851,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/electricity_square" />
 
             <ImageButton
                 android:id="@+id/button_energy_minus"
@@ -918,7 +965,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/heat" />
 
             <ImageButton
                 android:id="@+id/button_heat_minus"
@@ -1019,7 +1066,6 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -1088,58 +1134,14 @@
 
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginHorizontal="5dp"
 
-        <!--
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginHorizontal="5dp"
-            android:layout_marginBottom="5dp"
-
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <TextView
-                android:id="@+id/player_name"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Current Player:"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textview_current_player_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|left"
-                android:text="Player"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/actions_remaining"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Actions Remaining:"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textview_current_player_actions_remaining"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="0"
-                android:textSize="40sp" />
-        </LinearLayout> -->
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+        android:alpha="0.5"
+        android:background="@color/colorWindowText"
+        />
 
 </LinearLayout>
