@@ -4,6 +4,12 @@ Kirjasin kaiken mikä on vielä tekemättä ennen harkkatyödedistä. Osassa kat
 
 TODO: Eetu
     Pelin lopettamisen logiikka (ehkä UI)
+        - Viimeinen kierros alkaa, tee tuotannot
+        - Mahdollisuus rakentaa viheriöitä, EI MITÄÄN MUUTA
+        - Kun kaikki foldanneet pisteenlasku
+            - Kilpailut
+            - Lautapisteet
+            - Korttipisteet
 
 TODO: Top priority
     Pelin lopetus
@@ -18,22 +24,14 @@ TODO: Hotseat-peli kuntoon
     Pelaajien järjestyksen valinta tai prompti "anna nimet pelaamisjärjestyksessä"
         Järjestyksen valinta olisi parempi, koska saman koodin voisi kierrättä serveripeliin
         Listview-implementaatio: https://www.youtube.com/watch?v=_BZIvjMgH-Q
-    Beginner corporation -erikoistapauksen huomiointi -Eetu
-    Sukupolvien välissä "kuinka monta korttia ostit? (0-4) -prompti".
-        -Kutsuminen funktiosta endgeneration(Context)?
     Pistelasku -Eetu
 
 TODO: Corporate-era -korttien ja Prelude -lisäosan lisääminen
     Kaikki tarvittavat frameworkit valmiina, nyt vain kortteja pöytään
 
-TODO: Eetun edge-caset (vaativat yksilöllistä koodia)
-    Metadatalliset effektit serveripelissä
-
 TODO: TESTAAMINEN
 
-Ennen palautusta jos kerkeää, palautuksen jälkeen jos ei kerkeä:
-
-TODO: Tiilen asettamisen bugikorjaukset
+Ennen palautusta jos kerkeää, palautuksen jälkeen jos ei kerkeä: (Näin jälkiviisaana, hahhahahaahhaaha -Eetu, 14:01 07/05/2020)
 
 TODO: Debugviestien poistaminen
 

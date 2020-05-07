@@ -179,18 +179,15 @@ public class CardCostDialog {
         } else {
             GameController.getInstance().getGame().playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
             Toast.makeText(context, String.format("Card '%s' played successfully!", card.getName()), Toast.LENGTH_SHORT).show();
-            exit(context, from_action, dialog);
+            exit(from_action, dialog);
         }
     }
 
-    private static void exit(Context context, Boolean from_action, AlertDialog dialog) {
+    private static void exit(Boolean from_action, AlertDialog dialog) {
         if (from_action) {
-            dialog.dismiss();
             GameController.getInstance().useAction();
-        } else {
-            Intent intent = new Intent(context, InGameUI.class);
-            context.startActivity(intent);
         }
+        dialog.dismiss();
     }
 
     //maksuvaihtofunktiot. päivittävät myös textviewtä.

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
@@ -109,7 +110,12 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
             Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
         }
+
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
+
+        if (controller.getGreeneryRound() && !(card instanceof BuildGreenery)) {
+            Toast.makeText(getContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
+        }
 
         try {
              CardCostPacket packet = game.getRecommendedCardCost(card);

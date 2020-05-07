@@ -317,10 +317,13 @@ public class TileHandler {
             tile_type = Placeable.CITY;
         } else if (to_ocean.contains(tile_type)) {
             tile_type = Placeable.OCEAN;
+            game.placeOcean();
+            player.changeTerraformingRating(1);
             game.update_manager.onOceanPlaced(player);
         } else if (to_greenery.contains(tile_type)) {
             tile_type = Placeable.GREENERY;
             player.addGreenery();
+            game.raiseOxygen(player);
             game.update_manager.onGreeneryPlaced(player);
         } else if (tile_type.equals(Placeable.CAPITAL)) {
             game.update_manager.onCityPlaced(player, true);
@@ -346,7 +349,7 @@ public class TileHandler {
 
 
     //Yksityinen funktio tiilen naapurien saamiseen
-    private ArrayList<Tile> getNeighbours(Tile tile) {
+    public ArrayList<Tile> getNeighbours(Tile tile) {
         Integer x = tile.getX();
         Integer y = tile.getY();
 

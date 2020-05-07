@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Player {
 
@@ -521,6 +523,34 @@ public class Player {
     public Player(Game super_game, String player_name) {
         game = super_game;
         name = player_name;
+    }
+
+    void countPoints() {
+
+        //Tiilien pisteet
+        for (Tile tile : owned_tiles) {
+            switch (tile.getPlacedHex()) {
+                case CAPITAL:
+                    for (Tile neighbour : game.tile_handler.getNeighbours(tile)) {
+                        if (neighbour.getPlacedHex().equals(Placeable.OCEAN) || neighbour.getPlacedHex().equals(Placeable.GREENERY)) {
+                            victory_points++;
+                        }
+                    }
+                    break;
+                case CITY:
+                    for (Tile neighbour : game.tile_handler.getNeighbours(tile)) {
+                        if (neighbour.getPlacedHex().equals(Placeable.GREENERY)) {
+                            victory_points++;
+                        }
+                    }
+                    break;
+                case GREENERY:
+                    victory_points++;
+                    break;
+            }
+        }
+
+        victory_points += terraforming_rating;
     }
 
     @NonNull
