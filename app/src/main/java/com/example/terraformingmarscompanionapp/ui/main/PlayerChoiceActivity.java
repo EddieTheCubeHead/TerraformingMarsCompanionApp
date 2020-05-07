@@ -26,6 +26,9 @@ import com.example.terraformingmarscompanionapp.game.Player;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A simple activity for choosing the target player for a card.
+ */
 public class PlayerChoiceActivity extends AppCompatActivity {
 
     GameController controller;
@@ -75,11 +78,11 @@ public class PlayerChoiceActivity extends AppCompatActivity {
 
         Card card = game.getDeck().get(intent.getStringExtra(CARD_INTENT));
 
-        //layoutin rakentaminen
+        //Building the layout
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_spinners, null);
 
-        //visuaalinen muokkaus
+        //Visual edits
         view.setBackgroundColor(Color.TRANSPARENT);
 
         LinearLayout linearLayout = view.findViewById(R.id.root_linearlayout);
@@ -87,12 +90,11 @@ public class PlayerChoiceActivity extends AppCompatActivity {
         linearLayout.removeView(view.findViewById(R.id.title2));
         linearLayout.removeView(view.findViewById(R.id.spinner2));
 
-        //findviewbyid't
+        //findViewByIds
         TextView title = view.findViewById(R.id.title1);
         Spinner spinner = view.findViewById(R.id.spinner1);
 
-        //spinnerin valmistaminen
-        //arrayadapter kutsuu toString -metodia kortissa.
+        //Making the spinner
         ArrayAdapter<Player> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, targets);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -105,7 +107,7 @@ public class PlayerChoiceActivity extends AppCompatActivity {
 
         dialog.show();
 
-        //dialogin koon muuttaminen
+        //Setting the size
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
