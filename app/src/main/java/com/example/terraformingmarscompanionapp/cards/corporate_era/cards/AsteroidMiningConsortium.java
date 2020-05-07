@@ -16,7 +16,7 @@ public final class AsteroidMiningConsortium extends Card {
         name = "Asteroid mining consortium";
         price = 13;
         tags.add(Tag.JOVIAN);
-        requirements.setMinTitaniumProduction(1);
+        requirements.setMinEnergyTags(2);
         victory_points = 1;
         wait_for_server = true;
     }

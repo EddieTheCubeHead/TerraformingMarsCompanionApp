@@ -65,6 +65,11 @@ public final class ElectroCatapult extends Card implements ActionCard {
         action_used = true;
     }
 
+    @Override
+    public Boolean getActionUsed() {
+        return action_used;
+    }
+
     public String getActionName() {
         return getName();
     }
