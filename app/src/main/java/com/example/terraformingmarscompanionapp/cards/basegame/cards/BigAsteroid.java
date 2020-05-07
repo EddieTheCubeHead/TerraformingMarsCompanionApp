@@ -37,6 +37,6 @@ public final class BigAsteroid extends Card {
         player.changeTitanium(4);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

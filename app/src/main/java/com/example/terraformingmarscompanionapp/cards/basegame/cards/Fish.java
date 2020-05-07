@@ -68,14 +68,4 @@ public final class Fish extends ResourceCard implements ActionCard {
     public void setActionToUsed() {
         action_used = true;
     }
-
-    @Override
-    public void playProductionBox() {
-        Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, PlayerChoiceActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
-        intent.putExtra(PlayerChoiceActivity.SPECIAL_CASE, PlayerChoiceActivity.CASE_PRODCUTION);
-        context.startActivity(intent);
-    }
 }

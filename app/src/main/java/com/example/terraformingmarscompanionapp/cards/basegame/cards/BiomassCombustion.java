@@ -35,6 +35,6 @@ public final class BiomassCombustion extends Card {
     public void playWithMetadata(Player player, Integer data) {
         production_box.setStealPlantsProduction(1);
         production_box.setEnergyProduction(2);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

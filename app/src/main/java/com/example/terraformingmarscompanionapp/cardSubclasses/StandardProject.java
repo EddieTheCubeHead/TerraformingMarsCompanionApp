@@ -8,10 +8,4 @@ public abstract class StandardProject extends Card {
     public StandardProject(Game game) {
         super(Type.STANDARD_PROJECT, game);
     }
-
-    //Superin onPlayn override ettei vahingossakaan käytetä Card.onPlayta vakioprojektia luotaessa
-    @Override
-    public void playWithMetadata(Player player, Integer data) {
-        GameController.getInstance().useAction();
-    }
 }

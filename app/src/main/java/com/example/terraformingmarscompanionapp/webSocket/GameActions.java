@@ -51,6 +51,9 @@ public class GameActions {
                 case "use_action":
                     GameController.getInstance().useActionServer();
                     break;
+                case "start_generation":
+                    GameController.getInstance().atGenerationStart();
+                    break;
                 default:
                     Log.i("GameActions", "Unrecognized game action: " + event_data);
             }
@@ -154,6 +157,10 @@ public class GameActions {
 
     public static void sendUseAction() {
         WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;use_action;empty;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
+    }
+
+    public static void sendChangeGeneration() {
+        WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;start_generation;empty;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
     }
 
     //Pelin luonut pelaaja määrittää pelin alussa vuorojärjestyksen ja se lähetetään tällä

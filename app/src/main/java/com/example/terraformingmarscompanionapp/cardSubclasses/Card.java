@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
+import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.RoundStartDraw;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -62,7 +63,7 @@ public abstract class Card {
 
     public void playServerConnection(Player player, Integer data) {
         if (GameController.getInstance().getGame().getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
-            GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), 0));
+            GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         playWithMetadata(player, data);
     }
@@ -103,13 +104,13 @@ public abstract class Card {
             switch (tag)
             {
                 case BUILDING:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addBuildingTag();
                     }
                     break;
 
                 case SPACE:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addSpaceTag();
                     } else {
                         owner_game.update_manager.onSpaceEvent(player);
@@ -117,60 +118,60 @@ public abstract class Card {
                     break;
 
                 case EARTH:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addEarthTag();
                     }
                     owner_game.update_manager.onEarthTag(player);
                     break;
 
                 case CITY:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addCityTag();
                     }
                     break;
 
                 case PLANT:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addPlantTag();
                     }
                     owner_game.update_manager.onPlantTag(player);
                     break;
 
                 case MICROBE:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addMicrobeTag();
                     }
                     owner_game.update_manager.onMicrobeTag(player);
                     break;
 
                 case SCIENCE:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addScienceTag();
                     }
                     owner_game.update_manager.onScienceTag(player);
                     break;
 
                 case ENERGY:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addEnergyTag();
                     }
                     break;
 
                 case JOVIAN:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addJovianTag();
                     }
                     owner_game.update_manager.onJovianTag(player);
                     break;
 
                 case VENUS:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addVenusTag();
                     }
                     break;
 
                 case ANIMAL:
-                    if (!is_event) {
+                    if (!is_event && OWNABLES.contains(type)) {
                         player.addAnimalTag();
                     }
                     owner_game.update_manager.onAnimalTag(player);
