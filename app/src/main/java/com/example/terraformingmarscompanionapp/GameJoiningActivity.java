@@ -45,7 +45,6 @@ public class GameJoiningActivity extends AppCompatActivity implements ServerSetu
         //textview
         textview_names = findViewById(R.id.name_textview);
 
-        //Pelin koodi
         game_code = findViewById(R.id.name_edittext);
         game_code_string = getIntent().getStringExtra(TitleScreen.GAME_CODE_INTENT);
 
