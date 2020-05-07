@@ -5,10 +5,12 @@ import android.util.Log;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-//Luokka kortin pelaamisen vaatimien resurssien listaamiseen kompaktisti.
+/**
+ * The resources used when playing a card
+ */
 public class CardCostPacket implements PlayablePacket
 {
-    //ui-puolella chekataan isEligible -funktiota käyttäen voidaanko korttia pelata resursseilla.
+    //is eligible tells UI whether the packet can be used for buying a card
 
     private Boolean eligibility = true;
     public void reject() { eligibility = false; }
@@ -58,6 +60,6 @@ public class CardCostPacket implements PlayablePacket
         player.changeHeat(-heat);
 
         Log.i("Game", String.format("%d, %d, %d, %d", -money, -steel, -titanium, -heat));
-        //TODO resurssi-integraatio
+        //TODO card resource integration when expansions added (plants on Psychrophiles, floaters on Dirigibles)
     }
 }

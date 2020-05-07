@@ -5,6 +5,9 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.PlacementBonus;
 
+/**
+ * Event representing playing a card
+ */
 public class TileEventPacket implements PlayablePacket{
     private Placeable tile_type;
     private String player_name;

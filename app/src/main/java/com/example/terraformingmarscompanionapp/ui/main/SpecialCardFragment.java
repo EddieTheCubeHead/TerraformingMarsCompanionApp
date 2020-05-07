@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A veiw for the "extra" cards and actions, special projects, awards, milestones.
+ */
 public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener, GameController.GameUpdateListener {
     private SearchView searchview;
     private GameController controller;
@@ -32,20 +35,15 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
     RecyclerView recyclerview;
     RecyclerView.LayoutManager layout_manager;
 
-    //otettu
     @Override public View onCreateView
     (
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     )
     {
-        //defaultti: return inflater.inflate(R.layout.fragment_second, container, false);
         return inflater.inflate(R.layout.activity_search, container, false);
     }
 
-    //view on oncreateviewn palautusarvo
-    //sama juttu kun searchview tässä vaiheessa.
-    //TODO tee gamecontrolleriin pelattavat kortit ui-esiintymisjärjestyksessä palauttava funktio.
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);

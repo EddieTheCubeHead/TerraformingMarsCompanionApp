@@ -19,6 +19,9 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.webSocket.UserActions;
 import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
 
+/**
+ * The startup screen of the app.
+ */
 public class TitleScreen extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "msg";
@@ -46,7 +49,7 @@ public class TitleScreen extends AppCompatActivity {
 
 
     public void startSoloGame(View view) {
-        //TODO tämä
+        Toast.makeText(getApplicationContext(), "To be added", Toast.LENGTH_SHORT).show();
     }
 
     public void startHotSeat(View view) {

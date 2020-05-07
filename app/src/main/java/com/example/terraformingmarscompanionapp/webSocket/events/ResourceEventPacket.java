@@ -4,6 +4,9 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
+/**
+ * Representing adding or removing resources from a card
+ */
 public class ResourceEventPacket implements PlayablePacket {
     private String card_name;
     private Integer change;

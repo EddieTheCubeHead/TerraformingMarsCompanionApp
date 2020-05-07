@@ -7,6 +7,9 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
+/**
+ * A class representing a played card or a used action
+ */
 public class CardEventPacket implements PlayablePacket {
     private String card_name;
     private String player_name;
@@ -20,7 +23,7 @@ public class CardEventPacket implements PlayablePacket {
         extra_card = "";
     }
 
-    //Ihan vaan robotic workforcea varten
+    //Just for robotic workforce
     public CardEventPacket(String card_name, String player_name, Integer metadata, String extra_card) {
         this.card_name = card_name;
         this.player_name = player_name;
@@ -28,9 +31,7 @@ public class CardEventPacket implements PlayablePacket {
         this.extra_card = extra_card;
     }
 
-    /* Saadut paketit pelataan. Onko kyseessä kortin pelaaminen vai toiminnan käyttö selviää kortin omistajasta:
-     * pelatulla kortilla on aina omistaja => omistajallinen kortti on pelattu toimintona.
-     */
+    //The game can deduce whether a card was played or an action was used based on the card's owner
     @Override
     public void playPacket() {
         Game game = GameController.getInstance().getGame();
@@ -39,6 +40,7 @@ public class CardEventPacket implements PlayablePacket {
             card.playWithMetadata(game.getPlayer(player_name), metadata);
         } else if (card instanceof ActionCard) {
             ((ActionCard) card).actionWithMetadata(metadata);
+            GameController.getInstance().useAction();
         } else {
             Log.i("WebSocket", "CardEffectPacket lähetetty omistetusta kortista, jolla ei ole toimintaa. Huomauta Eetua. Kortin nimi: " + card_name);
         }

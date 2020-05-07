@@ -50,7 +50,7 @@ public class TilePlacementActivity extends AppCompatActivity {
         mImageMap.setImageResource(R.drawable.hexamap);
 
         /*
-            //koon vaihtaminen
+            //chaging the size:
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
