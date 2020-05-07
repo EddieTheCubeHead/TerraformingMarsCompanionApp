@@ -1,6 +1,10 @@
 package com.example.terraformingmarscompanionapp.webSocket;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.util.Log;
+
+import com.example.terraformingmarscompanionapp.ui.main.LoginActivity;
 
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -15,6 +19,15 @@ public class UserActions {
     private static String session_user = null;
     static String getSessionId() {return session_id;}
     static String getSessionUser() {return session_user;}
+
+    //Not held for long so warning can be dismissed (unlike GameActions)
+    @SuppressLint("StaticFieldLeak")
+    private static Context context;
+
+    public static void setContext(Context context) {
+        UserActions.context = context;
+    }
+    public static void resetContext() {context = null;}
 
     public static String getUser() {return session_user;}
 
@@ -60,14 +73,19 @@ public class UserActions {
         game_code_valid = Boolean.valueOf(web_socket_message.split(Pattern.quote(";"))[1]);
     }
 
+    static void handleFailure(String failure_message) {
+        ((LoginActivity)context).loginFailure(failure_message);
+        session_user = null;
+    }
+
     static void handleLogin(String web_socket_message) {
         getSessionId(web_socket_message);
-        successful_login = true;
+        ((LoginActivity)context).loginSuccess();
     }
 
     static void handleCreation(String web_socket_message) {
         getSessionId(web_socket_message);
-        successful_login = true;
+        ((LoginActivity)context).loginSuccess();
     }
 
     private static void getSessionId(String web_socket_message) {

@@ -92,12 +92,11 @@ public final class WebSocketHandler {
 
                         //Exceptions
                         case "username_exception":
-                            UserActions.successful_login = false;
-                            UserActions.message = "Invalid username.";
+                            UserActions.handleFailure("Invalid username.");
                             break;
                         case "password_exception":
-                            UserActions.successful_login = false;
-                            UserActions.message = "Invalid password.";
+                            UserActions.handleFailure("Invalid password.");
+                            break;
 
                         //Logging unrecognized messages
                         default:
