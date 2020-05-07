@@ -117,7 +117,7 @@ public class GameController
         }
     }
 
-    
+    //Working with a single instance makes life easier
     public static GameController makeInstance(Game game)
     {
         if (instance != null)
@@ -141,7 +141,7 @@ public class GameController
         return instance;
     }
 
-    //Vuoronhallintafunktiot:
+    //All the functions responsible for turn management. Ends roughly on row 280
     public Boolean useAction() {
         if (executeNextEvent()) {
             gameUpdate();
@@ -162,7 +162,7 @@ public class GameController
         return true;
     }
 
-    //Kutsu vain GameActions-luokasta. Rikkoo vuoronhallinnan muuten
+    //Only call from GameActions -class. Breaks things otherwise
     public void useActionServer() {
         ui_events.clear();
         useAction();
@@ -193,7 +193,15 @@ public class GameController
 
         System.out.println(current_player.getName() + " " + generation);
 
-        //Aloituskierroksen toimenpiteet
+        //Sometimes there are specific actions at the start of a generation or at certain generations
+        //this if-else mess keeps track of those
+
+        //Last generation is only for placing greeneries. No card draw
+        if (greenery_round) {
+            return;
+        }
+
+        //Preparation round
         if (generation == 0) {
             if (self_player == null || current_player == self_player) {
                 if (current_player.getCorporation() == null) {
@@ -205,10 +213,10 @@ public class GameController
                 }
             }
 
-        //Kierroksen alun kortinnosto
+        //Activity at the start of the round
         } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
 
-            //Beginner corporation nostaa ensimmäisellä kierroksella kymmenen korttia ilmaiseksi
+            //Beginner corporation draws 10 cards for free at game start
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
                 GameActions.sendUseAction();
                 useAction();
@@ -223,7 +231,7 @@ public class GameController
                 game.getDeck().get("Round start draw").onPlay(current_player);
             }
 
-        //Korporaatioiden määrittämät ensimmäiset toiminnot, jos on olemassa
+        //First actions declared by corporation cards
         } else if (generation == 1 && (self_player == null || current_player == self_player) && current_player.getCorporation() instanceof FirstAction)
 
         {
@@ -243,13 +251,10 @@ public class GameController
             countPoints();
             return;
         }
-        game.onGenerationEnd();
 
-        //epäfoldaus
         queue.clear();
         queue.addAll(queue_full);
 
-        //seuraavaan aloittajaan vaihto
         while(current_starter != queue.getFirst())
             queue.addLast(queue.removeFirst());
         queue.addLast(queue.removeFirst());
@@ -257,8 +262,11 @@ public class GameController
         current_starter = queue.getFirst();
         current_player = current_starter;
         ((InGameUI)context).generationEndPrompt();
+
+        game.onGenerationEnd();
     }
 
+    //Small function to keep server game in sync. Basically ignored in hotseat
     void changeGeneration()
     {
         if (!server_multiplayer) {
@@ -268,20 +276,22 @@ public class GameController
         }
     }
 
+    // Other part of the generation syncing. Called from change generation in hotseat,
+    // or via a websocketevent in server game
     public void atGenerationStart()
     {
         generation += 1;
         atTurnStart();
     }
 
-    //Vuoronhallintaan liittyviä pelaajagettereitä
+    //Player getters concerning turn order
     public Player getSelfPlayer() {return self_player;}
 
     public Player getDisplayPlayer()
     {
         Player display_player;
 
-        //Pelaaja, jonka kortit näytetään päänäytöllä.
+        //Current player in hotseat, client in server game
         if (server_multiplayer)
             display_player = self_player;
         else
@@ -290,7 +300,7 @@ public class GameController
         return display_player;
     }
 
-    //Pelin lopetuksen logiikka
+    //Game ending logic
     void gameEndPreparation() {
         greenery_round = true;
     }
@@ -314,12 +324,10 @@ public class GameController
 
     public Boolean getGreeneryRound() {return greenery_round;}
 
-    //UI-jonon hallinnointi
+    //Managing the UI queue
     public void addUiEvent(GameEvent event) {ui_events.addLast(event);}
 
-    public Boolean uiIsEmpty() {return ui_events.size() == 0;}
-
-    public Boolean executeNextEvent() {
+    private Boolean executeNextEvent() {
         if (ui_events.size() == 0) {
             return false;
         }
@@ -330,7 +338,7 @@ public class GameController
     }
 
     //https://stackoverflow.com/questions/37759734/dynamically-updating-a-fragment/37761276#37761276
-    //Fragmenttien päivittämiseen
+    //Upgrading necessary fragments
     public interface GameUpdateListener {
         void update();
     }
@@ -351,7 +359,7 @@ public class GameController
         }
     }
 
-    //Kaikkien pelaajien getteri
+    //Sometimes easier to call this from here, than from game
     public List<Player> getPlayers()
     {
         return queue_full;
@@ -360,6 +368,4 @@ public class GameController
     public void promptUser(String text) {
         ((InGameUI)context).displayPrompt(text);
     }
-
-    //TODO tokenien sijoittaminen
 }
