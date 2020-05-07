@@ -29,15 +29,16 @@ public class CardCostDialog {
 
     private static Player player;
 
-    //käytetään kortin maksun kalibroimiseen suositellusta cardcostista.
+    //used for verifying the validity of payment dialogs by comparing values with recommendedcardcost
     private static Integer change;
 
     private static CardCostPacket cost;
 
-    //Teräksen ja titaanin arvomuuttujat
+    //megacredits per unit values for steel and titanium
     private static Integer steel_value;
     private static Integer titanium_value;
 
+    //units payed
     private static Integer credit;
     private static Integer steel;
     private static Integer titanium;
@@ -45,7 +46,6 @@ public class CardCostDialog {
     private static Integer plant;
     private static Integer floater;
 
-    //DIALOGILOGIIKKa (alunperin resourcedialog -luokassa)
     @SuppressLint("StaticFieldLeak")
     static View view;
 
@@ -62,7 +62,6 @@ public class CardCostDialog {
         steel_value = (2 + player.getSteelValueModifier());
         titanium_value = (3 + player.getTitaniumValueModifier());
 
-        //maksujen alustaminen suosituksiin
         cost = game.getRecommendedCardCost(card);
 
         //todo näytä viesti
@@ -81,7 +80,10 @@ public class CardCostDialog {
         view = inflater.inflate(R.layout.dialog_resource, null);
 
         //visuaalinen muokkaus
-        view.setBackgroundColor(Color.TRANSPARENT);
+            //for clear edges
+            view.setBackgroundColor(Color.TRANSPARENT);
+
+            //opens to recommended costs
         ((TextView) view.findViewById(R.id.credit_chosen)).setText(credit.toString());
         ((TextView) view.findViewById(R.id.steel_chosen)).setText(steel.toString());
         ((TextView) view.findViewById(R.id.titanium_chosen)).setText(titanium.toString());
@@ -190,7 +192,7 @@ public class CardCostDialog {
         dialog.dismiss();
     }
 
-    //maksuvaihtofunktiot. päivittävät myös textviewtä.
+    //functions for changing the amount of units payed. they also update the shown amount.
     private static void creditMinus(Integer amount){
         if (credit-amount <= 0)
         {
