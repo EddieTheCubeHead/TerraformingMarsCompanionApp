@@ -40,13 +40,13 @@ public final class Birds extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
         resource_amount++;
-        GameController.getInstance().useAction();
     }
 
     @Override

@@ -17,9 +17,7 @@ public final class PhysicsComplex extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        if (owner_player.getEnergy() < 6) {
-            return;
-        }
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -27,7 +25,6 @@ public final class PhysicsComplex extends ResourceCard implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-6);
         resource_amount++;
-        GameController.getInstance().useAction();
     }
 
     @Override

@@ -16,6 +16,7 @@ public final class Steelworks extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -24,7 +25,6 @@ public final class Steelworks extends Card implements ActionCard {
         owner_player.changeSteel(2);
         owner_player.changeEnergy(-4);
         owner_game.raiseOxygen(owner_player);
-        GameController.getInstance().useAction();
     }
 
     @Override

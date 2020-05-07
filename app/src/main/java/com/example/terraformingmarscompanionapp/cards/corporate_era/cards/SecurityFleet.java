@@ -32,6 +32,7 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -39,7 +40,6 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeTitanium(-1);
         resource_amount++;
-        GameController.getInstance().useAction();
     }
 
     @Override

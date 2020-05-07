@@ -26,6 +26,7 @@ public final class Predators extends ResourceCard implements ActionCard {
 
     public void cardAction() {
         GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, owner_player, 1));
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -52,6 +53,5 @@ public final class Predators extends ResourceCard implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         resource_amount++;
-        GameController.getInstance().useAction();
     }
 }

@@ -20,6 +20,7 @@ public final class SymbioticFungus extends Card implements ActionCard {
     @Override
     public void cardAction() {
         GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, owner_player, 1, true));
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -39,7 +40,5 @@ public final class SymbioticFungus extends Card implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
-        GameController.getInstance().useAction();
-    }
+    public void actionWithMetadata(Integer data) {}
 }

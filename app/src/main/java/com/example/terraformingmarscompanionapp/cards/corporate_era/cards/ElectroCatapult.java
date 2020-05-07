@@ -1,11 +1,15 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
 
 public final class ElectroCatapult extends Card implements ActionCard {
     public ElectroCatapult(Game game) {
@@ -26,7 +30,23 @@ public final class ElectroCatapult extends Card implements ActionCard {
     }
 
     public void cardAction() {
-        //TODO boolean valinta UI
+        if (owner_player.getSteel() < 1) {
+            GameController.getInstance().useAction();
+            actionServerHook(owner_player, 0);
+            return;
+        } else if (owner_player.getPlants() < 1) {
+            GameController.getInstance().useAction();
+            actionServerHook(owner_player, 1);
+            return;
+        }
+        Context context = GameController.getInstance().getContext();
+        Intent intent = new Intent(context, BooleanDialogActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
+        intent.putExtra(BooleanDialogActivity.TITLE_TEXT, "Spend plants or steel?");
+        intent.putExtra(BooleanDialogActivity.FALSE_TEXT, "Plants");
+        intent.putExtra(BooleanDialogActivity.TRUE_TEXT, "Steel");
+        context.startActivity(intent);
     }
 
 
@@ -38,7 +58,6 @@ public final class ElectroCatapult extends Card implements ActionCard {
             owner_player.takeSteel(1);
         }
         owner_player.changeMoney(7);
-        GameController.getInstance().useAction();
     }
 
     @Override

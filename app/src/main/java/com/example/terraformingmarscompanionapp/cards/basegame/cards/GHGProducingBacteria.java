@@ -26,6 +26,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
     public void cardAction() {
         if (resource_amount < 2) {
             actionServerHook(owner_player, 0);
+            return;
         }
         Context context = GameController.getInstance().getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);
@@ -47,7 +48,6 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
             resource_amount -= 2;
             owner_game.raiseTemperature(owner_player);
         }
-        GameController.getInstance().useAction();
     }
 
     @Override

@@ -117,6 +117,7 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
                  Toast.makeText(getContext(), "Invalid requirements!", Toast.LENGTH_SHORT).show();
                  return;
              }
+            Toast.makeText(getContext(), String.format("Action %s performed", card.getName()), Toast.LENGTH_SHORT).show();
              game.playCard(card, packet);
         } catch (Exception ignored) {}
     }

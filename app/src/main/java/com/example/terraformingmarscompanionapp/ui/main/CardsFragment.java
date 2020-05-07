@@ -121,7 +121,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
 
             if (validity) {
                 System.out.println(((ActionCard) card).getActionValidity());
-                Toast.makeText(getContext(), "Action '%s' not valid", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), String.format("Action '%s' not usable.\nInsufficient requirements or already used", action_name), Toast.LENGTH_SHORT).show();
             } else {
                 ((ActionCard) card).cardAction();
                 Toast.makeText(getContext(), String.format("Action '%s' used", action_name), Toast.LENGTH_SHORT).show();

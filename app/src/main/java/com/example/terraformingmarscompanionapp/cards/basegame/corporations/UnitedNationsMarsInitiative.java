@@ -23,9 +23,7 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
 
     @Override
     public void cardAction() {
-        if (!owner_player.getRaisedTrThisGeneration() || owner_player.getMoney() < 3) {
-            return;
-        }
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -33,7 +31,6 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
     public void actionWithMetadata(Integer data) {
         owner_player.changeMoney(-3);
         owner_player.changeTerraformingRating(1);
-        GameController.getInstance().useAction();
     }
 
     @Override
@@ -48,6 +45,6 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
 
     @Override
     public Boolean getActionValidity() {
-        return action_used;
+        return (action_used || !owner_player.getRaisedTrThisGeneration() || owner_player.getMoney() < 3);
     }
 }

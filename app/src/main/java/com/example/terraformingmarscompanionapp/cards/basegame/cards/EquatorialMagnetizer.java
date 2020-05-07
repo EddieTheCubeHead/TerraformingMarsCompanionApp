@@ -16,6 +16,7 @@ public final class EquatorialMagnetizer extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
+        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
@@ -23,7 +24,6 @@ public final class EquatorialMagnetizer extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergyProduction(-1);
         owner_player.changeTerraformingRating(1);
-        GameController.getInstance().useAction();
     }
 
     @Override
