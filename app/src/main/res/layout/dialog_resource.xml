@@ -71,31 +71,25 @@
                 android:clickable="false"
                 android:text="-1"/>
 
-            <FrameLayout
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                app:srcCompat="@drawable/credit"
+                android:layout_weight="0 "/>
+
+            <TextView
+                android:id="@+id/credit_chosen"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center"
-
-                    android:textSize="20sp"
-                    app:srcCompat="@drawable/ic_credit" />
-
-                <TextView
-                    android:id="@+id/credit_chosen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-
-                    android:text="420"
-                    android:textSize="20sp" />
-
-            </FrameLayout>
+                android:gravity="center"
+                android:text="420"
+                android:textSize="20sp"
+                android:layout_weight="0" />
 
             <Button
                 android:id="@+id/credit_plus1"
@@ -137,31 +131,25 @@
                 android:clickable="false"
                 android:text="-1"/>
 
-            <FrameLayout
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                app:srcCompat="@drawable/steel_square"
+                android:layout_weight="0"/>
+
+            <TextView
+                android:id="@+id/steel_chosen"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center"
-
-                    android:textSize="20sp"
-                    app:srcCompat="@drawable/ic_credit" />
-
-                <TextView
-                    android:id="@+id/steel_chosen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-
-                    android:text="420"
-                    android:textSize="20sp" />
-
-            </FrameLayout>
+                android:gravity="center"
+                android:text="420"
+                android:textSize="20sp"
+                android:layout_weight="0" />
 
             <Button
                 android:id="@+id/steel_plus1"
@@ -203,31 +191,25 @@
                 android:clickable="false"
                 android:text="-1"/>
 
-            <FrameLayout
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                app:srcCompat="@drawable/titanium_square"
+                android:layout_weight="0"/>
+
+            <TextView
+                android:id="@+id/titanium_chosen"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center"
-
-                    android:textSize="20sp"
-                    app:srcCompat="@drawable/ic_credit" />
-
-                <TextView
-                    android:id="@+id/titanium_chosen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-
-                    android:text="420"
-                    android:textSize="20sp" />
-
-            </FrameLayout>
+                android:gravity="center"
+                android:text="420"
+                android:textSize="20sp"
+                android:layout_weight="0" />
 
             <Button
                 android:id="@+id/titanium_plus1"
@@ -269,31 +251,25 @@
                 android:clickable="false"
                 android:text="-1"/>
 
-            <FrameLayout
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                app:srcCompat="@drawable/heat"
+                android:layout_weight="0"/>
+
+            <TextView
+                android:id="@+id/heat_chosen"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center"
-
-                    android:textSize="20sp"
-                    app:srcCompat="@drawable/ic_credit" />
-
-                <TextView
-                    android:id="@+id/heat_chosen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-
-                    android:text="420"
-                    android:textSize="20sp" />
-
-            </FrameLayout>
+                android:gravity="center"
+                android:text="420"
+                android:textSize="20sp"
+                android:layout_weight="0" />
 
             <Button
                 android:id="@+id/heat_plus1"
@@ -335,31 +311,25 @@
                 android:clickable="false"
                 android:text="-1"/>
 
-            <FrameLayout
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                app:srcCompat="@drawable/plant_square"
+                android:layout_weight="0"/>
+
+            <TextView
+                android:id="@+id/plant_chosen"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center"
-
-                    android:textSize="20sp"
-                    app:srcCompat="@drawable/ic_credit" />
-
-                <TextView
-                    android:id="@+id/plant_chosen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-
-                    android:text="420"
-                    android:textSize="20sp" />
-
-            </FrameLayout>
+                android:gravity="center"
+                android:text="420"
+                android:textSize="20sp"
+                android:layout_weight="0" />
 
             <Button
                 android:id="@+id/plant_plus1"
@@ -401,31 +371,25 @@
                 android:clickable="false"
                 android:text="-1"/>
 
-            <FrameLayout
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                app:srcCompat="@drawable/ic_ph"
+                android:layout_weight="0"/>
+
+            <TextView
+                android:id="@+id/floater_chosen"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="0">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:gravity="center"
-
-                    android:textSize="20sp"
-                    app:srcCompat="@drawable/ic_credit" />
-
-                <TextView
-                    android:id="@+id/floater_chosen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-
-                    android:text="420"
-                    android:textSize="20sp" />
-
-            </FrameLayout>
+                android:gravity="center"
+                android:text="420"
+                android:textSize="20sp"
+                android:layout_weight="0" />
 
             <Button
                 android:id="@+id/floater_plus1"

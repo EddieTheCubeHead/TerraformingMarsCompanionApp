@@ -480,7 +480,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
             if (v == button_editcancel_resources)
             {
 
-                //Edit painikkeen painaminen
+                //Pressing edit button
                 if (!editmode)
                 {
                     editmode = true;
@@ -531,7 +531,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                     }
                 }
 
-                //Cancel painikkeen painaminen
+                //Pressing cancel button
                 else
                 {
                     editmode = false;
@@ -693,7 +693,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         }
     }
 
-    //Pelin tapahtumien kuuntelu
+    //Listening for changes in the game
     @Override
     public void update() {
         setResourceAmounts();
