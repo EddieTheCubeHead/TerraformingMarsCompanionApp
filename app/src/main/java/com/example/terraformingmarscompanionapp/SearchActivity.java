@@ -1,33 +1,16 @@
 package com.example.terraformingmarscompanionapp;
-
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.CardCostDialog;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +40,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         Game game = controller.getGame();
         HashMap<String, Card> deck = game.getDeck();
 
-        //korttien haku
+        //filtering the cards
         for (Map.Entry<String, Card> entry : deck.entrySet())
         {
             Card card = entry.getValue();
@@ -65,6 +48,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             if (valid_cards.contains(card.getType()))
                 card_list.add(card);
         }
+
         RecyclerView recyclerview = findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
 
@@ -82,7 +66,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
             }
         });
 
-        //aloittaa kirjoittamisen aina kun klikataan eikä vain suurennuslasista.
+        //aloittaa text input on click of searchview
         searchview.setOnClickListener(v -> searchview.setIconified(false));
     }
 
@@ -92,7 +76,6 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
         CardCostDialog.displayDialog(this, card);
     }
 
-    //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) { return false; }
 }
 
