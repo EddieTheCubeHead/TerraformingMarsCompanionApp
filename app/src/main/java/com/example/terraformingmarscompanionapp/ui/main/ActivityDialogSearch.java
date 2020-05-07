@@ -177,6 +177,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
 
         window.setLayout(3 * width / 4, WindowManager.LayoutParams.WRAP_CONTENT);
 
+        view.findViewById(R.id.exit_button).setOnClickListener(v -> onBackPressed());
     }
 
     @Override public void onCardClick(int position) {
