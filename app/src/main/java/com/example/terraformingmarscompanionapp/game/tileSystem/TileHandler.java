@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
 import com.example.terraformingmarscompanionapp.ui.main.TilePlacementActivity;
 
 import java.util.ArrayList;
@@ -292,19 +293,20 @@ public class TileHandler {
         space_tiles[1].placeHex(player, Placeable.CITY);
     }
 
-    public void placeTile(Player player, Tile to_place, Placeable tile_type) {
+    public ArrayList<String> placeTile(Player player, Tile to_place, Placeable tile_type) {
         ArrayList<Placeable> to_city = new ArrayList<>(Arrays.asList(Placeable.CITY, Placeable.RESEARCH_OUTPOST, Placeable.NOCTIS, Placeable.VOLCANIC_CITY, Placeable.URBANIZED_AREA));
         ArrayList<Placeable> to_ocean = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.LAND_OCEAN, Placeable.FLOOD_OCEAN));
         ArrayList<Placeable> to_greenery = new ArrayList<>(Arrays.asList(Placeable.GREENERY, Placeable.OCEAN_GREENERY));
 
-        ArrayList<Player> flood_neighbours = new ArrayList<>();
+        ArrayList<String> flood_neighbours = new ArrayList<>();
         boolean flood = false;
 
         if (tile_type.equals(Placeable.FLOOD_OCEAN)) {
             flood = true;
             for (Tile tile : getNeighbours(to_place)) {
                 if (tile.getOwner() != null) {
-                    flood_neighbours.add(tile.getOwner());
+                    flood_neighbours.add(tile.getOwner().getName());
+                    System.out.println(tile.getOwner().getName());
                 }
             }
         }
@@ -336,9 +338,10 @@ public class TileHandler {
         to_place.placeHex(player, tile_type);
         player.addTile(to_place);
 
-        if (flood && flood_neighbours.size() > 0) {
-            //TODO pelaajanvalintaUI tähän flood_neighbours -listalla
+        if (flood) {
+            return flood_neighbours;
         }
+        return null;
     }
 
 
@@ -403,7 +406,7 @@ public class TileHandler {
     }
 
     public Boolean checkPlacementValidity(Placeable tile_type, Integer x, Integer y) {
-        ArrayList<Placeable> ocean_placement = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.OCEAN_GREENERY, Placeable.MOHOLE));
+        ArrayList<Placeable> ocean_placement = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.OCEAN_GREENERY, Placeable.MOHOLE, Placeable.FLOOD_OCEAN));
 
         ArrayList<Placeable> volcanic_placement = new ArrayList<>(Arrays.asList(Placeable.LAVA_FLOW, Placeable.VOLCANIC_CITY));
 
@@ -495,7 +498,7 @@ public class TileHandler {
                     return false;
                 }
             case MINING_RIGHTS:
-                if (!to_place.getPlacementBonuses().contains(PlacementBonus.STEEL) | !to_place.getPlacementBonuses().contains(PlacementBonus.TITANIUM)) {
+                if ((!to_place.getPlacementBonuses().contains(PlacementBonus.STEEL) && !to_place.getPlacementBonuses().contains(PlacementBonus.TITANIUM))) {
                     Log.i("Invalid tile placement", "Requires placement bonus");
                     return false;
                 }

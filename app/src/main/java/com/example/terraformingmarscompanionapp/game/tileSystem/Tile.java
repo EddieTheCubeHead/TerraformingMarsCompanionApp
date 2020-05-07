@@ -77,8 +77,16 @@ public class Tile {
                         player.changeHandSize(1);
                 }
             }
-            if (placement_bonuses.contains(PlacementBonus.STEEL) | placement_bonuses.contains(PlacementBonus.TITANIUM)) {
+            if (placement_bonuses.contains(PlacementBonus.STEEL)) {
                 game.update_manager.onPlacementBonus(player);
+                if (hex_type == Placeable.MINING_AREA || hex_type == Placeable.MINING_RIGHTS) {
+                    player.changeSteelProduction(1);
+                }
+            } else if (placement_bonuses.contains(PlacementBonus.TITANIUM)) {
+                game.update_manager.onPlacementBonus(player);
+                if (hex_type == Placeable.MINING_AREA || hex_type == Placeable.MINING_RIGHTS) {
+                    player.changeTitaniumProduction(1);
+                }
             }
         }
         owner = player;

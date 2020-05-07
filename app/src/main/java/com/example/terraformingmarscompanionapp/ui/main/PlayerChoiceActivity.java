@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -23,6 +24,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlayerChoiceActivity extends AppCompatActivity {
 
@@ -60,6 +62,8 @@ public class PlayerChoiceActivity extends AppCompatActivity {
         Player nobody = new Player(game, "(nobody)");
 
         targets.add(nobody);
+
+        System.out.println(Arrays.toString(intent.getStringArrayExtra(TARGETS)));
 
         if (!(intent.getStringArrayExtra(TARGETS) == null)) {
             for (String target : intent.getStringArrayExtra(TARGETS)) {
@@ -132,12 +136,18 @@ public class PlayerChoiceActivity extends AppCompatActivity {
                 card.playServerConnection(player, target_index);
             }
             dialog.dismiss();
-            PlayerChoiceActivity.super.onBackPressed();
+            exit();
         });
     }
 
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
+    }
+
+    private void exit() {
+        Intent inGameUi = new Intent(this, InGameUI.class);
+        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        startActivity(inGameUi);
     }
 }
