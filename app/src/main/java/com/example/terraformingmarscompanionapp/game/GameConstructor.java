@@ -10,6 +10,75 @@ import com.example.terraformingmarscompanionapp.cards.basegame.corporations.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.milestones.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.*;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AcquiredCompany;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AdvancedAlloys;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AiCenteral;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AntiGravityTechnology;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AsteroidMiningConsortium;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.BribedCommittee;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.BuildingIndustries;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.BusinessNetwork;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.CallistoPenalMines;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.CaretakerContract;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Cartel;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.CeosFavoriteProject;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.CommercialDistrict;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.DevelopmentCenter;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.EarthCatapult;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.EarthOffice;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.ElectroCatapult;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.EnergyTapping;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.FuelFactory;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.GeneRepair;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.GreatEscarpmentConsortium;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Hackers;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.HiredRaiders;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.IndenturnedWorkers;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.InterstellarColonyShip;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.InventorsGuild;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.InvestionContest;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.InvestmentLoan;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.IoMiningIndustries;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.LagrangeObservatory;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.LandClaim;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.LightningHarvest;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MarsUniverse;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MassConverter;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MediaArchives;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MediaGroup;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MedicalLab;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Mine;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MineralDeposit;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MiningArea;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MirandaResort;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.PhysicsComplex;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.PowerInfrastructure;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.PowerSupplyConsortium;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.ProtectedHabitats;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.QuantumExtractor;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RadSuits;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Research;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RestrictedArea;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Sabotage;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Satellites;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.SecurityFleet;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.SpaceElevator;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.SpaceStation;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Sponsors;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.StandardTechnology;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Tardigrades;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.TechnologyDemostration;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.TerraformingGanymede;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.TitaniumMine;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.TollStation;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.TransNeptuneProbe;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.TropicalResort;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.VestaShipyard;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.ViralEnhancers;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Virus;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.corporations.SaturnSystems;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.corporations.Teractor;
 
 import java.util.HashMap;
 
@@ -503,7 +572,212 @@ class GameConstructor {
 
         //Corporate era
         if (corporate_era) {
-            //TODO add corporate era
+            Card acquired_company = new AcquiredCompany(game);
+            deck.put(acquired_company.getName(), acquired_company);
+
+            Card advanced_alloys = new AdvancedAlloys(game);
+            deck.put(advanced_alloys.getName(), advanced_alloys);
+
+            Card ai_centeral = new AiCenteral(game);
+            deck.put(ai_centeral.getName(), ai_centeral);
+
+            Card anti_gravity_technology = new AntiGravityTechnology(game);
+            deck.put(anti_gravity_technology.getName(), anti_gravity_technology);
+
+            Card asteroid_mining_consortium = new AsteroidMiningConsortium(game);
+            deck.put(asteroid_mining_consortium.getName(), asteroid_mining_consortium);
+
+            Card bribed_committee = new BribedCommittee(game);
+            deck.put(bribed_committee.getName(), bribed_committee);
+
+            Card building_indrustries = new BuildingIndustries(game);
+            deck.put(building_indrustries.getName(), building_indrustries);
+
+            Card business_network = new BusinessNetwork(game);
+            deck.put(business_network.getName(), business_network);
+
+            Card callisto_penal_mines = new CallistoPenalMines(game);
+            deck.put(callisto_penal_mines.getName(), callisto_penal_mines);
+
+            Card caretaker_contract = new CaretakerContract(game);
+            deck.put(caretaker_contract.getName(), caretaker_contract);
+
+            Card cartel = new Cartel(game);
+            deck.put(cartel.getName(), cartel);
+
+            Card ceos_favorite_project = new CeosFavoriteProject(game);
+            deck.put(ceos_favorite_project.getName(), ceos_favorite_project);
+
+            Card commercial_district = new CommercialDistrict(game);
+            deck.put(commercial_district.getName(), commercial_district);
+
+            Card developement_center = new DevelopmentCenter(game);
+            deck.put(developement_center.getName(), developement_center);
+
+            Card earth_catapult = new EarthCatapult(game);
+            deck.put(earth_catapult.getName(), earth_catapult);
+
+            Card earth_office = new EarthOffice(game);
+            deck.put(earth_office.getName(), earth_office);
+
+            Card electro_catapult = new ElectroCatapult(game);
+            deck.put(electro_catapult.getName(), electro_catapult);
+
+            Card energy_tapping = new EnergyTapping(game);
+            deck.put(energy_tapping.getName(), energy_tapping);
+
+            Card fuel_factory = new FuelFactory(game);
+            deck.put(fuel_factory.getName(), fuel_factory);
+
+            Card gene_repair = new GeneRepair(game);
+            deck.put(gene_repair.getName(), gene_repair);
+
+            Card great_escarpment_consortium = new GreatEscarpmentConsortium(game);
+            deck.put(great_escarpment_consortium.getName(), great_escarpment_consortium);
+
+            Card hackers = new Hackers(game);
+            deck.put(hackers.getName(), hackers);
+
+            Card hired_raiders = new HiredRaiders(game);
+            deck.put(hired_raiders.getName(), hired_raiders);
+
+            Card indenturned_workers = new IndenturnedWorkers(game);
+            deck.put(indenturned_workers.getName(), indenturned_workers);
+
+            Card intersteller_colony_ship = new InterstellarColonyShip(game);
+            deck.put(intersteller_colony_ship.getName(), intersteller_colony_ship);
+
+            Card inventors_guild = new InventorsGuild(game);
+            deck.put(inventors_guild.getName(), inventors_guild);
+
+            Card investion_contest = new InvestionContest(game);
+            deck.put(investion_contest.getName(), investion_contest);
+
+            Card investment_loan = new InvestmentLoan(game);
+            deck.put(investment_loan.getName(), investment_loan);
+
+            Card io_mining_industries = new IoMiningIndustries(game);
+            deck.put(io_mining_industries.getName(), io_mining_industries);
+
+            Card lagranga_observatory = new LagrangeObservatory(game);
+            deck.put(lagranga_observatory.getName(), lagranga_observatory);
+
+            Card land_claim = new LandClaim(game);
+            deck.put(land_claim.getName(), land_claim);
+
+            Card lighgtning_harvest = new LightningHarvest(game);
+            deck.put(lighgtning_harvest.getName(), lighgtning_harvest);
+
+            Card mars_universe = new MarsUniverse(game);
+            deck.put(mars_universe.getName(), mars_universe);
+
+            Card mass_conventer = new MassConverter(game);
+            deck.put(mass_conventer.getName(), mass_conventer);
+
+            Card media_archives = new MediaArchives(game);
+            deck.put(media_archives.getName(), media_archives);
+
+            Card media_group = new MediaGroup(game);
+            deck.put(media_group.getName(), media_group);
+
+            Card medical_lab = new MedicalLab(game);
+            deck.put(medical_lab.getName(), medical_lab);
+
+            Card mine = new Mine(game);
+            deck.put(mine.getName(), mine);
+
+            Card mineral_deposit = new MineralDeposit(game);
+            deck.put(mineral_deposit.getName(), mineral_deposit);
+
+            Card mining_area = new MiningArea(game);
+            deck.put(mining_area.getName(), mining_area);
+
+            Card miranda_resort = new MirandaResort(game);
+            deck.put(miranda_resort.getName(), miranda_resort);
+
+            Card physics_complex = new PhysicsComplex(game);
+            deck.put(physics_complex.getName(), physics_complex);
+
+            Card power_infastructure = new PowerInfrastructure(game);
+            deck.put(power_infastructure.getName(), power_infastructure);
+
+            Card power_supply_consortium = new PowerSupplyConsortium(game);
+            deck.put(power_supply_consortium.getName(), power_supply_consortium);
+
+            Card protected_habitats = new ProtectedHabitats(game);
+            deck.put(protected_habitats.getName(), protected_habitats);
+
+            Card quantum_extractor = new QuantumExtractor(game);
+            deck.put(quantum_extractor.getName(), quantum_extractor);
+
+            Card rad_suits = new RadSuits(game);
+            deck.put(rad_suits.getName(), rad_suits);
+
+            Card research = new Research(game);
+            deck.put(research.getName(), research);
+
+            Card restricted_area = new RestrictedArea(game);
+            deck.put(restricted_area.getName(), restricted_area);
+
+            Card robotic_workforce = new RoboticWorkforce(game);
+            deck.put(robotic_workforce.getName(), robotic_workforce);
+
+            Card sabotage = new Sabotage(game);
+            deck.put(sabotage.getName(), sabotage);
+
+            Card satellites = new Satellites(game);
+            deck.put(satellites.getName(), satellites);
+
+            Card security_fleet = new SecurityFleet(game);
+            deck.put(security_fleet.getName(), security_fleet);
+
+            Card space_elevator = new SpaceElevator(game);
+            deck.put(space_elevator.getName(), space_elevator);
+
+            Card space_station = new SpaceStation(game);
+            deck.put(space_station.getName(), space_station);
+
+            Card sponsors = new Sponsors(game);
+            deck.put(sponsors.getName(), sponsors);
+
+            Card standard_technology = new StandardTechnology(game);
+            deck.put(standard_technology.getName(), standard_technology);
+
+            Card tardigrades = new Tardigrades(game);
+            deck.put(tardigrades.getName(), tardigrades);
+
+            Card technology_demostration = new TechnologyDemostration(game);
+            deck.put(technology_demostration.getName(), technology_demostration);
+
+            Card terraforming_ganymede = new TerraformingGanymede(game);
+            deck.put(terraforming_ganymede.getName(), terraforming_ganymede);
+
+            Card titanium_mine = new TitaniumMine(game);
+            deck.put(titanium_mine.getName(), titanium_mine);
+
+            Card toll_station = new TollStation(game);
+            deck.put(toll_station.getName(), toll_station);
+
+            Card trans_neptune_probe = new TransNeptuneProbe(game);
+            deck.put(trans_neptune_probe.getName(), trans_neptune_probe);
+
+            Card tropical_resort = new TropicalResort(game);
+            deck.put(tropical_resort.getName(), tropical_resort);
+
+            Card vesta_shipyard = new VestaShipyard(game);
+            deck.put(vesta_shipyard.getName(), vesta_shipyard);
+
+            Card viral_enhancers = new ViralEnhancers(game);
+            deck.put(viral_enhancers.getName(), viral_enhancers);
+
+            Card virus = new Virus(game);
+            deck.put(virus.getName(), virus);
+
+            Card saturn_stystems = new SaturnSystems(game);
+            corporations.put(saturn_stystems.getName(), saturn_stystems);
+
+            Card teractor = new Teractor(game);
+            corporations.put(teractor.getName(), teractor);
         }
 
         //Prelude

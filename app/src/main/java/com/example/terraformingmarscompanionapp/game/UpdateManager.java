@@ -96,7 +96,7 @@ public final class UpdateManager {
     }
 
     public void onJovianTag(Player player) {
-
+        effect_cards.get("Saturn systems").cardEffect(player);
     }
 
     public void onEarthTag(Player player) {

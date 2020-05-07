@@ -6,21 +6,16 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-public final class MediaGroup extends Card implements EffectCard {
-    public MediaGroup(Game game) {
+public final class ProtectedHabitats extends Card implements EffectCard {
+    public ProtectedHabitats(Game game) {
         super(Type.BLUE, game);
-        name = "Media group";
-        price = 6;
-        tags.add(Tag.EARTH);
+        name = "Protected habitats";
+        price = 5;
+        owner_game = game;
     }
 
     @Override
     public void cardEffect(Player player) {
-        if (owner_player == null) {
-            return;
-        } else if (owner_player != player){
-            return;
-        }
-        owner_player.changeMoney(3);
+        //todo ei voi poistaa kasveja eiläimiä tai bakteerejaa
     }
 }

@@ -1,45 +1,49 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
-public final class SecurityFleet extends ResourceCard implements ActionCard {
-    public SecurityFleet(Game game) {
+public final class AiCenteral extends Card implements ActionCard {
+    public AiCenteral(Game game) {
         super(Type.BLUE, game);
-        name = "Security fleet";
-        price = 12;
-        tags.add(Tag.SPACE);
-        resource_type = ResourceType.UNIQUE;
+        name = "AI centeral";
+        price = 21;
+        requirements.setMinScienceTags(3);
+        tags.add(Tag.SCIENCE);
+        tags.add(Tag.BUILDING);
+        victory_points = 1;
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
+        player.changeEnergyProduction(-1);
         super.playWithMetadata(player, data);
     }
 
     @Override
-    public void onGameEnd() {
-        if (owner_player == null) {
-            return;
-        }
-        owner_player.changeVictoryPoints(resource_amount);
-    }
-
-    @Override
     public void cardAction() {
-        GameController.getInstance().useAction();
         actionServerHook(owner_player);
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeTitanium(-1);
-        resource_amount++;
+        GameController.getInstance().addUiEvent(new PromptEvent("Please draw 2 cards"));
+    }
+
+    @Override
+    public String getActionName() {
+        return getName();
+    }
+
+    @Override
+    public Boolean getActionValidity() {
+        return action_used;
     }
 
     @Override
@@ -50,15 +54,5 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
     @Override
     public Boolean getActionUsed() {
         return action_used;
-    }
-
-    @Override
-    public String getActionName() {
-        return getName();
-    }
-
-    @Override
-    public Boolean getActionValidity() {
-        return (action_used || (owner_player.getTitanium() < 1));
     }
 }
