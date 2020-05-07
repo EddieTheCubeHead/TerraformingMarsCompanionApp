@@ -12,7 +12,7 @@ import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.*;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AcquiredCompany;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AdvancedAlloys;
-import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AiCenteral;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AiCentral;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AntiGravityTechnology;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.AsteroidMiningConsortium;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.BribedCommittee;
@@ -77,8 +77,8 @@ import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Tropic
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.VestaShipyard;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.ViralEnhancers;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Virus;
-import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.corporations.SaturnSystems;
-import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.corporations.Teractor;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.corporations.SaturnSystems;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.corporations.Teractor;
 
 import java.util.HashMap;
 
@@ -578,7 +578,7 @@ class GameConstructor {
             Card advanced_alloys = new AdvancedAlloys(game);
             deck.put(advanced_alloys.getName(), advanced_alloys);
 
-            Card ai_centeral = new AiCenteral(game);
+            Card ai_centeral = new AiCentral(game);
             deck.put(ai_centeral.getName(), ai_centeral);
 
             Card anti_gravity_technology = new AntiGravityTechnology(game);

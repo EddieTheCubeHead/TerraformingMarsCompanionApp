@@ -32,23 +32,11 @@ public final class PowerInfrastructure extends Card implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        if (owner_player.getEnergy() == 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return owner_player.getEnergy() != 0;
     }
 
     @Override
     public void setActionToUsed() {
         action_used = true;
-    }
-
-    @Override
-    public Boolean getActionUsed() {
-        return action_used;
     }
 }

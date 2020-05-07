@@ -128,6 +128,7 @@ public class GameCreationActivity extends AppCompatActivity
 
         Game game = new Game(player_names,
                 corporate_era, prelude, colonies, venus, turmoil, extra_corporations, false,
+                false, false, false,
                 map);
 
         GameController.makeInstance(game);

@@ -34,11 +34,6 @@ public final class DevelopmentCenter extends Card implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
-    }
-
-    @Override
     public String getActionName() {
         return getName();
     }

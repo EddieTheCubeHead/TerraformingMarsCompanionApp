@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cards.corporate_era.cards.corporations;
+package com.example.terraformingmarscompanionapp.cards.corporate_era.corporations;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;

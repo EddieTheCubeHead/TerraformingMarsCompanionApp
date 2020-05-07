@@ -46,9 +46,4 @@ public final class BusinessNetwork extends Card implements ActionCard {
     public void setActionToUsed() {
 
     }
-
-    @Override
-    public Boolean getActionUsed() {
-        return null;
-    }
 }

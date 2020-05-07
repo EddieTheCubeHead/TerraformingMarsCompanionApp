@@ -15,11 +15,11 @@ public final class EnergyTapping extends Card {
     }
 
     @Override
-    public void playServerConnection(Player player, Integer data) {
+    public void onPlayServerHook(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
         player.changeEnergyProduction(1);
         //TODO vie 1 energia tuotanto
-        super.playServerConnection(player, data);
+        super.onPlayServerHook(player, data);
     }
 
     @Override

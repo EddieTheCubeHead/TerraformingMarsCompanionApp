@@ -40,22 +40,11 @@ public final class IndustrialCenter extends Card implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        if (action_used || owner_player.getMoney() < 7) {
-            return false;
-        }
-        else {
-            return true;
-
-        }
+        return !action_used && owner_player.getMoney() >= 7;
     }
 
     @Override
     public void setActionToUsed() {
 
-    }
-
-    @Override
-    public Boolean getActionUsed() {
-        return action_used;
     }
 }

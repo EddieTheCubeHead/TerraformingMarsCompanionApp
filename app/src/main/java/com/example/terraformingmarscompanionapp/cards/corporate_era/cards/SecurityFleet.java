@@ -48,11 +48,6 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public Boolean getActionUsed() {
-        return action_used;
-    }
-
-    @Override
     public String getActionName() {
         return getName();
     }

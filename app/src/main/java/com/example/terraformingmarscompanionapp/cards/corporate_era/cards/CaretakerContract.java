@@ -41,9 +41,4 @@ public final class CaretakerContract extends Card implements ActionCard {
     public void setActionToUsed() {
 
     }
-
-    @Override
-    public Boolean getActionUsed() {
-        return action_used;
-    }
 }

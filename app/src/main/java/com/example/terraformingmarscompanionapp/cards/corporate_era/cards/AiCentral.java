@@ -50,9 +50,4 @@ public final class AiCentral extends Card implements ActionCard {
     public void setActionToUsed() {
         action_used = true;
     }
-
-    @Override
-    public Boolean getActionUsed() {
-        return action_used;
-    }
 }
