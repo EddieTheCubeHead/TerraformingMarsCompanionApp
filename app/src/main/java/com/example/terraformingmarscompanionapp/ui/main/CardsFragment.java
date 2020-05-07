@@ -40,18 +40,15 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             Bundle savedInstanceState
     )
     {
-        //defaultti: return inflater.inflate(R.layout.fragment_second, container, false);
+        //default: return inflater.inflate(R.layout.fragment_second, container, false);
         return inflater.inflate(R.layout.activity_search, container, false);
     }
 
-    //view on oncreateviewn palautusarvo
-    //sama juttu kun searchview tässä vaiheessa.
-    //TODO tee gamecontrolleriin pelattavat kortit ui-esiintymisjärjestyksessä palauttava funktio.
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
 
-        //tästä eteenpäin noin sama koodi kuin searchactivityn oncreate:ssa
+        //standard code in multiple classes. maybe possible to generize.
         searchview = view.findViewById(R.id.searchview);
 
         controller = GameController.getInstance();
@@ -64,7 +61,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             card_list.add((Card)entry.getValue());
         }
 
-        //korttien nouto
+        //filtering cards
         for (Map.Entry<String, Card> entry : deck.entrySet())
         {
             Card card = entry.getValue();
