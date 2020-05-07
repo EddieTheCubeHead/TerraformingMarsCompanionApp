@@ -93,7 +93,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             }
         });
 
-        //aloittaa kirjoittamisen aina kun klikataan eikä vain suurennuslasista.
+        //starts text input on click of searchview
         searchview.setOnClickListener(v -> searchview.setIconified(false));
     }
 
