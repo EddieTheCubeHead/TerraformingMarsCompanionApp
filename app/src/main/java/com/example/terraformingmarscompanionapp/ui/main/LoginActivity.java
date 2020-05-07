@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.webSocket.UserActions;
 
+/**
+ * Simple activity for login information
+ */
 public class LoginActivity extends AppCompatActivity
 {
     EditText username_field;
@@ -52,7 +55,7 @@ public class LoginActivity extends AppCompatActivity
         }
 
         if (UserActions.successful_login) {
-            super.onBackPressed(); //ei-overridattu back-napin painallus
+            super.onBackPressed(); //non-overridden back-press
             Intent intent = new Intent(this, TitleScreen.class);
             startActivity(intent);
         } else {

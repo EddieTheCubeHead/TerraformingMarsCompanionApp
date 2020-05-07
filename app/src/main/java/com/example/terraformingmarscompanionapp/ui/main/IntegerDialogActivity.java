@@ -26,6 +26,9 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 
 import java.util.HashMap;
 
+/**
+ * Represents a numeric decision made by a player while playing a card.
+ */
 public class IntegerDialogActivity extends AppCompatActivity {
 
     AlertDialog dialog;
@@ -51,9 +54,8 @@ public class IntegerDialogActivity extends AppCompatActivity {
 
         GameController controller = GameController.getInstance();
         Game game = controller.getGame();
-        HashMap<String, Card> deck = game.getDeck();
 
-        //dialogin layoutin rakentaminen
+        //Building the layout
         LayoutInflater inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.dialog_integer, null);
 
@@ -65,7 +67,7 @@ public class IntegerDialogActivity extends AppCompatActivity {
 
         card = GameController.getInstance().getGame().getAllCards().get(intent.getStringExtra(CARD_NAME));
 
-        //findviewbyid't
+        //findViewByIds
         TextView title = view.findViewById(R.id.title);
         EditText number_field = view.findViewById(R.id.edittext_number);
 
@@ -80,10 +82,10 @@ public class IntegerDialogActivity extends AppCompatActivity {
         root.removeView(root.findViewById(R.id.button_positive_hidden));
 
 
-        //dialogin rakentaminen ja näyttäminen
+        //Build and show the dialogue
         view.setBackgroundColor(Color.TRANSPARENT);
 
-            //negatiivisen napin poisto
+            //Remove excess button
         button_negative.setClickable(false);
         button_negative.setAlpha(0);
 
@@ -94,7 +96,7 @@ public class IntegerDialogActivity extends AppCompatActivity {
 
         dialog.show();
 
-        //dialogin koon muuttaminen
+        //Setting size
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
@@ -103,7 +105,7 @@ public class IntegerDialogActivity extends AppCompatActivity {
 
         window.setLayout(  4*width / 5, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        //listenerit
+        //listeneris
         button_negative.setOnClickListener(v -> {
             exit();
         });
@@ -122,7 +124,7 @@ public class IntegerDialogActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Number too big, maximum: " + max, Toast.LENGTH_SHORT).show();
                 return;
             }
-            card.playServerConnection(GameController.getInstance().getCurrentPlayer(), result);
+            card.onPlayServerHook(GameController.getInstance().getCurrentPlayer(), result);
             exit();
         });
     }

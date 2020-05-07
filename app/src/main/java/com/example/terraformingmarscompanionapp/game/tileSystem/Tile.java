@@ -7,7 +7,9 @@ import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 import java.util.ArrayList;
 
-//Luokka heksan ja sillä mahdollisesti olevan tiilen esittämiseen
+/**
+ * A class that represents a hex tile on the map, as well as a placeable tile on the hex
+ */
 public class Tile {
     private final Game game;
     private Boolean is_ocean = false;

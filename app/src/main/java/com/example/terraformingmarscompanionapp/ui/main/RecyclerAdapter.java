@@ -142,17 +142,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.card_credit_view.setText(card.getPrice().toString());
         holder.requirement_view.setImageResource(requirement);
 
-
-        /*  xml colors
-            <color name="RED">#db4129</color>
-            <color name="GREEN">#059c48</color>
-            <color name="BLUE">#2276B8</color>
-            <color name="PRELUDE">#ff66ff</color>
-            <color name="CORPORATION">#222222</color>
-
-            <color name="transparent">#80000000</color>
-        */
-
         //type color
         Integer color;
 

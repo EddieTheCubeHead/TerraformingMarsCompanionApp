@@ -14,32 +14,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * A class for managing tile-based events in a game
+ */
 public class TileHandler {
     private final Integer map;
     private final Tile[][] mars_tiles = new Tile[17][9];
     private final Tile[] space_tiles;
     private final Game game;
-    /* koordinaatit x, y, huomioitavaa, että vain y=4 on täysi rivi heksoja
-     * Esimerkiksi 0, 3 on tyhjä
+    /* Coordnates are x and y. Not that only y=4 is a full row. The tiles are staggered and in a
+     * hex formation.
      */
 
+    //The constructor is ugly, but works. For now only the basegame map (tharsis) is used
     public TileHandler(Game owner_game, Integer game_map, Boolean venus_in_game) {
         game = owner_game;
 
-        //Map: 0 = perus, 1 = hellas, 2 = elysium
+        //Map: 0 = basegame/tharsis, 1 = hellas, 2 = elysium
         map = game_map;
-        //Alustetaan kartta null-arvoilla
+
+        //Init with nulls
         for (int x = 0; x < 17; x++) {
             for (int y = 0; y < 9; y++) {
                 mars_tiles[x][y] = null;
             }
         }
 
-        //Manuaalisesti asetetaan karttaa vastaavat tiilet. Hardkoodattu, koska karttoja on vain kolme
-        //Suosittelen minimoimaan
+        //Configuring tile data manually
         switch (map) {
             case 0:
-                //Tharsis/peruspeli
+                //Tharsis/basegame
                 mars_tiles[4][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{4, 8});
                 mars_tiles[6][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), true, new Integer[]{6, 8});
                 mars_tiles[8][8] = new Tile(game, null, false, new Integer[]{8, 8});
@@ -262,37 +266,30 @@ public class TileHandler {
                 throw new IllegalStateException("Unexpected value: " + map);
         }
 
-        //Avaruustiilillä ei ole asettamisbonusta tai viereisyysbonuksia. Venus-lisäri lisää 4 avaruustiiltä
+        //Space tiles don't have placement or adjacency bonuses. Venus-expansion adds 4 of these
         if (venus_in_game) {
             space_tiles = new Tile[7];
         } else {
             space_tiles = new Tile[3];
         }
 
-        //Avaruustiilten alustaminen
+        //Init space tiles
         for (int i = 0; i < space_tiles.length; i++) {
             space_tiles[i] = new Tile(game);
         }
     }
 
     public void placeGanymede(Player player) {
-        if (space_tiles[0] != null) {
-            //TODO error handling
-            return;
-        }
         game.update_manager.onCityPlaced(player, false);
         space_tiles[0].placeHex(player, Placeable.CITY);
     }
 
     public void placePhobos(Player player) {
-        if (space_tiles[1] != null) {
-            //TODO error handling
-            return;
-        }
         game.update_manager.onCityPlaced(player, false);
         space_tiles[1].placeHex(player, Placeable.CITY);
     }
 
+    //Gets called from TilePlacementActivity
     public ArrayList<String> placeTile(Player player, Tile to_place, Placeable tile_type) {
         ArrayList<Placeable> to_city = new ArrayList<>(Arrays.asList(Placeable.CITY, Placeable.RESEARCH_OUTPOST, Placeable.NOCTIS, Placeable.VOLCANIC_CITY, Placeable.URBANIZED_AREA));
         ArrayList<Placeable> to_ocean = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.LAND_OCEAN, Placeable.FLOOD_OCEAN));
@@ -348,7 +345,7 @@ public class TileHandler {
     }
 
 
-    //Yksityinen funktio tiilen naapurien saamiseen
+    //Get tile neighbours
     public ArrayList<Tile> getNeighbours(Tile tile) {
         Integer x = tile.getX();
         Integer y = tile.getY();
@@ -399,7 +396,7 @@ public class TileHandler {
         return neighbours;
     }
 
-    //UI-hook funktio. Tulee kysymään GUI:n avulla mihin koordinaatteihin tiili asetetaan
+    //UI-hook for playing cards
     public void getCoordinatesFromPlayer(Placeable tile_type) {
         Context context = GameController.getInstance().getContext();
         Intent intent = new Intent(context, TilePlacementActivity.class);
@@ -408,6 +405,7 @@ public class TileHandler {
         context.startActivity(intent);
     }
 
+    //Simple and boring if/else switch/case for validity checking
     public Boolean checkPlacementValidity(Placeable tile_type, Integer x, Integer y) {
         ArrayList<Placeable> ocean_placement = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.OCEAN_GREENERY, Placeable.MOHOLE, Placeable.FLOOD_OCEAN));
 

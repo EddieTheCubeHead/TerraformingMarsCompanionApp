@@ -26,6 +26,6 @@ public final class Plantation extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        super.playServerConnection(player, data);
+        super.onPlayServerHook(player, data);
     }
 }

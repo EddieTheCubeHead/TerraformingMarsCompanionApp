@@ -3,11 +3,9 @@ package com.example.terraformingmarscompanionapp.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -16,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -53,7 +50,7 @@ public class TilePlacementActivity extends AppCompatActivity {
         mImageMap.setImageResource(R.drawable.hexamap);
 
         /*
-            //koon vaihtaminen
+            //chaging the size:
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
@@ -190,7 +187,7 @@ public class TilePlacementActivity extends AppCompatActivity {
 
     public void playFlooding(ArrayList<String> targets) {
         if (targets.size() == 0) {
-            GameController.getInstance().getGame().getDeck().get("Flooding").playServerConnection(GameController.getInstance().getCurrentPlayer(), 0);
+            GameController.getInstance().getGame().getDeck().get("Flooding").onPlayServerHook(GameController.getInstance().getCurrentPlayer(), 0);
             exit(view);
             return;
         }

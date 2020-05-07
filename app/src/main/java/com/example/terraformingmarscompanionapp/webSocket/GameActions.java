@@ -15,6 +15,9 @@ import com.google.gson.GsonBuilder;
 
 import java.util.regex.Pattern;
 
+/**
+ * A handler for incoming and outgoing websocket data during a game
+ */
 @SuppressLint("DefaultLocale")
 public class GameActions {
     private static GsonBuilder builder = new GsonBuilder();
@@ -60,25 +63,20 @@ public class GameActions {
         })).start();
     }
 
-    //Pelin luominen, tallentaa pelikoodin
+    //Creating a game saves the game code
     static void handleGameCreated(String creation_data) {
-        //TODO tarvittavat UI-hookit
         game_code = creation_data.split(Pattern.quote(";"))[1];
-        Log.i("WebSocket", "Game created with code: " + game_code);
     }
 
-    //Peliin liittyminen, tallentaa pelikoodin
+    //Joining a game extracts the settings and saves the game code
     static void handleGameJoined(String join_data) {
         String[] data_points = join_data.split(Pattern.quote(";"));
         game_code = data_points[1];
-        Log.i("WebSocket", "Game '" + game_code + "' joined.");
         for (int i = 2; i < data_points.length-10 ; i++) {
-            //Jos pelaajia on vähemmän kuin viisi, tämä heittää errorin. Otetaan kiinni hiljaa.
             String player_name = data_points[i];
-            Log.i("WebSocketJoin", player_name);
             ((ServerSetupScreen) context).playerJoined(player_name);
         }
-        Integer first_setting = (data_points.length - 10);
+        int first_setting = (data_points.length - 10);
         ((ServerSetupScreen) context).settingChanged(GameSetting.CORPORATE_ERA, data_points[first_setting].equals("1"));
         ((ServerSetupScreen) context).settingChanged(GameSetting.PRELUDE, data_points[first_setting+1].equals("1"));
         ((ServerSetupScreen) context).settingChanged(GameSetting.VENUS, data_points[first_setting+2].equals("1"));
@@ -91,23 +89,21 @@ public class GameActions {
         ((ServerSetupScreen) context).mapChanged(Integer.valueOf(data_points[first_setting+9]));
     }
 
-    //Toisen liittyminen peliin, käytännössä käyttäjänimen kirjaaminen
+    //When somebody else joins the game add the name to the player name list
     static void handlePlayerJoined(String join_data) {
         String joined_user = join_data.split(Pattern.quote(";"))[1];
-        Log.i("WebSocket", "User '" + joined_user + "' joined the game.");
         ((ServerSetupScreen) context).playerJoined(joined_user);
     }
 
-    //Asetuksen muuttuminen
+    //Changing global settings
     static void handleSettingChanged(String web_socket_message) {
         GameSetting setting = GameSetting.valueOf(web_socket_message.split(Pattern.quote(";"))[1]);
         Boolean value = Boolean.valueOf(web_socket_message.split(Pattern.quote(";"))[2]);
         ((ServerSetupScreen) context).settingChanged(setting, value);
     }
 
-    //Pelin aloittaminen
+    //Starting the game
     static void handleGameStart() {
-        Log.i("WebSocketGame", "Starting game");
         ((ServerSetupScreen) context).startGame();
     }
 
@@ -120,7 +116,7 @@ public class GameActions {
         WebSocketHandler.sendMessage(String.format("start_game;%s;%s;%s", UserActions.getSessionUser(), UserActions.getSessionId(), game_code));
     }
 
-    //Eri event pakettien lähettäminen:
+    //Sending the different game events
     public static void sendCardEvent(CardEventPacket event) {
         String message = String.format("game_action;%s;%s;%s;card_event;", UserActions.getSessionUser(), UserActions.getSessionId(), game_code);
         message += gson.toJson(event);
@@ -150,7 +146,7 @@ public class GameActions {
         WebSocketHandler.sendMessage(message);
     }
 
-    //Foldaamisen lähettäminen
+    //Sending turn action data
     public static void sendFold() {
         WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;fold;empty;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
     }
@@ -161,10 +157,5 @@ public class GameActions {
 
     public static void sendChangeGeneration() {
         WebSocketHandler.sendMessage(String.format("game_action;%s;%s;%s;start_generation;empty;%d;%d", UserActions.getSessionUser(), UserActions.getSessionId(), game_code, action_number, GameController.getInstance().getGeneration()));
-    }
-
-    //Pelin luonut pelaaja määrittää pelin alussa vuorojärjestyksen ja se lähetetään tällä
-    public static void sendTurnOrder(String[] order_list) {
-
     }
 }

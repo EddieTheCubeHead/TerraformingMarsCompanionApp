@@ -53,7 +53,6 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
     private RecyclerAdapter adapter;
     private ArrayList<Card.Type> valid_types = new ArrayList<>(Arrays.asList(Card.Type.GREEN, Card.Type.RED, Card.Type.BLUE, Card.Type.CORPORATION));
     private ArrayList<ResourceCard.ResourceType> organics = new ArrayList<>(Arrays.asList(ResourceCard.ResourceType.ANIMAL, ResourceCard.ResourceType.MICROBE));
-    //todo tarkat valid types
 
     View view;
 

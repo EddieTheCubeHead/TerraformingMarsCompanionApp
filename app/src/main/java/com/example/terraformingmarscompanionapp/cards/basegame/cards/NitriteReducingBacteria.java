@@ -10,8 +10,6 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
-import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
 public final class NitriteReducingBacteria extends ResourceCard implements ActionCard {
     public NitriteReducingBacteria(Game game) {
@@ -31,7 +29,7 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
     @Override
     public void cardAction() {
         if (resource_amount < 3) {
-            playServerConnection(owner_player, 0);
+            onPlayServerHook(owner_player, 0);
             return;
         }
         Context context = GameController.getInstance().getContext();

@@ -35,11 +35,11 @@ public final class LocalHeatTrapping extends Card {
     }
 
     @Override
-    public void playServerConnection(Player player, Integer data) {
+    public void onPlayServerHook(Player player, Integer data) {
         if (data != 0) {
             GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
         }
-        super.playServerConnection(player, data);
+        super.onPlayServerHook(player, data);
     }
 
     @Override

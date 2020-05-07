@@ -44,7 +44,7 @@ public final class LargeConvoy extends Card {
     }
 
     @Override
-    public void playServerConnection(Player player, Integer data) {
+    public void onPlayServerHook(Player player, Integer data) {
         if (GameController.getInstance().getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }

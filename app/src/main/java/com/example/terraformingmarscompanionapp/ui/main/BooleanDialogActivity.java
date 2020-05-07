@@ -25,6 +25,10 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 
 import java.util.HashMap;
 
+/**
+ * A dialogue for a "boolean" decision made by a player when playing a card. Can be extended to
+ * 3 or 4 choices, but looks horrible with 3 options
+ */
 public class BooleanDialogActivity extends AppCompatActivity {
 
     AlertDialog dialog;
@@ -65,11 +69,11 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
         card = deck.get(intent.getStringExtra(CARD_NAME));
 
-        //dialogin layoutin rakentaminen
+        //For building the layout of the dialogue
         LayoutInflater inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.dialog_integer, null);
 
-        //findviewbyid't
+        //All required findViewByIds
         TextView title = view.findViewById(R.id.title);
         EditText number_field = view.findViewById(R.id.edittext_number);
 
@@ -99,15 +103,14 @@ public class BooleanDialogActivity extends AppCompatActivity {
             root.removeView(root.findViewById(R.id.button_positive_hidden));
         }
 
-        //dialogin rakentaminen ja näyttäminen
-            //kulmien läpinäkyvyys
+        //Calling and showing the dialogue
+            //transparent corners
         view.setBackgroundColor(Color.TRANSPARENT);
 
             //nappien tekstit
         button_negative.setText(false_text);
         button_positive.setText(true_text);
 
-        //textviewn poisto
         ((LinearLayout) view.findViewById(R.id.root_linearlayout)).removeView(number_field);
 
         dialog = new AlertDialog.Builder(this)
@@ -117,7 +120,7 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
         dialog.show();
 
-        //dialogin koon muuttaminen
+        //Setting the size of the dialogue
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = displayMetrics.widthPixels;
@@ -126,7 +129,7 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
         window.setLayout(  4*width / 5, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        //listenerit
+        //listeners
         button_negative.setOnClickListener(v -> {
             executeWithData(0);
         });
@@ -139,7 +142,7 @@ public class BooleanDialogActivity extends AppCompatActivity {
     private void executeWithData(Integer data) {
         card.overridePlayActionCall();
         if (card.getOwner() == null) {
-            card.playServerConnection(GameController.getInstance().getCurrentPlayer(), data);
+            card.onPlayServerHook(GameController.getInstance().getCurrentPlayer(), data);
         } else {
             if (card instanceof ActionCard) {
                 ((ActionCard) card).actionServerHook(card.getOwner(), data);

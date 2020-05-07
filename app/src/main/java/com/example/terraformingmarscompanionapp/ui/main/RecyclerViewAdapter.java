@@ -19,12 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapteri joka hakusuodattaa ja pitää cardviewn tietoja.
+ * Adapter for filtering cards in different contexts
  */
 
 //debug: uses unchecked or unsafe operations
 //Note: Recompile with -Xlint:unchecked for details
-//TODO mieti jos cardviewn voi korjata vaan cardilla ja onko performanssimaksua
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.CardViewHolder> implements Filterable
 {
     private ArrayList<CardView> card_view_list;
@@ -38,7 +37,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         OnCardListener onCardListener;
         OnCardLongListener onCardLongListener;
 
-        //layout ei käytössä ehkä
         public TextView card_name_view;
         public ImageView requirement_view;
         public ImageView tag1_view;
@@ -46,7 +44,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public ImageView tag3_view;
         public ImageView tag4_view;
 
-        //constructorissa tehdään kortille viittaukset
+        //Making references to cards
         public CardViewHolder(@NonNull View card_inflated, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
         {
             super(card_inflated);
@@ -57,10 +55,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tag3_view = card_inflated.findViewById(R.id.tag3);
             tag4_view = card_inflated.findViewById(R.id.tag4);
 
-            //klikkiominaisuus
+            //Clicking
             card_inflated.setOnClickListener(this);
             this.onCardListener = onCardListener;
-            //pitkä klikki
+            //Long click
             card_inflated.setOnLongClickListener(this);
             this.onCardLongListener = onCardLongListener;
         }
@@ -132,7 +130,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             List<CardView> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();
 
-            //hakua varten clause
+            //Filtering
             if (search_string == null || search_string.length() == 0)
             {
                 filtered_list.addAll(card_view_list_full);
@@ -159,7 +157,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             return results;
         }
 
-        //päivittää cardviewtä notifydatasetchangedillä
+        //Updating the cardview
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results)
         {
