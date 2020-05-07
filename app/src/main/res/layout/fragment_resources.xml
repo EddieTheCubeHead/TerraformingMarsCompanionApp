@@ -336,31 +336,30 @@
         android:layout_height="20dp"
         android:layout_marginHorizontal="5dp"
 
-        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
 
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
 
         <FrameLayout
-            android:layout_width="18dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-        </FrameLayout>
+            android:layout_width="50dp"
+            android:layout_height="match_parent"/>
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="Resource"
+            android:gravity="center"/>
+
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="Production"
+            android:gravity="center"/>
 
     </LinearLayout>
 
