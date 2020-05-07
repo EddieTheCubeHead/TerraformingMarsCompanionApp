@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
-public final class AiCenteral extends Card implements ActionCard {
-    public AiCenteral(Game game) {
+public final class AiCentral extends Card implements ActionCard {
+    public AiCentral(Game game) {
         super(Type.BLUE, game);
         name = "AI centeral";
         price = 21;
