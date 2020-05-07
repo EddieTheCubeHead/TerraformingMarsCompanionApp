@@ -574,29 +574,29 @@ class GameConstructor {
 
         //Corporate eran kortit:
         if (corporate_era) {
-            //TODO lisää Corporate eran kortit tähän
+            //TODO add corporate era corps
         } else if (extra_corporations) {
 
         }
 
         //Preludin kortit:
         if (prelude) {
-            //TODO lisää Preludin kortit (ei preludit) tähän
+            //TODO add prelude corps
         }
 
         //Colonies kortit:
         if (colonies) {
-            //TODO Lisää Colonies-kortit tähän
+            //TODO add colonies corps
         }
 
         //Venus kortit:
         if (venus) {
-            //TODO Lisää Venus-kortit tähän
+            //TODO add venus corps
         }
 
         //Turmoil kortit:
         if (turmoil) {
-            //TODO Lisää Turmoil-korit tähän
+            //TODO add turmoil corps
         }
 
         return corporations;

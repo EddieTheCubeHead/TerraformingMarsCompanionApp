@@ -64,9 +64,10 @@ public class CardCostDialog {
 
         cost = game.getRecommendedCardCost(card);
 
-        //todo näytä viesti
-        if (!cost.isEligible())
+        if (!cost.isEligible()) {
+            Toast.makeText(context, String.format("Can not play card '%s'", card.getName()), Toast.LENGTH_SHORT).show();
             return;
+        }
 
         credit = cost.getMoney();
         steel = cost.getSteel();
