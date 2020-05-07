@@ -98,7 +98,7 @@ public abstract class Card {
 
         boolean is_event = (type == Type.RED);
 
-        //Lisätään pelaajalle tägit ja aktivoidaan sopivat triggerit updateManagerissa
+        // Lisätään pelaajalle tägit ja aktivoidaan sopivat triggerit updateManagerissa
         for (Tag tag : tags)
         {
             switch (tag)
@@ -178,7 +178,7 @@ public abstract class Card {
                     break;
 
                 case JOKER:
-                    //Jokereita ei ole event-korteissa, joten checkin voi jättää pois
+                    //event-cards don't have jokers, so check can be left off
                     player.addJokerTag();
                     break;
 
@@ -236,8 +236,8 @@ public abstract class Card {
     public final CardRequirements getRequirements() {return requirements;}
     public final void resetActionUsed() {action_used = false;}
 
-    // Robotic workforcen pelaamista varten. Mahdollista overwrite:aa jos tarvitaan metadataa
-    // tai dynaamista tuotannon tarkistamista
+    // For playing robotit workforce. Possible to overwrite in case metadata is needed
+    // (or dynamic checking of production)
     public void playProductionBox() {
         production_box.playProductionBox(owner_player, 0);
     }
@@ -250,9 +250,6 @@ public abstract class Card {
 
         for (Tag tag : tags)
         {
-            //TODO Aleksanteri: luvut kuntoon
-            //toimii myös R.drawable.joku
-            //tällä hetkellä placeholderikoni
             switch (tag)
             {
                 case BUILDING:    tag_integers.add(R.drawable.building_round); break;
