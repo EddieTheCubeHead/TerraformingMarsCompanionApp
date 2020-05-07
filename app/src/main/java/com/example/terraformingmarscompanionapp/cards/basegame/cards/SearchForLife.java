@@ -18,7 +18,7 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
         price = 3;
         tags.add(Tag.SCIENCE);
         requirements.setMaxOxygen(6);
-        resource_type = ResourceType.MICROBE;
+        resource_type = ResourceType.SCIENCE;
     }
 
     @Override
