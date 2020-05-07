@@ -96,7 +96,9 @@ public final class UpdateManager {
     }
 
     public void onJovianTag(Player player) {
-        effect_cards.get("Saturn systems").cardEffect(player);
+        if (owner_game.modifiers.getCorporateEra()) {
+            effect_cards.get("Saturn systems").cardEffect(player);
+        }
     }
 
     public void onEarthTag(Player player) {
