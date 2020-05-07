@@ -117,7 +117,7 @@ public class GameController
         }
     }
 
-    
+    //Working with a single instance makes life easier
     public static GameController makeInstance(Game game)
     {
         if (instance != null)
@@ -141,7 +141,7 @@ public class GameController
         return instance;
     }
 
-    //Vuoronhallintafunktiot:
+    //All the functions responsible for turn management. Ends roughly on row 280
     public Boolean useAction() {
         if (executeNextEvent()) {
             gameUpdate();
@@ -162,7 +162,7 @@ public class GameController
         return true;
     }
 
-    //Kutsu vain GameActions-luokasta. Rikkoo vuoronhallinnan muuten
+    //Only call from GameActions -class. Breaks things otherwise
     public void useActionServer() {
         ui_events.clear();
         useAction();
@@ -193,7 +193,7 @@ public class GameController
 
         System.out.println(current_player.getName() + " " + generation);
 
-        //Aloituskierroksen toimenpiteet
+        //Preparation round
         if (generation == 0) {
             if (self_player == null || current_player == self_player) {
                 if (current_player.getCorporation() == null) {
@@ -205,10 +205,10 @@ public class GameController
                 }
             }
 
-        //Kierroksen alun kortinnosto
+        //Activity at the start of the round
         } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
 
-            //Beginner corporation nostaa ensimmäisellä kierroksella kymmenen korttia ilmaiseksi
+            //Beginner corporation draws 10 cards for free at game start
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
                 GameActions.sendUseAction();
                 useAction();
@@ -223,7 +223,7 @@ public class GameController
                 game.getDeck().get("Round start draw").onPlay(current_player);
             }
 
-        //Korporaatioiden määrittämät ensimmäiset toiminnot, jos on olemassa
+        //First actions declared by corporation cards
         } else if (generation == 1 && (self_player == null || current_player == self_player) && current_player.getCorporation() instanceof FirstAction)
 
         {
@@ -243,13 +243,10 @@ public class GameController
             countPoints();
             return;
         }
-        game.onGenerationEnd();
 
-        //epäfoldaus
         queue.clear();
         queue.addAll(queue_full);
 
-        //seuraavaan aloittajaan vaihto
         while(current_starter != queue.getFirst())
             queue.addLast(queue.removeFirst());
         queue.addLast(queue.removeFirst());
@@ -257,6 +254,8 @@ public class GameController
         current_starter = queue.getFirst();
         current_player = current_starter;
         ((InGameUI)context).generationEndPrompt();
+
+        game.onGenerationEnd();
     }
 
     void changeGeneration()
