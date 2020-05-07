@@ -17,7 +17,7 @@ public final class WebSocketHandler {
     private static Boolean is_initialized = false;
 
     //For rapid changing of server ip in development. Leave to null for localhost6
-    private static final String WEBSOCKET_URI = null;//"ws://168.61.98.65:8080/tfmca";
+    private static final String WEBSOCKET_URI = "ws://168.61.98.65:8080/tfmca";
 
     //Azure server ip
     //"ws://168.61.98.65:8080/tfmca"
