@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Adapteri joka hakusuodattaa RecyclerViewn SearchActivity.javassa
+ * An adapter that filters and updates a recyclerview that contains cards.
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable
@@ -37,13 +37,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private OnCardListener onCardListener;
     private OnCardLongListener onCardLongListener;
 
-    //listener on SearchActivity joka implementoi molemmat oncardlistenerit.
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener
     {
         OnCardListener on_card_listener;
         OnCardLongListener on_card_long_listener;
-
-        //layout ei käytössä ehkä
 
         public TextView card_credit_view;
         public TextView card_name_view;
@@ -70,14 +67,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             tag4_view = card_inflated.findViewById(R.id.tag4);
 
 
-            //tinttaamalla tätä saadaan eri tyyppejä
+            //card typing is done by tinting an imageview
             type_view_mid = card_inflated.findViewById(R.id.type_image_mid);
             token_view = card_inflated.findViewById(R.id.token_text);
 
-            //klikkiominaisuus
+            //short click is implemented in the calling class
             card_inflated.setOnClickListener(this);
             this.on_card_listener = onCardListener;
-            //pitkä klikki
+            //same for the long click
             card_inflated.setOnLongClickListener(this);
             this.on_card_long_listener = onCardLongListener;
         }
@@ -132,7 +129,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         String card_name = card.getName();
         Integer requirement = card.getRequirementInt();
 
-        //kortin ulkonäön asettaminen
+        //setting the layout's resources at reload.
         Integer tag1, tag2, tag3, tag4;
         ArrayList<Integer> tags = card.getTagIntegers();
         try {
@@ -147,7 +144,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.requirement_view.setImageResource(requirement);
 
 
-        /*  xml värit
+        /*  xml colors
             <color name="RED">#db4129</color>
             <color name="GREEN">#059c48</color>
             <color name="BLUE">#2276B8</color>
@@ -157,7 +154,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             <color name="transparent">#80000000</color>
         */
 
-        //tyypin ilmaiseminen värillä
+        //type color
         Integer color;
 
         switch (card.getType())
@@ -187,7 +184,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             List<Card> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();
 
-            //hakua varten clause
+            //clause for performance
             if (search_string == null || search_string.length() == 0)
             {
                 filtered_list.addAll(card_list_full);
@@ -219,7 +216,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             return results;
         }
 
-        //päivittää cardviewtä notifydatasetchangedillä
+        //updates view
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results)
         {
@@ -252,7 +249,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             return results;
         }
 
-        //päivittää cardviewtä notifydatasetchangedillä
+        //updates view
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results)
         {
@@ -298,7 +295,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             return results;
         }
 
-        //päivittää recyclerviewssä näkyvät kortit.
+        //updates view
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results)
         {
