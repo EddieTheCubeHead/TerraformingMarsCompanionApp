@@ -122,7 +122,7 @@ public class IntegerDialogActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Number too big, maximum: " + max, Toast.LENGTH_SHORT).show();
                 return;
             }
-            card.playServerConnection(GameController.getInstance().getCurrentPlayer(), result);
+            card.onPlayServerHook(GameController.getInstance().getCurrentPlayer(), result);
             exit();
         });
     }

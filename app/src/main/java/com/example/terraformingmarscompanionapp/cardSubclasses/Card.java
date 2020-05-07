@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
-import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.RoundStartDraw;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -16,6 +15,18 @@ import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * The meat of the app. Most things are cards. The basic pipeline of playing a card goes:
+ *
+ * - call ChildCard.onPlay(Player) ->
+ * - Child card knows if it requires metadata and either
+ *     1: (no metadata) calls onPlayServerHook(player, 0)
+ *     2: (requires metadata) calls an UI to get metadata. The UI calls onPlayServerHook(player, data)
+ * - onPlayServerHook checks if the game is playd with a server and sends info to server if needed
+ * - onPlayServerHook calls this.playActionWithMetadata(player, data)
+ * - this.playActionWithMetadata calls super.playActionWithMetadata
+ * - super.playActionWithMetadata calls super.finishPlay()
+ */
 public abstract class Card {
     protected Game owner_game;
     protected String name = "ABSTRACT_BASE_CARD";
@@ -23,7 +34,7 @@ public abstract class Card {
     protected Integer victory_points = 0;
     private Type type;
     protected Boolean action_used = false;
-    protected Player owner_player = null; //Omistava pelaaja, null jos pelaamaton
+    protected Player owner_player = null; //null if unowned
     protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
     protected ProductionBox production_box = new ProductionBox();
@@ -33,7 +44,6 @@ public abstract class Card {
     private Boolean override_play_action_call = false;
     public final void overridePlayActionCall() {override_play_action_call = true;}
 
-    //Enum kortin tyyppiin
     public enum Type {
         GREEN,
         RED,
@@ -52,16 +62,12 @@ public abstract class Card {
         owner_game = game;
     }
 
-    /* Kortin pelaamisen datavirta: peli kutsuu kortin onPlay
-     * jos kortin onPlay tulee isäluokasta, kortti kutsuu playWithMetadataa arvolla 0
-     * onPlay voidaan uudelleenkirjoittaa kutsumaan jotakin metadatan määrittävää UI:ta
-     *
-     */
+
     public void onPlay(Player player) {
-        playServerConnection(player, 0);
+        onPlayServerHook(player, 0);
     }
 
-    public void playServerConnection(Player player, Integer data) {
+    public void onPlayServerHook(Player player, Integer data) {
         if (GameController.getInstance().getGame().getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
@@ -98,7 +104,7 @@ public abstract class Card {
 
         boolean is_event = (type == Type.RED);
 
-        // Lisätään pelaajalle tägit ja aktivoidaan sopivat triggerit updateManagerissa
+        // Adding tags for players and calling triggers from UpdateManager
         for (Tag tag : tags)
         {
             switch (tag)
@@ -238,6 +244,8 @@ public abstract class Card {
 
     // For playing robotit workforce. Possible to overwrite in case metadata is needed
     // (or dynamic checking of production)
+
+    // God do I hate robotic workforce -Eetu
     public void playProductionBox() {
         production_box.playProductionBox(owner_player, 0);
     }
@@ -245,6 +253,7 @@ public abstract class Card {
         return production_box;
     }
 
+    // Getting graphics for tags
     public final ArrayList<Integer> getTagIntegers() {
         ArrayList<Integer> tag_integers = new ArrayList<>();
 
@@ -270,6 +279,7 @@ public abstract class Card {
         return tag_integers;
     }
 
+    // Getting the resources on the card represented as text
     public String getResourceText() {
         String resource_text = "";
         if (this instanceof ResourceCard && this.owner_player != null) {
@@ -298,7 +308,7 @@ public abstract class Card {
         return resource_text;
     }
 
-    //Tarkistaa onko kortilla olemassa vaatimuksia jotka lasketaan specialist (tms, en muista nimeaä) -saavutukseen
+    // Future-proofing for the tactician -achievement in Hellas -board
     public final Boolean getHasRequirement() {
         return requirements.getDrawableRequrement() != 0;
     }
@@ -308,7 +318,7 @@ public abstract class Card {
         return R.drawable.ic_ph;
     }
 
-    //tehty spinnereitä varten. kutsuu tostring defaulttina.
+    // Spinners call toString by default
     @Override public String toString() {
         return getName();
     }

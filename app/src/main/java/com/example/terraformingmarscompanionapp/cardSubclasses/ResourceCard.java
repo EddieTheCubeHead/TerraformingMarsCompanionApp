@@ -3,6 +3,10 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
+/**
+ * Cards that have resources (animals, microbes, etc.) on them should extend this instead of the base
+ * Card -class. Adds functionality and variables needed for representing resources on cards.
+ */
 public abstract class ResourceCard extends Card {
     public ResourceCard(Type type, Game game) {
         super(type, game);

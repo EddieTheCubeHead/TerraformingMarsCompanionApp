@@ -130,10 +130,10 @@ public class PlayerChoiceActivity extends AppCompatActivity {
                     case CASE_PRODCUTION:
                         card.getProductionBox().playProductionBox(player, target_index);
                     case CASE_VIRUS:
-                        card.playServerConnection(player, target_index + 2);
+                        card.onPlayServerHook(player, target_index + 2);
                 }
             } else {
-                card.playServerConnection(player, target_index);
+                card.onPlayServerHook(player, target_index);
             }
             dialog.dismiss();
             exit();

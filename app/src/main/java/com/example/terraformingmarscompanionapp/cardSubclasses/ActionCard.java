@@ -5,6 +5,10 @@ import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
 
+/**
+ * Interface for cards that have playable actions if owned. Action usage flow mimics that of playing
+ * a card.
+ */
 public interface ActionCard {
     void cardAction();
     default void actionServerHook(Player player, Integer data) {
@@ -26,8 +30,8 @@ public interface ActionCard {
 
     String getActionName();
 
-    //Huom. aikaisessa vaiheessa tehdyn virheen vuoksi tämä palauttaa booleanin "käänteisesti".
-    //Koska korjaamiseen menisi suhteellisen paljon aikaa suhteessa hyötyyn, tämä on nyt toiminto, eikä bugi
+    // Note: returns an "inverse" value based on wording. This is due to a decision made too early in
+    // development to realise the use of the function would change drastically.
     Boolean getActionValidity();
     void setActionToUsed();
 }

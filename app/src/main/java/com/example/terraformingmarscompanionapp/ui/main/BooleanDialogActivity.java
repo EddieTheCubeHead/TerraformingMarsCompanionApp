@@ -139,7 +139,7 @@ public class BooleanDialogActivity extends AppCompatActivity {
     private void executeWithData(Integer data) {
         card.overridePlayActionCall();
         if (card.getOwner() == null) {
-            card.playServerConnection(GameController.getInstance().getCurrentPlayer(), data);
+            card.onPlayServerHook(GameController.getInstance().getCurrentPlayer(), data);
         } else {
             if (card instanceof ActionCard) {
                 ((ActionCard) card).actionServerHook(card.getOwner(), data);

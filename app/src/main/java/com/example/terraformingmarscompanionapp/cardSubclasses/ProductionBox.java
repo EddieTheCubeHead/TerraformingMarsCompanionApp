@@ -3,7 +3,8 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-//Dataluokka korttien tuotantolaatikoille
+//Dataclass for the production box of cards
+//Only here because of robotic workforce
 public final class ProductionBox {
     private Boolean has_steal = false;
     private void hasSteal() {has_steal = true;}
