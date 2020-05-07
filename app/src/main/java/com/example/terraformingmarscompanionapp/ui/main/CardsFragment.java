@@ -23,11 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/*
- * netistä: You should inflate your layout in onCreateView but shouldn't initialize other views using findViewById in onCreateView.
- * */
-
 public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener, GameController.GameUpdateListener{
 
     private SearchView searchview;
