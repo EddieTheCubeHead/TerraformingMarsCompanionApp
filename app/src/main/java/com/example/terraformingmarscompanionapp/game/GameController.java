@@ -2,7 +2,6 @@ package com.example.terraformingmarscompanionapp.game;
 
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -10,7 +9,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
-import com.example.terraformingmarscompanionapp.ui.main.CardsBoughtActivity;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 
 import java.util.ArrayList;
@@ -49,6 +47,10 @@ public class GameController
     //Controllerin pitää tietää onko peli serverin välityksellä pelattu, ja jos on, kuka pelaajista on kyseisen clientin omistaja
     private Boolean server_multiplayer = false;
     private Player self_player;
+
+    //Pelejä ei sinällään hostata yhdellä clientillä, mutta "host" synkronoi sukupolvenvaihdot GameActions.sendGenerationChange() avulla
+    private Boolean is_host = false;
+    public void makeHost() {is_host = true;}
 
     //UI-event jono asynkronisesti kutsuttaviin UI-tapahtumiin (tile, resource, cost(?) ja cardprompt)
     private Deque<GameEvent> ui_events = new LinkedList<>();
@@ -189,40 +191,49 @@ public class GameController
         if (queue.size() == 0)
         {
             endGeneration();
+        } else {
+            current_player = queue.getFirst();
+            atTurnStart();
         }
-
-        current_player = queue.getFirst();
-
-        atTurnStart();
     }
 
     public void atTurnStart()
     {
+        System.out.println("Calling turn start function, GameController row 205");
         actions_used = 0;
         gameUpdate();
 
+        System.out.println(current_player.getName() + " " + generation);
+
         //Aloituskierroksen toimenpiteet
         if (generation == 0) {
+            System.out.println("Generation 0 actions, GameController row 211");
             if (self_player == null || current_player == self_player) {
                 if (current_player.getCorporation() == null) {
                     ((InGameUI) context).playCorporation();
                 } else if (game.modifiers.getPrelude() && current_player.getPreludes().size() == 0) {
                     ((InGameUI) context).playPreludes();
                 } else {
-                    atGenerationStart();
+                    changeGeneration();
                 }
             }
 
         //Kierroksen alun kortinnosto
         } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
+            System.out.println("Card draw, GameController row 224");
 
             //Beginner corporation nostaa ensimmäisellä kierroksella kymmenen korttia ilmaiseksi
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
+                GameActions.sendUseAction();
                 useAction();
                 current_player.changeHandSize(10);
+                current_player.setDrewCardsThisGen(true);
                 addUiEvent(new PromptEvent(current_player.getName() + ", please draw 10 cards."));
                 useAction();
             } else {
+                if (server_multiplayer) {
+                    GameActions.sendUseAction();
+                }
                 game.getDeck().get("Round start draw").onPlay(current_player);
             }
 
@@ -257,28 +268,23 @@ public class GameController
         current_player = current_starter;
         ((InGameUI)context).onGenerationEnd();
 
-        atGenerationStart();
+        changeGeneration();
+    }
+
+    public void changeGeneration()
+    {
+        if (!server_multiplayer) {
+            atGenerationStart();
+        } else if (is_host) {
+            GameActions.sendChangeGeneration();
+        }
     }
 
     public void atGenerationStart()
     {
-        generation++;
-
-        //cardboughtactivityt activity stackkiin
-        if (!server_multiplayer && generation > 0 && false)
-        {
-            do {
-                Intent intent = new Intent(context, CardsBoughtActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                intent.putExtra("player", queue.getLast().getName());
-                context.startActivity(intent);
-                queue.addFirst(queue.removeLast());
-            } while (queue.getLast() != current_starter);
-        }
-
+        generation += 1;
         atTurnStart();
     }
-
     public Player getSelfPlayer() {return self_player;}
 
     public Player getDisplayPlayer()

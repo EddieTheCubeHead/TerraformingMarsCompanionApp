@@ -35,7 +35,7 @@ public final class SmallAnimals extends ResourceCard implements ActionCard {
     public void playWithMetadata(Player player, Integer data) {
         production_box.setStealPlantsProduction(1);
         owner_game.update_manager.onVpCardPlayed(player);
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 
     @Override
@@ -67,15 +67,5 @@ public final class SmallAnimals extends ResourceCard implements ActionCard {
     @Override
     public Boolean getActionValidity() {
         return action_used;
-    }
-
-    @Override
-    public void playProductionBox() {
-        Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, PlayerChoiceActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
-        intent.putExtra(PlayerChoiceActivity.SPECIAL_CASE, PlayerChoiceActivity.CASE_PRODCUTION);
-        context.startActivity(intent);
     }
 }

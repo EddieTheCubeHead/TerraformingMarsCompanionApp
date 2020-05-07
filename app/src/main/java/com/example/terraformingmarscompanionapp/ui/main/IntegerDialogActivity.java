@@ -131,11 +131,9 @@ public class IntegerDialogActivity extends AppCompatActivity {
         dialog.dismiss();
         Intent inGameUi = new Intent(this, InGameUI.class);
         inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
-
         if (!(card instanceof RoundStartDraw)) {
             card.overridePlayActionCall();
         }
-
         startActivity(inGameUi);
     }
 }

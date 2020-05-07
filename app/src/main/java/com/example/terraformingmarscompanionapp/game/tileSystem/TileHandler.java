@@ -313,7 +313,7 @@ public class TileHandler {
 
         if (to_city.contains(tile_type)) {
             player.addCity();
-            game.update_manager.onCityPlaced(player, false);
+            game.update_manager.onCityPlaced(player, true);
             tile_type = Placeable.CITY;
         } else if (to_ocean.contains(tile_type)) {
             tile_type = Placeable.OCEAN;
