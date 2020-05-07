@@ -10,7 +10,9 @@ import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket
  * a card.
  */
 public interface ActionCard {
+
     void cardAction();
+
     default void actionServerHook(Player player, Integer data) {
         if (GameController.getInstance().getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), data));
@@ -18,14 +20,15 @@ public interface ActionCard {
         setActionToUsed();
         actionWithMetadata(data);
     }
+
     default void actionServerHook(Player player) {
         if (GameController.getInstance().getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), 0));
         }
         setActionToUsed();
         actionWithMetadata(0);
-        GameController.getInstance().gameUpdate();
     }
+
     void actionWithMetadata(Integer data);
 
     String getActionName();
@@ -33,6 +36,8 @@ public interface ActionCard {
     // Note: returns an "inverse" value based on wording. This is due to a decision made too early in
     // development to realise the use of the function would change drastically.
     Boolean getActionValidity();
+
     void setActionToUsed();
+
     default Boolean getActionRequiresWait() {return false;}
 }

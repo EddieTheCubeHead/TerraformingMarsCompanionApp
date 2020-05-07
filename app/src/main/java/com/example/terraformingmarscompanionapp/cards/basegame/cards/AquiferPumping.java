@@ -44,6 +44,6 @@ public final class AquiferPumping extends Card implements ActionCard {
 
     @Override
     public Boolean getActionRequiresWait() {
-        return false;
+        return true;
     }
 }

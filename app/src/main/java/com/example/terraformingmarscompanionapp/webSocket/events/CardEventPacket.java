@@ -39,16 +39,13 @@ public class CardEventPacket implements PlayablePacket {
         if (card.getOwner() == null) {
             card.playWithMetadata(game.getPlayer(player_name), metadata);
         } else if (card instanceof ActionCard) {
+            System.out.println("Playing action with server call, CardEventPacket row 42");
             ((ActionCard) card).actionWithMetadata(metadata);
             if (!((ActionCard) card).getActionRequiresWait()) {
-                System.out.println("Using action from action");
                 GameController.getInstance().useAction();
             }
         } else {
             Log.i("WebSocket", "CardEffectPacket lähetetty omistetusta kortista, jolla ei ole toimintaa. Huomauta Eetua. Kortin nimi: " + card_name);
-        }
-        if (!extra_card.equals("")) {
-            game.getAllCards().get(extra_card).playProductionBox();
         }
     }
 }

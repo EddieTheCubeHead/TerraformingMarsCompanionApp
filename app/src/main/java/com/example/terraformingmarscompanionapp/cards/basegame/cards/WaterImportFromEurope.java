@@ -61,6 +61,6 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public Boolean getActionRequiresWait() {
-        return false;
+        return true;
     }
 }
