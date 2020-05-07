@@ -255,18 +255,18 @@ public abstract class Card {
             //tällä hetkellä placeholderikoni
             switch (tag)
             {
-                case BUILDING:    tag_integers.add(R.drawable.ic_ph); break;
-                case SPACE:       tag_integers.add(R.drawable.ic_ph); break;
-                case EARTH:       tag_integers.add(R.drawable.ic_ph); break;
+                case BUILDING:    tag_integers.add(R.drawable.building_round); break;
+                case SPACE:       tag_integers.add(R.drawable.space_round); break;
+                case EARTH:       tag_integers.add(R.drawable.earth); break;
                 case CITY:        tag_integers.add(R.drawable.ic_ph); break;
-                case PLANT:       tag_integers.add(R.drawable.ic_ph); break;
+                case PLANT:       tag_integers.add(R.drawable.plant_round); break;
                 case MICROBE:     tag_integers.add(R.drawable.ic_ph); break;
-                case SCIENCE:     tag_integers.add(R.drawable.ic_ph); break;
-                case ENERGY:      tag_integers.add(R.drawable.ic_ph); break;
-                case JOVIAN:      tag_integers.add(R.drawable.ic_ph); break;
+                case SCIENCE:     tag_integers.add(R.drawable.science_round); break;
+                case ENERGY:      tag_integers.add(R.drawable.electricity_round); break;
+                case JOVIAN:      tag_integers.add(R.drawable.jovian); break;
                 case VENUS:       tag_integers.add(R.drawable.ic_ph); break;
-                case ANIMAL:      tag_integers.add(R.drawable.ic_ph); break;
-                case EVENT:       tag_integers.add(R.drawable.ic_ph); break;
+                case ANIMAL:      tag_integers.add(R.drawable.animal_round); break;
+                case EVENT:       tag_integers.add(R.drawable.event); break;
                 case JOKER:       tag_integers.add(R.drawable.ic_ph); break;
             }
         }
