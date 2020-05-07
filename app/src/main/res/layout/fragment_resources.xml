@@ -316,6 +316,40 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="5dp"
+
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2">
+
+        <FrameLayout
+            android:layout_width="18dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+    </LinearLayout>
+
     <!-- array nappeja jms -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -342,7 +376,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/credit" />
 
             <ImageButton
                 android:id="@+id/button_money_minus"
@@ -458,7 +492,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/steel_square" />
 
             <ImageButton
                 android:id="@+id/button_steel_minus"
@@ -574,7 +608,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/titanium_square" />
 
             <ImageButton
                 android:id="@+id/button_titanium_minus"
@@ -690,7 +724,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/plant_square" />
 
             <ImageButton
                 android:id="@+id/button_plants_minus"
@@ -804,7 +838,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/electricity_square" />
 
             <ImageButton
                 android:id="@+id/button_energy_minus"
@@ -918,7 +952,7 @@
 
                 android:layout_height="match_parent"
                 android:layout_weight="0"
-                app:srcCompat="@drawable/ic_ph" />
+                app:srcCompat="@drawable/heat" />
 
             <ImageButton
                 android:id="@+id/button_heat_minus"
