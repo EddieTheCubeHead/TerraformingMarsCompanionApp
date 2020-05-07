@@ -42,17 +42,14 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_creation_server);
 
-        //textview
         textview_names = findViewById(R.id.name_textview);
 
-        //Pelin koodi
         game_code = findViewById(R.id.name_edittext);
 
         game_code.setText("Waiting for server");
 
         GameActions.setContext(this);
 
-        //Switchit
         Switch switch_corporate_era = findViewById(R.id.switch_corporate_era);
         Switch switch_prelude = findViewById(R.id.switch_prelude);
         Switch switch_colonies = findViewById(R.id.switch_colonies);
@@ -60,9 +57,6 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
         Switch switch_turmoil = findViewById(R.id.switch_turmoil);
         Switch switch_extra_corporations = findViewById(R.id.switch_extra_corporations);
 
-        //switchien listenerit, vaihtaa booleaneja
-
-        //(buttonView, isChecked) -> (corporate_era = isChecked; GameActions.sendSettingChange(GameSetting.CORPORATE_ERA, corporate_era))
 
         switch_corporate_era.setOnCheckedChangeListener((buttonView, isChecked) -> {
             corporate_era = isChecked;
@@ -91,10 +85,8 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
         });
         switch_extra_corporations.setOnCheckedChangeListener((buttonView, isChecked) -> extra_corporations = isChecked);
 
-        //buttonit
         Button button_start = findViewById(R.id.button_start);
 
-        //nappien listenerit
         button_start.setOnClickListener(v -> startInGameUI());
 
         UserActions.createGame();
@@ -143,8 +135,7 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
     public void playerJoined(String player_name) {
         player_names.add(player_name);
 
-        //Lambda-esitys koodin ajamiseen UI-threadilla, jotta ohjelma ei kaatuisi kun toinen thread kutsuu tätä
-        //Tämä melko yleistä WebSocketin kanssa
+        //Lambda to get the code to run on the UI thread when calling from WebSocket
         new Thread(() -> runOnUiThread(() -> textview_names.append("\n" + player_name))).start();
     }
 

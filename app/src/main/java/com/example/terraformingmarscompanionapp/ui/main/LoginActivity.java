@@ -44,6 +44,11 @@ public class LoginActivity extends AppCompatActivity
         String username =  username_field.getText().toString().trim();
         String password = password_field.getText().toString().trim();
 
+        if (username.equals("") || password.equals("")) {
+            Toast.makeText(this, "Please fill both fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!state.equals("Sign up")) {
             UserActions.loginUser(username, password);
         } else {
@@ -72,6 +77,8 @@ public class LoginActivity extends AppCompatActivity
 
     public void loginFailure(String message)
     {
-        new Thread(() -> runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show()));
+        new Thread(() -> runOnUiThread(() ->  {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        })).start();
     }
 }
