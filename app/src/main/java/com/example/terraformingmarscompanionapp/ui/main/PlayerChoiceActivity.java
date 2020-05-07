@@ -34,6 +34,7 @@ public class PlayerChoiceActivity extends AppCompatActivity {
     public static final String TARGETS = "targets";
     public static final String SPECIAL_CASE = "case";
     public static final String CASE_PRODCUTION = "production";
+    public static final String CASE_VIRUS = "virus";
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -55,6 +56,10 @@ public class PlayerChoiceActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         String special_case = intent.getStringExtra(SPECIAL_CASE);
+
+        Player nobody = new Player(game, "(nobody)");
+
+        targets.add(nobody);
 
         if (!(intent.getStringArrayExtra(TARGETS) == null)) {
             for (String target : intent.getStringArrayExtra(TARGETS)) {
@@ -109,11 +114,19 @@ public class PlayerChoiceActivity extends AppCompatActivity {
         title.setText("Choose your target");
 
         view.findViewById(R.id.button_confirm).setOnClickListener(v -> {
-            Integer target_index = GameController.getInstance().getPlayerIndex((Player)spinner.getSelectedItem());
+            Integer target_index;
+            if (spinner.getSelectedItem() == nobody) {
+                target_index = 0;
+            } else {
+                target_index = GameController.getInstance().getPlayerIndex((Player) spinner.getSelectedItem());
+            }
+
             if (special_case != null) {
                 switch (special_case) {
                     case CASE_PRODCUTION:
                         card.getProductionBox().playProductionBox(player, target_index);
+                    case CASE_VIRUS:
+                        card.playServerConnection(player, target_index + 2);
                 }
             } else {
                 card.playServerConnection(player, target_index);
