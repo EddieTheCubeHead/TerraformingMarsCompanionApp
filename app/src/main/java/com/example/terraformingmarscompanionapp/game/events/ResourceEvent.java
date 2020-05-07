@@ -7,6 +7,9 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.ActivityDialogSearch;
 
+/**
+ * Prompt the player to decide on which card to put resources to
+ */
 public final class ResourceEvent extends GameEvent {
     private ResourceCard.ResourceType resource_type = ResourceCard.ResourceType.MICROBE;
     private Player player;

@@ -10,7 +10,10 @@ import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
 
 import java.util.ArrayList;
 
-//Käyttää haamukortteja kortin hinnan selvittämiseen
+/**
+ * Use a ghost card to get a card cost packet via the resource dialog UI. Used with some actions.
+ */
+
 public final class GhostCardCostEvent extends GameEvent {
     private CardCostPacket packet;
 

@@ -1,6 +1,8 @@
 package com.example.terraformingmarscompanionapp.game;
 
-//Dataluokka pelin boolean-muuttujille
+/**
+ * dataclass for the expansions and houserules of the game (both TBA)
+ */
 public class GameModifiers {
     private Boolean corporate_era;
     private Boolean prelude;

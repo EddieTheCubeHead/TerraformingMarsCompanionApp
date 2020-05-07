@@ -18,13 +18,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class representing the game. Has more direct access to game parameters than Controller, hence
+ * some functions such as card rewuirement checking are also here.
+ */
 public class Game implements Serializable {
 
-    //Suuremmat logiikkaa ohjaavat luokat
     public final UpdateManager update_manager;
     public final TileHandler tile_handler;
 
-    //Erityyppiset pakat
+    //Different decks
     private final HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
     private final HashMap<String, Card> corporations;
@@ -33,17 +36,16 @@ public class Game implements Serializable {
     private final HashMap<String, Card> milestones;
     private final HashMap<String, Card> all_cards;
 
-    //Simppeli ArrayList pelaajia. Pelaajien tarkempi hallinta ylempänä GameController -luokassa
+
     private final ArrayList<Player> players = new ArrayList<>();
 
-    //Pelataanko peli serverin välityksellä vai ei
-    private Boolean server_multiplayer = false;
+    private Boolean server_multiplayer;
     public Boolean getServerMultiplayer() {return server_multiplayer;}
 
-    //Modifierien säilytys
+    //Storing expansions and house rules
     public GameModifiers modifiers;
 
-    //Getterit pelaajille ja pakoille, plus pakalle listana
+    //Getters for players and decks
     public ArrayList<Player> getPlayers() {return players;}
     public HashMap<String, Card> getDeck() {return deck;}
     public HashMap<String, Card> getPreludes() {return preludes;}
@@ -53,12 +55,9 @@ public class Game implements Serializable {
     public HashMap<String, Card> getMilestones() {return milestones;}
     public HashMap<String, Card> getAllCards() {return all_cards;}
 
-    ArrayList<Card> getDeckAsList() {return new ArrayList<>(deck.values());}
-
-    //Milestonet ja awardit
+    //Milestones and awards
     private Integer claimed_milestones = 0;
     public void claimMilestone() {claimed_milestones++;}
-    public Integer getClaimedMilestones() {return claimed_milestones;}
 
     private Integer claimed_awards = 0;
     public void claimAward() {
@@ -66,7 +65,7 @@ public class Game implements Serializable {
     }
     public Integer getClaimedAwards() {return claimed_awards;}
 
-    //EffectCard -rajapinnan korttien haku pakasta UpdateManageria varten
+    //EffectCard -interface implementing cards get called to UpdateManager
     HashMap<String, EffectCard> getEffectCards() {
         HashMap<String, EffectCard> effect_cards = new HashMap<>();
         for (Map.Entry<String, Card> entry : deck.entrySet()) {
@@ -89,7 +88,7 @@ public class Game implements Serializable {
         return effect_cards;
     }
 
-    //Getteri pelaajalle nimen perusteella
+    //Getter for player based on name
     public Player getPlayer(String player_name) {
         for (Player player : players) {
             if (player.getName().equals(player_name)) {
@@ -99,7 +98,7 @@ public class Game implements Serializable {
         return null;
     }
 
-    //Pelin tilan parametrit, getterit ja setterit
+    //Global game state parameters, getters and setters
     private Integer global_temperature;
     public Integer getGlobalTemperature() {return global_temperature;}
     public void rawChangeTemperature(Integer value) {global_temperature += value;}
@@ -121,7 +120,7 @@ public class Game implements Serializable {
     public Integer getCitiesInSpace() {return cities_in_space;}
     void addCityInSpace() {cities_in_space++;}
 
-    //Rakentaja
+    //Constructor
     public Game(
                     ArrayList<String> player_names,
                     boolean corporate_era,
@@ -153,7 +152,7 @@ public class Game implements Serializable {
 
         all_cards = new HashMap<>();
 
-        //Streamien käyttäminen tähän vaatisi API tasoa 24. Näin taso pysyy alhaalla
+        //Using a stream would require higher API level. This keeps API level low
         for (Map.Entry<String, Card> entry : deck.entrySet()) {
             all_cards.put(entry.getKey(), entry.getValue());
         }
@@ -192,10 +191,10 @@ public class Game implements Serializable {
         venus_terraform = 0;
     }
 
+    //Functions for global parameter manipulation
     public void placeOcean() {oceans_placed++;}
     public Integer getOceansPlaced() {return oceans_placed;}
 
-    //Terraformaus-sliderien manipulaatio
     public boolean raiseTemperature(Player raising_player) {
         if (global_temperature >= 8) {
             return false;
@@ -232,12 +231,12 @@ public class Game implements Serializable {
         return true;
     }
 
+
+    //Functions for playing cards. First part in three functions
     public CardCostPacket getRecommendedCardCost(Card card)
     {
         ArrayList<Card.Type> single_owner = new ArrayList<>(Arrays.asList(Card.Type.BLUE, Card.Type.RED, Card.Type.GREEN, Card.Type.CORPORATION, Card.Type.GHOST, Card.Type.AWARD, Card.Type.MILESTONE));
 
-        /*hinta chekataan ensin koska siinä tapauksessa että se hylätään pelaaja
-        * voi nähdä käyttöliittymästä helposti sen miten monta resurssia enemmän tarvitsee*/
         CardCostPacket resources_to_use = checkCardCost(card);
 
         if (single_owner.contains(card.getType()) && card.getOwner() != null) {
@@ -253,25 +252,6 @@ public class Game implements Serializable {
         return resources_to_use;
     }
 
-    public void playCard(Card card, CardCostPacket resources_to_use)
-    {
-        Player player = GameController.getInstance().getCurrentPlayer();
-
-        if (!resources_to_use.isEligible())
-        {
-            return;
-        }
-
-        resources_to_use.playPacket();
-
-        if (server_multiplayer) {
-            GameActions.sendCardCost(resources_to_use);
-        }
-
-        card.onPlay(player);
-    }
-
-    //Kortin pelaamisen ensimmäinen vaihe. Palautta hinnan CardCost -oliona
     private CardCostPacket checkCardCost(Card card)
     {
         Player player = GameController.getInstance().getCurrentPlayer();
@@ -405,7 +385,6 @@ public class Game implements Serializable {
         }
     }
 
-    //Kortin pelaamisen toinen vaihe. Palauttaa totuusarvon, täyttääkö pelaajan nykytilanne kortin vaatimukset.
     private Boolean checkCardRequirements(Card card) {
 
         if (GameController.getInstance().getGreeneryRound() && !(card instanceof BuildGreenery)) {
@@ -690,8 +669,27 @@ public class Game implements Serializable {
         return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
     }
 
-    //Sukupolven päättäminen
-    public void onGenerationEnd() {
+    //Second part of playing a card. See Card -class for a more detailed explanation of playing cards
+    public void playCard(Card card, CardCostPacket resources_to_use)
+    {
+        Player player = GameController.getInstance().getCurrentPlayer();
+
+        if (!resources_to_use.isEligible())
+        {
+            return;
+        }
+
+        resources_to_use.playPacket();
+
+        if (server_multiplayer) {
+            GameActions.sendCardCost(resources_to_use);
+        }
+
+        card.onPlay(player);
+    }
+
+    //End a generation
+    void onGenerationEnd() {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
             GameController.getInstance().gameEndPreparation();
         }
@@ -707,7 +705,6 @@ public class Game implements Serializable {
             player.setRaisedTrThisGeneration(false);
             player.resetActions();
         }
-        //TODO turmoil-hommat tähän
 
         GameController.getInstance().changeGeneration();
     }

@@ -12,22 +12,22 @@ import java.util.Arrays;
 
 public class Player {
 
-    //Pelaajan nimi ja peli
+
     private final Game game;
     private final String name;
 
-    //Pelaajan yleistilanteesta tarvittavat tiedot
+
     private Integer cities = 0;
     private Integer greeneries = 0;
     private Integer colonies = 0;
 
-    //Parametrien muuttaminen
+
     public void addCity() {cities++;}
     public void addGreenery() {greeneries++;}
     public void addColony() {colonies++;}
 
-    //Erityyppisille korteille säilytyspaikkoja
-    private Integer hand_size = 0; //Vaikka ei pidetä tietoa, mitä kortteja kädessä, korttien määrä on helppo pitää ylhäällä milestoneja varten
+
+    private Integer hand_size = 0; //Even though actual cards are not tracked, hand size is used for milestone requirements
     private Card corporation;
     private final ArrayList<Card> green_cards = new ArrayList<>();
     private final ArrayList<Card> red_cards = new ArrayList<>();
@@ -35,15 +35,15 @@ public class Player {
     private final ArrayList<Card> blue_cards = new ArrayList<>();
     private final ArrayList<Card> preludes = new ArrayList<>();
 
-    //Omistetut tiilet
+
     private ArrayList<Tile> owned_tiles = new ArrayList<>();
 
-    //Vuoronhallintalogiikan avuksi
+    //Aids in turn order logic
     private Boolean drew_cards_this_gen = false;
     public void setDrewCardsThisGen(Boolean value) {drew_cards_this_gen = value;}
     public Boolean getDrewCardsThisGen() {return drew_cards_this_gen;}
 
-    //Korttien lisääminen vastaavaan säilytyspaikkaan
+
     private final ArrayList<ResourceCard> resource_holders = new ArrayList<>();
     public void setCorporation(Card card) {corporation=card;}
     public void addGreen(Card card) {green_cards.add(card);}
@@ -53,7 +53,7 @@ public class Player {
     public void addPrelude(Card card) {preludes.add(card);}
     public void addResourceHolder(ResourceCard card) {resource_holders.add(card);}
 
-    //Getterit tarvittaville muuttujille
+
     public String getName() {return name;}
 
     public Integer getCities() {return cities;}
@@ -70,7 +70,6 @@ public class Player {
     public ArrayList<ResourceCard> getResourceHolders() {return resource_holders;}
     public ArrayList<Card> getPreludes() {return preludes;}
 
-    //Käsikoon asettaminen
     public Boolean changeHandSize(Integer change_amount) {
         if (hand_size + change_amount < 0) {
             return false;
@@ -79,12 +78,11 @@ public class Player {
         return true;
     }
 
-    //Tiilen lisääminen
     public void addTile(Tile tile) {
         owned_tiles.add(tile);
     }
 
-    //Resetoi toimintojen käyttötilanne sukupolven lopuksi
+    //Reset usable actions at the end of a generation
     void resetActions() {
         for (Card card : blue_cards) {
             if (card instanceof ActionCard) {
@@ -94,15 +92,19 @@ public class Player {
         drew_cards_this_gen = false;
     }
 
-    /* Seuraavana luokassa on valtava määrä datan säilömiseen tarvittavia muuttujia, sekä
-     * niiden getterietä ja settereitä. Olen koittanut lajitella muuttujat melko selkeisiin
-     * kategorioihin. */
+    /* Next comes a huge amount of different variables, getters and setters. I've tried to order
+     * them in a smart way. */
 
     /***********************************************************************************
      Resurssit
      ************************************************************************************/
 
-    //Raha
+    /* some cards have "take up to" -descriptions takeResource() -functions take as much of a resource
+     * as they can, up to the specified amount, while changeResource() -functions are meant for buying a card
+     * etc. where it is important to ensure the player has enough of the resource
+     */
+
+    //Money
     private Integer money = 0;
     private Integer money_production = 0;
     public Integer getMoney() {return money;}
@@ -113,9 +115,7 @@ public class Player {
         money += change_amount;
         return true;
     }
-    /* Jotkin kortit vievät mahdollisimman paljon resurssia, takeResource() -funktiot vievät annetun
-     * määrän mutta jättävät määrän nollaan ja toimivat vaikkei annettua määrä voisi viedä.
-     */
+
     public void takeMoney(Integer amount) {
         money -= amount;
         if (money < 0) {
@@ -129,7 +129,7 @@ public class Player {
         game.update_manager.onMoneyProductionRaised(this, change_amount);
     }
 
-    //Teräs
+    //Steel
     private Integer steel = 0;
     private Integer steel_production = 0;
     public Integer getSteel() {return steel;}
@@ -163,7 +163,7 @@ public class Player {
         }
     }
 
-    //Titaani
+    //Titanium
     private Integer titanium = 0;
     private Integer titanium_production = 0;
     public Integer getTitanium() {return titanium;}
@@ -197,7 +197,7 @@ public class Player {
         }
     }
 
-    //Kasvit
+    //Plants
     private Integer plants = 0;
     private Integer plants_production = 0;
     public Integer getPlants() {return plants;}
@@ -231,7 +231,7 @@ public class Player {
         }
     }
 
-    //Energia
+    //Energy
     private Integer energy = 0;
     private Integer energy_production = 0;
     public Integer getEnergy() {return energy;}
@@ -259,7 +259,7 @@ public class Player {
         }
     }
 
-    //Lämpö
+    //Heat
     private Integer heat = 0;
     private Integer heat_production = 0;
     public Integer getHeat() {return heat;}
@@ -300,7 +300,7 @@ public class Player {
     public void changeVictoryPoints(Integer change_amount) {victory_points += change_amount;}
 
     /***********************************************************************************
-     Tagit
+     Tags
      ************************************************************************************/
 
     private Integer building_tags = 0;
@@ -430,7 +430,7 @@ public class Player {
 
 
     /***********************************************************************************
-    Passiiviset vaikutukset
+    Passive effects
     ************************************************************************************/
     private Integer base_tr_requirement_discount = 0;
     public Integer getBaseTrRequirementDiscount() {return base_tr_requirement_discount;}

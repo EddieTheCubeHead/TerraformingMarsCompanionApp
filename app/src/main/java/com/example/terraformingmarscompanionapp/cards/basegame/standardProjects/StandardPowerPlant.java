@@ -9,7 +9,7 @@ public final class StandardPowerPlant extends StandardProject {
     public StandardPowerPlant(Game game) {
         super(game);
         name = "Standard project: Power plant";
-        price = 14;
+        price = 11;
         tags.add(Tag.ENERGY);
     }
 

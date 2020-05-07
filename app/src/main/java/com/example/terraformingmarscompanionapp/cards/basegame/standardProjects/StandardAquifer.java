@@ -13,6 +13,7 @@ public final class StandardAquifer extends StandardProject {
         name = "Standard project: Aquifer";
         price = 18;
         wait_for_server = true;
+        requirements.setMaxOceans(8);
     }
 
     @Override

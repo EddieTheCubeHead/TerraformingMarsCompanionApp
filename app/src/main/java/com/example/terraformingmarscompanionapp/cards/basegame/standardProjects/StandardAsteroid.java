@@ -9,6 +9,7 @@ public final class StandardAsteroid extends StandardProject {
         super(game);
         name = "Standard project: Asteroid";
         price = 14;
+        requirements.setMaxTemperature(6);
     }
 
     @Override

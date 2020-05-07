@@ -4,6 +4,9 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
+/**
+ * UI event for placing a tile
+ */
 public final class TileEvent extends GameEvent {
     private Placeable tile_type;
     private Game game;

@@ -6,10 +6,9 @@ import java.util.HashMap;
 
 @SuppressWarnings("EmptyMethod")
 
-/* UpdateManager -luokka luodaan aina pelin yhteydessä. Se sisältää eri triggereille funktioita,
- * joita peli voi kutsua. Funktiot aktivoivat korttien effektifunktioita.
- * Osa luokan funktioista on helpompaa kutsua suoraan triggerin aktivoivasta kortista. Nämä funktiot
- * ovat julkisia package-private:n sijaan.
+/**
+ * UpdateManager is called on specific triggers. It is responsible for blue cards, that have
+ * effects that need to be represented with triggers, instead of just adding a modifier to a player
  */
 
 public final class UpdateManager {

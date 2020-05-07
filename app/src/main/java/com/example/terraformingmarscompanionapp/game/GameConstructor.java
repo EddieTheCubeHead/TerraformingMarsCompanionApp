@@ -13,7 +13,10 @@ import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.
 
 import java.util.HashMap;
 
-//Luokka pelin pakkojen rakentamiseen. Koodi on tuotettu python-skriptillä kortit sisältävästä kansiosta.
+/**
+ * A class that builds all the different decks. The generating code is made with a python script that
+ * scans a folder and sprouts out the result seen here.
+ */
 class GameConstructor {
     private final HashMap<String, Card> deck;
     private final HashMap<String, Card> preludes;
@@ -50,7 +53,7 @@ class GameConstructor {
 
     HashMap<String, Card> createDeck() {
 
-        //Peruspelin kortit:
+        //Basegame:
         Card adaptation_technology = new AdaptationTechnology(game);
         deck.put(adaptation_technology.getName(), adaptation_technology);
 
@@ -462,7 +465,7 @@ class GameConstructor {
         Card zeppelins = new Zeppelins(game);
         deck.put(zeppelins.getName(), zeppelins);
 
-        //Vakioprojektit
+        //Standard projects
         Card standard_aquifer = new StandardAquifer(game);
         deck.put(standard_aquifer.getName(), standard_aquifer);
 
@@ -482,7 +485,7 @@ class GameConstructor {
         deck.put(standard_sell_patents.getName(), standard_sell_patents);
 
 
-        //Utility-kortit
+        //Utility cards
         Card build_greenery = new BuildGreenery(game);
         deck.put(build_greenery.getName(), build_greenery);
 
@@ -498,29 +501,29 @@ class GameConstructor {
         Card water_import_from_europe_ghost = new WaterImportFromEuropeGhost(game);
         deck.put(water_import_from_europe_ghost.getName(), water_import_from_europe_ghost);
 
-        //Corporate eran kortit:
+        //Corporate era
         if (corporate_era) {
-            //TODO lisää Corporate eran kortit tähän
+            //TODO add corporate era
         }
 
-        //Preludin kortit:
+        //Prelude
         if (prelude) {
-            //TODO lisää Preludin kortit (ei preludit) tähän
+            //TODO add prelude
         }
 
         //Colonies kortit:
         if (colonies) {
-            //TODO Lisää Colonies-kortit tähän
+            //TODO add colonies
         }
 
         //Venus kortit:
         if (venus) {
-            //TODO Lisää Venus-kortit tähän
+            //TODO add venus
         }
 
         //Turmoil kortit:
         if (turmoil) {
-            //TODO Lisää Turmoil-korit tähän
+            //TODO add Turmoil
         }
 
         return deck;
@@ -528,7 +531,7 @@ class GameConstructor {
 
     HashMap<String, Card> createPreludes() {
         HashMap<String, Card> preludes = new HashMap<>();
-        //TODO Lisää preludit tähän
+        //TODO add preludes
         return preludes;
     }
 
