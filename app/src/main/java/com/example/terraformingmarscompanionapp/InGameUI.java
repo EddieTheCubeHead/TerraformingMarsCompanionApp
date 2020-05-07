@@ -1,7 +1,6 @@
 package com.example.terraformingmarscompanionapp;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.ui.main.CardsBoughtActivity;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.google.android.material.tabs.TabLayout;
@@ -47,7 +45,7 @@ public class InGameUI extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_game_u_i);
 
-        //korjaa näppäimistön satunnaisen ilmestymisen
+        //fixes the appearance of the keyboard on return to the activity
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -63,18 +61,16 @@ public class InGameUI extends AppCompatActivity {
             controller.useAction();
         }
 
-        //default ui-juttuja
-        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-        viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(sectionsPagerAdapter);
+        //default ui-things
+            sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+            viewPager = findViewById(R.id.view_pager);
+            viewPager.setAdapter(sectionsPagerAdapter);
+        //
 
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
         findViewById(R.id.item_1).setOnClickListener(view -> {
-
-            /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
-             * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
             if (!controller.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
@@ -90,24 +86,17 @@ public class InGameUI extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         });
 
-        findViewById(R.id.item_2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
-                 * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
-                if (!controller.checkTurnEligibility()) {
-                    Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (controller.getGreeneryRound()) {
-                    Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
-                }
-                startTestingActivity();
+        findViewById(R.id.item_2).setOnClickListener(v -> {
+            if (!controller.checkTurnEligibility()) {
+                Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (controller.getGreeneryRound()) {
+                Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
             }
+            startTestingActivity();
         });
 
         findViewById(R.id.item_3).setOnClickListener(view ->  {
-            /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
-             * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
             if (!controller.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
@@ -118,8 +107,6 @@ public class InGameUI extends AppCompatActivity {
         });
 
         findViewById(R.id.item_4).setOnClickListener(view -> {
-            /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
-             * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
             if (!controller.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
@@ -135,31 +122,28 @@ public class InGameUI extends AppCompatActivity {
         }
     }
 
-    //avaa dialogin ja laittaa pelaajien korporaatiot valinnan mukaisiksi
-    //tässä vaiheessa aika paljon toistoa
-    //tehty toistaen alku koska kuitenkin niin paljon eri asioita että on järkevää tehdä erillisiksi
     public void playCorporation()
     {
         Player self = controller.getCurrentPlayer();
 
-        //layoutin rakentaminen
+        //inflating layout
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_spinners, null);
 
-        //visuaalinen muokkaus
+        //visual editing
         view.setBackgroundColor(Color.TRANSPARENT);
 
-            //corporationroundissa käyttämättömien poisto.
+            //removing layout elements not used in the corporation round.
         LinearLayout linearLayout = view.findViewById(R.id.root_linearlayout);
 
         linearLayout.removeView(view.findViewById(R.id.title2));
         linearLayout.removeView(view.findViewById(R.id.spinner2));
 
-        //findviewbyid't
+        //finding views
         TextView title = view.findViewById(R.id.title1);
         Spinner spinner = view.findViewById(R.id.spinner1);
 
-        //korporaatioiden hankkiminen arraylistiin
+        //corporations to arraylist
         HashMap<String, Card> corps_hashmap = game.getCorporations();
 
         ArrayList<Card> corporations = new ArrayList<>();
@@ -171,8 +155,7 @@ public class InGameUI extends AppCompatActivity {
             corporations.add(corp_entry.getValue());
         }
 
-        //spinnerin valmistaminen
-        //arrayadapter kutsuu toString -metodia kortissa.
+        //setting up spinner
         ArrayAdapter<Card> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, corporations);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -202,15 +185,14 @@ public class InGameUI extends AppCompatActivity {
 
         title.setText("Choose " + player_string + " corporation.");
 
-        //eri pelaajien läpi menemisen logiikka onclicklistenerissä
-        //voi uudelleenkirjottaa
+        //cycling through all players.
         view.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
             private int player_index = 0;
 
             @Override
             public void onClick(View v)
             {
-            //korporaation asettaminen
+            //setting corporation
             ((Card) spinner.getSelectedItem()).onPlay(self);
 
             dialog.dismiss();
@@ -223,20 +205,20 @@ public class InGameUI extends AppCompatActivity {
     {
         Player self = controller.getCurrentPlayer();
 
-        //layoutin rakentaminen
+        //inflating layout
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.dialog_spinners, null);
 
-        //visuaalinen muokkaus
+        //visual editing
         view.setBackgroundColor(Color.TRANSPARENT);
 
-        //findviewbyid't
+        //finding views
         TextView title = view.findViewById(R.id.title1);
 
         Spinner spinner1 = view.findViewById(R.id.spinner1);
         Spinner spinner2 = view.findViewById(R.id.spinner2);
 
-        //preludien hankkiminen arraylistiin
+        //getting preludes
         HashMap<String, Card> preludes_hashmap = game.getPreludes();
 
         ArrayList<Card> preludes = new ArrayList<>();
@@ -244,9 +226,9 @@ public class InGameUI extends AppCompatActivity {
         for (Map.Entry<String, Card> corp_entry : preludes_hashmap.entrySet())
             preludes.add(corp_entry.getValue());
 
-        //spinnerin valmistaminen
-        //arrayadapter kutsuu toString -metodia
-        ArrayAdapter<Card> adapter = new ArrayAdapter<Card> (
+        //setting up spinners
+        //arrayadapter calls the toString method in Card
+        ArrayAdapter<Card> adapter = new ArrayAdapter<> (
                 this, android.R.layout.simple_spinner_item, preludes);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -294,11 +276,11 @@ public class InGameUI extends AppCompatActivity {
                     return;
                 }
 
-                //preludien asettaminen
+                //setting preludes
                 self.addPrelude((Card) spinner1.getSelectedItem());
                 self.addPrelude((Card) spinner2.getSelectedItem());
 
-                //seuraavaan pelaajaan siirtyminen
+                //to the next player
                 spinner1.setSelection(0);
                 spinner2.setSelection(1);
 
@@ -309,8 +291,6 @@ public class InGameUI extends AppCompatActivity {
     }
 
     public void startSearchActivity() {
-        /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
-         * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
         if (!controller.checkTurnEligibility()) {
             Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
@@ -320,10 +300,12 @@ public class InGameUI extends AppCompatActivity {
     }
 
     private void startTestingActivity() {
-        Intent intent = new Intent(this, CardsBoughtActivity.class);
+        /*
+        Intent intent = new Intent(this, MyActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra("player", controller.getCurrentPlayer().getName());
         startActivity(intent);
+         */
     }
 
     public void onBackPressed() {
@@ -341,11 +323,7 @@ public class InGameUI extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(text)
                 .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        controller.useAction();
-                    }
-                });
+                .setPositiveButton("OK", (dialog, id) -> controller.useAction());
         AlertDialog alert = builder.create();
         alert.show();
     }
