@@ -80,7 +80,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 app:srcCompat="@drawable/credit"
-                android:layout_weight="0dp "/>
+                android:layout_weight="0 "/>
 
             <TextView
                 android:id="@+id/credit_chosen"
@@ -140,7 +140,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 app:srcCompat="@drawable/steel_square"
-                android:layout_weight="0dp "/>
+                android:layout_weight="0"/>
 
             <TextView
                 android:id="@+id/steel_chosen"
@@ -200,7 +200,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 app:srcCompat="@drawable/titanium_square"
-                android:layout_weight="0dp "/>
+                android:layout_weight="0"/>
 
             <TextView
                 android:id="@+id/titanium_chosen"
@@ -260,7 +260,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 app:srcCompat="@drawable/heat"
-                android:layout_weight="0dp "/>
+                android:layout_weight="0"/>
 
             <TextView
                 android:id="@+id/heat_chosen"
@@ -320,7 +320,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 app:srcCompat="@drawable/plant_square"
-                android:layout_weight="0dp "/>
+                android:layout_weight="0"/>
 
             <TextView
                 android:id="@+id/plant_chosen"
@@ -380,7 +380,7 @@
                 android:scaleX="0.9"
                 android:scaleY="0.9"
                 app:srcCompat="@drawable/ic_ph"
-                android:layout_weight="0dp "/>
+                android:layout_weight="0"/>
 
             <TextView
                 android:id="@+id/floater_chosen"
