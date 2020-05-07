@@ -302,7 +302,7 @@ public class InGameUI extends AppCompatActivity {
         });
     }
 
-    private void startSearchActivity() {
+    public void startSearchActivity() {
         /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
          * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
         if (!controller.checkTurnEligibility()) {

@@ -282,31 +282,31 @@ public class Game implements Serializable {
         ArrayList<Tag> card_tags = card.getTags();
 
         //If -tarkistukset tagialennuksille
-        if (card.getType() != Card.Type.STANDARD_PROJECT) {
+        if (card.getType() != Card.Type.STANDARD_PROJECT && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getCardDiscount();
         }
 
-        if (card_tags.contains(Tag.BUILDING)) {
+        if (card_tags.contains(Tag.BUILDING) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getBuildingTagDiscount();
         }
 
-        if (card_tags.contains(Tag.SPACE)) {
+        if (card_tags.contains(Tag.SPACE) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getSpaceTagDiscount();
         }
 
-        if (card_tags.contains(Tag.EARTH)) {
+        if (card_tags.contains(Tag.EARTH) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getEarthTagDiscount();
         }
 
-        if (card_tags.contains(Tag.SCIENCE)) {
+        if (card_tags.contains(Tag.SCIENCE) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getScienceTagDiscount();
         }
 
-        if (card_tags.contains(Tag.ENERGY)) {
+        if (card_tags.contains(Tag.ENERGY) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getEnergyTagDiscount();
         }
 
-        if (card_tags.contains(Tag.VENUS)) {
+        if (card_tags.contains(Tag.VENUS) && card.getType() != Card.Type.OTHER) {
             actual_price -= player.getVenusTagDiscount();
         }
 

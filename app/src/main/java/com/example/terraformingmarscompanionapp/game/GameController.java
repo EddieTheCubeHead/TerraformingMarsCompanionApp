@@ -60,7 +60,6 @@ public class GameController
         if (ui_events.size() == 0) {
             return false;
         }
-        System.out.println("Delay action use set");
         delay_action_use = true;
         GameEvent event = ui_events.removeFirst();
         event.playEvent();
@@ -199,7 +198,6 @@ public class GameController
 
     public void atTurnStart()
     {
-        System.out.println("Calling turn start function, GameController row 205");
         actions_used = 0;
         gameUpdate();
 
@@ -207,7 +205,6 @@ public class GameController
 
         //Aloituskierroksen toimenpiteet
         if (generation == 0) {
-            System.out.println("Generation 0 actions, GameController row 211");
             if (self_player == null || current_player == self_player) {
                 if (current_player.getCorporation() == null) {
                     ((InGameUI) context).playCorporation();
@@ -220,7 +217,6 @@ public class GameController
 
         //Kierroksen alun kortinnosto
         } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
-            System.out.println("Card draw, GameController row 224");
 
             //Beginner corporation nostaa ensimmäisellä kierroksella kymmenen korttia ilmaiseksi
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
