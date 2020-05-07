@@ -104,10 +104,9 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
     }
 
 
+    //does card-specific action.
     @Override public void onCardClick(int position)
     {
-        /* Tarkistetaan onko serveripeli, ja jos on, onko clientin vuoro. Tämän koodinpätkän pitäisi
-         * olla kaikissa vuoroista riippuvaisissa toiminnoissa. */
         if (!controller.checkTurnEligibility()) {
             Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
@@ -117,7 +116,6 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
 
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
 
-        //jos kortti implementtaa actioncard-interfacen
         if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard) {
             Boolean validity = ((ActionCard) card).getActionValidity();
             String action_name = ((ActionCard) card).getActionName();
@@ -135,9 +133,8 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         else Log.i("non-interactable card","Pelaajan korttilistassa kortilla ei ollut CardActionia");
     }
 
-    //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
     @Override public boolean onCardLongClick(int position) { return false; }
 
-    @Override
-    public void update() { adapter.getPlayedFilter().filter(""); }
+    //updates by refiltering
+    @Override public void update() { adapter.getPlayedFilter().filter(""); }
 }
