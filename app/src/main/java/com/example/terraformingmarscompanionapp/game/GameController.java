@@ -7,7 +7,9 @@ import android.content.Intent;
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
+import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.ui.main.CardsBoughtActivity;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 
@@ -148,10 +150,6 @@ public class GameController
         return instance;
     }
 
-    //vuorojen hallitseminen
-    private Boolean folding = false;
-    public void setPlayerIsFolding(Boolean currentIsFolding) { folding = currentIsFolding; }
-
     //Toiminnon käyttäminen
     public Boolean useAction() {
         if (executeNextEvent()) {
@@ -168,7 +166,9 @@ public class GameController
         if (actions_used >= 2) {
             endTurn();
         }
+
         gameUpdate();
+
         return true;
     }
 
@@ -181,14 +181,9 @@ public class GameController
     {
 
         if(actions_used == 0)
-            folding = true;
-
-        //vuoron vaihto
-        if (folding)
             queue.removeFirst();
         else
             queue.addLast(queue.removeFirst());
-        setPlayerIsFolding(false);
 
         //kun kaikki on foldannu
         if (queue.size() == 0)
@@ -206,6 +201,7 @@ public class GameController
         actions_used = 0;
         gameUpdate();
 
+        //Aloituskierroksen toimenpiteet
         if (generation == 0) {
             if (self_player == null || current_player == self_player) {
                 if (current_player.getCorporation() == null) {
@@ -216,17 +212,29 @@ public class GameController
                     atGenerationStart();
                 }
             }
+
+        //Kierroksen alun kortinnosto
         } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
-            System.out.println("Round start draw");
-            game.getDeck().get("Round start draw").onPlay(current_player);
+
+            //Beginner corporation nostaa ensimmäisellä kierroksella kymmenen korttia ilmaiseksi
+            if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
+                useAction();
+                current_player.changeHandSize(10);
+                addUiEvent(new PromptEvent(current_player.getName() + ", please draw 10 cards."));
+                useAction();
+            } else {
+                game.getDeck().get("Round start draw").onPlay(current_player);
+            }
+
+        //Korporaatioiden määrittämät ensimmäiset toiminnot, jos on olemassa
         } else if (generation == 1 && (self_player == null || current_player == self_player) && current_player.getCorporation() instanceof FirstAction)
+
         {
             FirstAction action = (FirstAction)current_player.getCorporation();
 
             if (!action.firstActionUsed())
             {
                 action.firstAction();
-                System.out.println("Using first action");
                 useAction();
             }
         }

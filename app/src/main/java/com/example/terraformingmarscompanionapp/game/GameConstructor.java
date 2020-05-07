@@ -3,37 +3,12 @@ package com.example.terraformingmarscompanionapp.game;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cards.basegame.awards.Banker;
-import com.example.terraformingmarscompanionapp.cards.basegame.awards.Landlord;
-import com.example.terraformingmarscompanionapp.cards.basegame.awards.Miner;
-import com.example.terraformingmarscompanionapp.cards.basegame.awards.Scientist;
-import com.example.terraformingmarscompanionapp.cards.basegame.awards.Thermalist;
+import com.example.terraformingmarscompanionapp.cards.basegame.awards.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.cards.*;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Credicor;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Ecoline;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Helion;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.InterplanetaryCinematics;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Inventrix;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.MiningGuild;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.PhoboLog;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.TharsisRepublic;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.TharsisRepublicSecondEffect;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.Thorgate;
-import com.example.terraformingmarscompanionapp.cards.basegame.corporations.UnitedNationsMarsInitiative;
-import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Builder;
-import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Gardener;
-import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Mayor;
-import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Planner;
-import com.example.terraformingmarscompanionapp.cards.basegame.milestones.Terraformer;
-import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
-import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.RaiseTemperature;
-import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardAquifer;
-import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardAsteroid;
-import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardCity;
-import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardGreenery;
-import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardPowerPlant;
-import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.StandardSellPatents;
-import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.RoundStartDraw;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.*;
+import com.example.terraformingmarscompanionapp.cards.basegame.milestones.*;
+import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.*;
+import com.example.terraformingmarscompanionapp.cards.basegame.standardProjects.*;
 
 import java.util.HashMap;
 
@@ -551,6 +526,9 @@ class GameConstructor {
     HashMap<String, Card> createCorporations() {
 
         HashMap<String, Card> corporations = new HashMap<>();
+
+        Card beginner_corporation = new BeginnerCorporation(game);
+        corporations.put(beginner_corporation.getName(), beginner_corporation);
 
         Card credicor = new Credicor(game);
         corporations.put(credicor.getName(), credicor);

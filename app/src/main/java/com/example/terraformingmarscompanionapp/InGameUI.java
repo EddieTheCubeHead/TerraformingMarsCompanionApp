@@ -159,8 +159,12 @@ public class InGameUI extends AppCompatActivity {
 
         ArrayList<Card> corporations = new ArrayList<>();
 
-        for (Map.Entry<String, Card> corp_entry : corps_hashmap.entrySet())
+        for (Map.Entry<String, Card> corp_entry : corps_hashmap.entrySet()) {
+            if (corp_entry.getValue().getOwner() != null) {
+                continue;
+            }
             corporations.add(corp_entry.getValue());
+        }
 
         //spinnerin valmistaminen
         //arrayadapter kutsuu toString -metodia kortissa.

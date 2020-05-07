@@ -142,6 +142,8 @@ public class Game implements Serializable {
             players.add(new Player(this, player_name));
         }
 
+        this.modifiers = new GameModifiers(corporate_era, prelude, colonies, venus, turmoil, extra_corporations, world_government_terraforming, must_max_venus, turmoil_terraforming_revision);
+
         GameConstructor constructor = new GameConstructor(this, corporate_era, prelude, colonies, venus, turmoil, extra_corporations, map);
         deck = constructor.createDeck();
         corporations = constructor.createCorporations();
@@ -175,8 +177,6 @@ public class Game implements Serializable {
         if (prelude) {
             preludes = constructor.createPreludes();
         }
-
-        this.modifiers = new GameModifiers(corporate_era, prelude, colonies, venus, turmoil, extra_corporations, world_government_terraforming, must_max_venus, turmoil_terraforming_revision);
 
         this.server_multiplayer = server_multiplayer;
 

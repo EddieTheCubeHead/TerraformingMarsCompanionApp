@@ -7,7 +7,6 @@ TODO: Eetu
 
 TODO: Top priority
     Pelin lopetus
-    Korttien nostaminen pelin/vuoron alussa
 
 TODO: Isot bugit/quality of life
     Resurssidialogi (ActivityDialogSearch) tarvitsee poistumisnapin - lisäksi nimen voisi refactoroida
@@ -19,8 +18,6 @@ TODO: Hotseat-peli kuntoon
     Pelaajien järjestyksen valinta tai prompti "anna nimet pelaamisjärjestyksessä"
         Järjestyksen valinta olisi parempi, koska saman koodin voisi kierrättä serveripeliin
         Listview-implementaatio: https://www.youtube.com/watch?v=_BZIvjMgH-Q
-    Alun "kuinka monta korttia ostit? (0-10) -prompti"
-        kannattaa tehdä samassa kun kun (0-4) prompti
     Beginner corporation -erikoistapauksen huomiointi -Eetu
     Sukupolvien välissä "kuinka monta korttia ostit? (0-4) -prompti".
         -Kutsuminen funktiosta endgeneration(Context)?

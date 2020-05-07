@@ -3,6 +3,7 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -90,7 +91,7 @@ public abstract class Card {
     }
 
     protected final void finishPlay (Player player) {
-        if (OWNABLES.contains(type)) {
+        if (OWNABLES.contains(type) && !(this instanceof BeginnerCorporation)) {
             owner_player = player;
         }
 
