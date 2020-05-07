@@ -40,7 +40,10 @@ public class CardEventPacket implements PlayablePacket {
             card.playWithMetadata(game.getPlayer(player_name), metadata);
         } else if (card instanceof ActionCard) {
             ((ActionCard) card).actionWithMetadata(metadata);
-            GameController.getInstance().useAction();
+            if (!((ActionCard) card).getActionRequiresWait()) {
+                System.out.println("Using action from action");
+                GameController.getInstance().useAction();
+            }
         } else {
             Log.i("WebSocket", "CardEffectPacket lähetetty omistetusta kortista, jolla ei ole toimintaa. Huomauta Eetua. Kortin nimi: " + card_name);
         }

@@ -14,8 +14,8 @@ public final class AquiferPumpingGhost extends Card {
     }
 
     @Override
-    public void onPlay(Player player) {
+    public void playWithMetadata(Player player, Integer data) {
         overridePlayActionCall();
-        super.onPlay(player);
+        super.playWithMetadata(player, data);
     }
 }

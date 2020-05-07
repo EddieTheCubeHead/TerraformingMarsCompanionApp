@@ -58,4 +58,9 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public void actionWithMetadata(Integer data) {}
+
+    @Override
+    public Boolean getActionRequiresWait() {
+        return false;
+    }
 }

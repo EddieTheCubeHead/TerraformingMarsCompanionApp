@@ -25,6 +25,8 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        UserActions.setContext(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -48,33 +50,28 @@ public class LoginActivity extends AppCompatActivity
             UserActions.createUser(username, password);
         }
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         if (UserActions.successful_login) {
+            UserActions.resetContext();
             super.onBackPressed(); //non-overridden back-press
             Intent intent = new Intent(this, TitleScreen.class);
             startActivity(intent);
-        } else {
-            String login_message = UserActions.message;
-            toast(login_message);
         }
-
-
     }
 
-    public void cancelActivity(View view) {
+    public void loginSuccess() {
+        UserActions.resetContext();
         Intent intent = new Intent(this, TitleScreen.class);
         startActivity(intent);
     }
 
-    private void toast(String message)
-    {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void cancelActivity(View view) {
+        UserActions.resetContext();
+        Intent intent = new Intent(this, TitleScreen.class);
+        startActivity(intent);
     }
 
-    @Override public void onBackPressed() {} //back -nappi ei tee nyt mitään.
+    public void loginFailure(String message)
+    {
+        new Thread(() -> runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show()));
+    }
 }

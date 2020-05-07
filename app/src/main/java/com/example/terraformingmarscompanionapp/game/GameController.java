@@ -38,8 +38,8 @@ public class GameController
     }
 
     private Game game;
-    private List<Player> queue_full = new ArrayList<>(); //double ended queue
-    private Deque<Player> queue = new LinkedList<>();
+    private List<Player> queue_full = new ArrayList<>();
+    private Deque<Player> queue = new LinkedList<>(); //double ended queue
     private Player current_player;
     private Player current_starter;
     private Boolean greenery_round = false;
@@ -218,7 +218,9 @@ public class GameController
 
             //Beginner corporation draws 10 cards for free at game start
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
-                GameActions.sendUseAction();
+                if (server_multiplayer) {
+                    GameActions.sendUseAction();
+                }
                 useAction();
                 current_player.changeHandSize(10);
                 current_player.setDrewCardsThisGen(true);
