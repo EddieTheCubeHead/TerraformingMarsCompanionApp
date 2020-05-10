@@ -19,7 +19,7 @@ public final class Insulation extends Card {
 
     @Override
     public void onPlay(Player player) {
-        Context context = GameController.getInstance().getContext();
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, IntegerDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(IntegerDialogActivity.CARD_NAME, this.getName());

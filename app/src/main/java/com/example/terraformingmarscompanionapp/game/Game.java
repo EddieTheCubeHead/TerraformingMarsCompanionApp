@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
@@ -254,7 +256,7 @@ public class Game implements Serializable {
 
     private CardCostPacket checkCardCost(Card card)
     {
-        Player player = GameController.getInstance().getCurrentPlayer();
+        Player player = GameController.getCurrentPlayer();
 
         //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
 
@@ -304,7 +306,7 @@ public class Game implements Serializable {
         //Mikäli raaka raha ei riitä, tarkistetaan voiko korvata muilla resursseilla
         if (actual_price <= player.getMoney())
         {
-            return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+            return new CardCostPacket(GameController.getCurrentPlayer().getName(), actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
         else
         {
@@ -332,7 +334,7 @@ public class Game implements Serializable {
                     if (money_amount < 0)
                         money_amount = 0;
 
-                    return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 }
                 else
                 {
@@ -354,7 +356,7 @@ public class Game implements Serializable {
                     if (money_amount < 0)
                         money_amount = 0;
 
-                    return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 }
                 else
                 {
@@ -372,11 +374,11 @@ public class Game implements Serializable {
             if (player.getHeatIsMoney() && player.getHeat() >= needed_money)
             {
                 heat_amount = needed_money;
-                cardCostPacket = new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                cardCostPacket = new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
             }
             else
             {
-                cardCostPacket = new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                cardCostPacket = new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 cardCostPacket.reject();
                 cardCostPacket.setRejectanceMessage("Invalid funds");
             }
@@ -387,11 +389,11 @@ public class Game implements Serializable {
 
     private Boolean checkCardRequirements(Card card) {
 
-        if (GameController.getInstance().getGreeneryRound() && !(card instanceof BuildGreenery)) {
+        if (GameController.getGreeneryRound() && !(card instanceof BuildGreenery)) {
             return false;
         }
 
-        Player player = GameController.getInstance().getCurrentPlayer();
+        Player player = GameController.getCurrentPlayer();
 
         //Erittäin tylsä if-hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
         //Suosittelen lämpimästi minimoimaan tämän.
@@ -672,7 +674,7 @@ public class Game implements Serializable {
     //Second part of playing a card. See Card -class for a more detailed explanation of playing cards
     public void playCard(Card card, CardCostPacket resources_to_use)
     {
-        Player player = GameController.getInstance().getCurrentPlayer();
+        Player player = GameController.getCurrentPlayer();
 
         if (!resources_to_use.isEligible())
         {
@@ -689,9 +691,9 @@ public class Game implements Serializable {
     }
 
     //End a generation
-    void onGenerationEnd() {
+    void onGenerationEnd(Context context) {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
-            GameController.getInstance().gameEndPreparation();
+            GameController.gameEndPreparation();
         }
         for (Player player : players) {
             player.changeMoney(player.getMoneyProduction() + player.getTerraformingRating());
@@ -706,6 +708,6 @@ public class Game implements Serializable {
             player.resetActions();
         }
 
-        GameController.getInstance().changeGeneration();
+        GameController.changeGeneration(context);
     }
 }

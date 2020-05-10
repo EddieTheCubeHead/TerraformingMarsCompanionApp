@@ -8,7 +8,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 /**
  * The resources used when playing a card
  */
-public class CardCostPacket implements PlayablePacket
+public class CardCostPacket implements ServerPacket
 {
     //is eligible tells UI whether the packet can be used for buying a card
 
@@ -53,7 +53,7 @@ public class CardCostPacket implements PlayablePacket
 
     @Override
     public void playPacket() {
-        Player player = GameController.getInstance().getGame().getPlayer(player_name);
+        Player player = GameController.getGame().getPlayer(player_name);
         player.changeMoney(-money);
         player.changeSteel(-steel);
         player.changeTitanium(-titanium);

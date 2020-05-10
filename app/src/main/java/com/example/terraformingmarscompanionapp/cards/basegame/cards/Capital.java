@@ -22,7 +22,7 @@ public final class Capital extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.CAPITAL, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.CAPITAL, owner_game));
         super.onPlay(player);
     }
 

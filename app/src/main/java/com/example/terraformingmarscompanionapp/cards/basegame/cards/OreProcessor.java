@@ -16,7 +16,7 @@ public final class OreProcessor extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().useAction();
+        GameController.useAction();
         actionServerHook(owner_player);
     }
 
@@ -25,7 +25,7 @@ public final class OreProcessor extends Card implements ActionCard {
         owner_player.changeEnergy(-4);
         owner_player.changeTitanium(1);
         owner_game.raiseOxygen(owner_player);
-        GameController.getInstance().useAction();
+        GameController.useAction();
     }
 
     @Override

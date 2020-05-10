@@ -47,7 +47,7 @@ public final class ProductionBox {
 
         try {
             if (target_index != 0) {
-                Player target_player = GameController.getInstance().getPlayer(target_index);
+                Player target_player = GameController.getPlayer(target_index);
                 target_player.changeMoneyProduction(-steal_money_production);
                 target_player.takeSteelProduction(steal_steel_production);
                 target_player.takeTitaniumProduction(steal_titanium_production);

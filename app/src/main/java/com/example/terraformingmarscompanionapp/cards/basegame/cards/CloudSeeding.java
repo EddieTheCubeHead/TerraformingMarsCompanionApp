@@ -20,7 +20,7 @@ public final class CloudSeeding extends Card {
 
     @Override
     public void onPlay(Player player) {
-        Context context = GameController.getInstance().getContext();
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, PlayerChoiceActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());

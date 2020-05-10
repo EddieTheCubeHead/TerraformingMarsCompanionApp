@@ -27,8 +27,8 @@ public final class ImportedHydrogen extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        Context context = GameController.getInstance().getContext();
+        GameController.addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
@@ -42,9 +42,9 @@ public final class ImportedHydrogen extends Card {
     @Override
     public void onPlayServerHook(Player player, Integer data) {
         if (data == 1) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 3));
+            GameController.addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 3));
         } else if (data == 2) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2));
+            GameController.addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2));
         }
         super.onPlayServerHook(player, data);
     }

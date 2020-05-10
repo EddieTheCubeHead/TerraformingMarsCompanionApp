@@ -31,9 +31,9 @@ public final class LargeConvoy extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        GameController.getInstance().addUiEvent(new PromptEvent("Please draw 2 cards"));
-        Context context = GameController.getInstance().getContext();
+        GameController.addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        GameController.addUiEvent(new PromptEvent("Please draw 2 cards"));
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
@@ -45,11 +45,11 @@ public final class LargeConvoy extends Card {
 
     @Override
     public void onPlayServerHook(Player player, Integer data) {
-        if (GameController.getInstance().getGame().getServerMultiplayer()) {
+        if (GameController.getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         if (data == 1) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 4, true));
+            GameController.addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 4, true));
         }
         playWithMetadata(player, data);
     }

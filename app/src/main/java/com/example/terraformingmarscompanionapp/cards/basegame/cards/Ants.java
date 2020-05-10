@@ -26,8 +26,8 @@ public final class Ants extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceType.MICROBE, owner_player, -1));
-        GameController.getInstance().useAction();
+        GameController.addUiEvent(new ResourceEvent(ResourceType.MICROBE, owner_player, -1));
+        GameController.useAction();
         actionServerHook(owner_player);
     }
 

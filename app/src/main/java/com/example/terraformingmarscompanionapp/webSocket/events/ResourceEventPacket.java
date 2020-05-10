@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 /**
  * Representing adding or removing resources from a card
  */
-public class ResourceEventPacket implements PlayablePacket {
+public class ResourceEventPacket implements ServerPacket {
     private String card_name;
     private Integer change;
 
@@ -19,7 +19,7 @@ public class ResourceEventPacket implements PlayablePacket {
 
     @Override
     public void playPacket() {
-       Card card = GameController.getInstance().getGame().getDeck().get(card_name);
+       Card card = GameController.getGame().getDeck().get(card_name);
        if (card instanceof ResourceCard) {
            ResourceCard resource_holder = (ResourceCard)card;
            resource_holder.changeResourceAmount(change);

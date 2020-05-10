@@ -68,7 +68,7 @@ public abstract class Card {
     }
 
     public void onPlayServerHook(Player player, Integer data) {
-        if (GameController.getInstance().getGame().getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
+        if (GameController.getGame().getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         playWithMetadata(player, data);
@@ -83,17 +83,17 @@ public abstract class Card {
             return;
         }
 
-        if (wait_for_server && owner_game.getServerMultiplayer() && GameController.getInstance().getCurrentPlayer() != GameController.getInstance().getSelfPlayer()) {
+        if (wait_for_server && owner_game.getServerMultiplayer() && GameController.getCurrentPlayer() != GameController.getSelfPlayer()) {
             return;
         }
         if (type == Type.CORPORATION) {
             System.out.println("Calling use action from card row 84");
-            GameController.getInstance().useAction();
+            GameController.useAction();
         }
 
         if (type != Type.GHOST) {
             System.out.println("Calling use action from card row 86");
-            GameController.getInstance().useAction();
+            GameController.useAction();
         }
     }
 

@@ -26,7 +26,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        Context context = GameController.getInstance().getContext();
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
@@ -38,12 +38,12 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
 
     @Override
     public void actionServerHook(Player player, Integer data) {
-        if (GameController.getInstance().getGame().getServerMultiplayer()) {
+        if (GameController.getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), 0));
         }
         setActionToUsed();
         if (data == 0) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2, true));
+            GameController.addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2, true));
         }
         actionWithMetadata(data);
     }

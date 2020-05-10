@@ -5,8 +5,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.game.events.GhostCardCostEvent;
+import com.example.terraformingmarscompanionapp.game.events.CardCostEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
@@ -20,9 +19,9 @@ public final class AquiferPumping extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().addUiEvent(new GhostCardCostEvent(owner_game.getDeck().get("Aquifer pumping ghost")));
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        GameController.getInstance().useAction();
+        GameController.addUiEvent(new CardCostEvent(owner_game.getDeck().get("Aquifer pumping ghost")));
+        GameController.addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        GameController.useAction();
         actionServerHook(owner_player);
     }
 

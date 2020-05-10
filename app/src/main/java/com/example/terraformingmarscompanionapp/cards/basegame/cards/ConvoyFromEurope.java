@@ -21,8 +21,8 @@ public final class ConvoyFromEurope extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        GameController.getInstance().addUiEvent(new PromptEvent("Please draw a card"));
+        GameController.addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        GameController.addUiEvent(new PromptEvent("Please draw a card"));
         super.onPlay(player);
     }
 

@@ -22,7 +22,7 @@ public final class NaturalPreserve extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.NATURAL_RESERVE, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.NATURAL_RESERVE, owner_game));
         super.onPlay(player);
     }
 

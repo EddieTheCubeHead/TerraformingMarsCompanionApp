@@ -397,8 +397,7 @@ public class TileHandler {
     }
 
     //UI-hook for playing cards
-    public void getCoordinatesFromPlayer(Placeable tile_type) {
-        Context context = GameController.getInstance().getContext();
+    public void getCoordinatesFromPlayer(Placeable tile_type, Context context) {
         Intent intent = new Intent(context, TilePlacementActivity.class);
         intent.putExtra("tile", tile_type.toString());
         System.out.println("Starting tile placement activity");
@@ -489,7 +488,7 @@ public class TileHandler {
             case MINING_AREA:
                 boolean has_owner = false;
                 for (Tile neighbour : getNeighbours(to_place)) {
-                    if (neighbour.getOwner() == GameController.getInstance().getCurrentPlayer()) {
+                    if (neighbour.getOwner() == GameController.getCurrentPlayer()) {
                         has_owner = true;
                         break;
                     }

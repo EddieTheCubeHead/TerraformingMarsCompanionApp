@@ -18,7 +18,7 @@ public final class BlackPolarDust extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
         super.onPlay(player);
     }
 

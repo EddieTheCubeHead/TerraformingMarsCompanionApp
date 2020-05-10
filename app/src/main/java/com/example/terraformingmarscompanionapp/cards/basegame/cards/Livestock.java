@@ -27,7 +27,7 @@ public final class Livestock extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().useAction();
+        GameController.useAction();
         actionServerHook(owner_player);
     }
 

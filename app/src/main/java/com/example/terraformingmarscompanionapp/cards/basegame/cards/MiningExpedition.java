@@ -22,7 +22,7 @@ public final class MiningExpedition extends Card {
 
     @Override
     public void onPlay(Player player) {
-        Context context = GameController.getInstance().getContext();
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, PlayerChoiceActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
@@ -32,7 +32,7 @@ public final class MiningExpedition extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data != 0) {
-            GameController.getInstance().getPlayer(data).takePlants(2);
+            GameController.getPlayer(data).takePlants(2);
         }
         player.changeSteel(2);
         owner_game.raiseOxygen(player);

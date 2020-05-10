@@ -28,7 +28,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
             actionServerHook(owner_player, 0);
             return;
         }
-        Context context = GameController.getInstance().getContext();
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());

@@ -24,7 +24,7 @@ public final class EcologicalZone extends ResourceCard implements EffectCard {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.ECOLOGICAL_ZONE, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.ECOLOGICAL_ZONE, owner_game));
         super.onPlay(player);
     }
 

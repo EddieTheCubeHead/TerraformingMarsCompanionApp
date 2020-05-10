@@ -6,12 +6,9 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.game.events.GhostCardCostEvent;
+import com.example.terraformingmarscompanionapp.game.events.CardCostEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public final class WaterImportFromEurope extends Card implements ActionCard {
     public WaterImportFromEurope(Game game) {
@@ -30,7 +27,7 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().addUiEvent(new GhostCardCostEvent(owner_game.getDeck().get("Water import from europe ghost")));
+        GameController.getInstance().addUiEvent(new CardCostEvent(owner_game.getDeck().get("Water import from europe ghost")));
         GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
         GameController.getInstance().useAction();
         actionServerHook(owner_player);

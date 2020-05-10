@@ -21,8 +21,8 @@ public final class ImportedNitrogen extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 3, true));
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
+        GameController.addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 3, true));
+        GameController.addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
         super.onPlay(player);
     }
 

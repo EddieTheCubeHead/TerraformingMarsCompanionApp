@@ -14,7 +14,7 @@ public interface ActionCard {
     void cardAction();
 
     default void actionServerHook(Player player, Integer data) {
-        if (GameController.getInstance().getGame().getServerMultiplayer()) {
+        if (GameController.getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), data));
         }
         setActionToUsed();
@@ -22,7 +22,7 @@ public interface ActionCard {
     }
 
     default void actionServerHook(Player player) {
-        if (GameController.getInstance().getGame().getServerMultiplayer()) {
+        if (GameController.getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), 0));
         }
         setActionToUsed();

@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.game.events;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.game.GameController;
 
 /**
@@ -13,7 +15,7 @@ public class PromptEvent extends GameEvent {
     }
 
     @Override
-    public void playEvent() {
-        GameController.getInstance().promptUser(text);
+    public void playEvent(Context context) {
+        GameController.promptUser(text, context);
     }
 }

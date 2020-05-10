@@ -22,7 +22,7 @@ public final class ArtificialPhotosynthesis extends Card {
 
     @Override
     public void onPlay(Player player) {
-        Context context = GameController.getInstance().getContext();
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());

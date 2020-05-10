@@ -24,7 +24,7 @@ public final class Birds extends ResourceCard implements ActionCard {
 
     @Override
     public void onPlay(Player player) {
-        Context context = GameController.getInstance().getContext();
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, PlayerChoiceActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
@@ -40,7 +40,7 @@ public final class Birds extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().useAction();
+        GameController.useAction();
         actionServerHook(owner_player);
     }
 

@@ -21,7 +21,7 @@ public final class ArtificialLake extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.LAND_OCEAN, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.LAND_OCEAN, owner_game));
         super.onPlay(player);
     }
 

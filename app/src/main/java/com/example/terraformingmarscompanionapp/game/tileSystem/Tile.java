@@ -75,7 +75,7 @@ public class Tile {
                             game.tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN);
                         }
                     case CARD:
-                        GameController.getInstance().addUiEvent(new PromptEvent("Please draw a card"));
+                        GameController.addUiEvent(new PromptEvent("Please draw a card"));
                         player.changeHandSize(1);
                 }
             }

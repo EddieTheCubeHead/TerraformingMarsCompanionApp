@@ -20,7 +20,7 @@ public final class Plantation extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.GREENERY, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.GREENERY, owner_game));
         super.onPlay(player);
     }
 

@@ -15,7 +15,7 @@ public final class MartianRails extends Card implements ActionCard {
     }
 
     public void cardAction() {
-        GameController.getInstance().useAction();
+        GameController.useAction();
         actionServerHook(owner_player);
     }
 

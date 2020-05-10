@@ -24,7 +24,7 @@ public final class LocalHeatTrapping extends Card {
 
     @Override
     public void onPlay(Player player) {
-        Context context = GameController.getInstance().getContext();
+        Context context = GameController.getContext();
         Intent intent = new Intent(context, BooleanDialogActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
@@ -37,7 +37,7 @@ public final class LocalHeatTrapping extends Card {
     @Override
     public void onPlayServerHook(Player player, Integer data) {
         if (data != 0) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
+            GameController.addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
         }
         super.onPlayServerHook(player, data);
     }

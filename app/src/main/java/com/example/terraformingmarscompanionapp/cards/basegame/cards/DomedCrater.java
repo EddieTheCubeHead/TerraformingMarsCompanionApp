@@ -23,7 +23,7 @@ public final class DomedCrater extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.CITY, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.CITY, owner_game));
         super.onPlay(player);
     }
 

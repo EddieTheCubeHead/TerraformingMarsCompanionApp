@@ -21,7 +21,7 @@ public final class NoctisCity extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.NOCTIS, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.NOCTIS, owner_game));
         super.onPlay(player);
     }
 

@@ -19,7 +19,7 @@ public final class MiningRights extends Card {
 
     @Override
     public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.MINING_RIGHTS, owner_game));
+        GameController.addUiEvent(new TileEvent(Placeable.MINING_RIGHTS, owner_game));
         super.onPlay(player);
     }
 }

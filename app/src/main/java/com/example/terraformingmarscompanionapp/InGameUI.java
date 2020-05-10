@@ -19,9 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.google.android.material.tabs.TabLayout;
@@ -30,12 +32,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InGameUI extends AppCompatActivity {
+public class InGameUI extends AppCompatActivity implements GameUiElement {
 
     public static final String UI_QUEUE_CHECK = "ui";
 
     Game game;
-    GameController controller;
 
     SectionsPagerAdapter sectionsPagerAdapter;
     ViewPager viewPager;
@@ -49,17 +50,7 @@ public class InGameUI extends AppCompatActivity {
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        controller = GameController.getInstance();
-        controller.setContext(this);
-        game = controller.getGame();
-
-        if (game.getServerMultiplayer()) {
-            GameActions.setContext(null);
-        }
-
-        if (getIntent().getBooleanExtra(UI_QUEUE_CHECK, false)) {
-            controller.useAction();
-        }
+        game = GameController.getGame();
 
         //default ui-things
             sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
@@ -71,13 +62,13 @@ public class InGameUI extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
         findViewById(R.id.item_1).setOnClickListener(view -> {
-            if (!controller.checkTurnEligibility()) {
+            if (!GameController.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
-            } else if (controller.getGreeneryRound()) {
+            } else if (GameController.getGreeneryRound()) {
                 Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
             }
-            Player current_player = controller.getCurrentPlayer();
+            Player current_player = GameController.getCurrentPlayer();
 
             current_player.changeMoney(10);
 
@@ -87,44 +78,44 @@ public class InGameUI extends AppCompatActivity {
         });
 
         findViewById(R.id.item_2).setOnClickListener(v -> {
-            if (!controller.checkTurnEligibility()) {
+            if (!GameController.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
-            } else if (controller.getGreeneryRound()) {
+            } else if (GameController.getGreeneryRound()) {
                 Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
             }
             startTestingActivity();
         });
 
         findViewById(R.id.item_3).setOnClickListener(view ->  {
-            if (!controller.checkTurnEligibility()) {
+            if (!GameController.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
-            } else if (controller.getGreeneryRound()) {
+            } else if (GameController.getGreeneryRound()) {
                 Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
             }
             startSearchActivity();
         });
 
         findViewById(R.id.item_4).setOnClickListener(view -> {
-            if (!controller.checkTurnEligibility()) {
+            if (!GameController.checkTurnEligibility()) {
                 Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
                 return;
             }
-            controller.endTurn();
+            GameController.endTurn(this);
             if (game.getServerMultiplayer()) {
                 GameActions.sendFold();
             }
         });
 
-        if (controller.getGeneration() == 0) {
-            controller.atTurnStart();
+        if (GameController.getGeneration() == 0) {
+            GameController.atTurnStart(this);
         }
     }
 
     public void playCorporation()
     {
-        Player self = controller.getCurrentPlayer();
+        Player self = GameController.getCurrentPlayer();
 
         //inflating layout
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -203,7 +194,7 @@ public class InGameUI extends AppCompatActivity {
 
     public void playPreludes()
     {
-        Player self = controller.getCurrentPlayer();
+        Player self = GameController.getCurrentPlayer();
 
         //inflating layout
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -285,13 +276,12 @@ public class InGameUI extends AppCompatActivity {
                 spinner2.setSelection(1);
 
                 dialog.dismiss();
-                return;
             }
         });
     }
 
     public void startSearchActivity() {
-        if (!controller.checkTurnEligibility()) {
+        if (!GameController.checkTurnEligibility()) {
             Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -300,6 +290,8 @@ public class InGameUI extends AppCompatActivity {
     }
 
     private void startTestingActivity() {
+
+        Toast.makeText(getApplicationContext(), "This should be removed but isn't. Tough luck.", Toast.LENGTH_SHORT).show();
         /*
         Intent intent = new Intent(this, MyActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -323,7 +315,7 @@ public class InGameUI extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(text)
                 .setCancelable(false)
-                .setPositiveButton("OK", (dialog, id) -> controller.useAction());
+                .setPositiveButton("OK", (dialog, id) -> EventScheduler.playNextEvent(this));
         AlertDialog alert = builder.create();
         alert.show();
     }
