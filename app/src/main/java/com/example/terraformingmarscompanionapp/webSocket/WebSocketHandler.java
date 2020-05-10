@@ -16,7 +16,7 @@ public final class WebSocketHandler {
     private static WebSocketClient webSocketClient = null;
     private static Boolean is_initialized = false;
 
-    //For rapid changing of server ip in development. Leave to null for localhost6
+    //For rapid changing of server ip in development. Leave to null for localhost
     private static final String WEBSOCKET_URI = null;//"ws://168.61.98.65:8080/tfmca";
 
     //Azure server ip
@@ -48,7 +48,7 @@ public final class WebSocketHandler {
                 final String[] contents = s.split(Pattern.quote(";"));
                 final String identifier = contents[0];
                     switch (identifier) {
-                        //Kirjautumisen ja uuden käyttäjän luomisen onnistumiset
+                        //Logging in and creating user
                         case "user_creation_successful":
                             UserActions.handleCreation(s);
                             break;
