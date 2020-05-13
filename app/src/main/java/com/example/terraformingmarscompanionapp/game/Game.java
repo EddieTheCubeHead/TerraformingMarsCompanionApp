@@ -12,7 +12,9 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -124,18 +126,18 @@ public class Game implements Serializable {
 
     //Constructor
     public Game(
-                    ArrayList<String> player_names,
-                    boolean corporate_era,
-                    boolean prelude,
-                    boolean colonies,
-                    boolean venus,
-                    boolean turmoil,
-                    boolean extra_corporations,
-                    boolean world_government_terraforming,
-                    boolean must_max_venus,
-                    boolean turmoil_terraforming_revision,
-                    boolean server_multiplayer,
-                    Integer map
+            @NotNull ArrayList<String> player_names,
+            boolean corporate_era,
+            boolean prelude,
+            boolean colonies,
+            boolean venus,
+            boolean turmoil,
+            boolean extra_corporations,
+            boolean world_government_terraforming,
+            boolean must_max_venus,
+            boolean turmoil_terraforming_revision,
+            boolean server_multiplayer,
+            Integer map
                 )
     {
 
@@ -204,7 +206,7 @@ public class Game implements Serializable {
         raising_player.changeTerraformingRating(1);
         global_temperature += 2;
         if (global_temperature == 0) {
-            tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN);
+            tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN, GameController.getContext());
         } else if (global_temperature == -20 || global_temperature == -24) {
             raising_player.changeHeatProduction(1);
         }
@@ -248,7 +250,6 @@ public class Game implements Serializable {
         if (!checkCardRequirements(card))
         {
             resources_to_use.reject();
-            resources_to_use.setRejectanceMessage("You don't meet the requirements for playing this card.");
         }
 
         return resources_to_use;
@@ -380,7 +381,6 @@ public class Game implements Serializable {
             {
                 cardCostPacket = new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 cardCostPacket.reject();
-                cardCostPacket.setRejectanceMessage("Invalid funds");
             }
 
             return cardCostPacket;
@@ -544,9 +544,6 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMinHighestProduction() != null) {
-            //Tämän voisi tehdä kivoilla for-loopeilla ja listoilla, mutta oon väsynyt ja haluun tän pois alta
-            //ALL ABOARD THE IF -TRAIN!
-            //TODO katso olisiko järkevää kirjoittaa ei-sieluaraastavaan muotoon
             Integer max = 0;
             if (player.getMoneyProduction() > max) {
                 max = player.getMoneyProduction();
@@ -577,7 +574,7 @@ public class Game implements Serializable {
             }
         }
 
-        //Pieni erikoistapaus, aina milestone: ei voi olla muiden tag-requirementtien kanssa samaan aikaan
+        //Always in a milestone: never in the same card as other tag requirements
         if (requirements.getMinOrganicTags() != null) {
             if (player.getPlantTags() + player.getMicrobeTags() + player.getAnimalTags() + player.getJokerTags() < requirements.getMinOrganicTags()) {
                 return false;

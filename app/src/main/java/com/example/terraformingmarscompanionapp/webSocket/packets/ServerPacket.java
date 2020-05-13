@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.webSocket.events;
+package com.example.terraformingmarscompanionapp.webSocket.packets;
 
 /**
  * The server implementation works by senting ServerPacket -interface implementing objects with gson

@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.webSocket.events;
+package com.example.terraformingmarscompanionapp.webSocket.packets;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;

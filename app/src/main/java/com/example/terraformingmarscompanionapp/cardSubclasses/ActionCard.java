@@ -3,7 +3,7 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
 
 /**
  * Interface for cards that have playable actions if owned. Action usage flow mimics that of playing

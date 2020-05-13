@@ -9,7 +9,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
 
 public final class TharsisRepublic extends Card implements EffectCard, FirstAction {
     private Boolean first_action_used = false;

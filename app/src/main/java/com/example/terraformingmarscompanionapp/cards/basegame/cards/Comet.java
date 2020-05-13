@@ -10,7 +10,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
-import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 public final class Comet extends Card {
     public Comet(Game game) {
@@ -26,9 +26,9 @@ public final class Comet extends Card {
     public void onPlay(Player player) {
         GameController.addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
         Context context = GameController.getContext();
-        Intent intent = new Intent(context, PlayerChoiceActivity.class);
+        Intent intent = new Intent(context, ChoiceDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
+        intent.putExtra(ChoiceDialog.CARD_INTENT, this.getName());
         context.startActivity(intent);
     }
 

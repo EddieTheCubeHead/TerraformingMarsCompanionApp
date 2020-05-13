@@ -13,7 +13,9 @@ import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -30,10 +32,12 @@ public class GameController
     //Horrible but deadline came too soon.
     static GameController instance = null;
 
-    //Generation info
+    //Generation and action info
     private static Integer generation = 0;
+    private static Integer action_number = 0;
 
     public static Integer getGeneration() {return generation;}
+    public static Integer getActionNumber() {return action_number;}
     public static Integer getDisplayActions() {
         return 2 - actions_used;
     }
@@ -53,19 +57,21 @@ public class GameController
 
     //Games aren't hosted on a single client. The "host" merely sends generation end messages to keep that in sync.
     private static Boolean is_host = false;
-    public static void makeHost() {is_host = true;}
-
-    //UI-event queu for asyncronous UI-events (tile, resource, cost and cardprompt)
-    private static Deque<GameEvent> ui_events = new LinkedList<>();
-    private static Boolean delay_action_use = false;
-
-    //Context for InGameUI to use with t.ex prompts
 
     //Setting the instance owner
     public static void setSelfPlayer(Player player) {
         self_player = player;
     }
 
+    //Weak reference to InGameUI activity
+    private static WeakReference<Context> context_reference;
+    public static void setContextReference(Context context) {context_reference = new WeakReference<>(context);}
+    public static Context getContext() {
+        if (context_reference != null) {
+            return context_reference.get();
+        }
+        return null;
+    }
 
     public static Game getGame() { return game; }
     public static Player getCurrentPlayer()  { return current_player; }
@@ -92,10 +98,13 @@ public class GameController
         return null;
     }
 
-    public static Integer getPlayerIndex(Player player) {return (queue_full.indexOf(player)+1);}
+    public static Integer getPlayerIndex(String player_name) {
+        Player player = game.getPlayer(player_name);
+        return (queue_full.indexOf(player)+1);
+    }
 
     //TODO find out what needs to go here. Can basically work as a constructor
-    public static void initGameController(Game game) {
+    public static void initGameController(Game game, Boolean is_host) {
         GameController.game = game;
 
         ArrayList<Player> players = game.getPlayers();
@@ -111,8 +120,11 @@ public class GameController
 
         if (game.getServerMultiplayer()) {
             server_multiplayer = true;
+            GameController.is_host = is_host;
         }
     }
+
+    public static Boolean getServerMultiplayer() {return server_multiplayer;}
 
     //These should be gone after the remake
 
@@ -141,10 +153,19 @@ public class GameController
         return instance;
     } */
 
+    public static void useAction(Boolean end_turn) {
+        actions_used++;
+
+        if (actions_used >= 2 || end_turn) {
+            endTurn();
+        }
+    }
+
+    public static void endTurn() {endTurn(getContext());}
     public static void endTurn(Context context)
     {
 
-        if(actions_used == 0)
+        if (actions_used == 0)
             queue.removeFirst();
         else
             queue.addLast(queue.removeFirst());
@@ -192,17 +213,14 @@ public class GameController
             //Beginner corporation draws 10 cards for free at game start
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
                 if (server_multiplayer) {
-                    GameActions.sendUseAction();
+                    GameActions.sendActionUse(new ActionUsePacket(false));
                 }
                 current_player.changeHandSize(10);
                 current_player.setDrewCardsThisGen(true);
                 EventScheduler.addEvent(new PromptEvent(current_player.getName() + ", please draw 10 cards."));
 
             } else {
-                if (server_multiplayer) {
-                    GameActions.sendUseAction();
-                }
-                game.getDeck().get("Round start draw").onPlay(current_player);
+                game.getDeck().get("Round start draw").onPlay(current_player, context);
             }
 
         //First actions declared by corporation cards
@@ -251,6 +269,7 @@ public class GameController
 
     // Other part of the generation syncing. Called from change generation in hotseat,
     // or via a websocketevent in server game
+    public static void atGenerationStart() {atGenerationStart(getContext());}
     public static void atGenerationStart(Context context)
     {
         generation += 1;
@@ -315,7 +334,7 @@ public class GameController
         game_listeners.remove(listener);
     }
 
-    public static void gameUpdate() {
+    static void gameUpdate() {
         for (GameUpdateListener listener : game_listeners) {
             listener.update();
         }

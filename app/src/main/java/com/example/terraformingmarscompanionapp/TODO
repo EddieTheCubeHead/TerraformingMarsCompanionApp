@@ -25,7 +25,7 @@ After rewrite, in no particular order:
  - Add the expansion cards
  - Make the app able to funtion when only one player in a game uses it
     - UI needs a lot of thought, especially card resources
- - Flawor/information texts for cards, via android string resource
+ - Flavor/information texts for cards, via android string resource
 
 Some general fun ideas:
 

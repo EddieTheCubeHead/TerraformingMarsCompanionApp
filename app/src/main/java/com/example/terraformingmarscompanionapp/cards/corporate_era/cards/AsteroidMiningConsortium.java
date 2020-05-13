@@ -8,7 +8,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 public final class AsteroidMiningConsortium extends Card {
     public AsteroidMiningConsortium(Game game) {
@@ -24,9 +24,9 @@ public final class AsteroidMiningConsortium extends Card {
     @Override
     public void onPlay(Player player) {
         Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, PlayerChoiceActivity.class);
+        Intent intent = new Intent(context, ChoiceDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
+        intent.putExtra(ChoiceDialog.CARD_INTENT, this.getName());
         context.startActivity(intent);
     }
 
@@ -42,10 +42,10 @@ public final class AsteroidMiningConsortium extends Card {
     @Override
     public void playProductionBox() {
         Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, PlayerChoiceActivity.class);
+        Intent intent = new Intent(context, ChoiceDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
-        intent.putExtra(PlayerChoiceActivity.SPECIAL_CASE, PlayerChoiceActivity.CASE_PRODCUTION);
+        intent.putExtra(ChoiceDialog.CARD_INTENT, this.getName());
+        intent.putExtra(ChoiceDialog.USE_CASE, ChoiceDialog.PRODUCTION);
         context.startActivity(intent);
     }
 }

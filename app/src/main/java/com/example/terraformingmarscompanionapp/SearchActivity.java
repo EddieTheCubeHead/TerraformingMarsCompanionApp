@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.ui.main.CardCostDialog;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.CardCostDialog;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
 
 import java.util.ArrayList;

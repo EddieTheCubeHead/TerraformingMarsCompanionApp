@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
@@ -30,8 +32,8 @@ public abstract class ResourceCard extends Card {
 
     public final void changeResourceAmount(Integer change_amount) {resource_amount += change_amount;}
 
-    public void onPlay(Player player) {
+    public void onPlay(Player player, Context context) {
         player.addResourceHolder(this);
-        super.onPlay(player);
+        super.onPlay(player, context);
     }
 }

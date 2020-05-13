@@ -1,9 +1,8 @@
-package com.example.terraformingmarscompanionapp.ui.main;
+package com.example.terraformingmarscompanionapp.ui.playDialogues;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -16,14 +15,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
 
 public class CardCostDialog {
 
@@ -31,8 +29,6 @@ public class CardCostDialog {
 
     //used for verifying the validity of payment dialogs by comparing values with recommendedcardcost
     private static Integer change;
-
-    private static CardCostPacket cost;
 
     //megacredits per unit values for steel and titanium
     private static Integer steel_value;
@@ -47,22 +43,21 @@ public class CardCostDialog {
     private static Integer floater;
 
     @SuppressLint("StaticFieldLeak")
-    static View view;
+    private static View view;
 
     public static void displayDialog(Context context, Card card) {displayDialog(context, card, false);}
 
     public static void displayDialog(Context context, Card card, Boolean from_action)
     {
-        GameController controller = GameController.getInstance();
-        Game game = controller.getGame();
-        player = controller.getCurrentPlayer();
+        Game game = GameController.getGame();
+        player = GameController.getCurrentPlayer();
 
         change = 0;
 
         steel_value = (2 + player.getSteelValueModifier());
         titanium_value = (3 + player.getTitaniumValueModifier());
 
-        cost = game.getRecommendedCardCost(card);
+        CardCostPacket cost = game.getRecommendedCardCost(card);
 
         if (!cost.isEligible()) {
             Toast.makeText(context, String.format("Can not play card '%s'", card.getName()), Toast.LENGTH_SHORT).show();
@@ -180,16 +175,13 @@ public class CardCostDialog {
                         !(card.getTags().contains(Tag.SPACE) && change < titanium_value))) {
             Toast.makeText(context, String.format("Please remove %d megacredits worth of resources", change), Toast.LENGTH_SHORT).show();
         } else {
-            GameController.getInstance().getGame().playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
+            GameController.getGame().playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
             Toast.makeText(context, String.format("Card '%s' played successfully!", card.getName()), Toast.LENGTH_SHORT).show();
-            exit(from_action, dialog);
+            exit(dialog);
         }
     }
 
-    private static void exit(Boolean from_action, AlertDialog dialog) {
-        if (from_action) {
-            GameController.getInstance().useAction();
-        }
+    private static void exit(AlertDialog dialog) {
         dialog.dismiss();
     }
 

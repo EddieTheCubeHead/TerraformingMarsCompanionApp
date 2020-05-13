@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.webSocket.events;
+package com.example.terraformingmarscompanionapp.webSocket.packets;
 
 import android.util.Log;
 
@@ -15,9 +15,6 @@ public class CardCostPacket implements ServerPacket
     private Boolean eligibility = true;
     public void reject() { eligibility = false; }
     public boolean isEligible() { return eligibility; }
-
-    private String rejectance_message;
-    public void setRejectanceMessage(String message) { rejectance_message = message; }
 
     private String player_name;
     private Integer money;

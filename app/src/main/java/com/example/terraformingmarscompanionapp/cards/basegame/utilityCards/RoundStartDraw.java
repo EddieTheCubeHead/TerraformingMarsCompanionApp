@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.ui.main.IntegerDialogActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.IntegerDialog;
 
 public final class RoundStartDraw extends Card {
     public RoundStartDraw(Game game) {
@@ -18,12 +18,12 @@ public final class RoundStartDraw extends Card {
     @Override
     public void onPlay(Player player) {
         Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, IntegerDialogActivity.class);
+        Intent intent = new Intent(context, IntegerDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(IntegerDialogActivity.CARD_NAME, this.getName());
-        intent.putExtra(IntegerDialogActivity.INTEGER_MIN, 0);
-        intent.putExtra(IntegerDialogActivity.INTEGER_MAX, GameController.getInstance().getGeneration() == 1 ? 10 : 4);
-        intent.putExtra(IntegerDialogActivity.TITLE, player.getName() + " cards:");
+        intent.putExtra(IntegerDialog.CARD_NAME, this.getName());
+        intent.putExtra(IntegerDialog.INTEGER_MIN, 0);
+        intent.putExtra(IntegerDialog.INTEGER_MAX, GameController.getInstance().getGeneration() == 1 ? 10 : 4);
+        intent.putExtra(IntegerDialog.TITLE, player.getName() + " cards:");
         System.out.println("Calling intent");
         context.startActivity(intent);
     }

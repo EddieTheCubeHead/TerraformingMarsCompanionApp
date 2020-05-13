@@ -19,12 +19,11 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cards.basegame.cards.Pets;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.events.ResourceEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.ResourceEventPacket;
 
 import java.util.ArrayList;
 import java.util.Arrays;

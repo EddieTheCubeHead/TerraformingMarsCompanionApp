@@ -1,13 +1,13 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.utilityCards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceStandardOperation;
+import com.example.terraformingmarscompanionapp.cardSubclasses.CardlikeOperation;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
-public final class BuildGreenery extends ResourceStandardOperation {
+public final class BuildGreenery extends CardlikeOperation {
     public BuildGreenery(Game game) {
         super(game);
         name = "Build greenery";

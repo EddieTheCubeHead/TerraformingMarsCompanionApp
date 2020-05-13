@@ -9,7 +9,6 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
-import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
 
 public final class ArtificialPhotosynthesis extends Card {
     public ArtificialPhotosynthesis(Game game) {

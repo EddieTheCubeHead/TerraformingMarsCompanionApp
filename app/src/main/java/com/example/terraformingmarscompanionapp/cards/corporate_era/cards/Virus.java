@@ -10,7 +10,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
-import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 public final class Virus extends Card {
     public Virus(Game game) {
@@ -26,9 +26,9 @@ public final class Virus extends Card {
     @Override
     public void onPlay(Player player) {
         Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, PlayerChoiceActivity.class);
+        Intent intent = new Intent(context, ChoiceDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
+        intent.putExtra(ChoiceDialog.CARD_INTENT, this.getName());
         context.startActivity(intent);
     }
 
@@ -38,10 +38,10 @@ public final class Virus extends Card {
             GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, -2));
         } else if (data == 1) {
             Context context = GameController.getInstance().getContext();
-            Intent intent = new Intent(context, PlayerChoiceActivity.class);
+            Intent intent = new Intent(context, ChoiceDialog.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
-            intent.putExtra(PlayerChoiceActivity.SPECIAL_CASE, PlayerChoiceActivity.CASE_VIRUS);
+            intent.putExtra(ChoiceDialog.CARD_INTENT, this.getName());
+            intent.putExtra(ChoiceDialog.USE_CASE, ChoiceDialog.VIRUS);
             context.startActivity(intent);
             return;
         } else {

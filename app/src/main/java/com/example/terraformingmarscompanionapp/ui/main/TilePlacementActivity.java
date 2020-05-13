@@ -16,8 +16,9 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.TileEventPacket;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -193,10 +194,10 @@ public class TilePlacementActivity extends AppCompatActivity {
             return;
         }
         String[] targets_array = targets.toArray(new String[0]);
-        Intent intent = new Intent(this, PlayerChoiceActivity.class);
+        Intent intent = new Intent(this, ChoiceDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, "Flooding");
-        intent.putExtra(PlayerChoiceActivity.TARGETS, targets_array);
+        intent.putExtra(ChoiceDialog.CARD_INTENT, "Flooding");
+        intent.putExtra(ChoiceDialog.TARGETS, targets_array);
         this.startActivity(intent);
     }
 }

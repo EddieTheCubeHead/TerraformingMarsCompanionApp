@@ -15,5 +15,12 @@ public class EventScheduler {
 
     public static void addEvent(GameEvent event) {eventStack.push(event);}
 
-    public static void playNextEvent(Context context) {eventStack.pop().playEvent(context);}
+    public static void playNextEvent(Context context) {
+        GameController.gameUpdate();
+        if (eventStack.size() > 0) {
+            eventStack.pop().playEvent(context);
+        }
+    }
+
+    public static void clearEventStack() {eventStack.clear();}
 }
