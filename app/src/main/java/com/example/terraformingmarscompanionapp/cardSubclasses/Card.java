@@ -52,14 +52,19 @@ public abstract class Card {
     }
 
 
+    //Be sure to call default events first when overriding. Never call super.onPlay() when overriding
     public void onPlay(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(false)));
-        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
+        defaultEvents(player);
         EventScheduler.playNextEvent(context);
     }
 
+    protected void defaultEvents(Player player) {
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
+    }
+
     public void onPlayServerHook(Player player, Integer data) {
-        if (GameController.getGame().getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
+        if (owner_game.getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         playWithMetadata(player, data);
@@ -204,6 +209,8 @@ public abstract class Card {
         if (this instanceof ActionCard) {
             player.addAction((ActionCard)this);
         }
+
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}

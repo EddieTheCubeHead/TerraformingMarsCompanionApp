@@ -13,6 +13,10 @@ public final class ActionUseEvent extends GameEvent {
         this.packet = packet;
     }
 
+    public ActionUseEvent() {
+        this.packet = new ActionUsePacket();
+    }
+
     @Override
     public void playEvent(Context context) {
         packet.playPacket();

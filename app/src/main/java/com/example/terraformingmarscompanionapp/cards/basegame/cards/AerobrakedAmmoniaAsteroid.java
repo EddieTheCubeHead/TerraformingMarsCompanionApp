@@ -10,6 +10,8 @@ import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 
 public final class AerobrakedAmmoniaAsteroid extends Card {
@@ -23,8 +25,9 @@ public final class AerobrakedAmmoniaAsteroid extends Card {
 
     @Override
     public void onPlay(Player player, Context context) {
+        defaultEvents(player);
         EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2));
-        super.onPlay(player, context);
+        EventScheduler.playNextEvent(context);
     }
 
     @Override

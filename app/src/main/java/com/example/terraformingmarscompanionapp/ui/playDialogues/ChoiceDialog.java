@@ -40,7 +40,7 @@ public class ChoiceDialog {
         GENERAL
     }
 
-    private static void displayDialog(Context context, USE_CASE use_case, ArrayList<String> targets, Card card, Player player)
+    public static void displayDialog(Context context, String message, USE_CASE use_case, ArrayList<String> targets, Card card, Player player)
     {
         if (use_case.equals(USE_CASE.PLAYER)) {
             targets.add("nobody");
@@ -61,6 +61,8 @@ public class ChoiceDialog {
         //findViewByIds
         TextView title = view.findViewById(R.id.title1);
         Spinner spinner = view.findViewById(R.id.spinner1);
+
+        title.setText(message);
 
         //Making the spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
