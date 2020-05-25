@@ -42,6 +42,7 @@ public final class Tardigrades extends ResourceCard implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         resource_amount++;
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

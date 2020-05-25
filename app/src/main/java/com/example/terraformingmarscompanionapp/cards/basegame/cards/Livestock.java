@@ -36,6 +36,7 @@ public final class Livestock extends ResourceCard implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         resource_amount++;
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

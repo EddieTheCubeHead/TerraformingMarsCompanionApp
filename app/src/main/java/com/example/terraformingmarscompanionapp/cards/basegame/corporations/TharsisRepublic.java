@@ -10,6 +10,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
@@ -25,10 +26,7 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-
-        owner_game.playCard(owner_game.getGhosts().get("Tharsis republic ghost"),
-                new CardCostPacket(GameController.getCurrentPlayer().getName(), 0, 0, 0, 0, 0, 0),
-                GameController.getContext());
+        EventScheduler.addEvent(new PlayCardEvent(owner_game.getGhosts().get("Tharsis republic ghost"), player, 0));
 
         player.changeMoney(40);
         super.playWithMetadata(player, data);

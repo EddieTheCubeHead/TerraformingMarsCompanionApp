@@ -27,6 +27,7 @@ public final class CaretakerContract extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeHeat(-8);
         owner_player.changeTerraformingRating(1);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

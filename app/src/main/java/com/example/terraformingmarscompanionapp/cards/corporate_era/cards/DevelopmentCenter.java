@@ -28,6 +28,7 @@ public final class DevelopmentCenter extends Card implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-1);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

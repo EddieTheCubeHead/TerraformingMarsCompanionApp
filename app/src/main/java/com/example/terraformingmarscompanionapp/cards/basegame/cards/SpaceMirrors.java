@@ -27,6 +27,7 @@ public final class SpaceMirrors extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.takeMoney(7);
         owner_player.changeEnergyProduction(1);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

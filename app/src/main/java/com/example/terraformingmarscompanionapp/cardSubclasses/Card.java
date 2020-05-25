@@ -64,6 +64,8 @@ public abstract class Card {
     protected void defaultEvents(Player player) {
         if (type.equals(Type.CORPORATION)) {
             EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true)));
+        } else {
+            EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket()));
         }
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
     }

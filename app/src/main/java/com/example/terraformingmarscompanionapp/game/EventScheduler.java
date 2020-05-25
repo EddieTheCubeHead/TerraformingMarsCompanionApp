@@ -14,17 +14,22 @@ import java.util.Stack;
 public class EventScheduler {
     private static Stack<GameEvent> eventStack = new Stack<>();
 
-    public static void addEvent(GameEvent event) {eventStack.push(event);}
+    public static void addEvent(GameEvent event) {
+        Log.i("Event Scheduler", "Queued event: " + event.toString());
+        eventStack.push(event);
+    }
 
     public static void playNextEvent(Context context) {
-        Log.i("Event Scheduler", "Playing event");
+        Log.i("Event Scheduler", "Playing event, stack size: " + eventStack.size());
         GameController.gameUpdate();
         if (eventStack.size() > 0) {
             eventStack.pop().playEvent(context);
         }
     }
 
-    public static Boolean getStackHasEvents() {return eventStack.size() == 0;}
+    public static Boolean getStackHasEvents() {
+        return eventStack.size() > 0;
+    }
 
     public static void clearEventStack() {eventStack.clear();}
 }

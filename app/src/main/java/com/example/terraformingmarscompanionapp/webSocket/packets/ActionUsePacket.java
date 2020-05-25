@@ -29,7 +29,6 @@ public final class ActionUsePacket implements ServerPacket {
 
     @Override
     public void playPacket() {
-        Log.i("ActionUsePacket", String.format("Action data: end turn: %b, use_action %b", end_turn, use_action));
         if (use_action) {
             GameController.useAction(end_turn);
         } else if (end_turn) {

@@ -25,6 +25,7 @@ public final class MartianRails extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-1);
         owner_player.changeMoney(owner_game.getCitiesOnMars());
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

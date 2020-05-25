@@ -38,7 +38,6 @@ public final class RoundStartDraw extends Card {
         max_draw_amount = GameController.getGeneration() == 1 ? 10 : 4;
 
         EventScheduler.addEvent(new MetadataIntegerEvent(draw_message, 0, max_draw_amount, this));
-        Log.i("Round start draw", "Calling event stack to display integer dialogue");
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

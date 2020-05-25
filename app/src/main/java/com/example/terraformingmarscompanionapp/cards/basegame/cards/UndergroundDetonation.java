@@ -26,6 +26,7 @@ public final class UndergroundDetonation extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeMoney(-10);
         owner_player.changeHeatProduction(2);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

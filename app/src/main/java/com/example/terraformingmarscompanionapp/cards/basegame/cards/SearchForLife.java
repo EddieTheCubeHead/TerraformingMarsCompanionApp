@@ -50,6 +50,7 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
         if (data >= 0) {
             resource_amount++;
         }
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

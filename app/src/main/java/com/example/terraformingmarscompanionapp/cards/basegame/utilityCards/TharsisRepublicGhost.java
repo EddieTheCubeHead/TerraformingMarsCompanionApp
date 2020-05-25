@@ -25,9 +25,9 @@ public final class TharsisRepublicGhost extends Card implements EffectCard {
     @Override
     public void cardEffect(Player player) {
         if (owner_player == null) {
-            System.out.println("Tried to call tharsis republic second effect with no owner");
             return;
         }
+
         owner_player.changeMoneyProduction(1);
     }
 }

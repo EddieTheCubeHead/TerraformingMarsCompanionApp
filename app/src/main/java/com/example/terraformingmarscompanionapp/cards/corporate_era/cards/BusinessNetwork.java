@@ -45,6 +45,7 @@ public final class BusinessNetwork extends Card implements ActionCard {
         }
         owner_player.changeMoney(3 + owner_player.getCardBuyCostModifier());
         owner_player.changeHandSize(1);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

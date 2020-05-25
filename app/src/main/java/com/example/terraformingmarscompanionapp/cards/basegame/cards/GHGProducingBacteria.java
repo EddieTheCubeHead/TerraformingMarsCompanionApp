@@ -54,6 +54,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
             resource_amount -= 2;
             owner_game.raiseTemperature(owner_player);
         }
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

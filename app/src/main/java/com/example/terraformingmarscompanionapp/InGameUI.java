@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -26,6 +29,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
+import com.example.terraformingmarscompanionapp.ui.main.TileMapFragment;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 import com.google.android.material.tabs.TabLayout;
@@ -70,13 +74,10 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
             } else if (GameController.getGreeneryRound()) {
                 Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
             }
-            Player current_player = GameController.getCurrentPlayer();
 
-            current_player.changeMoney(10);
-
-            Toast.makeText(getApplicationContext(),
-                    current_player.getName() + ": " + current_player.getMoney() + "c",
-                    Toast.LENGTH_SHORT).show();
+            //Add data here
+            TileMapFragment mapFragment = new TileMapFragment();
+            //TODO FragmentManager manager = getSupportFragmentManager().beginTransaction()
         });
 
         findViewById(R.id.item_2).setOnClickListener(v -> {
@@ -117,6 +118,7 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
 
     @Override
     protected void onResume() {
+        Log.i("InGameUI", "Calling on resume");
         GameController.setContextReference(this);
         if (EventScheduler.getStackHasEvents()) {
             EventScheduler.playNextEvent(this);
@@ -198,7 +200,6 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
             ((Card) spinner.getSelectedItem()).onPlay(self, self_context);
 
             dialog.dismiss();
-            return;
             }
         });
     }

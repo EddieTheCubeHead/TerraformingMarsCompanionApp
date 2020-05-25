@@ -36,6 +36,7 @@ public final class SpaceElevator extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeSteel(-1);
         owner_player.changeMoney(5);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

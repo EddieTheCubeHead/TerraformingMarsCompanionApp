@@ -27,6 +27,7 @@ public final class Steelworks extends Card implements ActionCard {
         owner_player.changeSteel(2);
         owner_player.changeEnergy(-4);
         owner_game.raiseOxygen(owner_player);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

@@ -60,6 +60,7 @@ public final class ElectroCatapult extends Card implements ActionCard {
             owner_player.takeSteel(1);
         }
         owner_player.changeMoney(7);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

@@ -28,6 +28,7 @@ public final class WaterSplittingPlant extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-3);
         owner_game.raiseOxygen(owner_player);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

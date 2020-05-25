@@ -42,6 +42,7 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeTitanium(-1);
         resource_amount++;
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

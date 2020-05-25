@@ -27,6 +27,7 @@ public final class PhysicsComplex extends ResourceCard implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-6);
         resource_amount++;
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

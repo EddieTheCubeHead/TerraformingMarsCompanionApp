@@ -52,6 +52,7 @@ public final class RegolithEaters extends ResourceCard implements ActionCard {
         } else {
             Log.i("Regolith eaters Error", "Invalid checks led to this being played to raise oxygen without sufficient microbes.");
         }
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

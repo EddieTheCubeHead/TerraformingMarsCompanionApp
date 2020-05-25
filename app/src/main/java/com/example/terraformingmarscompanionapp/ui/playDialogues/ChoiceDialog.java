@@ -148,7 +148,6 @@ public class ChoiceDialog {
                     Log.i("Choice dialog", "Error in use case");
             }
             dialog.dismiss();
-            EventScheduler.playNextEvent(context);
         });
     }
 }

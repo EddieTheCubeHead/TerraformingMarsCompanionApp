@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.EventLog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -98,7 +99,7 @@ public class IntegerDialog extends AppCompatActivity {
             }
             card.onPlayServerHook(GameController.getCurrentPlayer(), result);
             dialog.dismiss();
-            EventScheduler.playNextEvent(context);
+            Log.i("Integer dialogue", "Dialogue dismissed and calling next event");
         });
     }
 }

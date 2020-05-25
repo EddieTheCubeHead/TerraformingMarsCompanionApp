@@ -33,6 +33,7 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
     public void actionWithMetadata(Integer data) {
         owner_player.changeMoney(-3);
         owner_player.changeTerraformingRating(1);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

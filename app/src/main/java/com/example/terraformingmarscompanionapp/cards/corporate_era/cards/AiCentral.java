@@ -38,6 +38,7 @@ public final class AiCentral extends Card implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         owner_player.changeHandSize(2);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

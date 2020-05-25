@@ -31,6 +31,7 @@ public final class PowerInfrastructure extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeEnergy(-data);
         owner_player.changeMoney(data);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

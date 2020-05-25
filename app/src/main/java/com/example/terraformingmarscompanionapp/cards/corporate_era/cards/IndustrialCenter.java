@@ -8,6 +8,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
@@ -37,6 +38,7 @@ public final class IndustrialCenter extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.changeMoney(-7);
         owner_player.changeSteelProduction(1);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

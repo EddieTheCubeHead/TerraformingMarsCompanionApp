@@ -157,6 +157,7 @@ public class GameController
 
     public static void useAction(Boolean end_turn) {
         actions_used++;
+        gameUpdate();
 
         if (actions_used >= 2 || end_turn) {
             endTurn();
@@ -238,6 +239,7 @@ public class GameController
 
             if (!action.firstActionUsed())
             {
+                Log.i("Game Controller", "Calling first action for player " + current_player.getName());
                 action.firstAction();
             }
         }
@@ -279,6 +281,7 @@ public class GameController
     public static void atGenerationStart() {atGenerationStart(getContext());}
     public static void atGenerationStart(Context context)
     {
+        Log.i("Game Controller", "Generation start called");
         generation += 1;
         atTurnStart(context);
     }
