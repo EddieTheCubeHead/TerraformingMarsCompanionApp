@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -104,13 +106,22 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
             }
             GameController.endTurn(this);
             if (game.getServerMultiplayer()) {
-                GameActions.sendFold();
+                GameActions.sendActionUse(new ActionUsePacket(true, false));
             }
         });
 
         if (GameController.getGeneration() == 0) {
             GameController.atTurnStart(this);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        GameController.setContextReference(this);
+        if (EventScheduler.getStackHasEvents()) {
+            EventScheduler.playNextEvent(this);
+        }
+        super.onResume();
     }
 
     public void playCorporation()
@@ -176,15 +187,15 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
 
         title.setText("Choose " + player_string + " corporation.");
 
-        //cycling through all players.
-        view.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
-            private int player_index = 0;
+        //Quickly store context to use inside spinner
+        Context self_context = this;
 
+        view.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
             //setting corporation
-            ((Card) spinner.getSelectedItem()).onPlay(self);
+            ((Card) spinner.getSelectedItem()).onPlay(self, self_context);
 
             dialog.dismiss();
             return;

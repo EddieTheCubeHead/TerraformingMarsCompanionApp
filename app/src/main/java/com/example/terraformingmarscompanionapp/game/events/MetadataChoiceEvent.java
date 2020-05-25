@@ -2,6 +2,9 @@ package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -37,6 +40,13 @@ public final class MetadataChoiceEvent extends GameEvent {
 
     @Override
     public void playEvent(Context context) {
+        Log.i("Event played", toString());
         ChoiceDialog.displayDialog(context, message, use_case, choices, card, GameController.getCurrentPlayer());
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("Metadata choice event: card: %s, use case: %s", card.getName(), use_case.toString());
     }
 }

@@ -57,21 +57,14 @@ public class IntegerDialog extends AppCompatActivity {
 
         title.setText(dialog_title);
 
-        Button button_negative = view.get().findViewById(R.id.button_negative);
         Button button_positive = view.get().findViewById(R.id.button_positive);
 
         LinearLayout root = view.get().findViewById(R.id.button_frame_lower);
-
-        root.removeView(root.findViewById(R.id.button_negative_hidden));
-        root.removeView(root.findViewById(R.id.button_positive_hidden));
 
 
         //Build and show the dialogue
         view.get().setBackgroundColor(Color.TRANSPARENT);
 
-            //Remove excess button
-        button_negative.setClickable(false);
-        button_negative.setAlpha(0);
 
         AlertDialog dialog = new AlertDialog.Builder(context)
                 .setView(view.get())
@@ -89,12 +82,6 @@ public class IntegerDialog extends AppCompatActivity {
 
         window.setLayout(  4*width / 5, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        //listeners
-        button_negative.setOnClickListener(v -> {
-            EventScheduler.clearEventStack();
-            dialog.dismiss();
-        });
-
         button_positive.setOnClickListener(v -> {
             if (number_field.getText().toString().equals("")) {
                 return;
@@ -111,7 +98,7 @@ public class IntegerDialog extends AppCompatActivity {
             }
             card.onPlayServerHook(GameController.getCurrentPlayer(), result);
             dialog.dismiss();
-            //TODO next event in stack
+            EventScheduler.playNextEvent(context);
         });
     }
 }

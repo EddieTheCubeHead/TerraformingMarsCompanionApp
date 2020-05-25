@@ -1,5 +1,9 @@
 package com.example.terraformingmarscompanionapp.webSocket.packets;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -14,7 +18,7 @@ public final class ActionUsePacket implements ServerPacket {
     }
 
     public ActionUsePacket(Boolean end_turn) {
-        this.end_turn = false;
+        this.end_turn = end_turn;
         use_action = true;
     }
 
@@ -25,10 +29,18 @@ public final class ActionUsePacket implements ServerPacket {
 
     @Override
     public void playPacket() {
+        Log.i("ActionUsePacket", String.format("Action data: end turn: %b, use_action %b", end_turn, use_action));
         if (use_action) {
             GameController.useAction(end_turn);
         } else if (end_turn) {
             GameController.endTurn();
         }
+    }
+
+    //Used for debugging
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("end turn: %b, use action: %b", end_turn, use_action);
     }
 }

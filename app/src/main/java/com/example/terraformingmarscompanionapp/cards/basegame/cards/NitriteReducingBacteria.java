@@ -6,10 +6,18 @@ import android.content.Intent;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public final class NitriteReducingBacteria extends ResourceCard implements ActionCard {
     public NitriteReducingBacteria(Game game) {
@@ -28,18 +36,13 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
 
     @Override
     public void cardAction() {
+        EventScheduler.addEvent(new ActionUseEvent());
         if (resource_amount < 3) {
             onPlayServerHook(owner_player, 0);
             return;
         }
-        Context context = GameController.getContext();
-        Intent intent = new Intent(context, BooleanDialogActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
-        intent.putExtra(BooleanDialogActivity.TITLE_TEXT, "Add a microbe or raise TR?");
-        intent.putExtra(BooleanDialogActivity.FALSE_TEXT, "Microbe");
-        intent.putExtra(BooleanDialogActivity.TRUE_TEXT, "TR");
-        context.startActivity(intent);
+        EventScheduler.addEvent(new MetadataChoiceEvent("Choose what to do:",
+                new ArrayList<>(Arrays.asList("Add a microbe", "Raise TR")), this, ChoiceDialog.USE_CASE.GENERAL));
     }
 
     @Override
@@ -50,6 +53,7 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
             resource_amount -= 3;
             owner_player.changeTerraformingRating(1);
         }
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

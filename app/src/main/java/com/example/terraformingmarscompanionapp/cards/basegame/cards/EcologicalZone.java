@@ -1,8 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -19,13 +23,13 @@ public final class EcologicalZone extends ResourceCard implements EffectCard {
         requirements.setMinPersonalGreeneries(1);
         resource_type = ResourceType.ANIMAL;
         owner_game = game;
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.addUiEvent(new TileEvent(Placeable.ECOLOGICAL_ZONE, owner_game));
-        super.onPlay(player);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new TileEvent(Placeable.ECOLOGICAL_ZONE, owner_game));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override
@@ -36,9 +40,7 @@ public final class EcologicalZone extends ResourceCard implements EffectCard {
 
     @Override
     public void cardEffect(Player player) {
-        if (owner_player == null) {
-            return;
-        } else if (owner_player == player) {
+        if (owner_player != null && owner_player == player) {
             resource_amount++;
         }
     }

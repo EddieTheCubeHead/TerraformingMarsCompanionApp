@@ -3,6 +3,8 @@ package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -23,8 +25,8 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
 
     @Override
     public void cardAction() {
-        GameController.getInstance().useAction();
-        actionServerHook(owner_player);
+        defaultEvents(owner_player);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

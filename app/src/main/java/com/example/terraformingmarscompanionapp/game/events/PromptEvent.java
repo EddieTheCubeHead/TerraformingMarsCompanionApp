@@ -1,6 +1,9 @@
 package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.terraformingmarscompanionapp.game.GameController;
 
@@ -16,6 +19,13 @@ public class PromptEvent extends GameEvent {
 
     @Override
     public void playEvent(Context context) {
+        Log.i("Event played", toString());
         GameController.promptUser(text, context);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("Prompt event: message: %s", text);
     }
 }

@@ -20,7 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -37,7 +39,12 @@ public class ChoiceDialog {
         PLAYER,
         VIRUS,
         ROBOTIC_WORKFORCE,
-        GENERAL
+        GENERAL,
+        RAIDERS_STEEL,
+        RAIDERS_MONEY,
+        SABOTAGE_TITANIUM,
+        SABOTAGE_STEEL,
+        SABOTAGE_MONEY
     }
 
     public static void displayDialog(Context context, String message, USE_CASE use_case, ArrayList<String> targets, Card card, Player player)
@@ -107,15 +114,41 @@ public class ChoiceDialog {
                 case VIRUS:
                     card.onPlayServerHook(player, target_index + 2);
                     break;
+
+                // These work the same way. The card first gets an integer through usecase GENERAl
+                // then serverHook method opens another dialogue with one of these usecases and the
+                // multiples of five in data are used to differentiate between the first choices made
+                case SABOTAGE_MONEY:
+                    if (target_index != 0) {
+                        target_index += 5;
+                    }
+                case SABOTAGE_STEEL:
+                case RAIDERS_MONEY:
+                    if (target_index != 0) {
+                        target_index += 5;
+                    }
+                case SABOTAGE_TITANIUM:
+                case RAIDERS_STEEL:
+                    card.playWithMetadata(player, target_index + 3);
+                    break;
+
                 case GENERAL:
                 case PLAYER:
-                    card.onPlayServerHook(player, target_index);
+
+                    //See if dialog called from onPlay or action. Call methods in card accordingly
+                    if (card.getOwner() == null) {
+                        card.onPlayServerHook(player, target_index);
+                    } else if (card instanceof ActionCard) {
+                        ((ActionCard) card).actionServerHook(player, target_index);
+                    } else {
+                        Log.i("Choice dialog Error", "Choice dialog called from an owned card that is not an action card.");
+                    }
                     break;
                 default:
                     Log.i("Choice dialog", "Error in use case");
             }
             dialog.dismiss();
-            //TODO next action in event stack
+            EventScheduler.playNextEvent(context);
         });
     }
 }

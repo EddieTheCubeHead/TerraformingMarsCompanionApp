@@ -7,6 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
@@ -156,6 +157,10 @@ public class Game implements Serializable {
 
         all_cards = new HashMap<>();
 
+        if (prelude) {
+            preludes = constructor.createPreludes();
+        }
+
         //Using a stream would require higher API level. This keeps API level low
         for (Map.Entry<String, Card> entry : deck.entrySet()) {
             all_cards.put(entry.getKey(), entry.getValue());
@@ -177,9 +182,10 @@ public class Game implements Serializable {
             all_cards.put(entry.getKey(), entry.getValue());
         }
 
-        if (prelude) {
-            preludes = constructor.createPreludes();
+        for (Map.Entry<String, Card> entry : preludes.entrySet()) {
+            all_cards.put(entry.getKey(), entry.getValue());
         }
+
 
         this.server_multiplayer = server_multiplayer;
 
@@ -239,7 +245,7 @@ public class Game implements Serializable {
     //Functions for playing cards. First part in three functions
     public CardCostPacket getRecommendedCardCost(Card card)
     {
-        ArrayList<Card.Type> single_owner = new ArrayList<>(Arrays.asList(Card.Type.BLUE, Card.Type.RED, Card.Type.GREEN, Card.Type.CORPORATION, Card.Type.GHOST, Card.Type.AWARD, Card.Type.MILESTONE));
+        ArrayList<Type> single_owner = new ArrayList<>(Arrays.asList(Type.BLUE, Type.RED, Type.GREEN, Type.CORPORATION, Type.GHOST, Type.AWARD, Type.MILESTONE));
 
         CardCostPacket resources_to_use = checkCardCost(card);
 
@@ -272,32 +278,36 @@ public class Game implements Serializable {
         ArrayList<Tag> card_tags = card.getTags();
 
         //If -tarkistukset tagialennuksille
-        if (card.getType() != Card.Type.STANDARD_PROJECT && card.getType() != Card.Type.OTHER) {
+        if (card.getType() != Type.STANDARD_PROJECT && card.getType() != Type.OTHER) {
             actual_price -= player.getCardDiscount();
         }
 
-        if (card_tags.contains(Tag.BUILDING) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.BUILDING) && card.getType() != Type.OTHER) {
             actual_price -= player.getBuildingTagDiscount();
         }
 
-        if (card_tags.contains(Tag.SPACE) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.SPACE) && card.getType() != Type.OTHER) {
             actual_price -= player.getSpaceTagDiscount();
         }
 
-        if (card_tags.contains(Tag.EARTH) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.EARTH) && card.getType() != Type.OTHER) {
             actual_price -= player.getEarthTagDiscount();
         }
 
-        if (card_tags.contains(Tag.SCIENCE) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.SCIENCE) && card.getType() != Type.OTHER) {
             actual_price -= player.getScienceTagDiscount();
         }
 
-        if (card_tags.contains(Tag.ENERGY) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.ENERGY) && card.getType() != Type.OTHER) {
             actual_price -= player.getEnergyTagDiscount();
         }
 
-        if (card_tags.contains(Tag.VENUS) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.VENUS) && card.getType() != Type.OTHER) {
             actual_price -= player.getVenusTagDiscount();
+        }
+
+        if (Card.MAIN_DECK.contains(card.getType())) {
+            actual_price -= player.getNextCardDiscount();
         }
 
         if (actual_price < 0) {
@@ -669,7 +679,7 @@ public class Game implements Serializable {
     }
 
     //Second part of playing a card. See Card -class for a more detailed explanation of playing cards
-    public void playCard(Card card, CardCostPacket resources_to_use)
+    public void playCard(Card card, CardCostPacket resources_to_use, Context context)
     {
         Player player = GameController.getCurrentPlayer();
 
@@ -684,7 +694,7 @@ public class Game implements Serializable {
             GameActions.sendCardCost(resources_to_use);
         }
 
-        card.onPlay(player);
+        card.onPlay(player, context);
     }
 
     //End a generation

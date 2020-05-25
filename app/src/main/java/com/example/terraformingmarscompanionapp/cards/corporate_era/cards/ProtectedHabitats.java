@@ -3,10 +3,11 @@ package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-public final class ProtectedHabitats extends Card implements EffectCard {
+public final class ProtectedHabitats extends Card {
     public ProtectedHabitats(Game game) {
         super(Type.BLUE, game);
         name = "Protected habitats";
@@ -15,7 +16,8 @@ public final class ProtectedHabitats extends Card implements EffectCard {
     }
 
     @Override
-    public void cardEffect(Player player) {
-        //todo ei voi poistaa kasveja eiläimiä tai bakteerejaa
+    public void playWithMetadata(Player player, Integer data) {
+        player.setOrganicsProtected(true);
+        super.playWithMetadata(player, data);
     }
 }

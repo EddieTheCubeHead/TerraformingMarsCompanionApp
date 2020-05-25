@@ -30,7 +30,6 @@
         <activity android:name=".GameJoiningActivity" />
         <activity android:name=".ui.main.ActivityDialogSearch" />
         <activity android:name=".ui.playDialogues.IntegerDialog" />
-        <activity android:name=".ui.main.BooleanDialogActivity" />
     </application>
 
 </manifest>

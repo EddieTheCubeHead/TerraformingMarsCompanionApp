@@ -23,7 +23,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="161dp"
+        android:layout_height="152dp"
         android:orientation="vertical">
 
 
@@ -48,6 +48,14 @@
 
                 />
 
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/edittext_number"
                 android:layout_width="0dp"
@@ -61,40 +69,6 @@
                 android:textSize="20sp"
 
                 />
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/button_frame"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button_negative"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_weight="1"
-
-                android:text="decline" />
-
-            <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:id="@+id/button_positive"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_weight="1"
-                android:text="confirm" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -107,23 +81,9 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button_negative_hidden"
+                android:id="@+id/button_positive"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_weight="1"
-
-                android:text="decline"
-                tools:visibility="visible" />
-
-            <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="match_parent" />
-
-            <Button
-                android:id="@+id/button_positive_hidden"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
 
                 android:layout_weight="1"
                 android:text="confirm"

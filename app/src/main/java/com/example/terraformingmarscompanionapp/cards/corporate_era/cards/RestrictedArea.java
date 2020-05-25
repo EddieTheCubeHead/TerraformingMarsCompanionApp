@@ -1,8 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -16,13 +20,13 @@ public final class RestrictedArea extends Card implements ActionCard {
         name = "Restricted area";
         price = 11;
         tags.add(Tag.SCIENCE);
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.RESTRICTED_AREA, owner_game));
-        super.onPlay(player);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new TileEvent(Placeable.RESTRICTED_AREA, owner_game));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override
@@ -32,9 +36,9 @@ public final class RestrictedArea extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().addUiEvent(new PromptEvent("Please draw a card"));
-        GameController.getInstance().useAction();
-        actionServerHook(owner_player);
+        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PromptEvent("Please draw a card"));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

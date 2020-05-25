@@ -1,10 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class IndustrialCenter extends Card implements ActionCard {
     public IndustrialCenter(Game game) {
@@ -12,14 +18,14 @@ public final class IndustrialCenter extends Card implements ActionCard {
         name = "Industrial center";
         price = 4;
         tags.add(Tag.BUILDING);
-        //TODO City tile laudalla ja hexa vierestä vapaana
         owner_game = game;
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
-        //TODO Erikois laatan laittaminen
-        super.playWithMetadata(player, data);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new TileEvent(Placeable.INDUSTRIAL_CENTER, owner_game));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override

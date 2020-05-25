@@ -175,7 +175,7 @@ public class CardCostDialog {
                         !(card.getTags().contains(Tag.SPACE) && change < titanium_value))) {
             Toast.makeText(context, String.format("Please remove %d megacredits worth of resources", change), Toast.LENGTH_SHORT).show();
         } else {
-            GameController.getGame().playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater));
+            GameController.getGame().playCard(card, new CardCostPacket(player.getName(), credit, steel, titanium, heat, plant, floater), context);
             Toast.makeText(context, String.format("Card '%s' played successfully!", card.getName()), Toast.LENGTH_SHORT).show();
             exit(dialog);
         }

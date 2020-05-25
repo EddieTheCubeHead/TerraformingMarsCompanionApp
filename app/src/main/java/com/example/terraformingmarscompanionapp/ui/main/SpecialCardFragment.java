@@ -50,10 +50,9 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
 
         searchview = view.findViewById(R.id.searchview);
 
-        controller = GameController.getInstance();
-        controller.registerGameUpdateListener(this);
+        GameController.registerGameUpdateListener(this);
 
-        game = controller.getGame();
+        game = GameController.getGame();
         HashMap<String, Card> deck = game.getDeck();
 
         //cards into arraylist
@@ -101,14 +100,14 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
 
     @Override public void onCardClick(int position)
     {
-        if (!controller.checkTurnEligibility()) {
+        if (!GameController.checkTurnEligibility()) {
             Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
 
-        if (controller.getGreeneryRound() && !(card instanceof BuildGreenery)) {
+        if (GameController.getGreeneryRound() && !(card instanceof BuildGreenery)) {
             Toast.makeText(getContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
         }
 
@@ -119,7 +118,7 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
                  return;
              }
             Toast.makeText(getContext(), String.format("Action %s performed", card.getName()), Toast.LENGTH_SHORT).show();
-             game.playCard(card, packet);
+             game.playCard(card, packet, this.getContext());
         } catch (Exception ignored) {}
     }
 

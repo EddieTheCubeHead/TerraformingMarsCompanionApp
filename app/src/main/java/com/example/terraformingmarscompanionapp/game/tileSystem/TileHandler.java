@@ -280,12 +280,12 @@ public class TileHandler {
 
     public void placeGanymede(Player player) {
         game.update_manager.onCityPlaced(player, false);
-        space_tiles[0].placeHex(player, Placeable.CITY);
+        space_tiles[0].placeHex(player, Placeable.CITY, GameController.getContext());
     }
 
     public void placePhobos(Player player) {
         game.update_manager.onCityPlaced(player, false);
-        space_tiles[1].placeHex(player, Placeable.CITY);
+        space_tiles[1].placeHex(player, Placeable.CITY, GameController.getContext());
     }
 
     //Gets called from TilePlacementActivity
@@ -334,7 +334,7 @@ public class TileHandler {
             }
         }
 
-        to_place.placeHex(player, tile_type);
+        to_place.placeHex(player, tile_type, GameController.getContext());
         player.addTile(to_place);
 
         if (flood) {

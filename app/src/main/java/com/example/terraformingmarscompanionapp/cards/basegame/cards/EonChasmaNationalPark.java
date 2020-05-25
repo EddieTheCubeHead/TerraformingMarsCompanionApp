@@ -1,8 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -17,13 +21,14 @@ public final class EonChasmaNationalPark extends Card {
         tags.add(Tag.BUILDING);
         requirements.setMinTemperature(-12);
         victory_points = 1;
-        wait_for_server = true;
+
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 1, true));
-        super.onPlay(player);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 1, true));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override

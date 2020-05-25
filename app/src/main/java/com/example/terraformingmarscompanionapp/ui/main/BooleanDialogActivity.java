@@ -28,6 +28,9 @@ import java.util.HashMap;
 /**
  * A dialogue for a "boolean" decision made by a player when playing a card. Can be extended to
  * 3 or 4 choices, but looks horrible with 3 options
+ *
+ * Decrepicated for now. Will probably be reworked into working with simple 2-way choices as a dialogue
+ * instead of an activity
  */
 public class BooleanDialogActivity extends AppCompatActivity {
 
@@ -40,11 +43,6 @@ public class BooleanDialogActivity extends AppCompatActivity {
     public static final String EXTRA_TEXT_1 = "extra1";
     public static final String EXTRA_TEXT_2 = "extra2";
 
-    private String false_text;
-    private String true_text;
-    private String title_text;
-    private String extra_text_1;
-    private String extra_text_2;
     private Card card;
 
     View view;
@@ -54,18 +52,13 @@ public class BooleanDialogActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empty);
-
-        GameController controller = GameController.getInstance();
-        Game game = controller.getGame();
+        
+        Game game = GameController.getGame();
         HashMap<String, Card> deck = game.getAllCards();
 
         Intent intent = getIntent();
 
-        false_text = intent.getStringExtra(FALSE_TEXT);
-        true_text = intent.getStringExtra(TRUE_TEXT);
-        title_text = intent.getStringExtra(TITLE_TEXT);
-        extra_text_1 = intent.getStringExtra(EXTRA_TEXT_1);
-        extra_text_2 = intent.getStringExtra(EXTRA_TEXT_2);
+        String title_text = intent.getStringExtra(TITLE_TEXT);
 
         card = deck.get(intent.getStringExtra(CARD_NAME));
 
@@ -78,38 +71,13 @@ public class BooleanDialogActivity extends AppCompatActivity {
         EditText number_field = view.findViewById(R.id.edittext_number);
 
         title.setText(title_text);
-        Button button_negative = view.findViewById(R.id.button_negative);
-        Button button_positive = view.findViewById(R.id.button_positive);
-        Button extra_first = view.findViewById(R.id.button_negative_hidden);
-        Button extra_second = view.findViewById(R.id.button_positive_hidden);
+        Button extra_second = view.findViewById(R.id.button_positive);
 
         LinearLayout root = view.findViewById(R.id.button_frame_lower);
-
-        if (extra_text_1 != null) {
-            extra_first.setText(extra_text_1);
-            extra_first.setOnClickListener(v -> {
-                executeWithData(2);
-            });
-        } else {
-            root.removeView(root.findViewById(R.id.button_negative_hidden));
-        }
-
-        if (extra_text_2 != null) {
-            extra_second.setText(extra_text_2);
-            extra_second.setOnClickListener(v -> {
-                executeWithData(3);
-            });
-        }else {
-            root.removeView(root.findViewById(R.id.button_positive_hidden));
-        }
 
         //Calling and showing the dialogue
             //transparent corners
         view.setBackgroundColor(Color.TRANSPARENT);
-
-            //nappien tekstit
-        button_negative.setText(false_text);
-        button_positive.setText(true_text);
 
         ((LinearLayout) view.findViewById(R.id.root_linearlayout)).removeView(number_field);
 
@@ -128,21 +96,11 @@ public class BooleanDialogActivity extends AppCompatActivity {
         Window window = dialog.getWindow();
 
         window.setLayout(  4*width / 5, WindowManager.LayoutParams.WRAP_CONTENT);
-
-        //listeners
-        button_negative.setOnClickListener(v -> {
-            executeWithData(0);
-        });
-
-        button_positive.setOnClickListener(v -> {
-            executeWithData(1);
-        });
     }
 
     private void executeWithData(Integer data) {
-        card.overridePlayActionCall();
         if (card.getOwner() == null) {
-            card.onPlayServerHook(GameController.getInstance().getCurrentPlayer(), data);
+            card.onPlayServerHook(GameController.getCurrentPlayer(), data);
         } else {
             if (card instanceof ActionCard) {
                 ((ActionCard) card).actionServerHook(card.getOwner(), data);

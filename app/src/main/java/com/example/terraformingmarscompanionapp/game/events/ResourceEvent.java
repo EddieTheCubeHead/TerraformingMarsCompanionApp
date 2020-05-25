@@ -2,6 +2,9 @@ package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -38,6 +41,7 @@ public final class ResourceEvent extends GameEvent {
 
     @Override
     public void playEvent(Context context) {
+        Log.i("Event played", toString());
         Intent intent = new Intent(context, ActivityDialogSearch.class);
         intent.putExtra(ActivityDialogSearch.RESOURCE_TYPE, resource_type.toString());
         intent.putExtra(ActivityDialogSearch.AMOUNT, amount);
@@ -45,5 +49,11 @@ public final class ResourceEvent extends GameEvent {
         intent.putExtra(ActivityDialogSearch.OWNER_ONLY, owner_required);
         intent.putExtra(ActivityDialogSearch.PLAYER_NAME, player.getName());
         context.startActivity(intent);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("Resource event: resource type: %s, resource amount: %d", resource_type.toString(), amount);
     }
 }

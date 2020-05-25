@@ -3,6 +3,8 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -25,9 +27,9 @@ public final class Predators extends ResourceCard implements ActionCard {
     }
 
     public void cardAction() {
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, owner_player, 1));
-        GameController.getInstance().useAction();
-        actionServerHook(owner_player);
+        defaultEvents(owner_player);
+        EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, owner_player, 1));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

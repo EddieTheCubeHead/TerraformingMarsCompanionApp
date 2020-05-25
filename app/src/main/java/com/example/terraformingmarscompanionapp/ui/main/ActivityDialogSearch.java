@@ -19,6 +19,7 @@ import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -50,7 +51,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
 
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
-    private ArrayList<Card.Type> valid_types = new ArrayList<>(Arrays.asList(Card.Type.GREEN, Card.Type.RED, Card.Type.BLUE, Card.Type.CORPORATION));
+    private ArrayList<Type> valid_types = new ArrayList<>(Arrays.asList(Type.GREEN, Type.RED, Type.BLUE, Type.CORPORATION));
     private ArrayList<ResourceCard.ResourceType> organics = new ArrayList<>(Arrays.asList(ResourceCard.ResourceType.ANIMAL, ResourceCard.ResourceType.MICROBE));
 
     View view;
@@ -69,8 +70,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         amount = intent.getIntExtra(AMOUNT, 0);
         type = ResourceCard.ResourceType.valueOf(intent.getStringExtra(RESOURCE_TYPE));
 
-        GameController controller = GameController.getInstance();
-        Game game = controller.getGame();
+        Game game = GameController.getGame();
         HashMap<String, Card> deck = game.getAllCards();
 
         //inflating layout
@@ -82,7 +82,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         RecyclerView recyclerview = view.findViewById(R.id.result_recyclerview);
 
         if (special_case.equals("Robotic workforce")) {
-            //filtering casrds
+            //filtering cards
             for (Map.Entry<String, Card> entry : deck.entrySet()) {
                 Card card = entry.getValue();
 
@@ -183,9 +183,10 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         Card card = card_list.get(position);
         if (special_case.equals("Robotic workforce")) {
             card.playProductionBox();
-            GameActions.sendCardEvent(new CardEventPacket("Robotic workforce", GameController.getInstance().getCurrentPlayer().getName(), 0, card.getName()));
+            //TODO Robotic workforce implementation
+            GameActions.sendCardEvent(new CardEventPacket("Robotic workforce", GameController.getCurrentPlayer().getName(), 0));
         } else {
-            if (GameController.getInstance().getGame().getServerMultiplayer()) {
+            if (GameController.getGame().getServerMultiplayer()) {
                 GameActions.sendResourceEvent(new ResourceEventPacket(card.getName(), amount));
             }
             ((ResourceCard)card).changeResourceAmount(amount);

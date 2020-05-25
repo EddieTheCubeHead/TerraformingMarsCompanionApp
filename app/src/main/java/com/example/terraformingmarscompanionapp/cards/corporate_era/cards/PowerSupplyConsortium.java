@@ -1,9 +1,15 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class PowerSupplyConsortium extends Card {
     public PowerSupplyConsortium(Game game) {
@@ -16,9 +22,16 @@ public final class PowerSupplyConsortium extends Card {
     }
 
     @Override
+    public void onPlay(Player player, Context context) {
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new MetadataChoiceEvent(this));
+        EventScheduler.playNextEvent(context);
+    }
+
+    @Override
     public void playWithMetadata(Player player, Integer data) {
-        //TODO vöhennä jotain energy productionia 1
-        player.changeEnergyProduction(1);
+        production_box.setStealEnergyProduction(1);
+        production_box.setEnergyProduction(1);
         super.playWithMetadata(player, data);
     }
 }

@@ -3,12 +3,14 @@ package com.example.terraformingmarscompanionapp.game;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
@@ -170,7 +172,7 @@ public class GameController
         else
             queue.addLast(queue.removeFirst());
 
-        //kun kaikki on foldannu
+        //If everyone has folded
         if (queue.size() == 0)
         {
             endGeneration(context);
@@ -183,9 +185,12 @@ public class GameController
     public static void atTurnStart(Context context)
     {
         actions_used = 0;
+
+        //Shouldn't be needed but just in case
+        EventScheduler.clearEventStack();
         gameUpdate();
 
-        System.out.println(current_player.getName() + " " + generation);
+        Log.i("Game controller", String.format("At turn start called for player %s, generation %s", current_player, generation));
 
         //Sometimes there are specific actions at the start of a generation or at certain generations
         //this if-else mess keeps track of those
@@ -210,10 +215,12 @@ public class GameController
         //Activity at the start of the round
         } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
 
+            current_player.setDrewCardsThisGen(true);
+
             //Beginner corporation draws 10 cards for free at game start
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
                 if (server_multiplayer) {
-                    GameActions.sendActionUse(new ActionUsePacket(false));
+                    EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true)));
                 }
                 current_player.changeHandSize(10);
                 current_player.setDrewCardsThisGen(true);

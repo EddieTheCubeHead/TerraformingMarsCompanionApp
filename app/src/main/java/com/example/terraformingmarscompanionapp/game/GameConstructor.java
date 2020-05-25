@@ -879,7 +879,7 @@ class GameConstructor {
     HashMap<String, Card> createGhosts() {
         HashMap<String, Card> ghosts = new HashMap<>();
 
-        Card tharsis_republic_second_effect = new TharsisRepublicSecondEffect(game);
+        Card tharsis_republic_second_effect = new TharsisRepublicGhost(game);
         ghosts.put(tharsis_republic_second_effect.getName(), tharsis_republic_second_effect);
 
         return ghosts;

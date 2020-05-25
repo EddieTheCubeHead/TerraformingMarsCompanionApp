@@ -43,8 +43,11 @@ public abstract class Card {
     protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
     protected ProductionBox production_box = new ProductionBox();
+
+    //Lists of tag collections for certain operations
     private final static ArrayList<Type> OWNABLES = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST, Type.MILESTONE));
     private final static ArrayList<Type> TAG_HOLDERS = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
+    public final static ArrayList<Type> MAIN_DECK = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE));
 
     public Card(Type card_type, Game game) {
         type = card_type;
@@ -59,7 +62,9 @@ public abstract class Card {
     }
 
     protected void defaultEvents(Player player) {
-        EventScheduler.addEvent(new ActionUseEvent());
+        if (type.equals(Type.CORPORATION)) {
+            EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true)));
+        }
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
     }
 
@@ -76,8 +81,13 @@ public abstract class Card {
     }
 
     protected final void finishPlay (Player player) {
+        Log.i("Card", String.format("Finishing playing card '%s'", name));
         if (OWNABLES.contains(type) && !(this instanceof BeginnerCorporation)) {
             owner_player = player;
+        }
+
+        if (MAIN_DECK.contains(type)) {
+            player.setNextCardDiscount(0);
         }
 
         boolean is_event = (type == Type.RED);
@@ -197,10 +207,12 @@ public abstract class Card {
                 player.addPrelude(this);
                 break;
             case GHOST:
-            case STANDARD_PROJECT:
             case AWARD:
             case MILESTONE:
             case OTHER:
+                break;
+            case STANDARD_PROJECT:
+                owner_game.update_manager.onStandardProjectPayment(player);
                 break;
             default:
                 Log.i("Card","Type error in card " + getName());

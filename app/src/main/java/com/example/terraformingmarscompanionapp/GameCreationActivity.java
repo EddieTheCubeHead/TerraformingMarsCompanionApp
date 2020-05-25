@@ -131,7 +131,7 @@ public class GameCreationActivity extends AppCompatActivity
                 false, false, false,
                 map);
 
-        GameController.makeInstance(game);
+        GameController.initGameController(game, true);
 
         Intent intent = new Intent(this, InGameUI.class);
         startActivity(intent);

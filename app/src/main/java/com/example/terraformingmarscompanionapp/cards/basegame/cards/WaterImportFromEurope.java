@@ -3,6 +3,8 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -27,10 +29,10 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().addUiEvent(new CardCostEvent(owner_game.getDeck().get("Water import from europe ghost")));
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        GameController.getInstance().useAction();
-        actionServerHook(owner_player);
+        defaultEvents(owner_player);
+        EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new CardCostEvent(owner_game.getDeck().get("Water import from europe ghost")));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

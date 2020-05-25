@@ -3,7 +3,10 @@ package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 
 public final class CaretakerContract extends Card implements ActionCard {
     public CaretakerContract(Game game) {
@@ -16,9 +19,8 @@ public final class CaretakerContract extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-            owner_player.changeTerraformingRating(1);
-            owner_player.changeHeat(-8);
-            action_used = true;
+        defaultEvents(owner_player);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
