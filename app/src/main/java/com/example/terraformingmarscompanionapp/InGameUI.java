@@ -47,6 +47,15 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
     SectionsPagerAdapter sectionsPagerAdapter;
     ViewPager viewPager;
 
+    //Will probably be used for managing state. Might get removed
+    private enum State {
+        MAIN_VIEW,
+        MAP,
+        SEARCH
+    }
+
+    private State state = State.MAIN_VIEW;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,25 +68,21 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
         game = GameController.getGame();
 
         //default ui-things
-            sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
-            viewPager = findViewById(R.id.view_pager);
-            viewPager.setAdapter(sectionsPagerAdapter);
-        //
+        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsPagerAdapter);
 
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
+        //Placeholder for map fragment testing. Doesn really function but at least gets the fragment open
         findViewById(R.id.item_1).setOnClickListener(view -> {
-            if (!GameController.checkTurnEligibility()) {
-                Toast.makeText(getApplicationContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
-                return;
-            } else if (GameController.getGreeneryRound()) {
-                Toast.makeText(getApplicationContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
-            }
-
-            //Add data here
-            TileMapFragment mapFragment = new TileMapFragment();
-            //TODO FragmentManager manager = getSupportFragmentManager().beginTransaction()
+            TileMapFragment map_fragment = new TileMapFragment(/*add data here*/);
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction map_transaction = manager.beginTransaction();
+            map_transaction.replace(R.id.main_layout, map_fragment, "map");
+            state = State.MAP;
+            map_transaction.commit();
         });
 
         findViewById(R.id.item_2).setOnClickListener(v -> {
@@ -313,8 +318,15 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
     }
 
     public void onBackPressed() {
-        if (viewPager.getCurrentItem() != 0) {
-            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        switch (state) {
+            case MAIN_VIEW:
+                if (viewPager.getCurrentItem() != 0) {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                }
+                break;
+            case MAP:
+                //TODO this
+                Log.i("InGameUI", "Back pressed from map.");
         }
     }
 

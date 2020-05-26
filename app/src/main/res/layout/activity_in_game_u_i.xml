@@ -8,6 +8,7 @@
     tools:context=".InGameUI">
 
     <LinearLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,9 +17,8 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:theme="@style/AppTheme.AppBarOverlay"
             android:layout_weight="0"
-            >
+            android:theme="@style/AppTheme.AppBarOverlay">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
@@ -31,44 +31,42 @@
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <LinearLayout
-            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/colorWindow"
+            android:layout_gravity="bottom"
             android:layout_weight="0"
-            >
+            android:background="@color/colorWindow">
 
             <ImageView
                 android:id="@+id/item_1"
-                android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_credit"
                 tools:ignore="VectorDrawableCompat" />
 
             <ImageView
                 android:id="@+id/item_2"
-                android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_close_custom"
                 tools:ignore="VectorDrawableCompat" />
 
             <ImageView
                 android:id="@+id/item_3"
-                android:layout_gravity="center_vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_search_custom"
-                tools:ignore="VectorDrawableCompat"
-                />
+                tools:ignore="VectorDrawableCompat" />
 
             <ImageView
                 android:id="@+id/item_4"
@@ -81,9 +79,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
