@@ -31,8 +31,6 @@ import java.util.List;
 
 public class GameController
 {
-    //Horrible but deadline came too soon.
-    static GameController instance = null;
 
     //Generation and action info
     private static Integer generation = 0;
@@ -105,7 +103,6 @@ public class GameController
         return (queue_full.indexOf(player)+1);
     }
 
-    //TODO find out what needs to go here. Can basically work as a constructor
     public static void initGameController(Game game, Boolean is_host) {
         GameController.game = game;
 
@@ -127,33 +124,6 @@ public class GameController
     }
 
     public static Boolean getServerMultiplayer() {return server_multiplayer;}
-
-    //These should be gone after the remake
-
-    /*
-    //Working with a single instance makes life easier
-    public static GameController makeInstance(Game game)
-    {
-        if (instance != null)
-        {
-            System.out.println("GAMECONTROLLER ALREADY INSTANCIATED BEFORE");
-            new Exception().printStackTrace();
-            System.exit(-1);
-        }
-        instance = new GameController(game);
-        return instance;
-    }
-
-    public static GameController getInstance()
-    {
-        if (instance == null)
-        {
-            System.out.println("GAMECONTROLLER NOT INSTANTIATED AT GETINSTANCE");
-            new Exception().printStackTrace();
-            System.exit(-1);
-        }
-        return instance;
-    } */
 
     public static void useAction(Boolean end_turn) {
         actions_used++;

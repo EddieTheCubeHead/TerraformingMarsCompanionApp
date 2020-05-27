@@ -265,8 +265,6 @@ public class Game implements Serializable {
     {
         Player player = GameController.getCurrentPlayer();
 
-        //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
-
         Integer actual_price = card.getPrice();
         Integer money_amount;
         Integer steel_amount = 0;
@@ -277,7 +275,7 @@ public class Game implements Serializable {
         Integer needed_money;
         ArrayList<Tag> card_tags = card.getTags();
 
-        //If -tarkistukset tagialennuksille
+        // Checks for tag-type specific discounts
         if (card.getType() != Type.STANDARD_PROJECT && card.getType() != Type.OTHER) {
             actual_price -= player.getCardDiscount();
         }
@@ -314,7 +312,7 @@ public class Game implements Serializable {
             actual_price = 0;
         }
 
-        //Mikäli raaka raha ei riitä, tarkistetaan voiko korvata muilla resursseilla
+        // If player doesn't have enough raw money, other resources can be used
         if (actual_price <= player.getMoney())
         {
             return new CardCostPacket(GameController.getCurrentPlayer().getName(), actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
@@ -324,16 +322,17 @@ public class Game implements Serializable {
             money_amount = player.getMoney();
             needed_money = actual_price - money_amount;
 
-            /* Käytettävän teräksen ja titaanin tarkastus toimii seuraavasti:
-             * Jos kortissa on käyttämiseen oikeuttava tägi, katsotaan onko pelaajan
-             * ko. resurssin määrä tarpeeksi suuri maksamaan kortin, huomioiden mahdolliset korteista
-             * saadut arvomuutokset resurssille. Sitten jakojäännöksen avulla poistetaan käytettyä rahaa
-             * niin että resurssin arvoa ei mene hukkaan.
-             *
-             * Jos pelaajan resurssimäärä ei riitä, lisätään kaikki pelaajalta löytyvät resurssit muistiin
-             * ja siirrytään tarkastamaan näiden kanssa seuraavan resurssin riittävyys. */
+            // Checks for used steel and titanium work as follows:
+            // If the card has the corrseponding tag for the resources, the app checks if the player
+            // has enough of that resource to pay for the card. Possible value added to the resource
+            // by the cards player has played are calculated as well. Then modulo is used to remove
+            // excess money as not to wasy any money on playing the card.
 
-            //titanium lisäys
+            // If the player doesn't have enough resources, all resources are dumped into the usage pool
+            // and have their value added to the available funds sum. Then the program moves on to
+            // checking the next resource
+
+            // Adding titanium
             if (card_tags.contains(Tag.SPACE))
             {
 
@@ -354,7 +353,7 @@ public class Game implements Serializable {
                 }
             }
 
-            //steel lisäys
+            // Adding steel
             if (card_tags.contains(Tag.BUILDING))
             {
 
@@ -376,11 +375,11 @@ public class Game implements Serializable {
                 }
             }
 
-            //TODO lisää psychrophiles check tähän jahka kortti implementoitu
+            //TODO implement psychrophiles here when preludes is added
 
-            //TODO Lisää floater = venus tag rahaa jahka kortti implementoitu
+            //TODO implement dirigibles here when venus next is added
 
-            //heat lisäys
+            // Adding heat
             CardCostPacket cardCostPacket;
             if (player.getHeatIsMoney() && player.getHeat() >= needed_money)
             {
@@ -405,8 +404,6 @@ public class Game implements Serializable {
 
         Player player = GameController.getCurrentPlayer();
 
-        //Erittäin tylsä if-hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
-        //Suosittelen lämpimästi minimoimaan tämän.
         CardRequirements requirements = card.getRequirements();
 
         Integer base_discount = player.getBaseTrRequirementDiscount();
@@ -414,7 +411,8 @@ public class Game implements Serializable {
 
         Integer unused_jokers = player.getJokerTags();
 
-        //Erillisinä portteina, jotta mahdollisuus kirjoittaa myöhemmin tarkempi palautteen anto
+        // Separate if cases in case I have enough energy at some point to implement exact feedback
+        // on what requirement caused the playing action to be rejected
         if (requirements.getMinOceans() != null && oceans_placed < requirements.getMinOceans() - base_discount) {
             return false;
         }
@@ -584,7 +582,7 @@ public class Game implements Serializable {
             }
         }
 
-        //Always in a milestone: never in the same card as other tag requirements
+        // Always in a milestone: never in the same card as other tag requirements
         if (requirements.getMinOrganicTags() != null) {
             if (player.getPlantTags() + player.getMicrobeTags() + player.getAnimalTags() + player.getJokerTags() < requirements.getMinOrganicTags()) {
                 return false;
@@ -678,7 +676,7 @@ public class Game implements Serializable {
         return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
     }
 
-    //Second part of playing a card. See Card -class for a more detailed explanation of playing cards
+    // Second part of playing a card. See Card -class for a more detailed explanation of playing cards
     public void playCard(Card card, CardCostPacket resources_to_use, Context context)
     {
         Player player = GameController.getCurrentPlayer();
@@ -697,7 +695,7 @@ public class Game implements Serializable {
         card.onPlay(player, context);
     }
 
-    //End a generation
+    // End a generation
     void onGenerationEnd(Context context) {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
             GameController.gameEndPreparation();

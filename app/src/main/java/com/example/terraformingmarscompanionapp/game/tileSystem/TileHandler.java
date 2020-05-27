@@ -21,7 +21,7 @@ public class TileHandler {
     private final Tile[][] mars_tiles = new Tile[17][9];
     private final Tile[] space_tiles;
     private final Game game;
-    /* Coordnates are x and y. Not that only y=4 is a full row. The tiles are staggered and in a
+    /* Coordnates are x and y. Note that only y=4 is a full row. The tiles are staggered and in a
      * hex formation.
      */
 
@@ -30,6 +30,7 @@ public class TileHandler {
         game = owner_game;
 
         //Map: 0 = basegame/tharsis, 1 = hellas, 2 = elysium
+        //TODO maybe replace using int here with an enum
         map = game_map;
 
         //Init with nulls
@@ -437,24 +438,24 @@ public class TileHandler {
             return false;
         }
 
-        //Erikoistapaukset:
-        //Huomioitavaa, että viheriöt vaativat naapuriksi kyseisen pelaajan omistaman heksan JOS MAHDOLLISTA.
-        //Tämän implementointi olisi sellainen algoritmin sekasorto että jätettäköön herrasmiessäännöksi
+        // Special cases for specific tile types
+        // Note that greeneries require that you place them next to an owned tile if possible
+        // At the moment the algorithm for that seems excessive enough to leave managing that to players
         switch (tile_type) {
-            //Tiilet jotka vaativat naapuritiilten olevan tyhjiä
+            // Tiles requiring all neighbours to be empty
             case NATURAL_RESERVE:
             case RESEARCH_OUTPOST:
                 for (Tile neighbour : getNeighbours(to_place)) {
-                    if (neighbour.getPlacedHex() != null) {
+                    if (neighbour.getPlacedHex() != null && neighbour.getPlacedHex() != Placeable.LAND_CLAIM) {
                         Log.i("Invalid tile placement", "Requires empty neighbours");
                         return false;
                     }
                 }
                 break;
 
-            //Kaupunkeja ei saa asettaa vierekkäin
+            // Cities cannot get placed next to each other
             case NOCTIS:
-                //Jos kartta ei sisällä noctikselle varattua tiiltä, tippuu läpi normi kaupunkicheckkiin.
+                // Noctis is an exception, but only on tharsis. Falls through if map is not tharsis
                 if (map == 0) {
                     break;
                 }
@@ -468,7 +469,7 @@ public class TileHandler {
                 }
                 break;
 
-            //Ecological zone tarvitsee viheriön viereen
+            // Ecological zone requires a greenery next to it
             case ECOLOGICAL_ZONE:
                 boolean has_greenery = false;
                 for (Tile neighbour : getNeighbours(to_place)) {
@@ -483,7 +484,8 @@ public class TileHandler {
                 }
                 break;
 
-            //Mining area ja mining rights. Areassa lisätarkistus, tippuu rightsin tarkistukseen
+            // Mining area and mining rights. Area has extra checks, but falls through into the common
+            // checks for tile placement bonuses
             case MINING_AREA:
                 boolean has_owner = false;
                 for (Tile neighbour : getNeighbours(to_place)) {
