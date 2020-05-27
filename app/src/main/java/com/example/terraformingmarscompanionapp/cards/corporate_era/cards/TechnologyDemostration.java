@@ -1,7 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -17,11 +21,10 @@ public final class TechnologyDemostration extends Card {
         tags.add(Tag.EVENT);
     }
 
-
-
     @Override
-    public void playWithMetadata(Player player, Integer data) {
-        GameController.getInstance().addUiEvent(new PromptEvent("Please draw 2 cards"));
-        super.playWithMetadata(player, data);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new PromptEvent("Please draw 2 cards"));
+        EventScheduler.playNextEvent(context);
     }
 }

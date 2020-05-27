@@ -1,7 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -16,13 +20,13 @@ public final class ResearchOutpost extends Card {
         tags.add(Tag.SCIENCE);
         tags.add(Tag.BUILDING);
         tags.add(Tag.CITY);
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.RESEARCH_OUTPOST, owner_game));
-        super.onPlay(player);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new TileEvent(Placeable.RESEARCH_OUTPOST, owner_game));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override

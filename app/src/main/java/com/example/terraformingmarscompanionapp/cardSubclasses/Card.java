@@ -1,16 +1,21 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,24 +43,11 @@ public abstract class Card {
     protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
     protected ProductionBox production_box = new ProductionBox();
+
+    //Lists of tag collections for certain operations
     private final static ArrayList<Type> OWNABLES = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST, Type.MILESTONE));
     private final static ArrayList<Type> TAG_HOLDERS = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
-    protected Boolean wait_for_server = false;
-    private Boolean override_play_action_call = false;
-    public final void overridePlayActionCall() {override_play_action_call = true;}
-
-    public enum Type {
-        GREEN,
-        RED,
-        BLUE,
-        CORPORATION,
-        PRELUDE,
-        STANDARD_PROJECT,
-        OTHER,
-        MILESTONE,
-        AWARD,
-        GHOST
-    }
+    public final static ArrayList<Type> MAIN_DECK = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE));
 
     public Card(Type card_type, Game game) {
         type = card_type;
@@ -63,12 +55,23 @@ public abstract class Card {
     }
 
 
-    public void onPlay(Player player) {
-        onPlayServerHook(player, 0);
+    //Be sure to call default events first when overriding. Never call super.onPlay() when overriding
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.playNextEvent(context);
+    }
+
+    protected void defaultEvents(Player player) {
+        if (type.equals(Type.CORPORATION)) {
+            EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true)));
+        } else {
+            EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket()));
+        }
+        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
     }
 
     public void onPlayServerHook(Player player, Integer data) {
-        if (GameController.getInstance().getGame().getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
+        if (owner_game.getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         playWithMetadata(player, data);
@@ -77,29 +80,16 @@ public abstract class Card {
     public void playWithMetadata(Player player, Integer data) {
         production_box.playProductionBox(player, data);
         finishPlay(player);
-
-        if (override_play_action_call) {
-            override_play_action_call = false;
-            return;
-        }
-
-        if (wait_for_server && owner_game.getServerMultiplayer() && GameController.getInstance().getCurrentPlayer() != GameController.getInstance().getSelfPlayer()) {
-            return;
-        }
-        if (type == Type.CORPORATION) {
-            System.out.println("Calling use action from card row 84");
-            GameController.getInstance().useAction();
-        }
-
-        if (type != Type.GHOST) {
-            System.out.println("Calling use action from card row 86");
-            GameController.getInstance().useAction();
-        }
     }
 
     protected final void finishPlay (Player player) {
+        Log.i("Card", String.format("Finishing playing card '%s'", name));
         if (OWNABLES.contains(type) && !(this instanceof BeginnerCorporation)) {
             owner_player = player;
+        }
+
+        if (MAIN_DECK.contains(type)) {
+            player.setNextCardDiscount(0);
         }
 
         boolean is_event = (type == Type.RED);
@@ -219,10 +209,12 @@ public abstract class Card {
                 player.addPrelude(this);
                 break;
             case GHOST:
-            case STANDARD_PROJECT:
             case AWARD:
             case MILESTONE:
             case OTHER:
+                break;
+            case STANDARD_PROJECT:
+                owner_game.update_manager.onStandardProjectPayment(player);
                 break;
             default:
                 Log.i("Card","Type error in card " + getName());
@@ -231,6 +223,8 @@ public abstract class Card {
         if (this instanceof ActionCard) {
             player.addAction((ActionCard)this);
         }
+
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}
@@ -244,8 +238,7 @@ public abstract class Card {
 
     // For playing robotit workforce. Possible to overwrite in case metadata is needed
     // (or dynamic checking of production)
-
-    // God do I hate robotic workforce -Eetu
+    // God do I hate robotic workforce
     public void playProductionBox() {
         production_box.playProductionBox(owner_player, 0);
     }

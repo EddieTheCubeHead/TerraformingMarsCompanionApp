@@ -1,10 +1,10 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.utilityCards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceStandardOperation;
+import com.example.terraformingmarscompanionapp.cardSubclasses.CardlikeOperation;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-public final class RaiseTemperature extends ResourceStandardOperation {
+public final class RaiseTemperature extends CardlikeOperation {
     public RaiseTemperature(Game game) {
         super(game);
         name = "Raise temperature";

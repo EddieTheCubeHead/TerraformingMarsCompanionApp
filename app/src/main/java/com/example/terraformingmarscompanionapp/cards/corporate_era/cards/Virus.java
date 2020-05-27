@@ -6,11 +6,18 @@ import android.content.Intent;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
-import com.example.terraformingmarscompanionapp.ui.main.PlayerChoiceActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public final class Virus extends Card {
     public Virus(Game game) {
@@ -20,29 +27,30 @@ public final class Virus extends Card {
         tags.add(Tag.MICROBE);
         tags.add(Tag.EVENT);
         owner_game = game;
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, PlayerChoiceActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
-        context.startActivity(intent);
+    public void onPlay(Player player, Context context) {
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to remove",
+                new ArrayList<>(Arrays.asList("Animals (x2)", "Plants (x5)")), this, ChoiceDialog.USE_CASE.GENERAL));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override
     public void onPlayServerHook(Player player, Integer data) {
         if (data == 0) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, -2));
+            EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, -2));
+            EventScheduler.playNextEvent(GameController.getContext());
+            return;
         } else if (data == 1) {
-            Context context = GameController.getInstance().getContext();
-            Intent intent = new Intent(context, PlayerChoiceActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent.putExtra(PlayerChoiceActivity.CARD_INTENT, this.getName());
-            intent.putExtra(PlayerChoiceActivity.SPECIAL_CASE, PlayerChoiceActivity.CASE_VIRUS);
-            context.startActivity(intent);
+            ArrayList<String> player_names = new ArrayList<>();
+            for (Player target : GameController.getPlayers()) {
+                player_names.add(target.getName());
+            }
+            EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target",
+                    player_names, this, ChoiceDialog.USE_CASE.VIRUS));
+            EventScheduler.playNextEvent(GameController.getContext());
             return;
         } else {
             data -= 2;
@@ -53,7 +61,7 @@ public final class Virus extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data > 0) {
-            GameController.getInstance().getPlayer(data).takePlants(5);
+            GameController.getPlayer(data).takePlants(5);
         }
         super.playWithMetadata(player, data);
     }

@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.webSocket.events;
+package com.example.terraformingmarscompanionapp.webSocket.packets;
 
 import android.util.Log;
 
@@ -8,16 +8,13 @@ import com.example.terraformingmarscompanionapp.game.Player;
 /**
  * The resources used when playing a card
  */
-public class CardCostPacket implements PlayablePacket
+public class CardCostPacket implements ServerPacket
 {
     //is eligible tells UI whether the packet can be used for buying a card
 
     private Boolean eligibility = true;
     public void reject() { eligibility = false; }
     public boolean isEligible() { return eligibility; }
-
-    private String rejectance_message;
-    public void setRejectanceMessage(String message) { rejectance_message = message; }
 
     private String player_name;
     private Integer money;
@@ -53,7 +50,7 @@ public class CardCostPacket implements PlayablePacket
 
     @Override
     public void playPacket() {
-        Player player = GameController.getInstance().getGame().getPlayer(player_name);
+        Player player = GameController.getGame().getPlayer(player_name);
         player.changeMoney(-money);
         player.changeSteel(-steel);
         player.changeTitanium(-titanium);

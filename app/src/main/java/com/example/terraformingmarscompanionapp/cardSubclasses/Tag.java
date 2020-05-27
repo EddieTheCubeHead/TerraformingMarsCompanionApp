@@ -1,6 +1,6 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
-//Enum korttien tagien tallentamiseen
+//Enum for storing Card tags
 public enum Tag {
     BUILDING,
     SPACE,

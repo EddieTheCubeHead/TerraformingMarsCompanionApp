@@ -6,16 +6,24 @@ import android.content.Intent;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public final class LargeConvoy extends Card {
     public LargeConvoy(Game game) {
@@ -26,30 +34,25 @@ public final class LargeConvoy extends Card {
         tags.add(Tag.EARTH);
         tags.add(Tag.EVENT);
         victory_points = 2;
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        GameController.getInstance().addUiEvent(new PromptEvent("Please draw 2 cards"));
-        Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, BooleanDialogActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
-        intent.putExtra(BooleanDialogActivity.TITLE_TEXT, "Choose which resource to recieve: ");
-        intent.putExtra(BooleanDialogActivity.FALSE_TEXT, "Plants (x5)");
-        intent.putExtra(BooleanDialogActivity.TRUE_TEXT, "Animal (x4)");
-        context.startActivity(intent);
+    public void onPlay(Player player, Context context) {
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
+                new ArrayList<>(Arrays.asList("Plants (x5)", "Animal (x4)")), this, ChoiceDialog.USE_CASE.GENERAL));
+        EventScheduler.addEvent(new PromptEvent("Please draw 2 cards"));
+        EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override
     public void onPlayServerHook(Player player, Integer data) {
-        if (GameController.getInstance().getGame().getServerMultiplayer()) {
+        if (GameController.getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         if (data == 1) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 4, true));
+            EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 4, true));
         }
         playWithMetadata(player, data);
     }

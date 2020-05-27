@@ -3,7 +3,12 @@ package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataIntegerEvent;
 
 public final class PowerInfrastructure extends Card implements ActionCard {
     public PowerInfrastructure(Game game) {
@@ -17,12 +22,16 @@ public final class PowerInfrastructure extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        actionServerHook(owner_player);
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new MetadataIntegerEvent("Give energy amount:", 0, owner_player.getEnergy(), this));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
-        //TODO Vaihda x määrä energiaa x määräksi rahaa
+        owner_player.changeEnergy(-data);
+        owner_player.changeMoney(data);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -26,6 +28,17 @@ public final class MarsUniverse extends Card implements EffectCard {
 
     @Override
     public void cardEffect(Player player) {
-        GameController.getInstance().addUiEvent(new PromptEvent("Please swap a card"));
+        if (owner_player == null) {
+            return;
+        }
+
+        if (owner_game.getServerMultiplayer()) {
+            if (owner_player != GameController.getSelfPlayer()) {
+                return;
+            }
+        }
+
+        EventScheduler.addEvent(new PromptEvent("Please swap a card"));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 }

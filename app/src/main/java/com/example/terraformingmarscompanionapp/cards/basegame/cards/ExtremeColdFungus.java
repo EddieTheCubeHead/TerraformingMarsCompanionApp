@@ -7,13 +7,21 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public final class ExtremeColdFungus extends Card implements ActionCard {
     public ExtremeColdFungus(Game game) {
@@ -26,24 +34,19 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, BooleanDialogActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
-        intent.putExtra(BooleanDialogActivity.TITLE_TEXT, "Choose which resources to add:");
-        intent.putExtra(BooleanDialogActivity.FALSE_TEXT, "Plants (x1)");
-        intent.putExtra(BooleanDialogActivity.TRUE_TEXT, "Microbes (x2)");
-        context.startActivity(intent);
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resources to add:", new ArrayList<>(Arrays.asList("Plants (x1)", "Microbes(x2)")), this, ChoiceDialog.USE_CASE.GENERAL));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
     public void actionServerHook(Player player, Integer data) {
-        if (GameController.getInstance().getGame().getServerMultiplayer()) {
-            GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), 0));
+        if (owner_game.getServerMultiplayer()) {
+            GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), data));
         }
         setActionToUsed();
         if (data == 0) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2, true));
+            EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2, true));
         }
         actionWithMetadata(data);
     }
@@ -53,6 +56,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
         if (data != 0) {
             owner_player.changePlants(1);
         }
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

@@ -51,10 +51,9 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         //standard code in multiple classes. maybe possible to generize.
         searchview = view.findViewById(R.id.searchview);
 
-        controller = GameController.getInstance();
-        controller.registerGameUpdateListener(this);
+        GameController.registerGameUpdateListener(this);
 
-        game = controller.getGame();
+        game = GameController.getGame();
         HashMap<String, Card>deck = game.getDeck();
 
         for (Map.Entry entry : game.getCorporations().entrySet()) {
@@ -99,10 +98,10 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
     //does card-specific action.
     @Override public void onCardClick(int position)
     {
-        if (!controller.checkTurnEligibility()) {
+        if (!GameController.checkTurnEligibility()) {
             Toast.makeText(getContext(), "Not your turn!", Toast.LENGTH_SHORT).show();
             return;
-        } else if (controller.getGreeneryRound()) {
+        } else if (GameController.getGreeneryRound()) {
             Toast.makeText(getContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
         }
 

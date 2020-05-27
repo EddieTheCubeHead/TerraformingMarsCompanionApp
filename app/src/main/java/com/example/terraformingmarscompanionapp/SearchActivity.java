@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.ui.main.CardCostDialog;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.CardCostDialog;
 import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
     private SearchView searchview;
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
-    private ArrayList<Card.Type> valid_cards = new ArrayList<>(Arrays.asList(Card.Type.GREEN, Card.Type.RED, Card.Type.BLUE));
+    private ArrayList<Type> valid_cards = new ArrayList<>(Arrays.asList(Type.GREEN, Type.RED, Type.BLUE));
 
     public Integer titanium;
     public Integer heat;
@@ -36,8 +37,7 @@ public class SearchActivity extends AppCompatActivity implements RecyclerAdapter
 
         searchview = findViewById(R.id.searchview);
 
-        GameController controller = GameController.getInstance();
-        Game game = controller.getGame();
+        Game game = GameController.getGame();
         HashMap<String, Card> deck = game.getDeck();
 
         //filtering the cards

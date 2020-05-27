@@ -4,6 +4,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
@@ -19,9 +21,9 @@ public final class SymbioticFungus extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, owner_player, 1, true));
-        GameController.getInstance().useAction();
-        actionServerHook(owner_player);
+        defaultEvents(owner_player);
+        EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, owner_player, 1, true));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
@@ -40,5 +42,5 @@ public final class SymbioticFungus extends Card implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {}
+    public void actionWithMetadata(Integer data) {EventScheduler.playNextEvent(GameController.getContext());}
 }

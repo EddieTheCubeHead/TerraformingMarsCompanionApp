@@ -1,16 +1,21 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.CardCostPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -122,18 +127,18 @@ public class Game implements Serializable {
 
     //Constructor
     public Game(
-                    ArrayList<String> player_names,
-                    boolean corporate_era,
-                    boolean prelude,
-                    boolean colonies,
-                    boolean venus,
-                    boolean turmoil,
-                    boolean extra_corporations,
-                    boolean world_government_terraforming,
-                    boolean must_max_venus,
-                    boolean turmoil_terraforming_revision,
-                    boolean server_multiplayer,
-                    Integer map
+            @NotNull ArrayList<String> player_names,
+            boolean corporate_era,
+            boolean prelude,
+            boolean colonies,
+            boolean venus,
+            boolean turmoil,
+            boolean extra_corporations,
+            boolean world_government_terraforming,
+            boolean must_max_venus,
+            boolean turmoil_terraforming_revision,
+            boolean server_multiplayer,
+            Integer map
                 )
     {
 
@@ -151,6 +156,10 @@ public class Game implements Serializable {
         milestones = constructor.createMilestones();
 
         all_cards = new HashMap<>();
+
+        if (prelude) {
+            preludes = constructor.createPreludes();
+        }
 
         //Using a stream would require higher API level. This keeps API level low
         for (Map.Entry<String, Card> entry : deck.entrySet()) {
@@ -173,9 +182,10 @@ public class Game implements Serializable {
             all_cards.put(entry.getKey(), entry.getValue());
         }
 
-        if (prelude) {
-            preludes = constructor.createPreludes();
+        for (Map.Entry<String, Card> entry : preludes.entrySet()) {
+            all_cards.put(entry.getKey(), entry.getValue());
         }
+
 
         this.server_multiplayer = server_multiplayer;
 
@@ -202,7 +212,7 @@ public class Game implements Serializable {
         raising_player.changeTerraformingRating(1);
         global_temperature += 2;
         if (global_temperature == 0) {
-            tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN);
+            tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN, GameController.getContext());
         } else if (global_temperature == -20 || global_temperature == -24) {
             raising_player.changeHeatProduction(1);
         }
@@ -235,7 +245,7 @@ public class Game implements Serializable {
     //Functions for playing cards. First part in three functions
     public CardCostPacket getRecommendedCardCost(Card card)
     {
-        ArrayList<Card.Type> single_owner = new ArrayList<>(Arrays.asList(Card.Type.BLUE, Card.Type.RED, Card.Type.GREEN, Card.Type.CORPORATION, Card.Type.GHOST, Card.Type.AWARD, Card.Type.MILESTONE));
+        ArrayList<Type> single_owner = new ArrayList<>(Arrays.asList(Type.BLUE, Type.RED, Type.GREEN, Type.CORPORATION, Type.GHOST, Type.AWARD, Type.MILESTONE));
 
         CardCostPacket resources_to_use = checkCardCost(card);
 
@@ -246,7 +256,6 @@ public class Game implements Serializable {
         if (!checkCardRequirements(card))
         {
             resources_to_use.reject();
-            resources_to_use.setRejectanceMessage("You don't meet the requirements for playing this card.");
         }
 
         return resources_to_use;
@@ -254,9 +263,7 @@ public class Game implements Serializable {
 
     private CardCostPacket checkCardCost(Card card)
     {
-        Player player = GameController.getInstance().getCurrentPlayer();
-
-        //Hyvin tylsä ja repetitiivinen funktio. Suosittelen minimoimaan.
+        Player player = GameController.getCurrentPlayer();
 
         Integer actual_price = card.getPrice();
         Integer money_amount;
@@ -268,59 +275,64 @@ public class Game implements Serializable {
         Integer needed_money;
         ArrayList<Tag> card_tags = card.getTags();
 
-        //If -tarkistukset tagialennuksille
-        if (card.getType() != Card.Type.STANDARD_PROJECT && card.getType() != Card.Type.OTHER) {
+        // Checks for tag-type specific discounts
+        if (card.getType() != Type.STANDARD_PROJECT && card.getType() != Type.OTHER) {
             actual_price -= player.getCardDiscount();
         }
 
-        if (card_tags.contains(Tag.BUILDING) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.BUILDING) && card.getType() != Type.OTHER) {
             actual_price -= player.getBuildingTagDiscount();
         }
 
-        if (card_tags.contains(Tag.SPACE) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.SPACE) && card.getType() != Type.OTHER) {
             actual_price -= player.getSpaceTagDiscount();
         }
 
-        if (card_tags.contains(Tag.EARTH) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.EARTH) && card.getType() != Type.OTHER) {
             actual_price -= player.getEarthTagDiscount();
         }
 
-        if (card_tags.contains(Tag.SCIENCE) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.SCIENCE) && card.getType() != Type.OTHER) {
             actual_price -= player.getScienceTagDiscount();
         }
 
-        if (card_tags.contains(Tag.ENERGY) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.ENERGY) && card.getType() != Type.OTHER) {
             actual_price -= player.getEnergyTagDiscount();
         }
 
-        if (card_tags.contains(Tag.VENUS) && card.getType() != Card.Type.OTHER) {
+        if (card_tags.contains(Tag.VENUS) && card.getType() != Type.OTHER) {
             actual_price -= player.getVenusTagDiscount();
+        }
+
+        if (Card.MAIN_DECK.contains(card.getType())) {
+            actual_price -= player.getNextCardDiscount();
         }
 
         if (actual_price < 0) {
             actual_price = 0;
         }
 
-        //Mikäli raaka raha ei riitä, tarkistetaan voiko korvata muilla resursseilla
+        // If player doesn't have enough raw money, other resources can be used
         if (actual_price <= player.getMoney())
         {
-            return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+            return new CardCostPacket(GameController.getCurrentPlayer().getName(), actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
         else
         {
             money_amount = player.getMoney();
             needed_money = actual_price - money_amount;
 
-            /* Käytettävän teräksen ja titaanin tarkastus toimii seuraavasti:
-             * Jos kortissa on käyttämiseen oikeuttava tägi, katsotaan onko pelaajan
-             * ko. resurssin määrä tarpeeksi suuri maksamaan kortin, huomioiden mahdolliset korteista
-             * saadut arvomuutokset resurssille. Sitten jakojäännöksen avulla poistetaan käytettyä rahaa
-             * niin että resurssin arvoa ei mene hukkaan.
-             *
-             * Jos pelaajan resurssimäärä ei riitä, lisätään kaikki pelaajalta löytyvät resurssit muistiin
-             * ja siirrytään tarkastamaan näiden kanssa seuraavan resurssin riittävyys. */
+            // Checks for used steel and titanium work as follows:
+            // If the card has the corrseponding tag for the resources, the app checks if the player
+            // has enough of that resource to pay for the card. Possible value added to the resource
+            // by the cards player has played are calculated as well. Then modulo is used to remove
+            // excess money as not to wasy any money on playing the card.
 
-            //titanium lisäys
+            // If the player doesn't have enough resources, all resources are dumped into the usage pool
+            // and have their value added to the available funds sum. Then the program moves on to
+            // checking the next resource
+
+            // Adding titanium
             if (card_tags.contains(Tag.SPACE))
             {
 
@@ -332,7 +344,7 @@ public class Game implements Serializable {
                     if (money_amount < 0)
                         money_amount = 0;
 
-                    return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 }
                 else
                 {
@@ -341,7 +353,7 @@ public class Game implements Serializable {
                 }
             }
 
-            //steel lisäys
+            // Adding steel
             if (card_tags.contains(Tag.BUILDING))
             {
 
@@ -354,7 +366,7 @@ public class Game implements Serializable {
                     if (money_amount < 0)
                         money_amount = 0;
 
-                    return new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                    return new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 }
                 else
                 {
@@ -363,22 +375,21 @@ public class Game implements Serializable {
                 }
             }
 
-            //TODO lisää psychrophiles check tähän jahka kortti implementoitu
+            //TODO implement psychrophiles here when preludes is added
 
-            //TODO Lisää floater = venus tag rahaa jahka kortti implementoitu
+            //TODO implement dirigibles here when venus next is added
 
-            //heat lisäys
+            // Adding heat
             CardCostPacket cardCostPacket;
             if (player.getHeatIsMoney() && player.getHeat() >= needed_money)
             {
                 heat_amount = needed_money;
-                cardCostPacket = new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                cardCostPacket = new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
             }
             else
             {
-                cardCostPacket = new CardCostPacket(GameController.getInstance().getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
+                cardCostPacket = new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
                 cardCostPacket.reject();
-                cardCostPacket.setRejectanceMessage("Invalid funds");
             }
 
             return cardCostPacket;
@@ -387,14 +398,12 @@ public class Game implements Serializable {
 
     private Boolean checkCardRequirements(Card card) {
 
-        if (GameController.getInstance().getGreeneryRound() && !(card instanceof BuildGreenery)) {
+        if (GameController.getGreeneryRound() && !(card instanceof BuildGreenery)) {
             return false;
         }
 
-        Player player = GameController.getInstance().getCurrentPlayer();
+        Player player = GameController.getCurrentPlayer();
 
-        //Erittäin tylsä if-hirviö. Palauttaa true jos kaikki vaatimukset täytetty, muuten false.
-        //Suosittelen lämpimästi minimoimaan tämän.
         CardRequirements requirements = card.getRequirements();
 
         Integer base_discount = player.getBaseTrRequirementDiscount();
@@ -402,7 +411,8 @@ public class Game implements Serializable {
 
         Integer unused_jokers = player.getJokerTags();
 
-        //Erillisinä portteina, jotta mahdollisuus kirjoittaa myöhemmin tarkempi palautteen anto
+        // Separate if cases in case I have enough energy at some point to implement exact feedback
+        // on what requirement caused the playing action to be rejected
         if (requirements.getMinOceans() != null && oceans_placed < requirements.getMinOceans() - base_discount) {
             return false;
         }
@@ -542,9 +552,6 @@ public class Game implements Serializable {
         }
 
         if (requirements.getMinHighestProduction() != null) {
-            //Tämän voisi tehdä kivoilla for-loopeilla ja listoilla, mutta oon väsynyt ja haluun tän pois alta
-            //ALL ABOARD THE IF -TRAIN!
-            //TODO katso olisiko järkevää kirjoittaa ei-sieluaraastavaan muotoon
             Integer max = 0;
             if (player.getMoneyProduction() > max) {
                 max = player.getMoneyProduction();
@@ -575,7 +582,7 @@ public class Game implements Serializable {
             }
         }
 
-        //Pieni erikoistapaus, aina milestone: ei voi olla muiden tag-requirementtien kanssa samaan aikaan
+        // Always in a milestone: never in the same card as other tag requirements
         if (requirements.getMinOrganicTags() != null) {
             if (player.getPlantTags() + player.getMicrobeTags() + player.getAnimalTags() + player.getJokerTags() < requirements.getMinOrganicTags()) {
                 return false;
@@ -669,10 +676,10 @@ public class Game implements Serializable {
         return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
     }
 
-    //Second part of playing a card. See Card -class for a more detailed explanation of playing cards
-    public void playCard(Card card, CardCostPacket resources_to_use)
+    // Second part of playing a card. See Card -class for a more detailed explanation of playing cards
+    public void playCard(Card card, CardCostPacket resources_to_use, Context context)
     {
-        Player player = GameController.getInstance().getCurrentPlayer();
+        Player player = GameController.getCurrentPlayer();
 
         if (!resources_to_use.isEligible())
         {
@@ -685,13 +692,13 @@ public class Game implements Serializable {
             GameActions.sendCardCost(resources_to_use);
         }
 
-        card.onPlay(player);
+        card.onPlay(player, context);
     }
 
-    //End a generation
-    void onGenerationEnd() {
+    // End a generation
+    void onGenerationEnd(Context context) {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
-            GameController.getInstance().gameEndPreparation();
+            GameController.gameEndPreparation();
         }
         for (Player player : players) {
             player.changeMoney(player.getMoneyProduction() + player.getTerraformingRating());
@@ -706,6 +713,6 @@ public class Game implements Serializable {
             player.resetActions();
         }
 
-        GameController.getInstance().changeGeneration();
+        GameController.changeGeneration(context);
     }
 }

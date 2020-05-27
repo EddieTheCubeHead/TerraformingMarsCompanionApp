@@ -516,6 +516,10 @@ public class Player {
     public Boolean getRaisedTrThisGeneration() {return raised_tr_this_generation;}
     public void setRaisedTrThisGeneration(Boolean value) {raised_tr_this_generation = value;}
 
+    private Integer next_card_discount = 0;
+    public Integer getNextCardDiscount() {return next_card_discount;}
+    public void setNextCardDiscount(Integer value) {next_card_discount = value;}
+
     /***********************************************************************************
      Constructor
      ************************************************************************************/

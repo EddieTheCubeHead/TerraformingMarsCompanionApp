@@ -1,7 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -14,12 +18,12 @@ public final class MiningRights extends Card {
         name = "Mining rights";
         price = 9;
         tags.add(Tag.BUILDING);
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.MINING_RIGHTS, owner_game));
-        super.onPlay(player);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new TileEvent(Placeable.MINING_RIGHTS, owner_game));
+        EventScheduler.playNextEvent(context);
     }
 }

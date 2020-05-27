@@ -1,6 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.standardProjects;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.StandardProject;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -12,13 +15,13 @@ public final class StandardAquifer extends StandardProject {
         super(game);
         name = "Standard project: Aquifer";
         price = 18;
-        wait_for_server = true;
         requirements.setMaxOceans(8);
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        super.onPlay(player);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.playNextEvent(context);
     }
 }

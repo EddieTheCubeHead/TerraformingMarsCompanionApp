@@ -6,11 +6,19 @@ import android.content.Intent;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public final class LocalHeatTrapping extends Card {
     public LocalHeatTrapping(Game game) {
@@ -19,25 +27,20 @@ public final class LocalHeatTrapping extends Card {
         price = 1;
         tags.add(Tag.EVENT);
         requirements.setMinHeat(5);
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, BooleanDialogActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
-        intent.putExtra(BooleanDialogActivity.TITLE_TEXT, "Choose which resource to gain:");
-        intent.putExtra(BooleanDialogActivity.FALSE_TEXT, "Plants (x4)");
-        intent.putExtra(BooleanDialogActivity.TRUE_TEXT, "Animals (x2)");
-        context.startActivity(intent);
+    public void onPlay(Player player, Context context) {
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
+                new ArrayList<>(Arrays.asList("Plants (x4)", "Animals (x2)")), this, ChoiceDialog.USE_CASE.GENERAL));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override
     public void onPlayServerHook(Player player, Integer data) {
         if (data != 0) {
-            GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
+            EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
         }
         super.onPlayServerHook(player, data);
     }

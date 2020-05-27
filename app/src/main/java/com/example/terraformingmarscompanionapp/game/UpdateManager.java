@@ -125,8 +125,10 @@ public final class UpdateManager {
         effect_cards.get("Interplanetary cinematics").cardEffect(player);
     }
 
-    void onStandardProjectPayment(Player player) {
-
+    public void onStandardProjectPayment(Player player) {
+        if (owner_game.modifiers.getCorporateEra()) {
+            effect_cards.get("Standard technology").cardEffect(player);
+        }
     }
 
     public void onGreeneryPlaced(Player player) {

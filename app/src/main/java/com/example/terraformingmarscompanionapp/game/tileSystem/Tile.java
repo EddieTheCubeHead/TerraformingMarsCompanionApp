@@ -1,5 +1,8 @@
 package com.example.terraformingmarscompanionapp.game.tileSystem;
 
+import android.content.Context;
+
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -50,7 +53,7 @@ public class Tile {
     }
 
     //Heksan asettaminen ko. tiileen
-    void placeHex(Player player, Placeable hex_type) {
+    void placeHex(Player player, Placeable hex_type, Context context) {
         if (placed_hex != null) {
             return;
         }
@@ -72,10 +75,10 @@ public class Tile {
                         break;
                     case OCEAN:
                         if (player.changeMoney(-6)) {
-                            game.tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN);
+                            game.tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN, context);
                         }
                     case CARD:
-                        GameController.getInstance().addUiEvent(new PromptEvent("Please draw a card"));
+                        EventScheduler.addEvent(new PromptEvent("Please draw a card"));
                         player.changeHandSize(1);
                 }
             }

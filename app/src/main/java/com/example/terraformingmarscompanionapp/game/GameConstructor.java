@@ -846,29 +846,29 @@ class GameConstructor {
         Card united_nations_mars_initiative = new UnitedNationsMarsInitiative(game);
         corporations.put(united_nations_mars_initiative.getName(), united_nations_mars_initiative);
 
-        //Corporate eran kortit:
+        //Corporate era cards:
         if (corporate_era) {
             //TODO add corporate era corps
         } else if (extra_corporations) {
 
         }
 
-        //Preludin kortit:
+        //Prelude cards:
         if (prelude) {
             //TODO add prelude corps
         }
 
-        //Colonies kortit:
+        //Colonies cards:
         if (colonies) {
             //TODO add colonies corps
         }
 
-        //Venus kortit:
+        //Venus cards:
         if (venus) {
             //TODO add venus corps
         }
 
-        //Turmoil kortit:
+        //Turmoil cards:
         if (turmoil) {
             //TODO add turmoil corps
         }
@@ -879,7 +879,7 @@ class GameConstructor {
     HashMap<String, Card> createGhosts() {
         HashMap<String, Card> ghosts = new HashMap<>();
 
-        Card tharsis_republic_second_effect = new TharsisRepublicSecondEffect(game);
+        Card tharsis_republic_second_effect = new TharsisRepublicGhost(game);
         ghosts.put(tharsis_republic_second_effect.getName(), tharsis_republic_second_effect);
 
         return ghosts;

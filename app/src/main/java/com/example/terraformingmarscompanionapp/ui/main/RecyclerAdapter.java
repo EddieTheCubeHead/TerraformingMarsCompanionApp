@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
@@ -217,12 +218,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private Filter special_filter = new Filter() {
 
-        ArrayList<Card.Type> valid_types = new ArrayList<>(Arrays.asList(Card.Type.AWARD, Card.Type.MILESTONE, Card.Type.STANDARD_PROJECT));
+        ArrayList<Type> valid_types = new ArrayList<>(Arrays.asList(Type.AWARD, Type.MILESTONE, Type.STANDARD_PROJECT));
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            Player display_player = GameController.getInstance().getDisplayPlayer();
-
             List<Card> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();
 
@@ -254,7 +253,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         @Override
         protected FilterResults performFiltering(CharSequence search_string)
         {
-            Player display_player = GameController.getInstance().getDisplayPlayer();
+            Player display_player = GameController.getDisplayPlayer();
 
             List<Card> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();

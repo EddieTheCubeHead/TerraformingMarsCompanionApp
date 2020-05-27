@@ -6,10 +6,18 @@ import android.content.Intent;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public final class SearchForLife extends ResourceCard implements ActionCard {
     public SearchForLife(Game game) {
@@ -29,14 +37,11 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, BooleanDialogActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
-        intent.putExtra(BooleanDialogActivity.TITLE_TEXT, "Did you draw a microbe tag?");
-        intent.putExtra(BooleanDialogActivity.FALSE_TEXT, "No");
-        intent.putExtra(BooleanDialogActivity.TRUE_TEXT, "Yes");
-        context.startActivity(intent);
+        //TODO another UI for simple stuff like this
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new MetadataChoiceEvent("Did you draw a card with a microbe tag?",
+                new ArrayList<>(Arrays.asList("Yes", "No")), this, ChoiceDialog.USE_CASE.GENERAL));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
@@ -45,6 +50,7 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
         if (data >= 0) {
             resource_amount++;
         }
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

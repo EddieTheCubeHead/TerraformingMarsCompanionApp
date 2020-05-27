@@ -183,7 +183,7 @@ public class CardRequirements {
     public void setMaxVenusTr(Integer value) {max_venus_tr = value;}
 
     public Integer getDrawableRequrement() {
-        //TODO siivous tänne jahka tiedetään mitä UI tarvitsee tästä ulos
+        //TODO cleanup once requirement displaying in UI is ready and I know what it needs to know
         if (min_oceans != null) {
             return 1;
         } else if (min_oxygen != null) {

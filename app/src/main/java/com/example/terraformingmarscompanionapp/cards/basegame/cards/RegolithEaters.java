@@ -7,9 +7,17 @@ import android.util.Log;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public final class RegolithEaters extends ResourceCard implements ActionCard {
     public RegolithEaters(Game game) {
@@ -24,18 +32,14 @@ public final class RegolithEaters extends ResourceCard implements ActionCard {
     @Override
     public void cardAction() {
         if (resource_amount < 2) {
-            GameController.getInstance().useAction();
-            onPlayServerHook(owner_player, 0);
+            defaultEvents(owner_player);
+            EventScheduler.playNextEvent(GameController.getContext());
             return;
         }
-        Context context = GameController.getInstance().getContext();
-        Intent intent = new Intent(context, BooleanDialogActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(BooleanDialogActivity.CARD_NAME, this.getName());
-        intent.putExtra(BooleanDialogActivity.TITLE_TEXT, "Add a microbe or raise oxygen?");
-        intent.putExtra(BooleanDialogActivity.FALSE_TEXT, "Microbe");
-        intent.putExtra(BooleanDialogActivity.TRUE_TEXT, "Oxygen");
-        context.startActivity(intent);
+        EventScheduler.addEvent(new ActionUseEvent());
+        EventScheduler.addEvent(new MetadataChoiceEvent("Choose what to do:",
+                new ArrayList<>(Arrays.asList("Add a microbe", "Raise oxygen")), this, ChoiceDialog.USE_CASE.GENERAL));
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
@@ -46,8 +50,9 @@ public final class RegolithEaters extends ResourceCard implements ActionCard {
             resource_amount -= 2;
             owner_game.raiseOxygen(owner_player);
         } else {
-            Log.i("Card", "Error in regolith eater checks!");
+            Log.i("Regolith eaters Error", "Invalid checks led to this being played to raise oxygen without sufficient microbes.");
         }
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

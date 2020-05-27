@@ -21,9 +21,8 @@ import com.example.terraformingmarscompanionapp.game.Player;
 
 public class ResourcesFragment extends Fragment implements GameController.GameUpdateListener {
 
-    private GameController controller = GameController.getInstance();
-    private Player player = controller.getDisplayPlayer();
-    private Game game = controller.getGame();
+    private Player player = GameController.getDisplayPlayer();
+    private Game game = GameController.getGame();
 
     //Paikalliset muuttujat muutosmoodiin
     private Integer multiplier;
@@ -702,23 +701,23 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        GameController.getInstance().registerGameUpdateListener(this);
+        GameController.registerGameUpdateListener(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        GameController.getInstance().unregisterGameUpdateListener(this);
+        GameController.unregisterGameUpdateListener(this);
     }
 
     //Setting the numbers to the current player's resources, used for updating the view
     private void setResourceAmounts()
     {
-        player = GameController.getInstance().getDisplayPlayer();
+        player = GameController.getDisplayPlayer();
 
         try {
-            textview_current_player_name.setText(GameController.getInstance().getCurrentPlayer().getName());
-            textview_current_player_actions_remaining.setText(String.valueOf(controller.getDisplayActions()));
+            textview_current_player_name.setText(GameController.getCurrentPlayer().getName());
+            textview_current_player_actions_remaining.setText(String.valueOf(GameController.getDisplayActions()));
             textview_temperature.setText(game.getGlobalTemperature() + "°C");
             textview_oxygen.setText(game.getGlobalOxygen() + "%");
             textview_tfr.setText(String.valueOf(player.getTerraformingRating()));

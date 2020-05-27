@@ -1,11 +1,17 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 
 public final class AerobrakedAmmoniaAsteroid extends Card {
@@ -15,13 +21,13 @@ public final class AerobrakedAmmoniaAsteroid extends Card {
         price = 26;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2));
-        super.onPlay(player);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override

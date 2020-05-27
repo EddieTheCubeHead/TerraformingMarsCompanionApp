@@ -3,6 +3,8 @@ package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -26,14 +28,15 @@ public final class SpaceElevator extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        GameController.getInstance().useAction();
-        actionServerHook(owner_player);
+        defaultEvents(owner_player);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
         owner_player.changeSteel(-1);
         owner_player.changeMoney(5);
+        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

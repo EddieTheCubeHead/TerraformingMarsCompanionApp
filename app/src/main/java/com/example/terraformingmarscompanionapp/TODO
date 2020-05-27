@@ -1,0 +1,32 @@
+Assignment over, let's go. Rewrite everything.
+
+The big change, in parts:
+
+1: Change UI queue to stack instead of queue. Move to own class (EventScheduler)
+2: EventScheduler and GameController to static
+3: Clean up UI: everything should preferably be a fragment/dialogue (see how well CardCostDialog works, reliable and reusable)
+    - Gonna probably need to do a LOT of work on hex placement. Wanna have hexes, production bonuses etc. rendered
+4: Make everything an event (in EventScheduler). Mainly includes playing cards. Combine WebSocket and Scheduler events.
+    - Get rid of hacky way of implementing things like corporation choice with multiple use actions.
+        - UseAction event. Add to the bottom of the event stack, integer whether one or two actions. Clean and simple
+    - Gonna need to rewrite the cards a lot
+5: Incorporate android's string holders as card names (later everything).
+    - Gets rid of typos and is cleaner.
+6: Clean up card system. The game only needs one deck, do everything else with filtering.
+7: Clean up the Player class. Move resources to a data class with small utility functions?
+8: Finish the scoring system
+
+After rewrite, in no particular order:
+
+ - Bigger UI revision
+    - Everything from outside the game
+ - Incorporate the event changes to the server so every move can be saved for analysis later
+ - Add systems that support the expansions
+ - Add the expansion cards
+ - Make the app able to funtion when only one player in a game uses it
+    - UI needs a lot of thought, especially card resources
+ - Flavor/information texts for cards, via android string resource
+
+Some general fun ideas:
+
+ - Some tongue in cheek achievment system

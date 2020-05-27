@@ -124,8 +124,8 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
                 true,
                 map);
 
-        GameController.makeInstance(game).setSelfPlayer(game.getPlayer(UserActions.getUser()));
-        GameController.getInstance().makeHost();
+        GameController.initGameController(game, true);
+        GameController.setSelfPlayer(game.getPlayer(UserActions.getUser()));
 
         Intent intent = new Intent(this, InGameUI.class);
         startActivity(intent);

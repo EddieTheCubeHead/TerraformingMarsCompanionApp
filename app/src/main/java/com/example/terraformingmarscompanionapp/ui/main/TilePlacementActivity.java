@@ -13,11 +13,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.events.TileEventPacket;
+import com.example.terraformingmarscompanionapp.webSocket.packets.TileEventPacket;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -62,10 +67,10 @@ public class TilePlacementActivity extends AppCompatActivity {
         tileicon = findViewById(R.id.imageView_tiletype);
 
         tile = Placeable.valueOf(getIntent().getStringExtra("tile"));
-        handler = GameController.getInstance().getGame().tile_handler;
+        handler = GameController.getGame().tile_handler;
 
         //There can only be nine oceans:
-        if (tile == Placeable.OCEAN && GameController.getInstance().getGame().getOceansPlaced() == 9) {
+        if (tile == Placeable.OCEAN && GameController.getGame().getOceansPlaced() == 9) {
             exit(view);
         }
 
@@ -96,7 +101,7 @@ public class TilePlacementActivity extends AppCompatActivity {
 
             case MINING_RIGHTS:
 
-            case RESERVED_AREA:
+            case LAND_CLAIM:
 
             case VOLCANIC_CITY:
 
@@ -166,11 +171,10 @@ public class TilePlacementActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Current placement is not valid!", Toast.LENGTH_SHORT).show();
         }
         else {
-            GameController controller = GameController.getInstance();
-            if (controller.getGame().getServerMultiplayer()) {
-                GameActions.sendTileEvent(new TileEventPacket(tile, controller.getCurrentPlayer().getName(), x, y));
+            if (GameController.getGame().getServerMultiplayer()) {
+                GameActions.sendTileEvent(new TileEventPacket(tile, GameController.getCurrentPlayer().getName(), x, y));
             }
-            ArrayList<String> flood_targets = handler.placeTile(controller.getCurrentPlayer(), handler.getTile(x, y), tile);
+            ArrayList<String> flood_targets = handler.placeTile(GameController.getCurrentPlayer(), handler.getTile(x, y), tile);
 
             if (flood_targets != null) {
                 playFlooding(flood_targets);
@@ -187,16 +191,12 @@ public class TilePlacementActivity extends AppCompatActivity {
     }
 
     public void playFlooding(ArrayList<String> targets) {
+        Card flooding = GameController.getGame().getDeck().get("Flooding");
         if (targets.size() == 0) {
-            GameController.getInstance().getGame().getDeck().get("Flooding").onPlayServerHook(GameController.getInstance().getCurrentPlayer(), 0);
-            exit(view);
-            return;
+            EventScheduler.addEvent(new PlayCardEvent(flooding, GameController.getCurrentPlayer(), 0));
+        } else {
+            EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:", targets, flooding, ChoiceDialog.USE_CASE.PLAYER));
         }
-        String[] targets_array = targets.toArray(new String[0]);
-        Intent intent = new Intent(this, PlayerChoiceActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        intent.putExtra(PlayerChoiceActivity.CARD_INTENT, "Flooding");
-        intent.putExtra(PlayerChoiceActivity.TARGETS, targets_array);
-        this.startActivity(intent);
+        exit(view);
     }
 }

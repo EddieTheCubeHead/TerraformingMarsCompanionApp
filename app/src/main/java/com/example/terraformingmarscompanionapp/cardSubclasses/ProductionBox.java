@@ -6,6 +6,8 @@ import com.example.terraformingmarscompanionapp.game.Player;
 //Dataclass for the production box of cards
 //Only here because of robotic workforce
 public final class ProductionBox {
+
+    //TODO have a look at whether these are needed
     private Boolean has_steal = false;
     private void hasSteal() {has_steal = true;}
 
@@ -47,7 +49,7 @@ public final class ProductionBox {
 
         try {
             if (target_index != 0) {
-                Player target_player = GameController.getInstance().getPlayer(target_index);
+                Player target_player = GameController.getPlayer(target_index);
                 target_player.changeMoneyProduction(-steal_money_production);
                 target_player.takeSteelProduction(steal_steel_production);
                 target_player.takeTitaniumProduction(steal_titanium_production);

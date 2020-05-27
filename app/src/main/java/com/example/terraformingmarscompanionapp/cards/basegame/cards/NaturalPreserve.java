@@ -1,7 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import android.content.Context;
+
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
@@ -17,13 +21,13 @@ public final class NaturalPreserve extends Card {
         tags.add(Tag.BUILDING);
         requirements.setMaxOxygen(4);
         victory_points = 1;
-        wait_for_server = true;
     }
 
     @Override
-    public void onPlay(Player player) {
-        GameController.getInstance().addUiEvent(new TileEvent(Placeable.NATURAL_RESERVE, owner_game));
-        super.onPlay(player);
+    public void onPlay(Player player, Context context) {
+        defaultEvents(player);
+        EventScheduler.addEvent(new TileEvent(Placeable.NATURAL_RESERVE, owner_game));
+        EventScheduler.playNextEvent(context);
     }
 
     @Override

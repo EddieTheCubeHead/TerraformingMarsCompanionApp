@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.webSocket.events;
+package com.example.terraformingmarscompanionapp.webSocket.packets;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -8,7 +8,7 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.PlacementBonus;
 /**
  * Event representing playing a card
  */
-public class TileEventPacket implements PlayablePacket{
+public class TileEventPacket implements ServerPacket {
     private Placeable tile_type;
     private String player_name;
     private Integer x_coord;
@@ -23,7 +23,7 @@ public class TileEventPacket implements PlayablePacket{
 
     @Override
     public void playPacket() {
-        Game game = GameController.getInstance().getGame();
+        Game game = GameController.getGame();
         game.tile_handler.placeTile(game.getPlayer(player_name), game.tile_handler.getTile(x_coord, y_coord), tile_type);
         switch (tile_type) {
             case OCEAN:

@@ -3,16 +3,21 @@ package com.example.terraformingmarscompanionapp.game;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
+import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -26,56 +31,53 @@ import java.util.List;
 
 public class GameController
 {
-    //Horrible but deadline came too soon.
-    static GameController instance = null;
 
-    //Generation info
-    private Integer generation = 0;
+    //Generation and action info
+    private static Integer generation = 0;
+    private static Integer action_number = 0;
 
-    public Integer getGeneration() {return generation;}
-    public Integer getDisplayActions() {
+    public static Integer getGeneration() {return generation;}
+    public static Integer getActionNumber() {return action_number;}
+    public static Integer getDisplayActions() {
         return 2 - actions_used;
     }
 
-    private Game game;
-    private List<Player> queue_full = new ArrayList<>();
-    private Deque<Player> queue = new LinkedList<>(); //double ended queue
-    private Player current_player;
-    private Player current_starter;
-    private Boolean greenery_round = false;
+    private static Game game;
+    private static List<Player> queue_full = new ArrayList<>();
+    private static Deque<Player> queue = new LinkedList<>(); //double ended queue
+    private static Player current_player;
+    private static Player current_starter;
+    private static Boolean greenery_round = false;
 
-    private Integer actions_used = 0;
+    private static Integer actions_used = 0;
 
     //Controller needs to know if the game is played via a server and if so, which player is the one playing on this instance
-    private Boolean server_multiplayer = false;
-    private Player self_player;
+    private static Boolean server_multiplayer = false;
+    private static Player self_player;
 
     //Games aren't hosted on a single client. The "host" merely sends generation end messages to keep that in sync.
-    private Boolean is_host = false;
-    public void makeHost() {is_host = true;}
-
-    //UI-event queu for asyncronous UI-events (tile, resource, cost and cardprompt)
-    private Deque<GameEvent> ui_events = new LinkedList<>();
-    private Boolean delay_action_use = false;
-
-    //Context for InGameUI to use with t.ex prompts
-    private Context context = null;
-    public void setContext(Context context) {
-        this.context = context;
-    }
+    private static Boolean is_host = false;
 
     //Setting the instance owner
-    public void setSelfPlayer(Player player) {
+    public static void setSelfPlayer(Player player) {
         self_player = player;
     }
 
+    //Weak reference to InGameUI activity
+    private static WeakReference<Context> context_reference;
+    public static void setContextReference(Context context) {context_reference = new WeakReference<>(context);}
+    public static Context getContext() {
+        if (context_reference != null) {
+            return context_reference.get();
+        }
+        return null;
+    }
 
-    public Game getGame() { return game; }
-    public Player getCurrentPlayer()  { return current_player; }
-    public Context getContext() { return context; }
+    public static Game getGame() { return game; }
+    public static Player getCurrentPlayer()  { return current_player; }
 
     //Checking if it is client's turn in a server game
-    public Boolean checkTurnEligibility() {
+    public static Boolean checkTurnEligibility() {
         if (!server_multiplayer) {
             return true;
         } else if (self_player == null) {
@@ -84,9 +86,9 @@ public class GameController
         return current_player==self_player;
     }
 
-    public Player getPlayer(Integer index) {return queue_full.get(index - 1);}
+    public static Player getPlayer(Integer index) {return queue_full.get(index - 1);}
 
-    public Player getPlayer(String name)
+    public static Player getPlayer(String name)
     {
         for (Player p : queue_full)
         {
@@ -96,15 +98,18 @@ public class GameController
         return null;
     }
 
-    public Integer getPlayerIndex(Player player) {return (queue_full.indexOf(player)+1);}
+    public static Integer getPlayerIndex(String player_name) {
+        Player player = game.getPlayer(player_name);
+        return (queue_full.indexOf(player)+1);
+    }
 
-    //Main constructor
-    private GameController(Game game){
-        this.game = game;
+    public static void initGameController(Game game, Boolean is_host) {
+        GameController.game = game;
 
         ArrayList<Player> players = game.getPlayers();
-        if (players == null || players.size() == 0)
+        if (players == null || players.size() == 0) {
             new Exception().printStackTrace();
+        }
 
         queue_full.addAll(players);
         queue.addAll(queue_full);
@@ -114,84 +119,49 @@ public class GameController
 
         if (game.getServerMultiplayer()) {
             server_multiplayer = true;
+            GameController.is_host = is_host;
         }
     }
 
-    //Working with a single instance makes life easier
-    public static GameController makeInstance(Game game)
-    {
-        if (instance != null)
-        {
-            System.out.println("GAMECONTROLLER ALREADY INSTANCIATED BEFORE");
-            new Exception().printStackTrace();
-            System.exit(-1);
-        }
-        instance = new GameController(game);
-        return instance;
-    }
+    public static Boolean getServerMultiplayer() {return server_multiplayer;}
 
-    public static GameController getInstance()
-    {
-        if (instance == null)
-        {
-            System.out.println("GAMECONTROLLER NOT INSTANTIATED AT GETINSTANCE");
-            new Exception().printStackTrace();
-            System.exit(-1);
-        }
-        return instance;
-    }
-
-    //All the functions responsible for turn management. Ends roughly on row 280
-    public Boolean useAction() {
-        if (executeNextEvent()) {
-            gameUpdate();
-            return false;
-        }
-        if (delay_action_use) {
-            delay_action_use = false;
-            if (server_multiplayer) {
-                GameActions.sendUseAction();
-            }
-        }
+    public static void useAction(Boolean end_turn) {
         actions_used++;
-        if (actions_used >= 2) {
+        gameUpdate();
+
+        if (actions_used >= 2 || end_turn) {
             endTurn();
         }
-
-        gameUpdate();
-        return true;
     }
 
-    //Only call from GameActions -class. Breaks things otherwise
-    public void useActionServer() {
-        ui_events.clear();
-        useAction();
-    }
-
-    public void endTurn()
+    public static void endTurn() {endTurn(getContext());}
+    public static void endTurn(Context context)
     {
 
-        if(actions_used == 0)
+        if (actions_used == 0)
             queue.removeFirst();
         else
             queue.addLast(queue.removeFirst());
 
-        //kun kaikki on foldannu
+        //If everyone has folded
         if (queue.size() == 0)
         {
-            endGeneration();
+            endGeneration(context);
         } else {
             current_player = queue.getFirst();
-            atTurnStart();
+            atTurnStart(context);
         }
     }
 
-    public void atTurnStart()
+    public static void atTurnStart(Context context)
     {
         actions_used = 0;
+
+        //Shouldn't be needed but just in case
+        EventScheduler.clearEventStack();
         gameUpdate();
 
-        System.out.println(current_player.getName() + " " + generation);
+        Log.i("Game controller", String.format("At turn start called for player %s, generation %s", current_player, generation));
 
         //Sometimes there are specific actions at the start of a generation or at certain generations
         //this if-else mess keeps track of those
@@ -209,28 +179,26 @@ public class GameController
                 } else if (game.modifiers.getPrelude() && current_player.getPreludes().size() == 0) {
                     ((InGameUI) context).playPreludes();
                 } else {
-                    changeGeneration();
+                    changeGeneration(context);
                 }
             }
 
         //Activity at the start of the round
         } else if (!current_player.getDrewCardsThisGen() && (self_player == null || current_player == self_player)) {
 
+            current_player.setDrewCardsThisGen(true);
+
             //Beginner corporation draws 10 cards for free at game start
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
                 if (server_multiplayer) {
-                    GameActions.sendUseAction();
+                    EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true)));
                 }
-                useAction();
                 current_player.changeHandSize(10);
                 current_player.setDrewCardsThisGen(true);
-                addUiEvent(new PromptEvent(current_player.getName() + ", please draw 10 cards."));
-                useAction();
+                EventScheduler.addEvent(new PromptEvent(current_player.getName() + ", please draw 10 cards."));
+
             } else {
-                if (server_multiplayer) {
-                    GameActions.sendUseAction();
-                }
-                game.getDeck().get("Round start draw").onPlay(current_player);
+                game.getDeck().get("Round start draw").onPlay(current_player, context);
             }
 
         //First actions declared by corporation cards
@@ -241,13 +209,13 @@ public class GameController
 
             if (!action.firstActionUsed())
             {
+                Log.i("Game Controller", "Calling first action for player " + current_player.getName());
                 action.firstAction();
-                useAction();
             }
         }
     }
 
-    private void endGeneration()
+    private static void endGeneration(Context context)
     {
         if (greenery_round) {
             countPoints();
@@ -265,14 +233,14 @@ public class GameController
         current_player = current_starter;
         ((InGameUI)context).generationEndPrompt();
 
-        game.onGenerationEnd();
+        game.onGenerationEnd(context);
     }
 
     //Small function to keep server game in sync. Basically ignored in hotseat
-    void changeGeneration()
+    static void changeGeneration(Context context)
     {
         if (!server_multiplayer) {
-            atGenerationStart();
+            atGenerationStart(context);
         } else if (is_host) {
             GameActions.sendChangeGeneration();
         }
@@ -280,16 +248,18 @@ public class GameController
 
     // Other part of the generation syncing. Called from change generation in hotseat,
     // or via a websocketevent in server game
-    public void atGenerationStart()
+    public static void atGenerationStart() {atGenerationStart(getContext());}
+    public static void atGenerationStart(Context context)
     {
+        Log.i("Game Controller", "Generation start called");
         generation += 1;
-        atTurnStart();
+        atTurnStart(context);
     }
 
     //Player getters concerning turn order
-    public Player getSelfPlayer() {return self_player;}
+    public static Player getSelfPlayer() {return self_player;}
 
-    public Player getDisplayPlayer()
+    public static Player getDisplayPlayer()
     {
         Player display_player;
 
@@ -303,11 +273,11 @@ public class GameController
     }
 
     //Game ending logic
-    void gameEndPreparation() {
+    static void gameEndPreparation() {
         greenery_round = true;
     }
 
-    private void countPoints() {
+    private static void countPoints() {
         for (Award award : game.getAwards().values()) {
             award.onGameEnd();
         }
@@ -324,20 +294,8 @@ public class GameController
         }
     }
 
-    public Boolean getGreeneryRound() {return greenery_round;}
+    public static Boolean getGreeneryRound() {return greenery_round;}
 
-    //Managing the UI queue
-    public void addUiEvent(GameEvent event) {ui_events.addLast(event);}
-
-    private Boolean executeNextEvent() {
-        if (ui_events.size() == 0) {
-            return false;
-        }
-        delay_action_use = true;
-        GameEvent event = ui_events.removeFirst();
-        event.playEvent();
-        return true;
-    }
 
     //https://stackoverflow.com/questions/37759734/dynamically-updating-a-fragment/37761276#37761276
     //Upgrading necessary fragments
@@ -345,29 +303,30 @@ public class GameController
         void update();
     }
 
-    private List<GameUpdateListener> game_listeners = new ArrayList<>();
+    private static List<GameUpdateListener> game_listeners = new ArrayList<>();
 
-    public synchronized void registerGameUpdateListener(GameUpdateListener listener) {
+    public static synchronized void registerGameUpdateListener(GameUpdateListener listener) {
         game_listeners.add(listener);
     }
 
-    public synchronized void unregisterGameUpdateListener(GameUpdateListener listener) {
+    //TODO find out if irrelevant, maybe replace with emptying the listener list at game end?
+    public static synchronized void unregisterGameUpdateListener(GameUpdateListener listener) {
         game_listeners.remove(listener);
     }
 
-    public void gameUpdate() {
+    static void gameUpdate() {
         for (GameUpdateListener listener : game_listeners) {
             listener.update();
         }
     }
 
     //Sometimes easier to call this from here, than from game
-    public List<Player> getPlayers()
+    public static List<Player> getPlayers()
     {
         return queue_full;
     }
 
-    public void promptUser(String text) {
-        ((InGameUI)context).displayPrompt(text);
+    public static void promptUser(String text, Context context) {
+        ((GameUiElement)context).displayPrompt(text);
     }
 }
