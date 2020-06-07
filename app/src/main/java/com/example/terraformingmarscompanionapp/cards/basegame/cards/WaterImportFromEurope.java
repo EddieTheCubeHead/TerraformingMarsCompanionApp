@@ -57,9 +57,4 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public void actionWithMetadata(Integer data) {EventScheduler.playNextEvent(GameController.getContext());}
-
-    @Override
-    public Boolean getActionRequiresWait() {
-        return true;
-    }
 }

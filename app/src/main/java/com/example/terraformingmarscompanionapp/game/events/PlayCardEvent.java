@@ -10,11 +10,22 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.Player;
 
-public final class PlayCardEvent extends GameEvent {
+/**
+ * An implementation of {@link GameEvent} used to represent playing a card or using an action of
+ * an already played card.
+ */
+public final class PlayCardEvent implements GameEvent {
     private Card card;
     private Player player;
     private Integer metadata;
 
+    /**
+     * Constructor
+     *
+     * @param card {@link Card} that is being played
+     * @param player {@link Player} that is playing the card
+     * @param metadata {@link Integer} metadata used for playing the card. If the card doesn't use metadata any value will work but giving 0 is recommended for consistency
+     */
     public PlayCardEvent(Card card, Player player, Integer metadata) {
         this.card = card;
         this.player = player;
@@ -33,6 +44,11 @@ public final class PlayCardEvent extends GameEvent {
         }
     }
 
+    /**
+     * toString overridden for logging and debugging
+     *
+     * @return {@link String} a verbal representation of the event
+     */
     @SuppressLint("DefaultLocale")
     @NonNull
     @Override

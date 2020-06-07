@@ -96,7 +96,7 @@ public class Player {
      * them in a smart way. */
 
     /***********************************************************************************
-     Resurssit
+     Resources
      ************************************************************************************/
 
     /* some cards have "take up to" -descriptions takeResource() -functions take as much of a resource

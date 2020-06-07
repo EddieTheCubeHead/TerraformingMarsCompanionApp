@@ -14,10 +14,14 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * A class for managing tile-based events in a game
+ * A class for managing the map of the game
+ *
+ * @author Eetu Asikainen
+ * @version 0.2
+ * @since 0.2
  */
 public class TileHandler {
-    private final Integer map;
+    private final GameMap map;
     private final Tile[][] mars_tiles = new Tile[17][9];
     private final Tile[] space_tiles;
     private final Game game;
@@ -25,25 +29,28 @@ public class TileHandler {
      * hex formation.
      */
 
-    //The constructor is ugly, but works. For now only the basegame map (tharsis) is used
-    public TileHandler(Game owner_game, Integer game_map, Boolean venus_in_game) {
+    /**
+     * Constructor. Generates one of the three maps based on the given value
+     *
+     * @param owner_game {@link Game} that the handler is associated with
+     * @param game_map {@link Integer} declaring the map to be used
+     */
+    public TileHandler(Game owner_game, GameMap game_map) {
         game = owner_game;
 
-        //Map: 0 = basegame/tharsis, 1 = hellas, 2 = elysium
-        //TODO maybe replace using int here with an enum
         map = game_map;
 
-        //Init with nulls
+        // Init with nulls
         for (int x = 0; x < 17; x++) {
             for (int y = 0; y < 9; y++) {
                 mars_tiles[x][y] = null;
             }
         }
 
-        //Configuring tile data manually
+        // Configuring tile data manually
         switch (map) {
-            case 0:
-                //Tharsis/basegame
+            case THARSIS:
+
                 mars_tiles[4][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{4, 8});
                 mars_tiles[6][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), true, new Integer[]{6, 8});
                 mars_tiles[8][8] = new Tile(game, null, false, new Integer[]{8, 8});
@@ -116,8 +123,8 @@ public class TileHandler {
                 break;
 
 
-            case 1:
-                //Hellas
+            case HELLAS:
+
                 mars_tiles[4][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{4, 8});
                 mars_tiles[5][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{6, 8});
                 mars_tiles[8][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{8, 8});
@@ -190,8 +197,8 @@ public class TileHandler {
                 break;
 
 
-            case 2:
-                //Elysium
+            case ELYSIUM:
+
                 mars_tiles[4][8] = new Tile(game, null, true, new Integer[]{4, 8});
                 mars_tiles[5][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), true, new Integer[]{6, 8});
                 mars_tiles[8][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), true, new Integer[]{8, 8});
@@ -266,31 +273,52 @@ public class TileHandler {
                 throw new IllegalStateException("Unexpected value: " + map);
         }
 
-        //Space tiles don't have placement or adjacency bonuses. Venus-expansion adds 4 of these
-        if (venus_in_game) {
+        // Space tiles don't have placement or adjacency bonuses. Venus-expansion adds 4 of these
+        if (owner_game.modifiers.getVenus()) {
             space_tiles = new Tile[7];
         } else {
             space_tiles = new Tile[3];
         }
 
-        //Init space tiles
+        // Init space tiles
         for (int i = 0; i < space_tiles.length; i++) {
             space_tiles[i] = new Tile(game);
         }
     }
 
-    public void placeGanymede(Player player) {
-        game.update_manager.onCityPlaced(player, false);
-        space_tiles[0].placeHex(player, Placeable.CITY, GameController.getContext());
+    /**
+     * A method to get a tile in the given coordinates
+     *
+     * @param x {@link Integer} the x coordinate of the tile
+     * @param y {@link Integer} the y coordinate of the tile
+     * @return {@link Tile} in the given coordinates. Can be null if coordinates are invalid (outside the hexagonal map, inside the square array)
+     */
+    public Tile getTile(Integer x, Integer y) {
+        return mars_tiles[x][y];
     }
 
-    public void placePhobos(Player player) {
-        game.update_manager.onCityPlaced(player, false);
-        space_tiles[1].placeHex(player, Placeable.CITY, GameController.getContext());
+    /**
+     * a method that hooks to the tile placement UI from the {@link com.example.terraformingmarscompanionapp.game.events.TileEvent} -Event
+     *
+     * @param tile_type {@link Placeable} being placed
+     * @param context {@link Context} UI context the event is called from
+     */
+    public void getCoordinatesFromPlayer(Placeable tile_type, Context context) {
+        Intent intent = new Intent(context, TilePlacementActivity.class);
+        intent.putExtra("tile", tile_type.toString());
+        System.out.println("Starting tile placement activity");
+        context.startActivity(intent);
     }
 
-    //Gets called from TilePlacementActivity
-    public ArrayList<String> placeTile(Player player, Tile to_place, Placeable tile_type) {
+    /**
+     * A method to place a placeable in the given tile.
+     *
+     * @param player {@link Player} placing the placeable
+     * @param target_tile {@link Tile} that the placeable is being placed on
+     * @param tile_type {@link Placeable} that is being placed
+     * @return {@link ArrayList} of {@link String} if the placealbe is of type FLOOD_OCEAN. Represents the players flood money removal can target. Otherwise returns null
+     */
+    public ArrayList<String> placeTile(Player player, Tile target_tile, Placeable tile_type) {
         ArrayList<Placeable> to_city = new ArrayList<>(Arrays.asList(Placeable.CITY, Placeable.RESEARCH_OUTPOST, Placeable.NOCTIS, Placeable.VOLCANIC_CITY, Placeable.URBANIZED_AREA));
         ArrayList<Placeable> to_ocean = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.LAND_OCEAN, Placeable.FLOOD_OCEAN));
         ArrayList<Placeable> to_greenery = new ArrayList<>(Arrays.asList(Placeable.GREENERY, Placeable.OCEAN_GREENERY));
@@ -300,7 +328,7 @@ public class TileHandler {
 
         if (tile_type.equals(Placeable.FLOOD_OCEAN)) {
             flood = true;
-            for (Tile tile : getNeighbours(to_place)) {
+            for (Tile tile : getNeighbours(target_tile)) {
                 if (tile.getOwner() != null) {
                     flood_neighbours.add(tile.getOwner().getName());
                     System.out.println(tile.getOwner().getName());
@@ -327,7 +355,7 @@ public class TileHandler {
             player.addCity();
         }
 
-        for (Tile neighbour : getNeighbours(to_place)) {
+        for (Tile neighbour : getNeighbours(target_tile)) {
             if (neighbour != null) {
                 if (neighbour.getPlacedHex() != null && neighbour.getPlacedHex() == Placeable.OCEAN) {
                     player.changeMoney(2 + player.getOceanAdjacencyBonusModifier());
@@ -335,8 +363,8 @@ public class TileHandler {
             }
         }
 
-        to_place.placeHex(player, tile_type, GameController.getContext());
-        player.addTile(to_place);
+        target_tile.placeHex(player, tile_type, GameController.getContext());
+        player.addTile(target_tile);
 
         if (flood) {
             return flood_neighbours;
@@ -345,7 +373,12 @@ public class TileHandler {
     }
 
 
-    //Get tile neighbours
+    /**
+     * A method to get the neighbouring tiles for the given tile
+     *
+     * @param tile {@link Tile} that the neighbours needed belong to. Make sure the tile is not a space tile
+     * @return {@link ArrayList} of {@link Tile} that contains all neighbours
+     */
     public ArrayList<Tile> getNeighbours(Tile tile) {
         Integer x = tile.getX();
         Integer y = tile.getY();
@@ -396,15 +429,14 @@ public class TileHandler {
         return neighbours;
     }
 
-    //UI-hook for playing cards
-    public void getCoordinatesFromPlayer(Placeable tile_type, Context context) {
-        Intent intent = new Intent(context, TilePlacementActivity.class);
-        intent.putExtra("tile", tile_type.toString());
-        System.out.println("Starting tile placement activity");
-        context.startActivity(intent);
-    }
-
-    //Simple and boring if/else switch/case for validity checking
+    /**
+     * A method to check the validity of the action of palcing a placeable in a tile
+     *
+     * @param tile_type {@link Placeable} being placed
+     * @param x {@link Integer} the x coordinate the placeable is being placed to
+     * @param y {@link Integer} the y coordinate the placeable is being placed to
+     * @return {@link Boolean} whether the placement action is valid with the current game rules
+     */
     public Boolean checkPlacementValidity(Placeable tile_type, Integer x, Integer y) {
         ArrayList<Placeable> ocean_placement = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.OCEAN_GREENERY, Placeable.MOHOLE, Placeable.FLOOD_OCEAN));
 
@@ -412,18 +444,18 @@ public class TileHandler {
 
         Tile to_place = getTile(x, y);
 
-        if (map == 0 && x == 4 && y == 4) {
+        if (map.equals(GameMap.THARSIS) && x == 4 && y == 4) {
             Log.i("Tile placement", "Noctis tile");
             return tile_type.equals(Placeable.NOCTIS);
         }
 
-        //Hellas ei sisällä tuliperäisiä tiiliä
-        if ((volcanic_placement.contains(tile_type) && (map != 1)) && !to_place.getIsVolcanic()) {
+        // Hellas doesn't have any volcanic tiles
+        if ((volcanic_placement.contains(tile_type) && (map != GameMap.HELLAS)) && !to_place.getIsVolcanic()) {
             Log.i("Invalid tile placement", "Requires volcanic");
             return false;
         }
 
-        //Onko mereen vai maalle asetettava tiili
+        // Whether the tile should be placed on land or on ocean
         if (ocean_placement.contains(tile_type) && !to_place.getIsOcean()) {
             Log.i("Invalid tile placement", "Requires ocean");
             return false;
@@ -432,7 +464,7 @@ public class TileHandler {
             return false;
         }
 
-        //Onko asetuspaikassa jo tiiltä
+        // Whether the placing spot already has tiles
         if (to_place.getPlacedHex() != null) {
             Log.i("Invalid tile placement", "Hex reserved");
             return false;
@@ -456,7 +488,7 @@ public class TileHandler {
             // Cities cannot get placed next to each other
             case NOCTIS:
                 // Noctis is an exception, but only on tharsis. Falls through if map is not tharsis
-                if (map == 0) {
+                if (map == GameMap.THARSIS) {
                     break;
                 }
             case CITY:
@@ -524,7 +556,25 @@ public class TileHandler {
         return true;
     }
 
-    public Tile getTile(Integer x, Integer y) {
-        return mars_tiles[x][y];
+    /**
+     * A simple method for placing the city from the card {@link com.example.terraformingmarscompanionapp.cards.basegame.cards.GanymedeColony}
+     * into a reserved space tile
+     *
+     * @param player {@link Player} placing the tile
+     */
+    public void placeGanymede(Player player) {
+        game.update_manager.onCityPlaced(player, false);
+        space_tiles[0].placeHex(player, Placeable.CITY, GameController.getContext());
+    }
+
+    /**
+     * A simple method for placing the city from the card {@link com.example.terraformingmarscompanionapp.cards.basegame.cards.PhobosSpaceHaven}
+     * into a reserved space tile
+     *
+     * @param player {@link Player} placing the tile
+     */
+    public void placePhobos(Player player) {
+        game.update_manager.onCityPlaced(player, false);
+        space_tiles[1].placeHex(player, Placeable.CITY, GameController.getContext());
     }
 }

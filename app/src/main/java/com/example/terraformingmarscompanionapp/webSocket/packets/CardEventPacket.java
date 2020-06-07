@@ -30,7 +30,7 @@ public class CardEventPacket implements ServerPacket {
         Game game = GameController.getGame();
         Card card = game.getAllCards().get(card_name);
         if (card.getOwner() == null) {
-            card.playWithMetadata(game.getPlayer(player_name), metadata);
+            card.playWithMetadata(GameController.getPlayer(player_name), metadata);
         } else if (card instanceof ActionCard) {
             ((ActionCard) card).actionWithMetadata(metadata);
         } else {

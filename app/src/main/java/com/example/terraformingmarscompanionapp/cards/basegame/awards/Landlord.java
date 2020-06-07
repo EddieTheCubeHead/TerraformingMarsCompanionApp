@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.cards.basegame.awards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public final class Landlord extends Award {
         Integer max = 0;
         Integer second = 0;
 
-        for (Player player : owner_game.getPlayers()) {
+        for (Player player : GameController.getPlayers()) {
             Integer player_result = player.getOwnedTiles().size();
             if (player_result > max) {
                 second = max;
@@ -45,7 +46,7 @@ public final class Landlord extends Award {
             player.changeVictoryPoints(5);
         }
 
-        if (owner_game.getPlayers().size() == 2) {
+        if (GameController.getPlayers().size() == 2) {
             return;
         }
 

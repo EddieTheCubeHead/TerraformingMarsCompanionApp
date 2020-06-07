@@ -6,15 +6,22 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 /**
+ * A subclass of {@link Card} to represent cards that hold special resources on them during the game.
  * Cards that have resources (animals, microbes, etc.) on them should extend this instead of the base
- * Card -class. Adds functionality and variables needed for representing resources on cards.
+ * Card -class. Adds functionality and variables needed for representing and managing the resources.
+ *
+ * @author Eetu Asikainen
+ * @version 0.2
+ * @since 0.2
  */
 public abstract class ResourceCard extends Card {
     public ResourceCard(Type type, Game game) {
         super(type, game);
     }
 
-    //Enum resurssityypin määrittämiseen
+    /**
+     * Enum to indicate the type of the resource stored on the card
+     */
     public enum ResourceType {
         MICROBE,
         ANIMAL,
@@ -27,9 +34,23 @@ public abstract class ResourceCard extends Card {
     protected ResourceType resource_type;
     protected Integer resource_amount = 0;
 
-    public final ResourceType getResourceType() {return resource_type;}
-    public final Integer getResourceAmount() {return resource_amount;}
+    /**
+     * @return {@link ResourceCard.ResourceType} the resource type stored on the card
+     */
+    public final ResourceType getResourceType() {
+        return resource_type;
+    }
 
+    /**
+     * @return {@link Integer} the amount of resources on the card.
+     */
+    public final Integer getResourceAmount() {
+        return resource_amount;
+    }
+
+    /**
+     * @param change_amount {@link Integer} the amount of resources to change
+     */
     public final void changeResourceAmount(Integer change_amount) {resource_amount += change_amount;}
 
     public void onPlay(Player player, Context context) {

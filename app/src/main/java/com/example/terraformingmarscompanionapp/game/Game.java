@@ -9,30 +9,33 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
+import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class representing the game. Has more direct access to game parameters than Controller, hence
- * some functions such as card rewuirement checking are also here.
+ * Class representing the game. Mostly houses data but also has some important methods that either
+ * manipulate the data or utilise it. Most of the logic running the game is situated in {@link GameController},
+ * not here.
+ *
+ * @author Eetu Asikainen
+ * @version 0.2
+ * @since 0.2
  */
-public class Game implements Serializable {
+public class Game {
 
     public final UpdateManager update_manager;
     public final TileHandler tile_handler;
 
-    //Different decks
+    // Different decks
     private final HashMap<String, Card> deck;
     private HashMap<String, Card> preludes = new HashMap<>();
     private final HashMap<String, Card> corporations;
@@ -41,114 +44,35 @@ public class Game implements Serializable {
     private final HashMap<String, Card> milestones;
     private final HashMap<String, Card> all_cards;
 
-
-    private final ArrayList<Player> players = new ArrayList<>();
-
-    private Boolean server_multiplayer;
-    public Boolean getServerMultiplayer() {return server_multiplayer;}
-
-    //Storing expansions and house rules
+    // Storing expansions and house rules
     public GameModifiers modifiers;
 
-    //Getters for players and decks
-    public ArrayList<Player> getPlayers() {return players;}
-    public HashMap<String, Card> getDeck() {return deck;}
-    public HashMap<String, Card> getPreludes() {return preludes;}
-    public HashMap<String, Card> getCorporations() {return corporations;}
-    public HashMap<String, Card> getGhosts() {return ghosts;}
-    public HashMap<String, Award> getAwards() {return awards;}
-    public HashMap<String, Card> getMilestones() {return milestones;}
-    public HashMap<String, Card> getAllCards() {return all_cards;}
-
-    //Milestones and awards
+    // Milestones and awards
     private Integer claimed_milestones = 0;
-    public void claimMilestone() {claimed_milestones++;}
-
     private Integer claimed_awards = 0;
-    public void claimAward() {
-        claimed_awards++;
-    }
-    public Integer getClaimedAwards() {return claimed_awards;}
 
-    //EffectCard -interface implementing cards get called to UpdateManager
-    HashMap<String, EffectCard> getEffectCards() {
-        HashMap<String, EffectCard> effect_cards = new HashMap<>();
-        for (Map.Entry<String, Card> entry : deck.entrySet()) {
-            if (entry.getValue() instanceof EffectCard) {
-                effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
-            }
-        }
+    private Boolean server_multiplayer;
 
-        for (Map.Entry<String, Card> entry : corporations.entrySet()) {
-            if (entry.getValue() instanceof EffectCard) {
-                effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
-            }
-        }
-
-        for (Map.Entry<String, Card> entry : ghosts.entrySet()) {
-            if (entry.getValue() instanceof EffectCard) {
-                effect_cards.put(entry.getKey(), (EffectCard)entry.getValue());
-            }
-        }
-        return effect_cards;
-    }
-
-    //Getter for player based on name
-    public Player getPlayer(String player_name) {
-        for (Player player : players) {
-            if (player.getName().equals(player_name)) {
-                return player;
-            }
-        }
-        return null;
-    }
-
-    //Global game state parameters, getters and setters
     private Integer global_temperature;
-    public Integer getGlobalTemperature() {return global_temperature;}
-    public void rawChangeTemperature(Integer value) {global_temperature += value;}
-
     private Integer global_oxygen;
-    public Integer getGlobalOxygen() {return global_oxygen;}
-    public void rawChangeOxygen(Integer value) {global_oxygen += value;}
-
     private Integer oceans_placed;
-
     private Integer venus_terraform;
-    public Integer getVenusTerraform() {return venus_terraform;}
-
     private Integer cities_on_mars;
-    public Integer getCitiesOnMars() {return cities_on_mars;}
-    void addCityOnMars() {cities_on_mars++;}
-
     private Integer cities_in_space;
-    public Integer getCitiesInSpace() {return cities_in_space;}
-    void addCityInSpace() {cities_in_space++;}
 
-    //Constructor
+    /**
+     * Constructor
+     *
+     * @param modifiers {@link GameModifiers} the modifiers of the game
+     * @param server_multiplayer {@link Boolean} representing whether the game is played through a server
+     * @param map {@link GameMap} representing the map the game is played on
+     */
     public Game(
-            @NotNull ArrayList<String> player_names,
-            boolean corporate_era,
-            boolean prelude,
-            boolean colonies,
-            boolean venus,
-            boolean turmoil,
-            boolean extra_corporations,
-            boolean world_government_terraforming,
-            boolean must_max_venus,
-            boolean turmoil_terraforming_revision,
+            GameModifiers modifiers,
             boolean server_multiplayer,
-            Integer map
-                )
-    {
-
-        for (String player_name : player_names) {
-            players.add(new Player(this, player_name));
-        }
-
-        this.modifiers = new GameModifiers(corporate_era, prelude, colonies, venus, turmoil, extra_corporations, world_government_terraforming, must_max_venus, turmoil_terraforming_revision);
-
-        GameConstructor constructor = new GameConstructor(this, corporate_era, prelude, colonies, venus, turmoil, extra_corporations, map);
+            GameMap map) {
+        this.modifiers = modifiers;
+        DeckConstructor constructor = new DeckConstructor(this, map);
         deck = constructor.createDeck();
         corporations = constructor.createCorporations();
         ghosts = constructor.createGhosts();
@@ -157,11 +81,11 @@ public class Game implements Serializable {
 
         all_cards = new HashMap<>();
 
-        if (prelude) {
+        if (modifiers.getPrelude()) {
             preludes = constructor.createPreludes();
         }
 
-        //Using a stream would require higher API level. This keeps API level low
+        // Using a stream would require higher API level. This keeps API level low
         for (Map.Entry<String, Card> entry : deck.entrySet()) {
             all_cards.put(entry.getKey(), entry.getValue());
         }
@@ -189,8 +113,8 @@ public class Game implements Serializable {
 
         this.server_multiplayer = server_multiplayer;
 
-        tile_handler = new TileHandler(this, map, venus);
-        update_manager =  new UpdateManager(this, corporate_era, prelude, colonies, venus, turmoil);
+        tile_handler = new TileHandler(this, map);
+        update_manager =  new UpdateManager(this);
 
         global_temperature = -30;
         global_oxygen = 0;
@@ -201,10 +125,188 @@ public class Game implements Serializable {
         venus_terraform = 0;
     }
 
-    //Functions for global parameter manipulation
-    public void placeOcean() {oceans_placed++;}
-    public Integer getOceansPlaced() {return oceans_placed;}
+    /**
+     * @return {@link Boolean} whether the game is played through a server
+     */
+    public Boolean getServerMultiplayer() {
+        return server_multiplayer;
+    }
 
+    /**
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the main deck of the game
+     */
+    public HashMap<String, Card> getDeck() {
+        return deck;
+    }
+
+    /**
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the preludes of the game
+     */
+    public HashMap<String, Card> getPreludes() {
+        return preludes;
+    }
+
+    /**
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the corporations in the game
+     */
+    public HashMap<String, Card> getCorporations() {
+        return corporations;
+    }
+
+    /**
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the ghost cards used in the game
+     */
+    public HashMap<String, Card> getGhosts() {
+        return ghosts;
+    }
+
+    /**
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the awards of the game
+     */
+    public HashMap<String, Award> getAwards() {
+        return awards;
+    }
+
+    /**
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the milestones of the game
+     */
+    public HashMap<String, Card> getMilestones() {
+        return milestones;
+    }
+
+    /**
+     * @return {@link HashMap} of {@link String} and {@link Card} representing all cards in the game
+     */
+    public HashMap<String, Card> getAllCards() {
+        return all_cards;
+    }
+
+    /**
+     * A simple method to increment the claimed milestone count
+     */
+    public void claimMilestone() {
+        claimed_milestones++;
+    }
+
+    /**
+     * A simple method to increment the claimed award count
+     */
+    public void claimAward() {
+        claimed_awards++;
+    }
+
+    /**
+     * @return {@link Integer} the amount of awards claimed in the game
+     */
+    public Integer getClaimedAwards() {
+        return claimed_awards;
+    }
+
+    /**
+     * A method for getting all cards that have effects in them
+     *
+     * @return {@link HashMap} of {@link String} and {@link EffectCard} representing all cards implementing {@link EffectCard} in the game
+     */
+    HashMap<String, EffectCard> getEffectCards() {
+        HashMap<String, EffectCard> effect_cards = new HashMap<>();
+        for (Map.Entry<String, Card> entry : all_cards.entrySet()) {
+            if (entry.getValue() instanceof EffectCard) {
+                effect_cards.put(entry.getKey(), (EffectCard) entry.getValue());
+            }
+        }
+        return effect_cards;
+    }
+
+    /**
+     * @return {@link Integer} the global temperature level of the game
+     */
+    public Integer getGlobalTemperature() {
+        return global_temperature;
+    }
+
+    /**
+     * A method to modify temperature level without triggering any effects. Don't call unless you
+     * are exactly sure what you're doing. Prefer {@link #raiseTemperature(Player)} instead
+     *
+     * @param value {@link Integer} the amount of change. Can be negative to decrease the oxygen level
+     */
+    public void rawChangeTemperature(Integer value) {
+        global_temperature += value;
+    }
+
+    /**
+     * @return {@link Integer} the global oxygen level of the game
+     */
+    public Integer getGlobalOxygen() {
+        return global_oxygen;
+    }
+
+    /**
+     * A method to modify oxygen level without triggering any effects. Don't call unless you are
+     * exactly sure what you're doing. Prefer {@link #raiseOxygen(Player)} instead
+     *
+     * @param value {@link Integer} the amount of change. Can be negative to decrease the oxygen level
+     */
+    public void rawChangeOxygen(Integer value) {
+        global_oxygen += value;
+    }
+
+    /**
+     * @return {@link Integer} the global venus terraforming level
+     */
+    public Integer getVenusTerraform() {
+        return venus_terraform;
+    }
+
+    /**
+     * @return {@link Integer} the number of cities on the map, not in space
+     */
+    public Integer getCitiesOnMars() {
+        return cities_on_mars;
+    }
+
+    /**
+     * A simple method to increment the amount of cities on the map
+     */
+    void addCityOnMars() {
+        cities_on_mars++;
+    }
+
+    /**
+     * @return {@link Integer} the number of cities in space
+     */
+    public Integer getCitiesInSpace() {
+        return cities_in_space;
+    }
+
+    /**
+     * A simple method to increment the amount of cities in space
+     */
+    void addCityInSpace() {
+        cities_in_space++;
+    }
+
+    /**
+     * A simple method to increment the amount of placed oceans
+     */
+    public void placeOcean() {
+        oceans_placed++;
+    }
+
+    /**
+     * @return {@link Integer} the amount of oceans on the map
+     */
+    public Integer getOceansPlaced() {
+        return oceans_placed;
+    }
+
+    /**
+     * A method to increase the temperature one step and perform all actions required by it like
+     * incrementing terraforming rating for the raising player.
+     *
+     * @param raising_player {@link Player} raising the temperature
+     * @return {@link Boolean} whether the action was successful
+     */
     public boolean raiseTemperature(Player raising_player) {
         if (global_temperature >= 8) {
             return false;
@@ -219,6 +321,13 @@ public class Game implements Serializable {
         return true;
     }
 
+    /**
+     * A method to increase the oxygen level one step and perform all actions required by it like
+     * incrementing terraforming rating for the raising player.
+     *
+     * @param raising_player {@link Player} raising the temperature
+     * @return {@link Boolean} whether the action was successful
+     */
     public boolean raiseOxygen(Player raising_player) {
         if (global_oxygen >= 14) {
             return false;
@@ -232,6 +341,13 @@ public class Game implements Serializable {
         return true;
     }
 
+    /**
+     * A method to increase the venus terraforming level one step and perform all actions required
+     * by it like incrementing terrafroming rating for the raising player.
+     *
+     * @param raising_player {@link Player} raising the temperature
+     * @return {@link Boolean} whether the action was successful
+     */
     public boolean raiseVenus(Player raising_player) {
         if (venus_terraform >= 30) {
             return false;
@@ -242,12 +358,19 @@ public class Game implements Serializable {
     }
 
 
-    //Functions for playing cards. First part in three functions
-    public CardCostPacket getRecommendedCardCost(Card card)
+    /**
+     * The first method to be called when preparing to play a card. Takes a card and calls {@link #getRecommendedCardCost(Card)}
+     * with the given card to get a {@link CardCostPacket} of the card, as well as checking the
+     * requirements of the card and reject the play action if the requirements are not met.
+     *
+     * @param card {@link Card} that is being played
+     * @return {@link CardCostPacket} representing the resources the player has to use for playing the card
+     */
+    public CardCostPacket prepareCardPlayAction(Card card)
     {
         ArrayList<Type> single_owner = new ArrayList<>(Arrays.asList(Type.BLUE, Type.RED, Type.GREEN, Type.CORPORATION, Type.GHOST, Type.AWARD, Type.MILESTONE));
 
-        CardCostPacket resources_to_use = checkCardCost(card);
+        CardCostPacket resources_to_use = getRecommendedCardCost(card);
 
         if (single_owner.contains(card.getType()) && card.getOwner() != null) {
             resources_to_use.reject();
@@ -261,7 +384,14 @@ public class Game implements Serializable {
         return resources_to_use;
     }
 
-    private CardCostPacket checkCardCost(Card card)
+    /**
+     * A method to get the resources a player needs to use to play a card. Takes into consideration
+     * discounts and resource value increses like PhoboLog special effect.
+     *
+     * @param card {@link Card} which cost should be calculated
+     * @return {@link CardCostPacket} representing the resources the player has to use for playing the card
+     */
+    private CardCostPacket getRecommendedCardCost(Card card)
     {
         Player player = GameController.getCurrentPlayer();
 
@@ -375,9 +505,9 @@ public class Game implements Serializable {
                 }
             }
 
-            //TODO implement psychrophiles here when preludes is added
+            // TODO implement psychrophiles here when preludes is added
 
-            //TODO implement dirigibles here when venus next is added
+            // TODO implement dirigibles here when venus next is added
 
             // Adding heat
             CardCostPacket cardCostPacket;
@@ -396,6 +526,12 @@ public class Game implements Serializable {
         }
     }
 
+    /**
+     * A method to check whether the requirements of a card have been met.
+     *
+     * @param card {@link Card} which requirements need to be checked
+     * @return {@link Boolean} whether the resources are met or not
+     */
     private Boolean checkCardRequirements(Card card) {
 
         if (GameController.getGreeneryRound() && !(card instanceof BuildGreenery)) {
@@ -676,7 +812,13 @@ public class Game implements Serializable {
         return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
     }
 
-    // Second part of playing a card. See Card -class for a more detailed explanation of playing cards
+    /**
+     * A method to actualise the playing of a card
+     *
+     * @param card {@link Card} being played
+     * @param resources_to_use {@link CardCostPacket} representing the resources the player has to use for playing the card
+     * @param context {@link Context} the UI context the playing action is being played from
+     */
     public void playCard(Card card, CardCostPacket resources_to_use, Context context)
     {
         Player player = GameController.getCurrentPlayer();
@@ -695,12 +837,18 @@ public class Game implements Serializable {
         card.onPlay(player, context);
     }
 
-    // End a generation
+    /**
+     * A method to call when a generation ends. Modifies player resources based on their productions.
+     * A part of the chain of methods responsible for changing the generation. Calls {@link GameController#syncGenerationChange(Context)}
+     * as the next part of the chain.
+     *
+     * @param context {@link Context} the UI context the method is called from. Should be {@link com.example.terraformingmarscompanionapp.InGameUI}
+     */
     void onGenerationEnd(Context context) {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
             GameController.gameEndPreparation();
         }
-        for (Player player : players) {
+        for (Player player : GameController.getPlayers()) {
             player.changeMoney(player.getMoneyProduction() + player.getTerraformingRating());
             player.changeSteel(player.getSteelProduction());
             player.changeTitanium(player.getTitaniumProduction());
@@ -713,6 +861,6 @@ public class Game implements Serializable {
             player.resetActions();
         }
 
-        GameController.changeGeneration(context);
+        GameController.syncGenerationChange(context);
     }
 }

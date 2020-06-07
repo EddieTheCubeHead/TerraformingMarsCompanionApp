@@ -50,13 +50,13 @@ public class CardCostPacket implements ServerPacket
 
     @Override
     public void playPacket() {
-        Player player = GameController.getGame().getPlayer(player_name);
+        Player player = GameController.getPlayer(player_name);
         player.changeMoney(-money);
         player.changeSteel(-steel);
         player.changeTitanium(-titanium);
         player.changeHeat(-heat);
 
         Log.i("Game", String.format("%d, %d, %d, %d", -money, -steel, -titanium, -heat));
-        //TODO card resource integration when expansions added (plants on Psychrophiles, floaters on Dirigibles)
+        // TODO card resource integration when expansions added (plants on Psychrophiles, floaters on Dirigibles)
     }
 }

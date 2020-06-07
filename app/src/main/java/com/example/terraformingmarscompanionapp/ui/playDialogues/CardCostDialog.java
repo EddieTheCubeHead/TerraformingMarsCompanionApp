@@ -57,7 +57,7 @@ public class CardCostDialog {
         steel_value = (2 + player.getSteelValueModifier());
         titanium_value = (3 + player.getTitaniumValueModifier());
 
-        CardCostPacket cost = game.getRecommendedCardCost(card);
+        CardCostPacket cost = game.prepareCardPlayAction(card);
 
         if (!cost.isEligible()) {
             Toast.makeText(context, String.format("Can not play card '%s'", card.getName()), Toast.LENGTH_SHORT).show();

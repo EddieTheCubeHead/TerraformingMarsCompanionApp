@@ -112,7 +112,7 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
         }
 
         try {
-             CardCostPacket packet = game.getRecommendedCardCost(card);
+             CardCostPacket packet = game.prepareCardPlayAction(card);
              if (!packet.isEligible()) {
                  Toast.makeText(getContext(), "Invalid requirements!", Toast.LENGTH_SHORT).show();
                  return;

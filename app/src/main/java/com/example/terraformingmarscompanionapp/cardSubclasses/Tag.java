@@ -1,6 +1,8 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
-//Enum for storing Card tags
+/**
+ * An enum to represent the different tags a {@link Card} childclass can have
+ */
 public enum Tag {
     BUILDING,
     SPACE,

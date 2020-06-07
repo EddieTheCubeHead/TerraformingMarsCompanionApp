@@ -21,16 +21,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * The meat of the app. Most things are cards. The basic pipeline of playing a card goes:
+ * The main parent class of all cards. Most actions in the game are represented as a card. The process
+ * of playing a card is split into three methods, {@link #onPlay(Player, Context)}, {@link #onPlayServerHook(Player, Integer)} and
+ * {@link #playWithMetadata(Player, Integer)}.
+ * <p></p>
+ * {@link #onPlay(Player, Context)} is called when starting the playing process and it
+ * queues events into the static {@link EventScheduler} -class. The events then call {@link #onPlayServerHook(Player, Integer)}
+ * which in turn calls {@link #playWithMetadata(Player, Integer)}.
  *
- * - call ChildCard.onPlay(Player) ->
- * - Child card knows if it requires metadata and either
- *     1: (no metadata) calls onPlayServerHook(player, 0)
- *     2: (requires metadata) calls an UI to get metadata. The UI calls onPlayServerHook(player, data)
- * - onPlayServerHook checks if the game is playd with a server and sends info to server if needed
- * - onPlayServerHook calls this.playActionWithMetadata(player, data)
- * - this.playActionWithMetadata calls super.playActionWithMetadata
- * - super.playActionWithMetadata calls super.finishPlay()
+ * @author Eetu Asikainen
+ * @version 0.2
+ * @since 0.2
  */
 public abstract class Card {
     protected Game owner_game;
@@ -44,23 +45,47 @@ public abstract class Card {
     protected CardRequirements requirements = new CardRequirements();
     protected ProductionBox production_box = new ProductionBox();
 
-    //Lists of tag collections for certain operations
+    // Lists of tag collections for certain operations
     private final static ArrayList<Type> OWNABLES = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE, Type.CORPORATION, Type.GHOST, Type.MILESTONE));
     private final static ArrayList<Type> TAG_HOLDERS = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
     public final static ArrayList<Type> MAIN_DECK = new ArrayList<>(Arrays.asList(Type.RED, Type.GREEN, Type.BLUE));
 
+    /**
+     * Default constructor. Should be overriden in every concrete childclass and set at least the
+     * name and the price of the card.
+     *
+     * @param card_type {@link Type} of the card
+     * @param game {@link Game} the card is tied to.
+     */
     public Card(Type card_type, Game game) {
         type = card_type;
         owner_game = game;
     }
 
 
-    //Be sure to call default events first when overriding. Never call super.onPlay() when overriding
+    /**
+     * The first method to be called in the playing process. Queues using an action and playing the
+     * card into {@link EventScheduler}. Can be overriden if the card needs custom event queueing.
+     * <p></p>
+     * When overriding make sure to add at least some form of ActionUseEvent into the queue. As well
+     * as call {@link EventScheduler#playNextEvent(Context)}. If metadata is not needed {@link #defaultEvents(Player)}
+     * can be used to automatically queue the basic events. Also never call {@code super.onPlay}
+     * when overriding.
+     *
+     * @param player {@link Player} playing the card. Instance of {@link Player}
+     * @param context {@link Context} the UI context onPlay is called from.
+     */
     public void onPlay(Player player, Context context) {
         defaultEvents(player);
         EventScheduler.playNextEvent(context);
     }
 
+    /**
+     * Helper method for {@link #onPlay(Player, Context)}. Queues a type-appropiate {@link ActionUseEvent} into the
+     * event stack, as well as a {@link PlayCardEvent} created from this instance of card.
+     *
+     * @param player {@link Player} playing the card. Instance of {@link Player}
+     */
     protected void defaultEvents(Player player) {
         if (type.equals(Type.CORPORATION)) {
             EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true)));
@@ -70,18 +95,43 @@ public abstract class Card {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
     }
 
+    /**
+     * A method mainly used for sending data to the server during the playing process of the card.
+     * Might need to be rewritten in some more complex cases to allow for more intricate metadata
+     * operations like chaining two decisions together. Unlike {@link #onPlay(Player, Context)}, this should always
+     * call {@code super.playWithMetadata} when overriding.
+     *
+     * @param player {@link Player} playing the card. Instance of {@link Player}
+     * @param data {@link Integer} the metadata associated with the play event
+     */
     public void onPlayServerHook(Player player, Integer data) {
-        if (owner_game.getServerMultiplayer() && !(this instanceof RoboticWorkforce)) {
+        if (owner_game.getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         playWithMetadata(player, data);
     }
 
+    /**
+     * The last public method called when playing a card. In almost all cases should be called from
+     * {@link #onPlayServerHook(Player, Integer)}. The most often overriden method out of the three in the playing
+     * process. Everything that happens on all clients when playing through a server should be
+     * declared in a card specific overriden version. As with {@link #onPlayServerHook(Player, Integer)}, should
+     * always call {@code super.playWithMetadata} when overriden.
+     *
+     * @param player {@link Player} playing the card. Instance of {@link Player}
+     * @param data {@link Integer} the metadata associated with the play event
+     */
     public void playWithMetadata(Player player, Integer data) {
         production_box.playProductionBox(player, data);
         finishPlay(player);
     }
 
+    /**
+     * Method for finishing the play process. Contains the shared logic. Should always be called
+     * from the superclass' {@link #playWithMetadata(Player, Integer)}.
+     *
+     * @param player {@link Player} playing the card. Instance of {@link Player}
+     */
     protected final void finishPlay (Player player) {
         Log.i("Card", String.format("Finishing playing card '%s'", name));
         if (OWNABLES.contains(type) && !(this instanceof BeginnerCorporation)) {
@@ -174,7 +224,7 @@ public abstract class Card {
                     break;
 
                 case JOKER:
-                    //event-cards don't have jokers, so check can be left off
+                    // event-cards don't have jokers, so check can be left off
                     player.addJokerTag();
                     break;
 
@@ -227,26 +277,79 @@ public abstract class Card {
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
-    public void onGameEnd() {owner_player.changeVictoryPoints(victory_points);}
+    /**
+     * A method for counting points when the game ends.
+     */
+    public void onGameEnd() {
+        if (owner_player == null) {
+            return;
+        }
+        owner_player.changeVictoryPoints(victory_points);
+    }
+
+    /**
+     * @return {@link String} the name of the card
+     */
     public final String getName() {return name;}
+
+    /**
+     * @return {@link Player} the owner player
+     */
     public final Player getOwner() {return owner_player;}
+
+    /**
+     * @return {@link Integer} the price of the card
+     */
     public Integer getPrice() {return price;}
+
+    /**
+     * @return {@link Type} of the card
+     */
     public final Type getType() {return type;}
+
+    /**
+     * @return {@link ArrayList} of {@link Tag} enums that represent the tags of the card
+     */
     public final ArrayList<Tag> getTags() {return tags;}
+
+    /**
+     * @return {@link CardRequirements} the requirements for playing the card.
+     */
     public final CardRequirements getRequirements() {return requirements;}
+
+    /**
+     * Used to reset the action of the card if the card is an instance of {@link ActionCard}.
+     * Implemented here because this way at the end of a generation the game can just run this for
+     * all cards, no need for casting.
+     */
     public final void resetActionUsed() {action_used = false;}
 
-    // For playing robotit workforce. Possible to overwrite in case metadata is needed
+    // For playing robotit workforce. Possible to override in case metadata is needed
     // (or dynamic checking of production)
+
     // God do I hate robotic workforce
+    /**
+     * Method representing the "production box" part of the card. Only here because robotic workforce
+     * needs this. Runs {@link ProductionBox#playProductionBox(Player, Integer)} on the {@link ProductionBox}
+     * of the card.
+     */
     public void playProductionBox() {
+        //TODO playing robotic workforce
         production_box.playProductionBox(owner_player, 0);
     }
+
+    /**
+     * @return {@link ProductionBox} of the card
+     */
     public final ProductionBox getProductionBox() {
         return production_box;
     }
 
-    // Getting graphics for tags
+    /**
+     * Method for getting the tags of the card as drawables
+     *
+     * @return {@link ArrayList} of {@link Integer}, that represent drawables of card tags.
+     */
     public final ArrayList<Integer> getTagIntegers() {
         ArrayList<Integer> tag_integers = new ArrayList<>();
 
@@ -273,6 +376,12 @@ public abstract class Card {
     }
 
     // Getting the resources on the card represented as text
+
+    /**
+     * Method to get the resources on the card as text for UI uses
+     *
+     * @return {@link String} representation of the resources on the card
+     */
     public String getResourceText() {
         String resource_text = "";
         if (this instanceof ResourceCard && this.owner_player != null) {
@@ -306,6 +415,7 @@ public abstract class Card {
         return requirements.getDrawableRequrement() != 0;
     }
 
+    // TBA with graphics for requirements. Stud for now
     public final Integer getRequirementInt()
     {
         return R.drawable.ic_ph;

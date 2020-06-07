@@ -124,6 +124,7 @@ public final class WebSocketHandler {
             public void onException(Exception e) {
                 Log.i("WebSocket",  "exception on message: " + e.getMessage());
                 e.printStackTrace();
+                is_initialized = false;
             }
 
             @Override

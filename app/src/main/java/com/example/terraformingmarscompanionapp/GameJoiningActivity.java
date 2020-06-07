@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.GameModifiers;
+import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
 import com.example.terraformingmarscompanionapp.ui.main.TitleScreen;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.GameSetting;
@@ -20,16 +22,8 @@ import java.util.ArrayList;
 
 public class GameJoiningActivity extends AppCompatActivity implements ServerSetupScreen {
     ArrayList<String> player_names = new ArrayList<>();
-    boolean corporate_era = false;
-    boolean prelude = false;
-    boolean colonies = false;
-    boolean venus = false;
-    boolean turmoil = false;
-    boolean extra_corporations = false;
-    boolean must_max_venus = false;
-    boolean world_government_terraforming = false;
-    boolean turmoi_terraforming_revision = true;
-    Integer map = 0;
+    GameMap map = GameMap.THARSIS;
+    GameModifiers modifiers;
     String game_code_string = null;
 
     TextView game_code;
@@ -41,6 +35,7 @@ public class GameJoiningActivity extends AppCompatActivity implements ServerSetu
         setContentView(R.layout.activity_game_joining);
 
         GameActions.setContext(this);
+        modifiers = new GameModifiers();
 
         //textview
         textview_names = findViewById(R.id.name_textview);
@@ -61,21 +56,10 @@ public class GameJoiningActivity extends AppCompatActivity implements ServerSetu
             return;
         }
 
-        Game game = new Game(player_names,
-                corporate_era,
-                prelude,
-                colonies,
-                venus,
-                turmoil,
-                extra_corporations,
-                false,
-                false,
-                true,
-                true,
-                map);
+        Game game = new Game(modifiers, true, map);
 
-        GameController.initGameController(game, false);
-        GameController.setSelfPlayer(game.getPlayer(UserActions.getUser()));
+        GameController.initGameController(game, false, player_names);
+        GameController.setSelfPlayer(GameController.getPlayer(UserActions.getUser()));
 
         Intent intent = new Intent(this, InGameUI.class);
         startActivity(intent);
@@ -85,8 +69,8 @@ public class GameJoiningActivity extends AppCompatActivity implements ServerSetu
     public void playerJoined(String player_name) {
         player_names.add(player_name);
 
-        //Lambda-esitys koodin ajamiseen UI-threadilla, jotta ohjelma ei kaatuisi kun toinen thread kutsuu tätä
-        //Tämä melko yleistä WebSocketin kanssa
+        // Lambda-expression to run the code on UI thread to prevent crashing when calling from
+        // WebSocket thread
         new Thread(() -> runOnUiThread(() -> textview_names.append("\n" + player_name))).start();
     }
 
@@ -101,31 +85,31 @@ public class GameJoiningActivity extends AppCompatActivity implements ServerSetu
     public void settingChanged(GameSetting setting, Boolean value) {
         switch (setting) {
             case VENUS:
-                venus = value;
+                modifiers.setVenus(value);
                 break;
             case PRELUDE:
-                prelude = value;
+                modifiers.setPrelude(value);
                 break;
             case TURMOIL:
-                turmoil = value;
+                modifiers.setTurmoil(value);
                 break;
             case COLONIES:
-                colonies = value;
+                modifiers.setColonies(value);
                 break;
             case CORPORATE_ERA:
-                corporate_era = value;
+                modifiers.setCorporateEra(value);
                 break;
             case MUST_MAX_VENUS:
-                must_max_venus = value;
+                modifiers.setMustMaxVenus(value);
                 break;
             case EXTRA_CORPORATIONS:
-                extra_corporations = value;
+                modifiers.setExtraCorporations(value);
                 break;
             case TURMOIL_TERRAFORMING_REVISION:
-                turmoi_terraforming_revision = value;
+                modifiers.setTurmoilTerraformingRevision(value);
                 break;
             case WORLD_GOVERNMENT_TERRAFORMING:
-                world_government_terraforming = value;
+                modifiers.setWorldGovernmentTerraformin(value);
                 break;
             default:
                 break;
@@ -133,7 +117,7 @@ public class GameJoiningActivity extends AppCompatActivity implements ServerSetu
     }
 
     @Override
-    public void mapChanged(Integer value) {
+    public void mapChanged(GameMap value) {
         map = value;
     }
 }

@@ -53,11 +53,11 @@ public class ChoiceDialog {
             targets.add("nobody");
         }
 
-        //Building the layout
+        // Building the layout
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.dialog_spinners, null);
 
-        //Visual edits
+        // Visual edits
         view.setBackgroundColor(Color.TRANSPARENT);
 
         LinearLayout linearLayout = view.findViewById(R.id.root_linearlayout);
@@ -65,13 +65,13 @@ public class ChoiceDialog {
         linearLayout.removeView(view.findViewById(R.id.title2));
         linearLayout.removeView(view.findViewById(R.id.spinner2));
 
-        //findViewByIds
+        // findViewByIds
         TextView title = view.findViewById(R.id.title1);
         Spinner spinner = view.findViewById(R.id.spinner1);
 
         title.setText(message);
 
-        //Making the spinner
+        // Making the spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 context, android.R.layout.simple_spinner_item, targets);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -84,17 +84,16 @@ public class ChoiceDialog {
 
         dialog.show();
 
-        //Setting the size
+        // Setting the size
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((AppCompatActivity)context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
         Window window = dialog.getWindow();
 
         window.setLayout(2 * width / 3, WindowManager.LayoutParams.WRAP_CONTENT);
 
-        title.setText("Choose your target");
+        title.setText(message);
 
         view.findViewById(R.id.button_confirm).setOnClickListener(v -> {
             Integer target_index;
@@ -116,7 +115,7 @@ public class ChoiceDialog {
                     break;
 
                 // These work the same way. The card first gets an integer through usecase GENERAl
-                // then serverHook method opens another dialogue with one of these usecases and the
+                // then onPlayServerHook method opens another dialogue with one of these usecases and the
                 // multiples of five in data are used to differentiate between the first choices made
                 case SABOTAGE_MONEY:
                     if (target_index != 0) {
@@ -135,7 +134,7 @@ public class ChoiceDialog {
                 case GENERAL:
                 case PLAYER:
 
-                    //See if dialog called from onPlay or action. Call methods in card accordingly
+                    // See if dialog called from onPlay or action. Call methods in card accordingly
                     if (card.getOwner() == null) {
                         card.onPlayServerHook(player, target_index);
                     } else if (card instanceof ActionCard) {

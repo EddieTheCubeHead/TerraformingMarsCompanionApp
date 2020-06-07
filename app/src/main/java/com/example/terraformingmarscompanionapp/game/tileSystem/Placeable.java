@@ -1,5 +1,8 @@
 package com.example.terraformingmarscompanionapp.game.tileSystem;
 
+/**
+ * An enum representing all different types of placeable tiles
+ */
 public enum Placeable {
     OCEAN,
     FLOOD_OCEAN,

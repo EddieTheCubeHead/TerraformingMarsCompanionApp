@@ -8,11 +8,21 @@ import androidx.annotation.NonNull;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
 /**
- * Simple prompt with some declareable text
+ * A simple implementation of {@link GameEvent} to display a customisable prompt to the player as one
+ * event.
+ *
+ * @author Eetu Asikainen
+ * @version 0.2
+ * @since 0.2
  */
-public class PromptEvent extends GameEvent {
+public class PromptEvent implements GameEvent {
     private String text;
 
+    /**
+     * Constructor
+     *
+     * @param text {@link String} the text of the prompt
+     */
     public PromptEvent(String text) {
         this.text = text;
     }
@@ -23,6 +33,11 @@ public class PromptEvent extends GameEvent {
         GameController.promptUser(text, context);
     }
 
+    /**
+     * toString overridden for logging and debugging
+     *
+     * @return {@link String} a verbal representation of the event
+     */
     @NonNull
     @Override
     public String toString() {

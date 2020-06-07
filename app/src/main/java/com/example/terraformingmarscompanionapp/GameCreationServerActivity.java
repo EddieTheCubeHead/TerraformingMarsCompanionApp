@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.GameModifiers;
+import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.GameSetting;
 import com.example.terraformingmarscompanionapp.webSocket.ServerSetupScreen;
@@ -22,16 +24,8 @@ import java.util.ArrayList;
 
 public class GameCreationServerActivity extends AppCompatActivity implements ServerSetupScreen {
     ArrayList<String> player_names = new ArrayList<>();
-    boolean corporate_era = false;
-    boolean prelude = false;
-    boolean colonies = false;
-    boolean venus = false;
-    boolean turmoil = false;
-    boolean extra_corporations = false;
-    boolean must_max_venus = false;
-    boolean world_government_terraforming = false;
-    boolean turmoi_terraforming_revision = true;
-    Integer map = 0;
+    GameMap map = GameMap.THARSIS;
+    GameModifiers modifiers;
     String game_code_string = null;
 
     TextView game_code;
@@ -48,6 +42,8 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
 
         game_code.setText("Waiting for server");
 
+        modifiers = new GameModifiers();
+
         GameActions.setContext(this);
 
         Switch switch_corporate_era = findViewById(R.id.switch_corporate_era);
@@ -59,31 +55,31 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
 
 
         switch_corporate_era.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            corporate_era = isChecked;
-            System.out.println("Corporate era value: " + corporate_era + ", " + corporate_era);
-            GameActions.sendSettingChange(GameSetting.CORPORATE_ERA, corporate_era);
+            modifiers.setCorporateEra(isChecked);
+            GameActions.sendSettingChange(GameSetting.CORPORATE_ERA, isChecked);
         });
 
         switch_prelude.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            prelude = isChecked;
-            GameActions.sendSettingChange(GameSetting.PRELUDE, prelude);
+            modifiers.setPrelude(isChecked);
+            GameActions.sendSettingChange(GameSetting.PRELUDE, isChecked);
         });
+
         switch_colonies.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            colonies = isChecked;
-            GameActions.sendSettingChange(GameSetting.COLONIES, colonies);
+            modifiers.setColonies(isChecked);
+            GameActions.sendSettingChange(GameSetting.COLONIES, isChecked);
         });
+
         switch_venus.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            venus = isChecked;
-            GameActions.sendSettingChange(GameSetting.VENUS, venus);
+            modifiers.setVenus(isChecked);
+            GameActions.sendSettingChange(GameSetting.VENUS, isChecked);
         });
-        switch_turmoil.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                turmoil = isChecked;
-                GameActions.sendSettingChange(GameSetting.TURMOIL, turmoil);
-            }
+
+        switch_turmoil.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            modifiers.setTurmoil(isChecked);
+            GameActions.sendSettingChange(GameSetting.TURMOIL, isChecked);
         });
-        switch_extra_corporations.setOnCheckedChangeListener((buttonView, isChecked) -> extra_corporations = isChecked);
+
+        switch_extra_corporations.setOnCheckedChangeListener((buttonView, isChecked) -> modifiers.setExtraCorporations(isChecked));
 
         Button button_start = findViewById(R.id.button_start);
 
@@ -111,21 +107,10 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
 
         GameActions.sendGameStart();
 
-        Game game = new Game(player_names,
-                corporate_era,
-                prelude,
-                colonies,
-                venus,
-                turmoil,
-                extra_corporations,
-                world_government_terraforming,
-                must_max_venus,
-                turmoi_terraforming_revision,
-                true,
-                map);
+        Game game = new Game(modifiers, true, map);
 
-        GameController.initGameController(game, true);
-        GameController.setSelfPlayer(game.getPlayer(UserActions.getUser()));
+        GameController.initGameController(game, true, player_names);
+        GameController.setSelfPlayer(GameController.getPlayer(UserActions.getUser()));
 
         Intent intent = new Intent(this, InGameUI.class);
         startActivity(intent);
@@ -135,7 +120,7 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
     public void playerJoined(String player_name) {
         player_names.add(player_name);
 
-        //Lambda to get the code to run on the UI thread when calling from WebSocket
+        // Lambda to get the code to run on the UI thread when calling from WebSocket
         new Thread(() -> runOnUiThread(() -> textview_names.append("\n" + player_name))).start();
     }
 
@@ -147,31 +132,31 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
     public void settingChanged(GameSetting setting, Boolean value) {
         switch (setting) {
             case VENUS:
-                venus = value;
+                modifiers.setVenus(value);
                 break;
             case PRELUDE:
-                prelude = value;
+                modifiers.setPrelude(value);
                 break;
             case TURMOIL:
-                turmoil = value;
+                modifiers.setTurmoil(value);
                 break;
             case COLONIES:
-                colonies = value;
+                modifiers.setColonies(value);
                 break;
             case CORPORATE_ERA:
-                corporate_era = value;
+                modifiers.setCorporateEra(value);
                 break;
             case MUST_MAX_VENUS:
-                must_max_venus = value;
+                modifiers.setMustMaxVenus(value);
                 break;
             case EXTRA_CORPORATIONS:
-                extra_corporations = value;
+                modifiers.setExtraCorporations(value);
                 break;
             case TURMOIL_TERRAFORMING_REVISION:
-                turmoi_terraforming_revision = value;
+                modifiers.setTurmoilTerraformingRevision(value);
                 break;
             case WORLD_GOVERNMENT_TERRAFORMING:
-                world_government_terraforming = value;
+                modifiers.setWorldGovernmentTerraformin(value);
                 break;
             default:
                 break;
@@ -179,7 +164,7 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
     }
 
     @Override
-    public void mapChanged(Integer value) {
+    public void mapChanged(GameMap value) {
         map = value;
     }
 }

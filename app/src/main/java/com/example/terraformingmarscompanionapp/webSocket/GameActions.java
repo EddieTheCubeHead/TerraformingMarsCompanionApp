@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
 import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
@@ -26,7 +27,7 @@ public class GameActions {
     private static Gson gson = builder.create();
     private static String game_code;
 
-    //Constants for different strings to prevent typos and make future edits easier
+    // Constants for different strings to prevent typos and make future edits easier
     private static final String GAME_ACTION = "game_action";
     private static final String GAME_SETTING = "game_setting";
     private static final String GAME_START = "game_start";
@@ -73,12 +74,12 @@ public class GameActions {
         })).start();
     }
 
-    //Creating a game saves the game code
+    // Creating a game saves the game code
     static void handleGameCreated(String creation_data) {
         game_code = creation_data.split(Pattern.quote(";"))[1];
     }
 
-    //Joining a game extracts the settings and saves the game code
+    // Joining a game extracts the settings and saves the game code
     static void handleGameJoined(String join_data) {
         String[] data_points = join_data.split(Pattern.quote(";"));
         game_code = data_points[1];
@@ -97,23 +98,27 @@ public class GameActions {
         context.settingChanged(GameSetting.WORLD_GOVERNMENT_TERRAFORMING, data_points[first_setting+6].equals("1"));
         context.settingChanged(GameSetting.MUST_MAX_VENUS, data_points[first_setting+7].equals("1"));
         context.settingChanged(GameSetting.TURMOIL_TERRAFORMING_REVISION, data_points[first_setting+8].equals("1"));
-        context.mapChanged(Integer.valueOf(data_points[first_setting+9]));
+        context.mapChanged(GameMap.valueOf(data_points[first_setting+9]));
     }
 
-    //When somebody else joins the game add the name to the player name list
+    // When somebody else joins the game add the name to the player name list
     static void handlePlayerJoined(String join_data) {
         String joined_user = join_data.split(Pattern.quote(";"))[1];
         ((ServerSetupScreen) creation_context.get()).playerJoined(joined_user);
     }
 
-    //Changing global settings
+    // Changing global settings
     static void handleSettingChanged(String web_socket_message) {
         GameSetting setting = GameSetting.valueOf(web_socket_message.split(Pattern.quote(";"))[1]);
         Boolean value = Boolean.valueOf(web_socket_message.split(Pattern.quote(";"))[2]);
         ((ServerSetupScreen) creation_context.get()).settingChanged(setting, value);
     }
 
-    //Starting the game
+    static void handleMapChanged(String web_socket_message) {
+        ((ServerSetupScreen) creation_context.get()).mapChanged(GameMap.valueOf(web_socket_message.split(Pattern.quote(";"))[2]));
+    }
+
+    // Starting the game
     static void handleGameStart() {
         ((ServerSetupScreen) creation_context.get()).startGame();
         resetContext();
@@ -124,11 +129,16 @@ public class GameActions {
         WebSocketHandler.sendMessage(message);
     }
 
+    public static void sendMapChange(GameMap map) {
+        String message = String.format("%s;%s;%s;%s", GAME_SETTING, generateEventId(), "MAP", map.toString());
+        WebSocketHandler.sendMessage(message);
+    }
+
     public static void sendGameStart() {
         WebSocketHandler.sendMessage(String.format("%s;%s", GAME_START, generateEventId()));
     }
 
-    //Sending the different game events
+    // Sending the different game events
     public static void sendCardEvent(CardEventPacket event) {
         String message = String.format("%s;%s;%s;%s;%s", GAME_ACTION, generateEventId(), CARD_EVENT, generateActionInfo(), gson.toJson(event));
         WebSocketHandler.sendMessage(message);
@@ -158,7 +168,7 @@ public class GameActions {
         WebSocketHandler.sendMessage(String.format("%s;%s;%s;empty", GAME_ACTION, generateEventId(), START_GENERATION));
     }
 
-    //Two functions to generate the constant parts of sent Strings
+    // Two functions to generate the constant parts of sent Strings
     private static String generateActionInfo() {
         return String.format("%d;%d", GameController.getActionNumber(), GameController.getGeneration());
     }

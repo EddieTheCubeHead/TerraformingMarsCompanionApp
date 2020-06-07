@@ -14,20 +14,10 @@ import java.util.HashMap;
 public final class UpdateManager {
     private final HashMap<String, EffectCard> effect_cards;
     private final Game owner_game;
-    private final Boolean corporate_era;
-    private final Boolean prelude;
-    private final Boolean colonies;
-    private final Boolean venus;
-    private final Boolean turmoil;
 
-    UpdateManager(Game game, boolean game_corporate_era, boolean game_prelude, boolean game_colonies, boolean game_venus, boolean game_turmoil) {
+    UpdateManager(Game game) {
         effect_cards = game.getEffectCards();
         owner_game = game;
-        corporate_era = game_corporate_era;
-        prelude = game_prelude;
-        colonies = game_colonies;
-        venus = game_venus;
-        turmoil = game_turmoil;
     }
 
     void onVenusTrUp(Player player) {

@@ -2,19 +2,40 @@ Assignment over, let's go. Rewrite everything.
 
 The big change, in parts:
 
-1: Change UI queue to stack instead of queue. Move to own class (EventScheduler)
-2: EventScheduler and GameController to static
-3: Clean up UI: everything should preferably be a fragment/dialogue (see how well CardCostDialog works, reliable and reusable)
+1 (Done): Change UI queue to stack instead of queue. Move to own class (EventScheduler)
+2 (Done): EventScheduler and GameController to static
+3 (Done): Clean up UI: everything should preferably be a fragment/dialogue (see how well CardCostDialog works, reliable and reusable)
     - Gonna probably need to do a LOT of work on hex placement. Wanna have hexes, production bonuses etc. rendered
-4: Make everything an event (in EventScheduler). Mainly includes playing cards. Combine WebSocket and Scheduler events.
+4 (Done): Make everything an event (in EventScheduler). Mainly includes playing cards. Combine WebSocket and Scheduler events.
     - Get rid of hacky way of implementing things like corporation choice with multiple use actions.
         - UseAction event. Add to the bottom of the event stack, integer whether one or two actions. Clean and simple
     - Gonna need to rewrite the cards a lot
+    - WebSocketPackets and GameEvents have not been merged. Will have another look at that once UI is
+      fully revamped so I know exactly how all events will function
 5: Incorporate android's string holders as card names (later everything).
     - Gets rid of typos and is cleaner.
 6: Clean up card system. The game only needs one deck, do everything else with filtering.
 7: Clean up the Player class. Move resources to a data class with small utility functions?
 8: Finish the scoring system
+
+Taking a break from the main rewrites to try and improve overall code quality:
+
+ - Study Java comment practices/JavaDoc. Actually comment all the code properly
+   - Need to decide how to represent versions as numbers. Assignment return version cannot be 1.0,
+     it was incomplete as can be.
+     - The current vision is consider "1.0" to be the version where I would myself feel like using this
+       with the game is beneficial and include basegame and corporate era functionality
+     - Think I am just gonna call assignment return version 0.1 and the current version (27/05/2020)
+       0.2. I think 1.0 is like 6-8 branch-merge cycles away:
+        1/2: Docs, testing and cleanup (0.3)
+        1/2: Roni's hex UI rewrite (0.3)
+        3: Corporate era special case implementation (0.4)
+        4: Serverside changes, error handling, rejoining, game loading etc. (0.5)
+        5: UI revamps (0.6)
+        (6-7): For anything that comes up during the development
+        8: Finalization and cleanup (1.0)
+ - Reformat at least UI classes into proper folders. Have a look at the overall folder structure as well
+ - Study and implement testing the best I can.
 
 After rewrite, in no particular order:
 

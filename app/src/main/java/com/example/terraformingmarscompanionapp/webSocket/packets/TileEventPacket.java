@@ -24,19 +24,19 @@ public class TileEventPacket implements ServerPacket {
     @Override
     public void playPacket() {
         Game game = GameController.getGame();
-        game.tile_handler.placeTile(game.getPlayer(player_name), game.tile_handler.getTile(x_coord, y_coord), tile_type);
+        game.tile_handler.placeTile(GameController.getPlayer(player_name), game.tile_handler.getTile(x_coord, y_coord), tile_type);
         switch (tile_type) {
             case OCEAN:
-                game.getPlayer(player_name).changeTerraformingRating(1);
+                GameController.getPlayer(player_name).changeTerraformingRating(1);
                 break;
             case GREENERY:
-                game.raiseOxygen(game.getPlayer(player_name));
+                game.raiseOxygen(GameController.getPlayer(player_name));
                 break;
             case MINING_AREA:
                 if (game.tile_handler.getTile(x_coord, y_coord).getPlacementBonuses().contains(PlacementBonus.TITANIUM)) {
-                    game.getPlayer(player_name).changeTitaniumProduction(1);
+                    GameController.getPlayer(player_name).changeTitaniumProduction(1);
                 } else {
-                    game.getPlayer(player_name).changeSteelProduction(1);
+                    GameController.getPlayer(player_name).changeSteelProduction(1);
                 }
             default:
                 break;

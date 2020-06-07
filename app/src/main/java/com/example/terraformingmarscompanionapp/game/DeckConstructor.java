@@ -79,14 +79,20 @@ import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.ViralE
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.Virus;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.corporations.SaturnSystems;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.corporations.Teractor;
+import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
 
 import java.util.HashMap;
 
 /**
- * A class that builds all the different decks. The generating code is made with a python script that
- * scans a folder and sprouts out the result seen here.
+ * A Class responsible for creating all the different decks in the game. Takes the expansions and
+ * modifiers of the game as input in constructor and has methods that can be called to get different
+ * parts of the deck
+ *
+ * @author Eetu Asikainen
+ * @version 0.2
+ * @since 0.2
  */
-class GameConstructor {
+class DeckConstructor {
     private final HashMap<String, Card> deck;
     private final HashMap<String, Card> preludes;
     private final HashMap<String, Card> corporations;
@@ -97,32 +103,36 @@ class GameConstructor {
     private Boolean venus;
     private Boolean turmoil;
     private Boolean extra_corporations;
-    private Integer map;
+    private GameMap map;
 
-    GameConstructor(Game game,
-                    boolean corporate_era,
-                    boolean prelude,
-                    boolean colonies,
-                    boolean venus,
-                    boolean turmoil,
-                    boolean extra_corporations,
-                    Integer map) {
+    /**
+     * Constructor
+     *
+     * @param game {@link Game} the deck constructor is associated with
+     * @param map {@link GameMap} the map of the game
+     */
+    DeckConstructor(Game game, GameMap map) {
         deck = new HashMap<>();
         preludes = new HashMap<>();
         corporations = new HashMap<>();
         this.game = game;
-        this.corporate_era = corporate_era;
-        this.prelude = prelude;
-        this.colonies = colonies;
-        this.venus = venus;
-        this.turmoil = turmoil;
-        this.extra_corporations = extra_corporations;
+        this.corporate_era = game.modifiers.getCorporateEra();
+        this.prelude = game.modifiers.getPrelude();
+        this.colonies = game.modifiers.getColonies();
+        this.venus = game.modifiers.getVenus();
+        this.turmoil = game.modifiers.getTurmoil();
+        this.extra_corporations = game.modifiers.getExtraCorporations();
         this.map = map;
     }
 
+    /**
+     * A method to create the project card deck of the game.
+     *
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the deck
+     */
     HashMap<String, Card> createDeck() {
 
-        //Basegame:
+        // Basegame:
         Card adaptation_technology = new AdaptationTechnology(game);
         deck.put(adaptation_technology.getName(), adaptation_technology);
 
@@ -534,7 +544,7 @@ class GameConstructor {
         Card zeppelins = new Zeppelins(game);
         deck.put(zeppelins.getName(), zeppelins);
 
-        //Standard projects
+        // Standard projects
         Card standard_aquifer = new StandardAquifer(game);
         deck.put(standard_aquifer.getName(), standard_aquifer);
 
@@ -554,7 +564,7 @@ class GameConstructor {
         deck.put(standard_sell_patents.getName(), standard_sell_patents);
 
 
-        //Utility cards
+        // Utility cards
         Card build_greenery = new BuildGreenery(game);
         deck.put(build_greenery.getName(), build_greenery);
 
@@ -570,7 +580,7 @@ class GameConstructor {
         Card water_import_from_europe_ghost = new WaterImportFromEuropeGhost(game);
         deck.put(water_import_from_europe_ghost.getName(), water_import_from_europe_ghost);
 
-        //Corporate era
+        // Corporate era
         if (corporate_era) {
             Card acquired_company = new AcquiredCompany(game);
             deck.put(acquired_company.getName(), acquired_company);
@@ -780,22 +790,22 @@ class GameConstructor {
             corporations.put(teractor.getName(), teractor);
         }
 
-        //Prelude
+        // Adding prelude cards
         if (prelude) {
             //TODO add prelude
         }
 
-        //Colonies kortit:
+        // Adding colonies cards:
         if (colonies) {
             //TODO add colonies
         }
 
-        //Venus kortit:
+        // Adding venus cards:
         if (venus) {
             //TODO add venus
         }
 
-        //Turmoil kortit:
+        // Adding turmoil cards:
         if (turmoil) {
             //TODO add Turmoil
         }
@@ -803,12 +813,25 @@ class GameConstructor {
         return deck;
     }
 
+    /**
+     * A method to create the prelude deck if the prelude expansion is in use
+     *
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the prelude deck
+     */
     HashMap<String, Card> createPreludes() {
+        if (!prelude) {
+            return null;
+        }
         HashMap<String, Card> preludes = new HashMap<>();
         //TODO add preludes
         return preludes;
     }
 
+    /**
+     * A method to create the corporation deck of the game
+     *
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the corporate deck
+     */
     HashMap<String, Card> createCorporations() {
 
         HashMap<String, Card> corporations = new HashMap<>();
@@ -846,29 +869,29 @@ class GameConstructor {
         Card united_nations_mars_initiative = new UnitedNationsMarsInitiative(game);
         corporations.put(united_nations_mars_initiative.getName(), united_nations_mars_initiative);
 
-        //Corporate era cards:
+        // Adding corporate era corporations:
         if (corporate_era) {
             //TODO add corporate era corps
         } else if (extra_corporations) {
 
         }
 
-        //Prelude cards:
+        // Adding prelude corporations:
         if (prelude) {
             //TODO add prelude corps
         }
 
-        //Colonies cards:
+        // Adding colonies corporations:
         if (colonies) {
             //TODO add colonies corps
         }
 
-        //Venus cards:
+        // Adding venus next corporations:
         if (venus) {
             //TODO add venus corps
         }
 
-        //Turmoil cards:
+        // Adding turmoil corporations:
         if (turmoil) {
             //TODO add turmoil corps
         }
@@ -876,6 +899,11 @@ class GameConstructor {
         return corporations;
     }
 
+    /**
+     * A method to create the hidden ghost and utility card deck
+     *
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the ghost deck of the game
+     */
     HashMap<String, Card> createGhosts() {
         HashMap<String, Card> ghosts = new HashMap<>();
 
@@ -885,11 +913,16 @@ class GameConstructor {
         return ghosts;
     }
 
+    /**
+     * A method to create the awards of the game
+     *
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the awards of the game
+     */
     HashMap<String, Award> createAwards() {
         HashMap<String, Award> deck = new HashMap<>();
 
         switch (map) {
-            case 0:
+            case THARSIS:
                 Award banker = new Banker(game);
                 deck.put(banker.getName(), banker);
 
@@ -905,22 +938,27 @@ class GameConstructor {
                 Award thermalist = new Thermalist(game);
                 deck.put(thermalist.getName(), thermalist);
                 break;
-            case 1:
+            case HELLAS:
                 break;
-            case 2:
+            case ELYSIUM:
                 break;
             default:
-                Log.i("GameConstructor", "Invalid map value");
+                Log.i("DeckConstructor", "Invalid map value");
         }
 
         return deck;
     }
 
+    /**
+     * A method to create the milestones of the game
+     *
+     * @return {@link HashMap} of {@link String} and {@link Card} representing the milestones of the game
+     */
     HashMap<String, Card> createMilestones() {
         HashMap<String, Card> deck = new HashMap<>();
 
         switch (map) {
-            case 0:
+            case THARSIS:
                 Card builder = new Builder(game);
                 deck.put(builder.getName(), builder);
 
@@ -936,12 +974,12 @@ class GameConstructor {
                 Card terraformer = new Terraformer(game);
                 deck.put(terraformer.getName(), terraformer);
                 break;
-            case 1:
+            case HELLAS:
                 break;
-            case 2:
+            case ELYSIUM:
                 break;
             default:
-                Log.i("GameConstructor", "Invalid map value");
+                Log.i("DeckConstructor", "Invalid map value");
         }
         return deck;
     }

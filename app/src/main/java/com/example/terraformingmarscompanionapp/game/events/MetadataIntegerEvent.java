@@ -8,12 +8,24 @@ import androidx.annotation.NonNull;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.IntegerDialog;
 
-public final class MetadataIntegerEvent extends GameEvent {
+/**
+ * An implementation of {@link GameEvent} used when a card needs data in the form of a numerical
+ * decision made by player. For example of usecases see {@link com.example.terraformingmarscompanionapp.cards.basegame.cards.Insulation}
+ */
+public final class MetadataIntegerEvent implements GameEvent {
     private String message;
     private Integer min;
     private Integer max;
     private Card card;
 
+    /**
+     * Constructor
+     *
+     * @param message {@link String} a message shown in the dialogue detailing the decision
+     * @param min {@link Integer} the minimum value accepted. Most often 0
+     * @param max {@link Integer} the maximum value accepted
+     * @param card {@link Card} that the dialogue is gathering data to play
+     */
     public MetadataIntegerEvent(String message, Integer min, Integer max, Card card) {
         this.message = message;
         this.min = min;
@@ -27,6 +39,11 @@ public final class MetadataIntegerEvent extends GameEvent {
         IntegerDialog.displayDialog(context, card, min, max, message);
     }
 
+    /**
+     * toString overridden for logging and debugging
+     *
+     * @return {@link String} a verbal representation of the event
+     */
     @NonNull
     @Override
     public String toString() {

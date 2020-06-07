@@ -4,6 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 
 public final class MediaArchives extends Card {
@@ -17,7 +18,7 @@ public final class MediaArchives extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         Integer event_count = 0;
-        for (Player game_player : owner_game.getPlayers()) {
+        for (Player game_player : GameController.getPlayers()) {
             event_count += game_player.getEventTags();
         }
         player.changeMoney(event_count);
