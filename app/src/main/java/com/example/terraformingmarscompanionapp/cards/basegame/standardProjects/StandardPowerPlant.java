@@ -3,7 +3,7 @@ package com.example.terraformingmarscompanionapp.cards.basegame.standardProjects
 import com.example.terraformingmarscompanionapp.cardSubclasses.StandardProject;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class StandardPowerPlant extends StandardProject {
     public StandardPowerPlant(Game game) {

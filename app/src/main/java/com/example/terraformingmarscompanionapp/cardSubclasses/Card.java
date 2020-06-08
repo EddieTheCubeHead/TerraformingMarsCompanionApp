@@ -5,12 +5,11 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
-import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -67,32 +66,15 @@ public abstract class Card {
      * The first method to be called in the playing process. Queues using an action and playing the
      * card into {@link EventScheduler}. Can be overriden if the card needs custom event queueing.
      * <p></p>
-     * When overriding make sure to add at least some form of ActionUseEvent into the queue. As well
-     * as call {@link EventScheduler#playNextEvent(Context)}. If metadata is not needed {@link #defaultEvents(Player)}
-     * can be used to automatically queue the basic events. Also never call {@code super.onPlay}
-     * when overriding.
+     * When overriding make sure to add a call for {@link PlayCardEvent} or some form of metadata
+     * gathering event and a call for {@link EventScheduler#playNextEvent(Context)}
      *
      * @param player {@link Player} playing the card. Instance of {@link Player}
      * @param context {@link Context} the UI context onPlay is called from.
      */
     public void onPlay(Player player, Context context) {
-        defaultEvents(player);
-        EventScheduler.playNextEvent(context);
-    }
-
-    /**
-     * Helper method for {@link #onPlay(Player, Context)}. Queues a type-appropiate {@link ActionUseEvent} into the
-     * event stack, as well as a {@link PlayCardEvent} created from this instance of card.
-     *
-     * @param player {@link Player} playing the card. Instance of {@link Player}
-     */
-    protected void defaultEvents(Player player) {
-        if (type.equals(Type.CORPORATION)) {
-            EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true)));
-        } else {
-            EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket()));
-        }
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
+        EventScheduler.playNextEvent(context);
     }
 
     /**
@@ -139,7 +121,7 @@ public abstract class Card {
         }
 
         if (MAIN_DECK.contains(type)) {
-            player.setNextCardDiscount(0);
+            player.getModifiers().setNextCardDiscount(0);
         }
 
         boolean is_event = (type == Type.RED);
@@ -151,13 +133,13 @@ public abstract class Card {
             {
                 case BUILDING:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addBuildingTag();
+                        player.getTags().addBuildingTag();
                     }
                     break;
 
                 case SPACE:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addSpaceTag();
+                        player.getTags().addSpaceTag();
                     } else {
                         owner_game.update_manager.onSpaceEvent(player);
                     }
@@ -165,71 +147,71 @@ public abstract class Card {
 
                 case EARTH:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addEarthTag();
+                        player.getTags().addEarthTag();
                     }
                     owner_game.update_manager.onEarthTag(player);
                     break;
 
                 case CITY:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addCityTag();
+                        player.getTags().addCityTag();
                     }
                     break;
 
                 case PLANT:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addPlantTag();
+                        player.getTags().addPlantTag();
                     }
                     owner_game.update_manager.onPlantTag(player);
                     break;
 
                 case MICROBE:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addMicrobeTag();
+                        player.getTags().addMicrobeTag();
                     }
                     owner_game.update_manager.onMicrobeTag(player);
                     break;
 
                 case SCIENCE:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addScienceTag();
+                        player.getTags().addScienceTag();
                     }
                     owner_game.update_manager.onScienceTag(player);
                     break;
 
                 case ENERGY:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addEnergyTag();
+                        player.getTags().addEnergyTag();
                     }
                     break;
 
                 case JOVIAN:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addJovianTag();
+                        player.getTags().addJovianTag();
                     }
                     owner_game.update_manager.onJovianTag(player);
                     break;
 
                 case VENUS:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addVenusTag();
+                        player.getTags().addVenusTag();
                     }
                     break;
 
                 case ANIMAL:
                     if (!is_event && OWNABLES.contains(type)) {
-                        player.addAnimalTag();
+                        player.getTags().addAnimalTag();
                     }
                     owner_game.update_manager.onAnimalTag(player);
                     break;
 
                 case JOKER:
                     // event-cards don't have jokers, so check can be left off
-                    player.addJokerTag();
+                    player.getTags().addJokerTag();
                     break;
 
                 case EVENT:
-                    player.addEventTag();
+                    player.getTags().addEventTag();
                     owner_game.update_manager.onEventPlayed(player);
                     break;
                 default:
@@ -239,25 +221,23 @@ public abstract class Card {
 
 
         if (tags.size() == 0 && TAG_HOLDERS.contains(type)) {
-            player.addNullTag();
+            player.getTags().addNullTag();
         }
 
         switch (type) {
             case GREEN:
-                player.addGreen(this);
+                player.addGreen();
                 break;
             case RED:
-                player.addRed(this);
+                player.addRed();
                 break;
             case BLUE:
-                player.addBlue(this);
+                player.addBlue();
                 break;
             case CORPORATION:
                 player.setCorporation(this);
                 break;
             case PRELUDE:
-                player.addPrelude(this);
-                break;
             case GHOST:
             case AWARD:
             case MILESTONE:
@@ -270,10 +250,6 @@ public abstract class Card {
                 Log.i("Card","Type error in card " + getName());
         }
 
-        if (this instanceof ActionCard) {
-            player.addAction((ActionCard)this);
-        }
-
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
@@ -284,7 +260,7 @@ public abstract class Card {
         if (owner_player == null) {
             return;
         }
-        owner_player.changeVictoryPoints(victory_points);
+        owner_player.setVictoryPoints(owner_player.getVictoryPoints() + victory_points);
     }
 
     /**

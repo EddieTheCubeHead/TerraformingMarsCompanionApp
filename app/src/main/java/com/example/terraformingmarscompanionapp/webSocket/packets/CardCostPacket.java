@@ -3,7 +3,7 @@ package com.example.terraformingmarscompanionapp.webSocket.packets;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * The resources used when playing a card

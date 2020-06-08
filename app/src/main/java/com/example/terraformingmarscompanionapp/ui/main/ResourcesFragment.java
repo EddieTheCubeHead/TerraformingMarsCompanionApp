@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public class ResourcesFragment extends Fragment implements GameController.GameUpdateListener {
 

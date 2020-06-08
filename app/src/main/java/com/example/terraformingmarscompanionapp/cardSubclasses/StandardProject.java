@@ -1,8 +1,7 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * A subclass of {@link Card} to represent standard projexts in game. Most of the functionality was

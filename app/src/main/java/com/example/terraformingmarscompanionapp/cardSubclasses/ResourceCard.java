@@ -3,7 +3,7 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 import android.content.Context;
 
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * A subclass of {@link Card} to represent cards that hold special resources on them during the game.

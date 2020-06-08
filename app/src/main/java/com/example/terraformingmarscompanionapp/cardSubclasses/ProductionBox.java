@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * A dataclass representing the production box of cards. Only needed so robotic workforce functions

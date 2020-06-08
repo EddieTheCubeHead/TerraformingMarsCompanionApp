@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp.game;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 import java.util.HashMap;
 
@@ -37,7 +38,7 @@ public final class UpdateManager {
         effect_cards.get("Pets").cardEffect(player);
     }
 
-    void onNewUniqueTag(Player player) {
+    public void onNewUniqueTag(Player player) {
 
     }
 
