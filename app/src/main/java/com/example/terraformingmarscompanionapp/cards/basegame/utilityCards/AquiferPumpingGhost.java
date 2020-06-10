@@ -17,10 +17,4 @@ public final class AquiferPumpingGhost extends Card {
         name = "Aquifer pumping ghost";
         price = 8;
     }
-
-    @Override
-    public void initializePlayEvents(Player player, Context context) {
-        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.playNextEvent(context);
-    }
 }

@@ -307,16 +307,16 @@ public class GameController
 
             // Beginner corporation draws 10 cards for free at game start
             if (current_player.getCorporation() instanceof BeginnerCorporation && generation == 1) {
-                if (server_multiplayer) {
-                    EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true)));
-                }
+                EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, true)));
                 current_player.changeHandSize(10);
                 current_player.setDrewCardsThisGen(true);
                 EventScheduler.addEvent(new PromptEvent(current_player.getName() + ", please draw 10 cards."));
+                EventScheduler.playNextEvent(context);
 
             } else {
                 EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, true)));
-                game.getDeck().get("Round start draw").initializePlayEvents(current_player, context);
+                game.getDeck().get("Round start draw").initializePlayEvents(current_player);
+                EventScheduler.playNextEvent(context);
             }
 
         // First actions declared by corporation cards

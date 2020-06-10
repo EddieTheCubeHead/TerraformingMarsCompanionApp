@@ -23,11 +23,10 @@ public final class ConvoyFromEurope extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
         EventScheduler.addEvent(new PromptEvent("Please draw a card"));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

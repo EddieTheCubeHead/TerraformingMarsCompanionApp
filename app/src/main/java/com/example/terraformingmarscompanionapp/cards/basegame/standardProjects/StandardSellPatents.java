@@ -16,10 +16,8 @@ public final class StandardSellPatents extends StandardProject {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataIntegerEvent("Amount of cards stolen:", 0, player.getHandSize(), this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

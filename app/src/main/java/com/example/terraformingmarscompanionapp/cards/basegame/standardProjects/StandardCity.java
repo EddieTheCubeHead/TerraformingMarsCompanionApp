@@ -18,10 +18,9 @@ public final class StandardCity extends StandardProject {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new TileEvent(Placeable.CITY, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

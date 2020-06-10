@@ -25,10 +25,8 @@ public final class SmallAnimals extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

@@ -26,11 +26,10 @@ public final class Sabotage extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resource you want to sabotage",
                 new ArrayList<>(Arrays.asList("Titanium (x3), Steel (x4), Money (x7)")), this, ChoiceDialog.USE_CASE.GENERAL));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

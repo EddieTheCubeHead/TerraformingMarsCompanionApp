@@ -69,17 +69,15 @@ public abstract class Card {
      * super.onPlay when overriding
      *
      * @param player {@link Player} playing the card. Instance of {@link Player}
-     * @param context {@link Context} the UI context onPlay is called from.
      */
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.playNextEvent(context);
     }
 
     /**
      * A method mainly used for sending data to the server during the playing process of the card.
      * Might need to be rewritten in some more complex cases to allow for more intricate metadata
-     * operations like chaining two decisions together. Unlike {@link #initializePlayEvents(Player, Context)}, this should always
+     * operations like chaining two decisions together. Unlike {@link #initializePlayEvents(Player)}, this should always
      * call {@code super.playWithMetadata} when overriding.
      *
      * @param player {@link Player} playing the card. Instance of {@link Player}

@@ -22,10 +22,8 @@ public final class PowerSupplyConsortium extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

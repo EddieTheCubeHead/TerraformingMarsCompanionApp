@@ -26,8 +26,7 @@ public final class HiredRaiders extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resource to steal:",
                 new ArrayList<>(Arrays.asList("Steel (x2)", "Money (x3)")), this, ChoiceDialog.USE_CASE.GENERAL));
     }

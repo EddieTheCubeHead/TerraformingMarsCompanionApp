@@ -23,10 +23,9 @@ public final class Flooding extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new TileEvent(Placeable.FLOOD_OCEAN, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

@@ -22,9 +22,8 @@ public final class TechnologyDemostration extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new PromptEvent("Please draw 2 cards"));
-        EventScheduler.playNextEvent(context);
     }
 }

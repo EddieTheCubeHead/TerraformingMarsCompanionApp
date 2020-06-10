@@ -23,10 +23,9 @@ public final class Herbivores extends ResourceCard implements EffectCard {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

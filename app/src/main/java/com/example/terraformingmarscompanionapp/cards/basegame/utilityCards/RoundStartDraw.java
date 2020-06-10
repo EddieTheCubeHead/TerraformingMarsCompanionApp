@@ -19,7 +19,7 @@ public final class RoundStartDraw extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
 
         //Setting the varying parameters of the draw
         String draw_message;
@@ -34,7 +34,6 @@ public final class RoundStartDraw extends Card {
         max_draw_amount = GameController.getGeneration() == 1 ? 10 : 4;
 
         EventScheduler.addEvent(new MetadataIntegerEvent(draw_message, 0, max_draw_amount, this));
-        EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override

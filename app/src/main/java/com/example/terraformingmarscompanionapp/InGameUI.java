@@ -203,7 +203,7 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
             public void onClick(View v) {
                 //setting corporation
                 EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, game.modifiers.getPrelude())));
-                ((Card) spinner.getSelectedItem()).initializePlayEvents(self, self_context);
+                ((Card) spinner.getSelectedItem()).initializePlayEvents(self);
                 EventScheduler.playNextEvent(self_context);
                 dialog.dismiss();
             }
@@ -289,8 +289,8 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
                 }
 
                 EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, false)));
-                prelude1.initializePlayEvents(GameController.getCurrentPlayer(), self_context);
-                prelude2.initializePlayEvents(GameController.getCurrentPlayer(), self_context);
+                prelude1.initializePlayEvents(GameController.getCurrentPlayer());
+                prelude2.initializePlayEvents(GameController.getCurrentPlayer());
                 EventScheduler.playNextEvent(self_context);
 
                 GameController.getCurrentPlayer().setPlayedPreludes(true);

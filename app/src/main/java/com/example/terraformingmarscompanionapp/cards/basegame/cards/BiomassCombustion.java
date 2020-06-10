@@ -23,9 +23,8 @@ public final class BiomassCombustion extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

@@ -839,7 +839,7 @@ public class Game {
 
         // TODO event to handle UI better?
         EventScheduler.addEvent(new ActionUseEvent());
-        card.initializePlayEvents(player, context);
+        card.initializePlayEvents(player);
         EventScheduler.playNextEvent(context);
     }
 

@@ -27,11 +27,9 @@ public final class LocalHeatTrapping extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x4)", "Animals (x2)")), this, ChoiceDialog.USE_CASE.GENERAL));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

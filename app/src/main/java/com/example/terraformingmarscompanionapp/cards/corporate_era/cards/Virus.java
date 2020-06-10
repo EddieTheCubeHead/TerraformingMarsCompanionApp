@@ -29,11 +29,10 @@ public final class Virus extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to remove",
                 new ArrayList<>(Arrays.asList("Animals (x2)", "Plants (x5)")), this, ChoiceDialog.USE_CASE.GENERAL));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

@@ -22,10 +22,9 @@ public final class BusinessContact extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new PromptEvent("Please look 4 top cards on draw pile and choose 2 of them"));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

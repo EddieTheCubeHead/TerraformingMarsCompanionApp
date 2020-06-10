@@ -22,10 +22,9 @@ public final class MiningExpedition extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

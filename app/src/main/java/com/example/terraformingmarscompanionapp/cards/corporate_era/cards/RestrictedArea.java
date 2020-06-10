@@ -24,10 +24,9 @@ public final class RestrictedArea extends Card implements ActionCard {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new TileEvent(Placeable.RESTRICTED_AREA, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

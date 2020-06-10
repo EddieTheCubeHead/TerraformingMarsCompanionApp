@@ -18,10 +18,8 @@ public final class Insulation extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataIntegerEvent("Give production change amount:", 0, player.getResources().getHeatProduction(), this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

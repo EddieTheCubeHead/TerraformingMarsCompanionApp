@@ -21,9 +21,8 @@ public final class MiningArea extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new TileEvent(Placeable.MINING_AREA, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 }

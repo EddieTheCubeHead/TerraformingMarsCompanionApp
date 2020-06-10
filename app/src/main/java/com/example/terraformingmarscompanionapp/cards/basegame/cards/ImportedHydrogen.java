@@ -30,12 +30,11 @@ public final class ImportedHydrogen extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x3)", "Microbes (x3)", "Animals (x2)")), this, ChoiceDialog.USE_CASE.GENERAL));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

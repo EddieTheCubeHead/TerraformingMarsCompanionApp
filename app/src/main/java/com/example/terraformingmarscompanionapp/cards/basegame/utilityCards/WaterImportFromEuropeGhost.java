@@ -17,10 +17,4 @@ public final class WaterImportFromEuropeGhost extends Card {
         price = 12;
         tags.add(Tag.SPACE);
     }
-
-    @Override
-    public void initializePlayEvents(Player player, Context context) {
-        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.playNextEvent(context);
-    }
 }

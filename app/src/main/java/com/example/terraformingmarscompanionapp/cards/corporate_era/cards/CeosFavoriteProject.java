@@ -22,10 +22,9 @@ public final class CeosFavoriteProject extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.EXISTING, player, 1, true));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

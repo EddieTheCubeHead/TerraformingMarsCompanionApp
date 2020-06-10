@@ -24,12 +24,11 @@ public final class GiantIceAsteroid extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

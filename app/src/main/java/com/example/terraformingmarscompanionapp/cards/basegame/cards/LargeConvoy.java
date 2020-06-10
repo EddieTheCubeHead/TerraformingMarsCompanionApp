@@ -35,13 +35,12 @@ public final class LargeConvoy extends Card {
     }
 
     @Override
-    public void initializePlayEvents(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x5)", "Animal (x4)")), this, ChoiceDialog.USE_CASE.GENERAL));
         EventScheduler.addEvent(new PromptEvent("Please draw 2 cards"));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override
