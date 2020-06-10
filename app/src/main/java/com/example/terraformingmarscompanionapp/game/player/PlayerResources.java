@@ -12,6 +12,9 @@ import com.example.terraformingmarscompanionapp.game.GameController;
  */
 public class PlayerResources {
 
+    // Storing the player for triggering Manutech and UNMI effects
+    private Player player;
+
     // Raw resources
     private Integer money = 0;
     private Integer steel = 0;
@@ -30,6 +33,13 @@ public class PlayerResources {
 
     private Integer terraforming_rating = 20;
 
+    public PlayerResources(Player player) {
+        this.player = player;
+    }
+
+    /**
+     * A function to add player's productions to their resources at the end of a generation
+     */
     public void addProduction() {
 
         money += money_production;
@@ -75,6 +85,11 @@ public class PlayerResources {
      * @param amount {@link Integer} the amount of money production a {@link Player} has
      */
     public void setMoneyProduction(Integer amount) {
+
+        // Triggering the unique effect of Manutech corporation
+        if (amount > money_production && player.getModifiers().getResourcesFromRaisingProduction()) {
+            money += (amount - money_production);
+        }
         money_production = amount > -5 ? amount : -5;
     }
 
@@ -105,6 +120,10 @@ public class PlayerResources {
      * @param amount {@link Integer} the amount of steel production a {@link Player} has
      */
     public void setSteelProduction(Integer amount) {
+        // Triggering the unique effect of Manutech corporation
+        if (amount > steel && player.getModifiers().getResourcesFromRaisingProduction()) {
+            steel += (amount - steel_production);
+        }
         steel_production = amount > 0 ? amount : 0;
     }
 
@@ -135,6 +154,10 @@ public class PlayerResources {
      * @param amount {@link Integer} the amount of titanium production a {@link Player} has
      */
     public void setTitaniumProduction(Integer amount) {
+        // Triggering the unique effect of Manutech corporation
+        if (amount > titanium_production && player.getModifiers().getResourcesFromRaisingProduction()) {
+            titanium += (amount - titanium_production);
+        }
         titanium_production = amount > 0 ? amount : 0;
     }
 
@@ -165,6 +188,10 @@ public class PlayerResources {
      * @param amount {@link Integer} the amount of plants productopm a {@link Player} has
      */
     public void setPlantsProduction(Integer amount) {
+        // Triggering the unique effect of Manutech corporation
+        if (amount > plants_production && player.getModifiers().getResourcesFromRaisingProduction()) {
+            plants += (amount - plants_production);
+        }
         plants_production = amount > 0 ? amount : 0;
     }
 
@@ -195,6 +222,10 @@ public class PlayerResources {
      * @param amount {@link Integer} the amount of energy production a {@link Player} has
      */
     public void setEnergyProduction(Integer amount) {
+        // Triggering the unique effect of Manutech corporation
+        if (amount > energy_production && player.getModifiers().getResourcesFromRaisingProduction()) {
+            energy += (amount - energy_production);
+        }
         energy_production = amount > 0 ? amount : 0;
     }
 
@@ -225,6 +256,10 @@ public class PlayerResources {
      * @param amount {@link Integer} the amount of heat production a {@link Player} has
      */
     public void setHeatProduction(Integer amount) {
+        // Triggering the unique effect of Manutech corporation
+        if (amount > heat_production && player.getModifiers().getResourcesFromRaisingProduction()) {
+            heat += (amount - heat_production);
+        }
         heat_production = amount > 0 ? amount : 0;
     }
 
@@ -241,6 +276,10 @@ public class PlayerResources {
      * @param amount {@link Integer} the amount of terraforming rating a {@link Player} has
      */
     public void setTerraformingRating(Integer amount) {
+        // For UNMI special action
+        if (amount > terraforming_rating) {
+            player.getModifiers().setRaisedTrThisGeneration(true);
+        }
         terraforming_rating = amount > 0 ? amount : 0; // Should never happen, but just in case
     }
 }

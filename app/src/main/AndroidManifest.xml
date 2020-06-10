@@ -28,7 +28,7 @@
         <activity android:name=".ui.main.LoginActivity" />
         <activity android:name=".GameCreationServerActivity" />
         <activity android:name=".GameJoiningActivity" />
-        <activity android:name=".ui.main.ActivityDialogSearch" />
+        <activity android:name=".ui.main.ActivityResourceAddition" />
         <activity android:name=".ui.playDialogues.IntegerDialog" />
     </application>
 

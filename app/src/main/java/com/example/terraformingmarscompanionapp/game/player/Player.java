@@ -34,7 +34,7 @@ public class Player {
 
     // Compositing more dataclasses
     private PlayerModifiers modifiers = new PlayerModifiers();
-    private PlayerResources resources = new PlayerResources();
+    private PlayerResources resources = new PlayerResources(this);
     private PlayerTags tags = new PlayerTags();
 
     // Aids in turn order logic

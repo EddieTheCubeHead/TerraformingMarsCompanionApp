@@ -41,6 +41,7 @@ public class PlayerModifiers {
     private Boolean organics_protected = false;
     private Boolean heat_is_money = false;
     private Boolean raised_tr_this_generation = false;
+    private Boolean resources_from_raising_production = false; // Such a good and imaginative name
 
     /**
      * @return {@link Integer} the amount of discount a player gets when buying a card
@@ -368,5 +369,20 @@ public class PlayerModifiers {
      */
     public void setRaisedTrThisGeneration(Boolean value) {
         raised_tr_this_generation = value;
+    }
+
+
+    /**
+     * @return {@link Boolean} whether the player should get raw resources equal to the amount of production they raise
+     */
+    public Boolean getResourcesFromRaisingProduction() {
+        return resources_from_raising_production;
+    }
+
+    /**
+     * @param value {@link Boolean} whether the player should get raw resources equal to the amount of production they raise
+     */
+    public void setResourcesFromRaisingProduction(Boolean value) {
+        resources_from_raising_production = value;
     }
 }

@@ -31,7 +31,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActivityDialogSearch extends AppCompatActivity implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener
+/**
+ * A UI class representing the choice on which card to place resources on
+ *
+ * @author Aleksanteri Reijo, Eetu Asikainen
+ * @version 0.2
+ * @since 0.2
+ */
+public class ActivityResourceAddition extends AppCompatActivity implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener
 {
     public static final String OWNER_ONLY = "owner_required";
     public static final String SPECIAL_CASE = "special";
@@ -145,8 +152,8 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         RecyclerView.LayoutManager layout_manager = new LinearLayoutManager(this);
         recyclerview.setLayoutManager(layout_manager);
 
-        //searchviewn toiminnallisuus
-            //filtteröinti tekstin vaihtuessa
+        // SearchView functionality
+        // Filter on text change
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) { return false; }
             @Override public boolean onQueryTextChange(String search_string) {
@@ -199,7 +206,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
         startActivity(inGameUi);
     }
 
-    //tässä vaiheessa tyhjä. kun tehdään toiminnallisuus niin palauta true.
+    // TODO have a look at possibly removing this
     @Override public boolean onCardLongClick(int position) { return false; }
 
     @Override

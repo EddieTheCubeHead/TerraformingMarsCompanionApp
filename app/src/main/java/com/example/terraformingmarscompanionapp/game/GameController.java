@@ -313,6 +313,7 @@ public class GameController
                 EventScheduler.addEvent(new PromptEvent(current_player.getName() + ", please draw 10 cards."));
                 EventScheduler.playNextEvent(context);
 
+
             } else {
                 EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, true)));
                 game.getDeck().get("Round start draw").initializePlayEvents(current_player);
