@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Helion extends Card {
     public Helion(Game game) {
@@ -15,9 +15,9 @@ public final class Helion extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(42);
+        player.getResources().setMoney(42);
         production_box.setHeatProduction(3);
-        player.setHeatIsMoney(true);
+        player.getModifiers().setHeatIsMoney(true);
         super.playWithMetadata(player, data);
     }
 }

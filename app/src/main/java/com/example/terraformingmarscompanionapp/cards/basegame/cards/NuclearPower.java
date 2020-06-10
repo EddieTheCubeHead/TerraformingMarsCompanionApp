@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class NuclearPower extends Card {
     public NuclearPower(Game game) {
@@ -13,6 +13,7 @@ public final class NuclearPower extends Card {
         price = 10;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
+        requirements.setMinMoneyProduction(-2);
     }
 
     @Override

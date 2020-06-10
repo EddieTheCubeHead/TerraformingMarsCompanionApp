@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * A subclass of {@link Card} representing the milestone gameplay system of the game.

@@ -8,7 +8,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
@@ -26,11 +26,10 @@ public final class Sabotage extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resource you want to sabotage",
                 new ArrayList<>(Arrays.asList("Titanium (x3), Steel (x4), Money (x7)")), this, ChoiceDialog.USE_CASE.GENERAL));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override
@@ -63,15 +62,18 @@ public final class Sabotage extends Card {
         Player target;
         if (data > 0 && data < 6) {
             target = GameController.getPlayer(data);
-            target.takeTitanium(3);
+            target.getResources().setTitanium(target.getResources().getTitanium() - 3);
+
         } else if (data >= 6 && data < 11) {
             data -= 5;
             target = GameController.getPlayer(data);
-            target.takeSteel(4);
+            target.getResources().setSteel(target.getResources().getSteel() - 4);
+
         } else if (data >= 11) {
             data -= 10;
             target = GameController.getPlayer(data);
-            target.takeMoney(7);
+            target.getResources().setMoney(target.getResources().getMoney() - 7);
+
         }
         super.playWithMetadata(player, data);
     }

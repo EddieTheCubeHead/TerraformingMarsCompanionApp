@@ -1,8 +1,5 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import android.content.Context;
-import android.content.Intent;
-
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -10,11 +7,10 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
-import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 import java.util.ArrayList;
@@ -40,9 +36,9 @@ public final class ElectroCatapult extends Card implements ActionCard {
 
     public void cardAction() {
         EventScheduler.addEvent(new ActionUseEvent());
-        if (owner_player.getSteel() < 1) {
+        if (owner_player.getResources().getSteel() < 1) {
             EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
-        } else if (owner_player.getPlants() < 1) {
+        } else if (owner_player.getResources().getPlants() < 1) {
             EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 1));
         } else {
             EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resource to spend:",
@@ -55,11 +51,11 @@ public final class ElectroCatapult extends Card implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         if (data == 0) {
-            owner_player.takePlants(1);
+            owner_player.getResources().setPlants(owner_player.getResources().getPlants() - 1);
         } else {
-            owner_player.takeSteel(1);
+            owner_player.getResources().setSteel(owner_player.getResources().getSteel() - 1);
         }
-        owner_player.changeMoney(7);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 7);
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
@@ -73,6 +69,6 @@ public final class ElectroCatapult extends Card implements ActionCard {
     }
 
     public Boolean getActionValidity() {
-        return (action_used || (owner_player.getSteel() < 1 && owner_player.getPlants() < 1));
+        return (action_used || (owner_player.getResources().getSteel() < 1 && owner_player.getResources().getPlants() < 1));
     }
 }

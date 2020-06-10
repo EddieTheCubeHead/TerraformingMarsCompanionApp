@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
@@ -22,8 +22,8 @@ public final class Inventrix extends Card implements FirstAction {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(45);
-        player.changeBaseTrRequirementDiscount(2);
+        player.getResources().setMoney(45);
+        player.getModifiers().setBaseTrRequirementDiscount(2);
 
         player.changeHandSize(3);
         super.playWithMetadata(player, data);

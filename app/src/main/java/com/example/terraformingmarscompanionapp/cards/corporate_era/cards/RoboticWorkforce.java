@@ -6,7 +6,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 
 //TODO system to play this fluidly
@@ -20,7 +20,7 @@ public final class RoboticWorkforce extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
 
     }
 

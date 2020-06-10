@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class IndenturnedWorkers extends Card {
     public IndenturnedWorkers(Game game) {
@@ -20,7 +20,8 @@ public final class IndenturnedWorkers extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.setNextCardDiscount(8);
+
+        player.getModifiers().setNextCardDiscount(8);
         super.playWithMetadata(player, data);
     }
 }

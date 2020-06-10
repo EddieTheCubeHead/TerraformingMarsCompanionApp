@@ -99,7 +99,8 @@ public class IntegerDialog extends AppCompatActivity {
             }
             card.onPlayServerHook(GameController.getCurrentPlayer(), result);
             dialog.dismiss();
-            Log.i("Integer dialogue", "Dialogue dismissed and calling next event");
+            Log.i("IntegerDialog", "Dialogue dismissed and calling next event");
+            EventScheduler.playNextEvent(context);
         });
     }
 }

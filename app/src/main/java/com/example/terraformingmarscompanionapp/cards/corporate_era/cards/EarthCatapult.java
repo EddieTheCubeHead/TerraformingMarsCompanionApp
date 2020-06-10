@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class EarthCatapult extends Card {
     public EarthCatapult(Game game) {
@@ -18,7 +18,7 @@ public final class EarthCatapult extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.changeCardDiscount(2);
+        player.getModifiers().setCardDiscount(player.getModifiers().getCardDiscount() + 2);
         super.playWithMetadata(player, data);
     }
 }

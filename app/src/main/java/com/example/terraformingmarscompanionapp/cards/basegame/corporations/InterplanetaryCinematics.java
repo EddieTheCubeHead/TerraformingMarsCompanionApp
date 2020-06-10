@@ -5,7 +5,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class InterplanetaryCinematics extends Card implements EffectCard {
     public InterplanetaryCinematics(Game game) {
@@ -16,8 +16,8 @@ public final class InterplanetaryCinematics extends Card implements EffectCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeSteel(20);
-        player.changeMoney(30);
+        player.getResources().setSteel(20);
+        player.getResources().setMoney(30);
         super.playWithMetadata(player, data);
     }
 
@@ -26,6 +26,6 @@ public final class InterplanetaryCinematics extends Card implements EffectCard {
         if (owner_player == null | owner_player != player) {
             return;
         }
-        owner_player.changeMoney(2);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 2);
     }
 }

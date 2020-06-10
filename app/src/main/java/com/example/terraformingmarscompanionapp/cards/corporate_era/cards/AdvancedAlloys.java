@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class AdvancedAlloys extends Card {
     public AdvancedAlloys(Game game) {
@@ -16,8 +16,8 @@ public final class AdvancedAlloys extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeSteelValueModifier(1);
-        player.changeTitaniumValueModifier(1);
+        player.getModifiers().setSteelValueModifier(player.getModifiers().getSteelValueModifier() + 1);
+        player.getModifiers().setTitaniumValueModifier(player.getModifiers().getTitaniumValueModifier() + 1);
         super.playWithMetadata(player, data);
     }
 }

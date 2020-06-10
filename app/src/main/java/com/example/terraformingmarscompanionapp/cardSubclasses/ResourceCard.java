@@ -3,7 +3,7 @@ package com.example.terraformingmarscompanionapp.cardSubclasses;
 import android.content.Context;
 
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * A subclass of {@link Card} to represent cards that hold special resources on them during the game.
@@ -28,7 +28,8 @@ public abstract class ResourceCard extends Card {
         SCIENCE,
         FLOATER,
         PET,
-        UNIQUE
+        UNIQUE,
+        EXISTING // Used with CEOs favourite project
     }
 
     protected ResourceType resource_type;
@@ -52,9 +53,4 @@ public abstract class ResourceCard extends Card {
      * @param change_amount {@link Integer} the amount of resources to change
      */
     public final void changeResourceAmount(Integer change_amount) {resource_amount += change_amount;}
-
-    public void onPlay(Player player, Context context) {
-        player.addResourceHolder(this);
-        super.onPlay(player, context);
-    }
 }

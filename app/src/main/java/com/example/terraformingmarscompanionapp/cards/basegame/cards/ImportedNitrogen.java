@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 
 public final class ImportedNitrogen extends Card {
@@ -23,17 +23,16 @@ public final class ImportedNitrogen extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
-        defaultEvents(player);
+    public void initializePlayEvents(Player player) {
+        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 3, true));
         EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeTerraformingRating(1);
-        player.changePlants(4);
+        player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + 1);
+        player.getResources().setPlants(player.getResources().getPlants() + 4);
         super.playWithMetadata(player, data);
     }
 }

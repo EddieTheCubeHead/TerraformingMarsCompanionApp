@@ -5,7 +5,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MiningGuild extends Card implements EffectCard {
     public MiningGuild(Game game) {
@@ -17,8 +17,8 @@ public final class MiningGuild extends Card implements EffectCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(30);
-        player.changeSteel(5);
+        player.getResources().setMoney(30);
+        player.getResources().setSteel(5);
         production_box.setSteelProduction(1);
         super.playWithMetadata(player, data);
     }
@@ -28,6 +28,7 @@ public final class MiningGuild extends Card implements EffectCard {
         if (owner_player == null | owner_player != player) {
             return;
         }
-        owner_player.changeSteelProduction(1);
+
+        owner_player.getResources().setSteelProduction(owner_player.getResources().getSteelProduction() + 1);
     }
 }

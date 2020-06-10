@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class ImmigrationShuttles extends Card {
     public ImmigrationShuttles(Game game) {
@@ -24,6 +24,7 @@ public final class ImmigrationShuttles extends Card {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints((owner_game.getCitiesOnMars() + owner_game.getCitiesInSpace())/3);
+        victory_points = (owner_game.getCitiesInSpace() + owner_game.getCitiesOnMars()) / 3;
+        super.onGameEnd();
     }
 }

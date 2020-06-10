@@ -7,8 +7,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.game.Player;
-import com.example.terraformingmarscompanionapp.ui.main.ActivityDialogSearch;
+import com.example.terraformingmarscompanionapp.game.player.Player;
+import com.example.terraformingmarscompanionapp.ui.main.ActivityResourceAddition;
 
 /**
  * An implementation of {@link GameEvent} used for getting the target of a card resource change from
@@ -56,11 +56,11 @@ public final class ResourceEvent implements GameEvent {
     @Override
     public void playEvent(Context context) {
         Log.i("Event played", toString());
-        Intent intent = new Intent(context, ActivityDialogSearch.class);
-        intent.putExtra(ActivityDialogSearch.RESOURCE_TYPE, resource_type.toString());
-        intent.putExtra(ActivityDialogSearch.AMOUNT, amount);
-        intent.putExtra(ActivityDialogSearch.OWNER_ONLY, own_card_only);
-        intent.putExtra(ActivityDialogSearch.PLAYER_NAME, player.getName());
+        Intent intent = new Intent(context, ActivityResourceAddition.class);
+        intent.putExtra(ActivityResourceAddition.RESOURCE_TYPE, resource_type.toString());
+        intent.putExtra(ActivityResourceAddition.AMOUNT, amount);
+        intent.putExtra(ActivityResourceAddition.OWNER_ONLY, own_card_only);
+        intent.putExtra(ActivityResourceAddition.PLAYER_NAME, player.getName());
         context.startActivity(intent);
     }
 

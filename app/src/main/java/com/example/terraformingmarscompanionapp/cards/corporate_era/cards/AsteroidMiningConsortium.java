@@ -1,19 +1,15 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
-import com.example.terraformingmarscompanionapp.game.events.MetadataIntegerEvent;
-import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 public final class AsteroidMiningConsortium extends Card {
     public AsteroidMiningConsortium(Game game) {
@@ -26,10 +22,8 @@ public final class AsteroidMiningConsortium extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override

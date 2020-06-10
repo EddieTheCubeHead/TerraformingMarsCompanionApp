@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class ImportedGHG extends Card {
     public ImportedGHG(Game game) {
@@ -19,7 +19,7 @@ public final class ImportedGHG extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setHeatProduction(1);
-        player.changeHeat(3);
+        player.getResources().setHeat(player.getResources().getHeat() + 3);
         super.playWithMetadata(player, data);
     }
 }

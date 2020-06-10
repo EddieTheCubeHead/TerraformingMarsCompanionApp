@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * A dataclass representing the production box of cards. Only needed so robotic workforce functions
@@ -151,22 +151,23 @@ public final class ProductionBox {
      * @param target_index {@link Integer} representing the target for production stealing. See {@link GameController#getPlayer(Integer)}
      */
     public void playProductionBox(Player player, Integer target_index) {
-        player.changeMoneyProduction(money_production);
-        player.changeSteelProduction(steel_production);
-        player.changeTitaniumProduction(titanium_production);
-        player.changeEnergyProduction(energy_production);
-        player.changePlantsProduction(plants_production);
-        player.changeHeatProduction(heat_production);
+        player.getResources().setMoneyProduction(player.getResources().getMoneyProduction() + money_production);
+        player.getResources().setSteelProduction(player.getResources().getSteelProduction() + steel_production);
+        player.getResources().setTitaniumProduction(player.getResources().getTitaniumProduction() + titanium_production);
+        player.getResources().setPlantsProduction(player.getResources().getPlantsProduction() + plants_production);
+        player.getResources().setEnergyProduction(player.getResources().getEnergyProduction() + energy_production);
+        player.getResources().setHeatProduction(player.getResources().getHeatProduction() + heat_production);
 
         try {
             if (target_index != 0) {
                 Player target_player = GameController.getPlayer(target_index);
-                target_player.changeMoneyProduction(-steal_money_production);
-                target_player.takeSteelProduction(steal_steel_production);
-                target_player.takeTitaniumProduction(steal_titanium_production);
-                target_player.takePlantsProduction(steal_plants_production);
-                target_player.takeEnergyProduction(steal_energy_production);
-                target_player.takeHeatProduction(steal_heat_production);
+
+                target_player.getResources().setMoneyProduction(target_player.getResources().getMoneyProduction() + money_production);
+                target_player.getResources().setSteelProduction(target_player.getResources().getSteelProduction() + steel_production);
+                target_player.getResources().setTitaniumProduction(target_player.getResources().getTitaniumProduction() + titanium_production);
+                target_player.getResources().setPlantsProduction(target_player.getResources().getPlantsProduction() + plants_production);
+                target_player.getResources().setEnergyProduction(target_player.getResources().getEnergyProduction() + energy_production);
+                target_player.getResources().setHeatProduction(target_player.getResources().getHeatProduction() + heat_production);
             }
         } catch (Exception ignored) {}
     }

@@ -1,7 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
@@ -10,14 +9,13 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
-import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
@@ -37,13 +35,12 @@ public final class LargeConvoy extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x5)", "Animal (x4)")), this, ChoiceDialog.USE_CASE.GENERAL));
         EventScheduler.addEvent(new PromptEvent("Please draw 2 cards"));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override
@@ -60,7 +57,7 @@ public final class LargeConvoy extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data == 0) {
-            player.changePlants(5);
+            player.getResources().setPlants(player.getResources().getPlants() + 5);
         }
         player.changeHandSize(2);
         super.playWithMetadata(player, data);

@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class AdaptationTechnology extends Card {
     public AdaptationTechnology(Game game) {
@@ -17,7 +17,7 @@ public final class AdaptationTechnology extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeBaseTrRequirementDiscount(2);
+        player.getModifiers().setBaseTrRequirementDiscount(player.getModifiers().getBaseTrRequirementDiscount() + 2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

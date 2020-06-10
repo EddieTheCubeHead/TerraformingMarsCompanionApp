@@ -1,7 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -9,10 +8,9 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
-import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 public final class DeimosDown extends Card {
     public DeimosDown(Game game) {
@@ -24,18 +22,17 @@ public final class DeimosDown extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data != 0) {
-            GameController.getPlayer(data).takePlants(8);
+            Player target = GameController.getPlayer(data);
+            target.getResources().setPlants(target.getResources().getPlants() - 8);
         }
-        player.changeSteel(4);
+        player.getResources().setSteel(player.getResources().getSteel() + 4);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);

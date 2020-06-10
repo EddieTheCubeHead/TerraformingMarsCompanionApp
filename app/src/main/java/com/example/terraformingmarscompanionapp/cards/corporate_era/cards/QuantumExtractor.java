@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class QuantumExtractor extends Card {
     public QuantumExtractor(Game game) {
@@ -19,7 +19,7 @@ public final class QuantumExtractor extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(4);
-        player.changeSpaceTagDiscount(2);
+        player.getModifiers().setSpaceTagDiscount(player.getModifiers().getSpaceTagDiscount() + 2);
         super.playWithMetadata(player, data);
     }
 }

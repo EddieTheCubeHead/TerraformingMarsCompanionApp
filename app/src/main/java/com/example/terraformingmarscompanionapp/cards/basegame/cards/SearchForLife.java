@@ -1,8 +1,5 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import android.content.Context;
-import android.content.Intent;
-
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -10,10 +7,9 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
-import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 import java.util.ArrayList;
@@ -46,7 +42,7 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeMoney(-1);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() - 1);
         if (data >= 0) {
             resource_amount++;
         }
@@ -61,8 +57,9 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
     @Override
     public void onGameEnd() {
         if (resource_amount > 0) {
-            owner_player.changeVictoryPoints(3);
+            victory_points = 3;
         }
+        super.onGameEnd();
     }
 
     @Override
@@ -72,6 +69,6 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || (owner_player.getMoney() < 1));
+        return (action_used || (owner_player.getResources().getMoney() < 1));
     }
 }

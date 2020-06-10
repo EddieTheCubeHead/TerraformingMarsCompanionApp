@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Farming extends Card {
     public Farming(Game game) {
@@ -18,7 +18,7 @@ public final class Farming extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(2);
+        player.getResources().setPlants(player.getResources().getPlants() + 2);
         production_box.setPlantsProduction(2);
         production_box.setMoneyProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);

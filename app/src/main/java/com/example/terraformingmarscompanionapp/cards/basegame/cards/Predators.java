@@ -7,7 +7,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 
 public final class Predators extends ResourceCard implements ActionCard {
@@ -27,7 +28,7 @@ public final class Predators extends ResourceCard implements ActionCard {
     }
 
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, owner_player, 1));
         EventScheduler.playNextEvent(GameController.getContext());
     }
@@ -39,7 +40,8 @@ public final class Predators extends ResourceCard implements ActionCard {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount);
+        victory_points = resource_amount;
+        super.onGameEnd();
     }
 
     @Override

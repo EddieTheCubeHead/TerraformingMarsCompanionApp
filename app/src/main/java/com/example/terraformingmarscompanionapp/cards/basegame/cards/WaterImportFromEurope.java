@@ -7,7 +7,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.CardCostEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
@@ -29,7 +30,7 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
         EventScheduler.addEvent(new CardCostEvent(owner_game.getDeck().get("Water import from europe ghost")));
         EventScheduler.playNextEvent(GameController.getContext());
@@ -42,7 +43,8 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(owner_player.getJovianTags());
+        victory_points = owner_player.getTags().getJovianTags();
+        super.onGameEnd();
     }
 
     @Override
@@ -52,7 +54,7 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || ((owner_player.getMoney() + owner_player.getTitanium() * (3 + owner_player.getTitaniumValueModifier())) < 12));
+        return (action_used || ((owner_player.getResources().getMoney() + owner_player.getResources().getTitanium() * (3 + owner_player.getModifiers().getTitaniumValueModifier())) < 12));
     }
 
     @Override

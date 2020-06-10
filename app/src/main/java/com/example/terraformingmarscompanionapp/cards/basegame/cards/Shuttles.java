@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Shuttles extends Card {
     public Shuttles(Game game) {
@@ -19,7 +19,7 @@ public final class Shuttles extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeSpaceTagDiscount(2);
+        player.getModifiers().setSpaceTagDiscount(player.getModifiers().getSpaceTagDiscount() + 2);
         production_box.setEnergyProduction(-1);
         production_box.setMoneyProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);

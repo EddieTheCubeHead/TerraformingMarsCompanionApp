@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class GanymedeColony extends Card {
     public GanymedeColony(Game game) {
@@ -26,6 +26,7 @@ public final class GanymedeColony extends Card {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(owner_player.getJovianTags());
+        victory_points = owner_player.getTags().getJovianTags();
+        super.onGameEnd();
     }
 }

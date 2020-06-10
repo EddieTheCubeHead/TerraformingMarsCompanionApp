@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public class ResourcesFragment extends Fragment implements GameController.GameUpdateListener {
 
@@ -456,6 +456,23 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
                 editmode = false;
 
+                player.getResources().setMoney(money);
+                player.getResources().setSteel(steel);
+                player.getResources().setTitanium(titanium);
+                player.getResources().setPlants(plants);
+                player.getResources().setEnergy(energy);
+                player.getResources().setHeat(heat);
+
+                player.getResources().setMoneyProduction(moneyProduction);
+                player.getResources().setSteelProduction(steelProduction);
+                player.getResources().setTitaniumProduction(titaniumProduction);
+                player.getResources().setPlantsProduction(plantsProduction);
+                player.getResources().setEnergyProduction(energyProduction);
+                player.getResources().setHeatProduction(heatProduction);
+
+                // Leaving the old code here for reference as I am not 100% sure the new one will work
+
+                /*
                 player.changeMoney(money - player.getMoney());
                 player.changeMoneyProduction(moneyProduction - player.getMoneyProduction());
                 player.changeSteel(money - player.getMoney());
@@ -469,6 +486,8 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                 player.changeHeat(heat - player.getHeatProduction());
                 player.changeHeatProduction(heatProduction - player.getHeatProduction());
                 player.changeTerraformingRating(terraformingRating - player.getTerraformingRating());
+                */
+
                 game.rawChangeTemperature(temperature - game.getGlobalTemperature());
                 game.rawChangeOxygen(oxygen - game.getGlobalOxygen());
 
@@ -718,42 +737,48 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
         try {
             textview_current_player_name.setText(GameController.getCurrentPlayer().getName());
             textview_current_player_actions_remaining.setText(String.valueOf(GameController.getDisplayActions()));
+
             textview_temperature.setText(game.getGlobalTemperature() + "°C");
             textview_oxygen.setText(game.getGlobalOxygen() + "%");
-            textview_tfr.setText(String.valueOf(player.getTerraformingRating()));
-            textview_money.setText(String.valueOf(player.getMoney()));
-            textview_money_production.setText(String.valueOf(player.getMoneyProduction()));
-            textview_steel.setText(String.valueOf(player.getSteel()));
-            textview_steel_production.setText(String.valueOf(player.getSteelProduction()));
-            textview_titanium.setText(String.valueOf(player.getTitanium()));
-            textview_titanium_production.setText(String.valueOf(player.getTitaniumProduction()));
-            textview_plants.setText(String.valueOf(player.getPlants()));
-            textview_plants_production.setText(String.valueOf(player.getPlantsProduction()));
-            textview_energy.setText(String.valueOf(player.getEnergy()));
-            textview_energy_production.setText(String.valueOf(player.getEnergyProduction()));
-            textview_heat.setText(String.valueOf(player.getHeat()));
-            textview_heat_production.setText(String.valueOf(player.getHeatProduction()));
+
+            textview_tfr.setText(String.valueOf(player.getResources().getTerraformingRating()));
+
+            textview_money.setText(String.valueOf(player.getResources().getMoney()));
+            textview_steel.setText(String.valueOf(player.getResources().getSteel()));
+            textview_titanium.setText(String.valueOf(player.getResources().getTitanium()));
+            textview_plants.setText(String.valueOf(player.getResources().getPlants()));
+            textview_energy.setText(String.valueOf(player.getResources().getEnergy()));
+            textview_heat.setText(String.valueOf(player.getResources().getHeat()));
+
+            textview_money_production.setText(String.valueOf(player.getResources().getMoneyProduction()));
+            textview_steel_production.setText(String.valueOf(player.getResources().getSteelProduction()));
+            textview_titanium_production.setText(String.valueOf(player.getResources().getTitaniumProduction()));
+            textview_plants_production.setText(String.valueOf(player.getResources().getPlantsProduction()));
+            textview_energy_production.setText(String.valueOf(player.getResources().getEnergyProduction()));
+            textview_heat_production.setText(String.valueOf(player.getResources().getHeatProduction()));
         } catch (NullPointerException ignored) {
         }
     }
 
-    //refreshing the local variables for editmode
+    // refreshing the local variables for editmode
     private void refreshEditVariables() {
+        terraformingRating = player.getResources().getTerraformingRating();
 
-        money = player.getMoney();
-        moneyProduction = player.getMoneyProduction();
-        steel = player.getSteel();
-        steelProduction = player.getSteelProduction();
-        titanium = player.getTitanium();
-        titaniumProduction = player.getTitaniumProduction();
-        plants = player.getPlants();
-        plantsProduction = player.getPlantsProduction();
-        energy = player.getEnergy();
-        energyProduction = player.getEnergyProduction();
-        heat = player.getHeat();
-        heatProduction = player.getHeatProduction();
+        money = player.getResources().getMoney();
+        steel = player.getResources().getSteel();
+        titanium = player.getResources().getTitanium();
+        plants = player.getResources().getPlants();
+        energy = player.getResources().getEnergy();
+        heat = player.getResources().getHeat();
+
+        moneyProduction = player.getResources().getMoneyProduction();
+        steelProduction = player.getResources().getSteelProduction();
+        titaniumProduction = player.getResources().getTitaniumProduction();
+        plantsProduction = player.getResources().getPlantsProduction();
+        energyProduction = player.getResources().getEnergyProduction();
+        heatProduction = player.getResources().getHeatProduction();
+
         temperature = game.getGlobalTemperature();
-        terraformingRating = player.getTerraformingRating();
         oxygen = game.getGlobalOxygen();
     }
 

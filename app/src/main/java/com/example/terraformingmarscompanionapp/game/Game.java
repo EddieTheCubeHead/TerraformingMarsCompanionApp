@@ -9,6 +9,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
@@ -311,12 +313,13 @@ public class Game {
         if (global_temperature >= 8) {
             return false;
         }
-        raising_player.changeTerraformingRating(1);
+
+        raising_player.getResources().setTerraformingRating(raising_player.getResources().getTerraformingRating() + 1);
         global_temperature += 2;
         if (global_temperature == 0) {
             tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN, GameController.getContext());
         } else if (global_temperature == -20 || global_temperature == -24) {
-            raising_player.changeHeatProduction(1);
+            raising_player.getResources().setHeatProduction(raising_player.getResources().getHeatProduction() + 1);
         }
         return true;
     }
@@ -332,7 +335,9 @@ public class Game {
         if (global_oxygen >= 14) {
             return false;
         }
-        raising_player.changeTerraformingRating(1);
+
+        raising_player.getResources().setTerraformingRating(raising_player.getResources().getTerraformingRating() + 1);
+
         global_oxygen++;
         if (global_oxygen == 8) {
             raiseTemperature(raising_player);
@@ -352,7 +357,9 @@ public class Game {
         if (venus_terraform >= 30) {
             return false;
         }
-        raising_player.changeTerraformingRating(1);
+
+        raising_player.getResources().setTerraformingRating(raising_player.getResources().getTerraformingRating() + 1);
+
         venus_terraform += 2;
         return true;
     }
@@ -407,35 +414,35 @@ public class Game {
 
         // Checks for tag-type specific discounts
         if (card.getType() != Type.STANDARD_PROJECT && card.getType() != Type.OTHER) {
-            actual_price -= player.getCardDiscount();
+            actual_price -= player.getModifiers().getCardDiscount();
         }
 
         if (card_tags.contains(Tag.BUILDING) && card.getType() != Type.OTHER) {
-            actual_price -= player.getBuildingTagDiscount();
+            actual_price -= player.getModifiers().getBuildingTagDiscount();
         }
 
         if (card_tags.contains(Tag.SPACE) && card.getType() != Type.OTHER) {
-            actual_price -= player.getSpaceTagDiscount();
+            actual_price -= player.getModifiers().getSpaceTagDiscount();
         }
 
         if (card_tags.contains(Tag.EARTH) && card.getType() != Type.OTHER) {
-            actual_price -= player.getEarthTagDiscount();
+            actual_price -= player.getModifiers().getEarthTagDiscount();
         }
 
         if (card_tags.contains(Tag.SCIENCE) && card.getType() != Type.OTHER) {
-            actual_price -= player.getScienceTagDiscount();
+            actual_price -= player.getModifiers().getScienceTagDiscount();
         }
 
         if (card_tags.contains(Tag.ENERGY) && card.getType() != Type.OTHER) {
-            actual_price -= player.getEnergyTagDiscount();
+            actual_price -= player.getModifiers().getEnergyTagDiscount();
         }
 
         if (card_tags.contains(Tag.VENUS) && card.getType() != Type.OTHER) {
-            actual_price -= player.getVenusTagDiscount();
+            actual_price -= player.getModifiers().getVenusTagDiscount();
         }
 
         if (Card.MAIN_DECK.contains(card.getType())) {
-            actual_price -= player.getNextCardDiscount();
+            actual_price -= player.getModifiers().getNextCardDiscount();
         }
 
         if (actual_price < 0) {
@@ -443,13 +450,13 @@ public class Game {
         }
 
         // If player doesn't have enough raw money, other resources can be used
-        if (actual_price <= player.getMoney())
+        if (actual_price <= player.getResources().getMoney())
         {
             return new CardCostPacket(GameController.getCurrentPlayer().getName(), actual_price, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
         }
         else
         {
-            money_amount = player.getMoney();
+            money_amount = player.getResources().getMoney();
             needed_money = actual_price - money_amount;
 
             // Checks for used steel and titanium work as follows:
@@ -466,10 +473,10 @@ public class Game {
             if (card_tags.contains(Tag.SPACE))
             {
 
-                if (player.getTitanium() * (3 + player.getTitaniumValueModifier()) >= needed_money)
+                if (player.getResources().getTitanium() * (3 + player.getModifiers().getTitaniumValueModifier()) >= needed_money)
                 {
-                    titanium_amount = (needed_money + needed_money % (3 + player.getTitaniumValueModifier())) / (3 + player.getTitaniumValueModifier());
-                    money_amount = actual_price - titanium_amount * (3 + player.getTitaniumValueModifier());
+                    titanium_amount = (needed_money + needed_money % (3 + player.getModifiers().getTitaniumValueModifier())) / (3 + player.getModifiers().getTitaniumValueModifier());
+                    money_amount = actual_price - titanium_amount * (3 + player.getModifiers().getTitaniumValueModifier());
 
                     if (money_amount < 0)
                         money_amount = 0;
@@ -478,8 +485,8 @@ public class Game {
                 }
                 else
                 {
-                    titanium_amount = player.getTitanium();
-                    needed_money -= titanium_amount * (3 + player.getTitaniumValueModifier());
+                    titanium_amount = player.getResources().getTitanium();
+                    needed_money -= titanium_amount * (3 + player.getModifiers().getTitaniumValueModifier());
                 }
             }
 
@@ -487,11 +494,11 @@ public class Game {
             if (card_tags.contains(Tag.BUILDING))
             {
 
-                if (player.getSteel() * (2 + player.getSteelValueModifier()) >= needed_money)
+                if (player.getResources().getSteel() * (2 + player.getModifiers().getSteelValueModifier()) >= needed_money)
                 {
-                    steel_amount = (needed_money + needed_money % (2 + player.getSteelValueModifier())) / (2 + player.getSteelValueModifier());
-                    money_amount = actual_price - (steel_amount * (2 + player.getSteelValueModifier()
-                                                   + titanium_amount * (3 + player.getTitaniumValueModifier())));
+                    steel_amount = (needed_money + needed_money % (2 + player.getModifiers().getSteelValueModifier())) / (2 + player.getModifiers().getSteelValueModifier());
+                    money_amount = actual_price - (steel_amount * (2 + player.getModifiers().getSteelValueModifier()
+                                                   + titanium_amount * (3 + player.getModifiers().getTitaniumValueModifier())));
 
                     if (money_amount < 0)
                         money_amount = 0;
@@ -500,8 +507,8 @@ public class Game {
                 }
                 else
                 {
-                    steel_amount = player.getSteel();
-                    needed_money -= steel_amount * (2 + player.getSteelValueModifier());
+                    steel_amount = player.getResources().getSteel();
+                    needed_money -= steel_amount * (2 + player.getModifiers().getSteelValueModifier());
                 }
             }
 
@@ -511,7 +518,7 @@ public class Game {
 
             // Adding heat
             CardCostPacket cardCostPacket;
-            if (player.getHeatIsMoney() && player.getHeat() >= needed_money)
+            if (player.getModifiers().getHeatIsMoney() && player.getResources().getHeat() >= needed_money)
             {
                 heat_amount = needed_money;
                 cardCostPacket = new CardCostPacket(GameController.getCurrentPlayer().getName(), money_amount, steel_amount, titanium_amount, heat_amount, plants_amount, floaters_amount);
@@ -542,10 +549,10 @@ public class Game {
 
         CardRequirements requirements = card.getRequirements();
 
-        Integer base_discount = player.getBaseTrRequirementDiscount();
-        Integer venus_discount = player.getVenusTrRequirementDiscount();
+        Integer base_discount = player.getModifiers().getBaseTrRequirementDiscount();
+        Integer venus_discount = player.getModifiers().getVenusTrRequirementDiscount();
 
-        Integer unused_jokers = player.getJokerTags();
+        Integer unused_jokers = player.getTags().getJokerTags();
 
         // Separate if cases in case I have enough energy at some point to implement exact feedback
         // on what requirement caused the playing action to be rejected
@@ -553,11 +560,11 @@ public class Game {
             return false;
         }
 
-        if (requirements.getMinEnergyProduction() != null && player.getEnergyProduction() < requirements.getMinEnergyProduction()) {
+        if (requirements.getMinEnergyProduction() != null && player.getResources().getEnergyProduction() < requirements.getMinEnergyProduction()) {
             return false;
         }
 
-        if (requirements.getMinPlants() != null && player.getPlants() < requirements.getMinPlants()) {
+        if (requirements.getMinPlants() != null && player.getResources().getPlants() < requirements.getMinPlants()) {
             return false;
         }
 
@@ -565,23 +572,23 @@ public class Game {
             return false;
         }
 
-        if (requirements.getMinScienceTags() != null && player.getScienceTags() < requirements.getMinScienceTags()) {
-            if (player.getScienceTags() + unused_jokers > requirements.getMinScienceTags()) {
-                unused_jokers -= (requirements.getMinScienceTags() - player.getScienceTags());
+        if (requirements.getMinScienceTags() != null && player.getTags().getScienceTags() < requirements.getMinScienceTags()) {
+            if (player.getTags().getScienceTags() + unused_jokers > requirements.getMinScienceTags()) {
+                unused_jokers -= (requirements.getMinScienceTags() - player.getTags().getScienceTags());
             } else {
                 return false;
             }
         }
 
-        if (requirements.getMinJovianTags() != null && player.getJovianTags() < requirements.getMinJovianTags()) {
-            if (player.getJovianTags() + unused_jokers > requirements.getMinJovianTags()) {
-                unused_jokers -= (requirements.getMinJovianTags() - player.getJovianTags());
+        if (requirements.getMinJovianTags() != null && player.getTags().getJovianTags() < requirements.getMinJovianTags()) {
+            if (player.getTags().getJovianTags() + unused_jokers > requirements.getMinJovianTags()) {
+                unused_jokers -= (requirements.getMinJovianTags() - player.getTags().getJovianTags());
             } else {
                 return false;
             }
         }
 
-        if (requirements.getMinSteelProduction() != null && player.getSteelProduction() < requirements.getMinSteelProduction()) {
+        if (requirements.getMinSteelProduction() != null && player.getResources().getSteelProduction() < requirements.getMinSteelProduction()) {
             return false;
         }
 
@@ -601,37 +608,37 @@ public class Game {
             return false;
         }
 
-        if (requirements.getMinPlantProduction() != null && player.getPlantsProduction() < requirements.getMinPlantProduction()) {
+        if (requirements.getMinPlantProduction() != null && player.getResources().getPlantsProduction() < requirements.getMinPlantProduction()) {
             return false;
         }
 
-        if (requirements.getMinMicrobeTags() != null && player.getMicrobeTags() < requirements.getMinMicrobeTags()) {
-            if (player.getMicrobeTags() + unused_jokers > requirements.getMinMicrobeTags()) {
-                unused_jokers -= (requirements.getMinMicrobeTags() - player.getMicrobeTags());
+        if (requirements.getMinMicrobeTags() != null && player.getTags().getMicrobeTags() < requirements.getMinMicrobeTags()) {
+            if (player.getTags().getMicrobeTags() + unused_jokers > requirements.getMinMicrobeTags()) {
+                unused_jokers -= (requirements.getMinMicrobeTags() - player.getTags().getMicrobeTags());
             } else {
                 return false;
             }
         }
 
-        if (requirements.getMinAnimalTags() != null && player.getAnimalTags() < requirements.getMinAnimalTags()) {
-            if (player.getAnimalTags() + unused_jokers > requirements.getMinAnimalTags()) {
-                unused_jokers -= (requirements.getMinAnimalTags() - player.getAnimalTags());
+        if (requirements.getMinAnimalTags() != null && player.getTags().getAnimalTags() < requirements.getMinAnimalTags()) {
+            if (player.getTags().getAnimalTags() + unused_jokers > requirements.getMinAnimalTags()) {
+                unused_jokers -= (requirements.getMinAnimalTags() - player.getTags().getAnimalTags());
             } else {
                 return false;
             }
         }
 
-        if (requirements.getMinEarthTags() != null && player.getEarthTags() < requirements.getMinEarthTags()) {
-            if (player.getEarthTags() + unused_jokers > requirements.getMinEarthTags()) {
-                unused_jokers -= (requirements.getMinEarthTags() - player.getEarthTags());
+        if (requirements.getMinEarthTags() != null && player.getTags().getEarthTags() < requirements.getMinEarthTags()) {
+            if (player.getTags().getEarthTags() + unused_jokers > requirements.getMinEarthTags()) {
+                unused_jokers -= (requirements.getMinEarthTags() - player.getTags().getEarthTags());
             } else {
                 return false;
             }
         }
 
-        if (requirements.getMinEnergyTags() != null && player.getEnergyTags() < requirements.getMinEnergyTags()) {
-            if (player.getEnergyTags() + unused_jokers > requirements.getMinEnergyTags()) {
-                unused_jokers -= (requirements.getMinEnergyTags() - player.getEnergyTags());
+        if (requirements.getMinEnergyTags() != null && player.getTags().getEnergyTags() < requirements.getMinEnergyTags()) {
+            if (player.getTags().getEnergyTags() + unused_jokers > requirements.getMinEnergyTags()) {
+                unused_jokers -= (requirements.getMinEnergyTags() - player.getTags().getEnergyTags());
             } else {
                 return false;
             }
@@ -639,9 +646,11 @@ public class Game {
 
         if (requirements.getMinFloaters() != null) {
             int floaters = 0;
-            for (ResourceCard resource_card : player.getResourceHolders()) {
-                if (resource_card.getResourceType() == ResourceCard.ResourceType.FLOATER) {
-                    floaters += resource_card.getResourceAmount();
+            for (Card resource_card : all_cards.values()) {
+                if (resource_card instanceof ResourceCard && resource_card.getOwner() == player) {
+                    if (((ResourceCard) resource_card).getResourceType() == ResourceCard.ResourceType.FLOATER) {
+                        floaters += ((ResourceCard) resource_card).getResourceAmount();
+                    }
                 }
             }
             if (floaters < requirements.getMinFloaters()) {
@@ -650,7 +659,7 @@ public class Game {
         }
 
         if (requirements.getPlantsForGreenery()) {
-            if (player.getPlants() < (8 + player.getGreeneryPlantCostModifier())) {
+            if (player.getResources().getPlants() < (8 + player.getModifiers().getGreeneryPlantCostModifier())) {
                 return false;
             }
         }
@@ -659,7 +668,7 @@ public class Game {
             return false;
         }
 
-        if (requirements.getMinTitaniumProduction() != null && player.getTitaniumProduction() < requirements.getMinTitaniumProduction()) {
+        if (requirements.getMinTitaniumProduction() != null && player.getResources().getTitaniumProduction() < requirements.getMinTitaniumProduction()) {
             return false;
         }
 
@@ -667,50 +676,50 @@ public class Game {
             return false;
         }
 
-        if (requirements.getMinHeatProduction() != null && player.getHeatProduction() < requirements.getMinHeatProduction()) {
+        if (requirements.getMinHeatProduction() != null && player.getResources().getHeatProduction() < requirements.getMinHeatProduction()) {
             return false;
         }
 
-        if (requirements.getMinTr() != null && player.getTerraformingRating() < requirements.getMinTr()) {
+        if (requirements.getMinTr() != null && player.getResources().getTerraformingRating() < requirements.getMinTr()) {
             return false;
         }
 
-        if (requirements.getMinVenusTags() != null && player.getVenusTags() < requirements.getMinVenusTags()) {
-            if (player.getVenusTags() + unused_jokers > requirements.getMinVenusTags()) {
-                unused_jokers -= (requirements.getMinVenusTags() - player.getVenusTags());
+        if (requirements.getMinVenusTags() != null && player.getTags().getVenusTags() < requirements.getMinVenusTags()) {
+            if (player.getTags().getVenusTags() + unused_jokers > requirements.getMinVenusTags()) {
+                unused_jokers -= (requirements.getMinVenusTags() - player.getTags().getVenusTags());
             } else {
                 return false;
             }
         }
 
-        if (requirements.getMinHeat() != null && player.getHeat() < requirements.getMinHeat()) {
+        if (requirements.getMinHeat() != null && player.getResources().getHeat() < requirements.getMinHeat()) {
             return false;
         }
 
         if (requirements.getMinHighestProduction() != null) {
             Integer max = 0;
-            if (player.getMoneyProduction() > max) {
-                max = player.getMoneyProduction();
+            if (player.getResources().getMoneyProduction() > max) {
+                max = player.getResources().getMoneyProduction();
             }
 
-            if (player.getSteelProduction() > max) {
-                max = player.getSteelProduction();
+            if (player.getResources().getSteelProduction() > max) {
+                max = player.getResources().getSteelProduction();
             }
 
-            if (player.getTitaniumProduction() > max) {
-                max = player.getTitaniumProduction();
+            if (player.getResources().getTitaniumProduction() > max) {
+                max = player.getResources().getTitaniumProduction();
             }
 
-            if (player.getPlantsProduction() > max) {
-                max = player.getPlantsProduction();
+            if (player.getResources().getPlantsProduction() > max) {
+                max = player.getResources().getPlantsProduction();
             }
 
-            if (player.getEnergyProduction() > max) {
-                max = player.getEnergyProduction();
+            if (player.getResources().getEnergyProduction() > max) {
+                max = player.getResources().getEnergyProduction();
             }
 
-            if (player.getHeatProduction() > max) {
-                max = player.getHeatProduction();
+            if (player.getResources().getHeatProduction() > max) {
+                max = player.getResources().getHeatProduction();
             }
 
             if (max < requirements.getMinHighestProduction()) {
@@ -720,7 +729,7 @@ public class Game {
 
         // Always in a milestone: never in the same card as other tag requirements
         if (requirements.getMinOrganicTags() != null) {
-            if (player.getPlantTags() + player.getMicrobeTags() + player.getAnimalTags() + player.getJokerTags() < requirements.getMinOrganicTags()) {
+            if (player.getTags().getPlantTags() + player.getTags().getMicrobeTags() + player.getTags().getAnimalTags() + player.getTags().getJokerTags() < requirements.getMinOrganicTags()) {
                 return false;
             }
         }
@@ -730,32 +739,26 @@ public class Game {
         }
 
         if (requirements.getMinCardsOnTable() != null &&
-                player.getGreen().size() + player.getBlue().size() < requirements.getMinCardsOnTable()) {
+                player.getGreen() + player.getBlue() < requirements.getMinCardsOnTable()) {
             return false;
         }
 
-        if (requirements.getMinEventsPlayed() != null && player.getRed().size() < requirements.getMinEventsPlayed()) {
+        if (requirements.getMinEventsPlayed() != null && player.getRed() < requirements.getMinEventsPlayed()) {
             return false;
         }
 
-        if (requirements.getMinMoneyProduction() != null && player.getMoneyProduction() < requirements.getMinMoneyProduction()) {
+        if (requirements.getMinMoneyProduction() != null && player.getResources().getMoneyProduction() < requirements.getMinMoneyProduction()) {
             return false;
         }
 
-        if (requirements.getMinUniqueTags() != null && player.getUniqueTags() < requirements.getMinUniqueTags()) {
+        if (requirements.getMinUniqueTags() != null && player.getTags().getUniqueTags() < requirements.getMinUniqueTags()) {
             return false;
         }
 
         if (requirements.getMinRequirementCards() != null) {
             Integer amount = 0;
-            for (Card card_to_check : player.getBlue()) {
-                if (card_to_check.getRequirements().getDrawableRequrement() != null) {
-                    amount++;
-                }
-            }
-
-            for (Card card_to_check : player.getGreen()) {
-                if (card_to_check.getRequirements().getDrawableRequrement() != null) {
+            for (Card card_to_check : all_cards.values()) {
+                if (card_to_check.getRequirements().getDrawableRequrement() != null && card_to_check.getOwner() == player) {
                     amount++;
                 }
             }
@@ -779,7 +782,7 @@ public class Game {
         }
 
         if (requirements.getMinBuildingTags() != null) {
-            if (!(player.getBuildingTags() + unused_jokers > requirements.getMinBuildingTags())) {
+            if (!(player.getTags().getBuildingTags() + unused_jokers > requirements.getMinBuildingTags())) {
                 return false;
             }
         }
@@ -834,7 +837,10 @@ public class Game {
             GameActions.sendCardCost(resources_to_use);
         }
 
-        card.onPlay(player, context);
+        // TODO event to handle UI better?
+        EventScheduler.addEvent(new ActionUseEvent());
+        card.initializePlayEvents(player);
+        EventScheduler.playNextEvent(context);
     }
 
     /**
@@ -849,16 +855,8 @@ public class Game {
             GameController.gameEndPreparation();
         }
         for (Player player : GameController.getPlayers()) {
-            player.changeMoney(player.getMoneyProduction() + player.getTerraformingRating());
-            player.changeSteel(player.getSteelProduction());
-            player.changeTitanium(player.getTitaniumProduction());
-            player.changePlants(player.getPlantsProduction());
-            player.changeHeat(player.getEnergy());
-            player.changeEnergy(-player.getEnergy());
-            player.changeEnergy(player.getEnergyProduction());
-            player.changeHeat(player.getHeatProduction());
-            player.setRaisedTrThisGeneration(false);
-            player.resetActions();
+            player.getResources().addProduction();
+            player.setDrewCardsThisGen(false);
         }
 
         GameController.syncGenerationChange(context);

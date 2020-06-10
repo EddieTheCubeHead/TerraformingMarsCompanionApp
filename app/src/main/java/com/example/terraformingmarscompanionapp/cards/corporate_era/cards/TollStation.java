@@ -5,7 +5,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class TollStation extends Card {
     public TollStation(Game game) {
@@ -23,7 +23,7 @@ public final class TollStation extends Card {
             if (opponent == player) {
                 continue;
             }
-            tag_amount += opponent.getSpaceTags();
+            tag_amount += opponent.getTags().getSpaceTags();
         }
         production_box.setMoneyProduction(tag_amount);
         super.playWithMetadata(player, data);
@@ -36,7 +36,7 @@ public final class TollStation extends Card {
             if (opponent == owner_player) {
                 continue;
             }
-            tag_amount += opponent.getSpaceTags();
+            tag_amount += opponent.getTags().getSpaceTags();
         }
         production_box.setMoneyProduction(tag_amount);
         super.playProductionBox();

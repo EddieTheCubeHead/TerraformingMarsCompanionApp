@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class LunarBeam extends Card {
     public LunarBeam(Game game) {
@@ -13,6 +13,7 @@ public final class LunarBeam extends Card {
         price = 13;
         tags.add(Tag.EARTH);
         tags.add(Tag.ENERGY);
+        requirements.setMinMoneyProduction(-3);
     }
 
     @Override

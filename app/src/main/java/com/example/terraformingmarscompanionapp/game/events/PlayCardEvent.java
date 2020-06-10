@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * An implementation of {@link GameEvent} used to represent playing a card or using an action of

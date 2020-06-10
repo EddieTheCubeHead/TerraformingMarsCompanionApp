@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MineralDeposit extends Card {
     public MineralDeposit(Game game) {
@@ -16,7 +16,7 @@ public final class MineralDeposit extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_player.changeSteel(5);
+        player.getResources().setSteel(player.getResources().getSteel() + 5);
         super.playWithMetadata(player, data);
     }
 }

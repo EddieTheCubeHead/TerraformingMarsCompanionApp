@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class PowerGrid extends Card {
     public PowerGrid(Game game) {
@@ -16,13 +16,13 @@ public final class PowerGrid extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        production_box.setEnergyProduction(player.getEnergyTags());
+        production_box.setEnergyProduction(player.getTags().getEnergyTags());
         super.playWithMetadata(player, data);
     }
 
     @Override
     public void playProductionBox() {
-        production_box.setEnergyProduction(owner_player.getEnergyTags());
+        production_box.setEnergyProduction(owner_player.getTags().getEnergyTags());
         super.playProductionBox();
     }
 }

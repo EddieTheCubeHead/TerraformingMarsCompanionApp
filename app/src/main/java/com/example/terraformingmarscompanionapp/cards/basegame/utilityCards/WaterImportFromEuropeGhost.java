@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class WaterImportFromEuropeGhost extends Card {
@@ -16,11 +16,5 @@ public final class WaterImportFromEuropeGhost extends Card {
         name = "Water import from europe ghost";
         price = 12;
         tags.add(Tag.SPACE);
-    }
-
-    @Override
-    public void onPlay(Player player, Context context) {
-        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.playNextEvent(context);
     }
 }

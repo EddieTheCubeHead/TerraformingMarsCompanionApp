@@ -7,6 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class Psychrophiles extends ResourceCard implements ActionCard {
     public Psychrophiles(Game game) {
@@ -20,7 +21,7 @@ public final class Psychrophiles extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

@@ -8,7 +8,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
@@ -23,16 +23,16 @@ public final class Flooding extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new TileEvent(Placeable.FLOOD_OCEAN, owner_game));
-        EventScheduler.playNextEvent(context);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (!(data == 0)) {
-            GameController.getPlayer(data).takeMoney(4);
+            Player target = GameController.getPlayer(data);
+            target.getResources().setMoney(target.getResources().getMoney() - 4);
         }
     }
 }

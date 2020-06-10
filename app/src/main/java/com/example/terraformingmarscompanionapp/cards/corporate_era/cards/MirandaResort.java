@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MirandaResort extends Card {
     public MirandaResort(Game game) {
@@ -19,13 +19,13 @@ public final class MirandaResort extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        production_box.setMoneyProduction(player.getEarthTags());
+        production_box.setMoneyProduction(player.getTags().getEarthTags());
         super.playWithMetadata(player, data);
     }
 
     @Override
     public void playProductionBox() {
-        production_box.setMoneyProduction(owner_player.getEarthTags());
+        production_box.setMoneyProduction(owner_player.getTags().getEarthTags());
         super.playProductionBox();
     }
 }

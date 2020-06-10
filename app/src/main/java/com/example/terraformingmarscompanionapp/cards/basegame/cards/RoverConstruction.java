@@ -5,7 +5,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class RoverConstruction extends Card implements EffectCard {
     public RoverConstruction(Game game) {
@@ -25,7 +25,7 @@ public final class RoverConstruction extends Card implements EffectCard {
     @Override
     public void cardEffect(Player player) {
         if (owner_player != null) {
-            owner_player.changeMoney(2);
+            owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 2);
         }
     }
 }

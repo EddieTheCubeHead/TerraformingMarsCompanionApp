@@ -2,7 +2,7 @@ package com.example.terraformingmarscompanionapp.cards.basegame.utilityCards;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.CardlikeOperation;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class RaiseTemperature extends CardlikeOperation {
     public RaiseTemperature(Game game) {
@@ -14,7 +14,7 @@ public final class RaiseTemperature extends CardlikeOperation {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.raiseTemperature(player);
-        player.changeHeat(-8);
+        player.getResources().setHeat(player.getResources().getHeat() - 8);
         super.playWithMetadata(player, data);
     }
 }

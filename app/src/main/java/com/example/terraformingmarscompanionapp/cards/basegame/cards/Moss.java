@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Moss extends Card {
 
@@ -19,7 +19,7 @@ public final class Moss extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(-1);
+        player.getResources().setPlants(player.getResources().getPlants() - 1);
         production_box.setPlantsProduction(1);
         super.playWithMetadata(player, data);
     }

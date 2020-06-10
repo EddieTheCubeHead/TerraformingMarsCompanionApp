@@ -5,7 +5,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MediaGroup extends Card implements EffectCard {
     public MediaGroup(Game game) {
@@ -22,6 +22,6 @@ public final class MediaGroup extends Card implements EffectCard {
         } else if (owner_player != player){
             return;
         }
-        owner_player.changeMoney(3);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 3);
     }
 }

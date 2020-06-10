@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class SolarWindPower extends Card {
     public SolarWindPower(Game game) {
@@ -19,7 +19,7 @@ public final class SolarWindPower extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(1);
-        player.changeTitanium(2);
+        player.getResources().setTitanium(player.getResources().getTitanium() + 2);
         super.playWithMetadata(player, data);
     }
 }

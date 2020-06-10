@@ -4,7 +4,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class BribedCommittee extends Card {
     public BribedCommittee(Game game) {
@@ -19,7 +19,7 @@ public final class BribedCommittee extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeTerraformingRating(2);
+        player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + 2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

@@ -1,6 +1,6 @@
 package com.example.terraformingmarscompanionapp.cardSubclasses;
 
-import com.example.terraformingmarscompanionapp.game.Player;
+import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * Simple interface for {@link Card} childclasses that need to be played via {@link com.example.terraformingmarscompanionapp.game.UpdateManager}

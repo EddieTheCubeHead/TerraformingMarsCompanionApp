@@ -23,7 +23,6 @@ public final class AquiferPumping extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
         EventScheduler.addEvent(new CardCostEvent(owner_game.getDeck().get("Aquifer pumping ghost")));
@@ -40,7 +39,7 @@ public final class AquiferPumping extends Card implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || (owner_player.getMoney() + owner_player.getSteel() * (2 + owner_player.getSteelValueModifier()) < 8));
+        return (action_used || (owner_player.getResources().getMoney() + owner_player.getResources().getSteel() * (2 + owner_player.getModifiers().getSteelValueModifier()) < 8));
     }
 
     @Override

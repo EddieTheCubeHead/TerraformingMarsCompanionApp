@@ -74,7 +74,7 @@ public class TilePlacementActivity extends AppCompatActivity {
             exit(view);
         }
 
-        //changing the icon depending the tile being placed
+        // changing the icon depending the tile being placed
         switch (tile) {
 
             case CITY:
