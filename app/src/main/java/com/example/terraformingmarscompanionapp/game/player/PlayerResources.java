@@ -13,22 +13,22 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 public class PlayerResources {
 
     // Raw resources
-    private Integer money;
-    private Integer steel;
-    private Integer titanium;
-    private Integer plants;
-    private Integer energy;
-    private Integer heat;
+    private Integer money = 0;
+    private Integer steel = 0;
+    private Integer titanium = 0;
+    private Integer plants = 0;
+    private Integer energy = 0;
+    private Integer heat = 0;
 
     // Productions
-    private Integer money_production;
-    private Integer steel_production;
-    private Integer titanium_production;
-    private Integer plants_production;
-    private Integer energy_production;
-    private Integer heat_production;
+    private Integer money_production = 0;
+    private Integer steel_production = 0;
+    private Integer titanium_production = 0;
+    private Integer plants_production = 0;
+    private Integer energy_production = 0;
+    private Integer heat_production = 0;
 
-    private Integer terraforming_rating;
+    private Integer terraforming_rating = 20;
 
     public void addProduction() {
 

@@ -8,6 +8,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 
 public final class SymbioticFungus extends Card implements ActionCard {
@@ -21,7 +22,7 @@ public final class SymbioticFungus extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, owner_player, 1, true));
         EventScheduler.playNextEvent(GameController.getContext());
     }

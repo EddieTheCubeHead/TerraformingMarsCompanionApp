@@ -18,7 +18,7 @@ public final class Farming extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(2);
+        player.getResources().setPlants(player.getResources().getPlants() + 2);
         production_box.setPlantsProduction(2);
         production_box.setMoneyProduction(2);
         owner_game.update_manager.onVpCardPlayed(player);

@@ -19,7 +19,7 @@ public final class ArcticAlgae extends Card implements EffectCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(1);
+        player.getResources().setPlants(player.getResources().getPlants() + 1);
         super.playWithMetadata(player, data);
     }
 
@@ -28,6 +28,6 @@ public final class ArcticAlgae extends Card implements EffectCard {
         if (owner_player == null) {
             return;
         }
-        owner_player.changePlants(2);
+        owner_player.getResources().setPlants(owner_player.getResources().getPlants() + 2);
     }
 }

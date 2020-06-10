@@ -19,7 +19,7 @@ public final class Trees extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setPlantsProduction(3);
-        player.changePlants(1);
+        player.getResources().setPlants(player.getResources().getPlants() + 1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

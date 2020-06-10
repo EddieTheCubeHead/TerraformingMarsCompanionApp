@@ -13,6 +13,7 @@ public final class FueledGenerators extends Card {
         price = 1;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
+        requirements.setMinMoneyProduction(-1);
     }
 
     @Override

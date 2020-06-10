@@ -54,8 +54,8 @@ public class CardCostDialog {
 
         change = 0;
 
-        steel_value = (2 + player.getSteelValueModifier());
-        titanium_value = (3 + player.getTitaniumValueModifier());
+        steel_value = (2 + player.getModifiers().getSteelValueModifier());
+        titanium_value = (3 + player.getModifiers().getTitaniumValueModifier());
 
         CardCostPacket cost = game.prepareCardPlayAction(card);
 
@@ -129,7 +129,7 @@ public class CardCostDialog {
         if(!card.getTags().contains(Tag.SPACE))
             root.removeView(root.findViewById(R.id.dialog_titanium_layout));
 
-        if(!player.getHeatIsMoney())
+        if(!player.getModifiers().getHeatIsMoney())
             root.removeView(root.findViewById(R.id.dialog_heat_layout));
 
         root.removeView(root.findViewById(R.id.dialog_plant_layout));
@@ -200,10 +200,10 @@ public class CardCostDialog {
     }
 
     private static void creditPlus(Integer amount) {
-        if (credit+amount >= player.getMoney())
+        if (credit+amount >= player.getResources().getMoney())
         {
-            change += player.getMoney() - credit;
-            credit = player.getMoney();
+            change += player.getResources().getMoney() - credit;
+            credit = player.getResources().getMoney();
         } else {
             credit += amount;
             change += amount;
@@ -227,10 +227,10 @@ public class CardCostDialog {
     }
 
     private static void steelPlus(Integer amount) {
-        if (steel+amount >= player.getSteel())
+        if (steel+amount >= player.getResources().getSteel())
         {
-            change += (player.getSteel() - steel) * steel_value;
-            steel = player.getSteel();
+            change += (player.getResources().getSteel() - steel) * steel_value;
+            steel = player.getResources().getSteel();
         } else {
             steel += amount;
             change += amount * steel_value;
@@ -253,10 +253,10 @@ public class CardCostDialog {
     }
 
     private static void titaniumPlus(Integer amount) {
-        if (titanium+amount >= player.getTitanium())
+        if (titanium+amount >= player.getResources().getTitanium())
         {
-            change += (player.getTitanium() - titanium) * titanium_value;
-            titanium = player.getTitanium();
+            change += (player.getResources().getTitanium() - titanium) * titanium_value;
+            titanium = player.getResources().getTitanium();
         } else {
             titanium += amount;
             change += amount * titanium_value;
@@ -279,10 +279,10 @@ public class CardCostDialog {
     }
 
     private static void heatPlus(Integer amount) {
-        if (heat+amount >= player.getHeat())
+        if (heat+amount >= player.getResources().getHeat())
         {
-            change += player.getHeat() - heat;
-            heat = player.getHeat();
+            change += player.getResources().getHeat() - heat;
+            heat = player.getResources().getHeat();
         } else {
             heat += amount;
             change += amount;
@@ -305,10 +305,10 @@ public class CardCostDialog {
     }
 
     private static void plantPlus(Integer amount) {
-        if (plant+amount >= player.getPlants())
+        if (plant+amount >= player.getResources().getPlants())
         {
-            change += (player.getPlants() - plant) * 2;
-            plant = player.getPlants();
+            change += (player.getResources().getPlants() - plant) * 2;
+            plant = player.getResources().getPlants();
         } else {
             plant += amount;
             change += amount * 2;

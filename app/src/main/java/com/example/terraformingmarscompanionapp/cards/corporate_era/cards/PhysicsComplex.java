@@ -7,6 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class PhysicsComplex extends ResourceCard implements ActionCard {
     public PhysicsComplex(Game game) {
@@ -19,13 +20,13 @@ public final class PhysicsComplex extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeEnergy(-6);
+        owner_player.getResources().setEnergy(owner_player.getResources().getEnergy() - 6);
         resource_amount++;
         EventScheduler.playNextEvent(GameController.getContext());
     }
@@ -42,11 +43,12 @@ public final class PhysicsComplex extends ResourceCard implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || (owner_player.getEnergy() < 6));
+        return (action_used || (owner_player.getResources().getEnergy() < 6));
     }
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount * 2);
+        victory_points = resource_amount * 2;
+        super.onGameEnd();
     }
 }

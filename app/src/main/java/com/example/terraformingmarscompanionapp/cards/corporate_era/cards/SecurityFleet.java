@@ -7,6 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class SecurityFleet extends ResourceCard implements ActionCard {
@@ -26,21 +27,19 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
 
     @Override
     public void onGameEnd() {
-        if (owner_player == null) {
-            return;
-        }
-        owner_player.changeVictoryPoints(resource_amount);
+        victory_points = resource_amount;
+        super.onGameEnd();
     }
 
     @Override
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeTitanium(-1);
+        owner_player.getResources().setTitanium(owner_player.getResources().getTitanium() - 1);
         resource_amount++;
         EventScheduler.playNextEvent(GameController.getContext());
     }
@@ -57,6 +56,6 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || (owner_player.getTitanium() < 1));
+        return (action_used || (owner_player.getResources().getTitanium() < 1));
     }
 }

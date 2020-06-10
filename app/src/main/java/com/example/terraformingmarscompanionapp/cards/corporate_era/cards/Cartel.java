@@ -17,7 +17,7 @@ public final class Cartel extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(player.getEarthTags());
+        player.getResources().setMoneyProduction(player.getResources().getMoneyProduction() + player.getTags().getEarthTags());
         super.playWithMetadata(player, data);
     }
 }

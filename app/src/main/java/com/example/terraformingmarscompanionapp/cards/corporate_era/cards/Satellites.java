@@ -17,7 +17,7 @@ public final class Satellites extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        production_box.setMoneyProduction(player.getSpaceTags());
+        production_box.setMoneyProduction(player.getTags().getSpaceTags());
         super.playWithMetadata(player, data);
     }
 }

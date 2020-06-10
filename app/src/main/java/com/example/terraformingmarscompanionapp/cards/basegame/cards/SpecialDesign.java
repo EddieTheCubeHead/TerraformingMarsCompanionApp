@@ -17,8 +17,8 @@ public final class SpecialDesign extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.setSpecialDesignEffect(true);
-        player.changeBaseTrRequirementDiscount(2);
+        player.getModifiers().setSpecialDesignEffect(true);
+        player.getModifiers().setBaseTrRequirementDiscount(player.getModifiers().getBaseTrRequirementDiscount() + 2);
         super.playWithMetadata(player, data);
     }
 }

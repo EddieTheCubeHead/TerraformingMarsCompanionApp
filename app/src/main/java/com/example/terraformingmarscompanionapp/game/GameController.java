@@ -83,7 +83,23 @@ public class GameController
     public static void setSelfPlayer(Player player) {
         self_player = player;
     }
-    public static void setContextReference(Context context) {context_reference = new WeakReference<>(context);}
+
+    /**
+     * A method to set the UI context the game is currently running in. Should get called whenever
+     * the UI context changes with the fresh context
+     *
+     * @param context {@link Context} the UI context the game is currently running in
+     */
+    public static void setContextReference(Context context) {
+        context_reference = new WeakReference<>(context);
+    }
+
+    /**
+     * A method to get the current context of the game. Can return null and usage should be limited
+     * to places where getting context from a passed parameter is impossible.
+     *
+     * @return {@link Context} the context the game is currently running in
+     */
     public static Context getContext() {
         if (context_reference != null) {
             return context_reference.get();
@@ -232,9 +248,10 @@ public class GameController
         else
             queue.addLast(queue.removeFirst());
 
-        //If everyone has folded
+        // If everyone has folded
         if (queue.size() == 0)
         {
+            Log.i("GameController", "Player queue empty. Ending generation");
             endGeneration(context);
         } else {
             current_player = queue.getFirst();
@@ -278,10 +295,8 @@ public class GameController
             if (self_player == null || current_player == self_player) {
                 if (current_player.getCorporation() == null) {
                     ((InGameUI) context).playCorporation();
-                } else if (game.modifiers.getPrelude() && current_player.getPreludes().size() == 0) {
+                } else if (game.modifiers.getPrelude() && current_player.getPlayedPreludes()) {
                     ((InGameUI) context).playPreludes();
-                } else {
-                    syncGenerationChange(context);
                 }
             }
 
@@ -300,7 +315,8 @@ public class GameController
                 EventScheduler.addEvent(new PromptEvent(current_player.getName() + ", please draw 10 cards."));
 
             } else {
-                game.getDeck().get("Round start draw").onPlay(current_player, context);
+                EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, true)));
+                game.getDeck().get("Round start draw").initializePlayEvents(current_player, context);
             }
 
         // First actions declared by corporation cards
@@ -332,14 +348,18 @@ public class GameController
 
         queue.clear();
         queue.addAll(players);
+        System.out.println(queue.toString());
 
-        while(current_starter != queue.getFirst())
+        if (generation > 0) {
+            Log.i("GameController", "Assigning new turn order for generation " + (generation + 1));
+            while (current_starter != queue.getFirst())
+                queue.addLast(queue.removeFirst());
             queue.addLast(queue.removeFirst());
-        queue.addLast(queue.removeFirst());
 
-        current_starter = queue.getFirst();
+            current_starter = queue.getFirst();
+            ((InGameUI) context).generationEndPrompt();
+        }
         current_player = current_starter;
-        ((InGameUI)context).generationEndPrompt();
 
         game.onGenerationEnd(context);
     }

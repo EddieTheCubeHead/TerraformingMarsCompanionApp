@@ -16,7 +16,7 @@ public final class EarthOffice extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEarthTagDiscount(3);
+        player.getModifiers().setEarthTagDiscount(player.getModifiers().getEarthTagDiscount() + 3);
         super.playWithMetadata(player, data);
     }
 }

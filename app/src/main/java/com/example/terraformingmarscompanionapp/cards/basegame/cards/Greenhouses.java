@@ -17,7 +17,8 @@ public final class Greenhouses extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(owner_game.getCitiesInSpace() + owner_game.getCitiesOnMars());
+        Integer city_count = owner_game.getCitiesInSpace() + owner_game.getCitiesOnMars();
+        player.getResources().setPlants(player.getResources().getPlants() + city_count);
         super.playWithMetadata(player, data);
     }
 }

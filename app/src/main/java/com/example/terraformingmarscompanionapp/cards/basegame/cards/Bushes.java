@@ -18,7 +18,7 @@ public final class Bushes extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setPlantsProduction(2);
-        player.changePlants(2);
+        player.getResources().setPlants(player.getResources().getPlants() + 2);
         super.playWithMetadata(player, data);
     }
 }

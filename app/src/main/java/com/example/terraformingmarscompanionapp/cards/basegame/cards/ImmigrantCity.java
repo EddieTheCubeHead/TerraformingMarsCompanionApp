@@ -8,6 +8,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
@@ -20,18 +21,19 @@ public final class ImmigrantCity extends Card implements EffectCard {
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
         requirements.setMinEnergyProduction(1);
+        requirements.setMinMoneyProduction(-4);
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
-        defaultEvents(player);
+    public void initializePlayEvents(Player player, Context context) {
+        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new TileEvent(Placeable.CITY, owner_game));
         EventScheduler.playNextEvent(context);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        production_box.setMoneyProduction(-2);
+        production_box.setMoneyProduction(-1);
         production_box.setEnergyProduction(-1);
         super.playWithMetadata(player, data);
     }
@@ -41,6 +43,6 @@ public final class ImmigrantCity extends Card implements EffectCard {
         if (owner_player == null) {
             return;
         }
-        owner_player.changeMoneyProduction(1);
+        owner_player.getResources().setMoneyProduction(owner_player.getResources().getMoneyProduction() + 1);
     }
 }

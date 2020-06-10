@@ -23,7 +23,7 @@ public final class StandardTechnology extends Card implements EffectCard {
         }
 
         if (owner_player == player) {
-            player.changeMoney(3);
+            player.getResources().setMoney(player.getResources().getMoney() + 3);
         }
     }
 }

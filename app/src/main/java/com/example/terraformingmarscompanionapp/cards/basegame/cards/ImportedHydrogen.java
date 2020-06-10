@@ -30,7 +30,7 @@ public final class ImportedHydrogen extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x3)", "Microbes (x3)", "Animals (x2)")), this, ChoiceDialog.USE_CASE.GENERAL));
@@ -52,7 +52,7 @@ public final class ImportedHydrogen extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data == 0) {
-            player.changePlants(3);
+            player.getResources().setPlants(player.getResources().getPlants() + 3);
         }
         super.finishPlay(player);
     }

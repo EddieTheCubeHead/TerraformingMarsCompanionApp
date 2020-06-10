@@ -7,6 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class UndergroundDetonation extends Card implements ActionCard {
     public UndergroundDetonation(Game game) {
@@ -18,14 +19,14 @@ public final class UndergroundDetonation extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeMoney(-10);
-        owner_player.changeHeatProduction(2);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() - 10);
+        owner_player.getResources().setHeatProduction(owner_player.getResources().getHeatProduction() + 2);
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
@@ -41,6 +42,6 @@ public final class UndergroundDetonation extends Card implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || (owner_player.getMoney() < 10));
+        return (action_used || (owner_player.getResources().getMoney() < 10));
     }
 }

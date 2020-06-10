@@ -13,7 +13,7 @@ public final class BeginnerCorporation extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(42);
+        player.getResources().setMoney(42);
         super.playWithMetadata(player, data);
     }
 }

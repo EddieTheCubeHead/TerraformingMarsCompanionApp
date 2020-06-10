@@ -136,21 +136,27 @@ public class Tile {
             for (PlacementBonus bonus : placement_bonuses) {
                 switch (bonus) {
                     case STEEL:
-                        player.changeSteel(1);
+                        player.getResources().setSteel(player.getResources().getSteel() + 1);
                         break;
+
                     case TITANIUM:
-                        player.changeTitanium(1);
+                        player.getResources().setTitanium(player.getResources().getTitanium() + 1);
                         break;
+
                     case PLANT:
-                        player.changePlants(1);
+                        player.getResources().setPlants(player.getResources().getPlants() + 1);
                         break;
+
                     case HEAT:
-                        player.changeHeat(1);
+                        player.getResources().setHeat(player.getResources().getHeat() + 1);
                         break;
+
                     case OCEAN:
-                        if (player.changeMoney(-6)) {
+                        if (player.getResources().getMoney() < 6) {
+                            player.getResources().setMoney(player.getResources().getMoney() - 6);
                             game.tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN, context);
                         }
+
                     case CARD:
                         EventScheduler.addEvent(new PromptEvent("Please draw a card"));
                         player.changeHandSize(1);
@@ -159,12 +165,13 @@ public class Tile {
             if (placement_bonuses.contains(PlacementBonus.STEEL)) {
                 game.update_manager.onPlacementBonus(player);
                 if (hex_type == Placeable.MINING_AREA || hex_type == Placeable.MINING_RIGHTS) {
-                    player.changeSteelProduction(1);
+                    player.getResources().setSteelProduction(player.getResources().getSteelProduction() + 1);
                 }
+
             } else if (placement_bonuses.contains(PlacementBonus.TITANIUM)) {
                 game.update_manager.onPlacementBonus(player);
                 if (hex_type == Placeable.MINING_AREA || hex_type == Placeable.MINING_RIGHTS) {
-                    player.changeTitaniumProduction(1);
+                    player.getResources().setTitaniumProduction(player.getResources().getTitaniumProduction() + 1);
                 }
             }
         }

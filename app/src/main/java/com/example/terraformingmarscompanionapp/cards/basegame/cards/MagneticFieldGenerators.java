@@ -19,7 +19,7 @@ public final class MagneticFieldGenerators extends Card {
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(-4);
         production_box.setPlantsProduction(2);
-        player.changeTerraformingRating(3);
+        player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + 3);
         super.playWithMetadata(player, data);
     }
 }

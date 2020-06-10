@@ -27,7 +27,7 @@ public final class LocalHeatTrapping extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x4)", "Animals (x2)")), this, ChoiceDialog.USE_CASE.GENERAL));
@@ -44,9 +44,9 @@ public final class LocalHeatTrapping extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeHeat(-5);
+        player.getResources().setHeat(player.getResources().getHeat() - 5);
         if (data == 0) {
-            player.changePlants(4);
+            player.getResources().setPlants(player.getResources().getPlants() + 4);
         }
         super.playWithMetadata(player, data);
     }

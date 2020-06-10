@@ -20,7 +20,7 @@ public final class NoctisFarming extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setMoneyProduction(1);
-        player.changePlants(2);
+        player.getResources().setPlants(player.getResources().getPlants() + 2);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

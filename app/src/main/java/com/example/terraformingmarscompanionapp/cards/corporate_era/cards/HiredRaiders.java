@@ -26,7 +26,7 @@ public final class HiredRaiders extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resource to steal:",
                 new ArrayList<>(Arrays.asList("Steel (x2)", "Money (x3)")), this, ChoiceDialog.USE_CASE.GENERAL));
@@ -60,15 +60,18 @@ public final class HiredRaiders extends Card {
         Player target;
         if (data > 0 && data < 6) {
             target = GameController.getPlayer(data);
-            steal_amount = target.getSteel() > 2 ? 2 : target.getSteel();
-            target.takeSteel(steal_amount);
-            player.changeSteel(steal_amount);
+            steal_amount = target.getResources().getSteel() > 2 ? 2 : target.getResources().getSteel();
+
+            target.getResources().setSteel(target.getResources().getSteel() - steal_amount);
+            player.getResources().setSteel(player.getResources().getSteel() + steal_amount);
+
         } else if (data >= 6) {
             data -= 5;
             target = GameController.getPlayer(data);
-            steal_amount = target.getMoney() > 3 ? 3 : target.getMoney();
-            target.takeMoney(steal_amount);
-            player.changeMoney(steal_amount);
+            steal_amount = target.getResources().getMoney() > 3 ? 3 : target.getResources().getMoney();
+
+            target.getResources().setMoney(target.getResources().getMoney() - steal_amount);
+            player.getResources().setMoney(player.getResources().getMoney() + steal_amount);
         }
         super.playWithMetadata(player, data);
     }

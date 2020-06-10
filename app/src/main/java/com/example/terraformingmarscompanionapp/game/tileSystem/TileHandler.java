@@ -343,7 +343,7 @@ public class TileHandler {
         } else if (to_ocean.contains(tile_type)) {
             tile_type = Placeable.OCEAN;
             game.placeOcean();
-            player.changeTerraformingRating(1);
+            player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + 1);
             game.update_manager.onOceanPlaced(player);
         } else if (to_greenery.contains(tile_type)) {
             tile_type = Placeable.GREENERY;
@@ -358,7 +358,7 @@ public class TileHandler {
         for (Tile neighbour : getNeighbours(target_tile)) {
             if (neighbour != null) {
                 if (neighbour.getPlacedHex() != null && neighbour.getPlacedHex() == Placeable.OCEAN) {
-                    player.changeMoney(2 + player.getOceanAdjacencyBonusModifier());
+                    player.getResources().setMoney(player.getResources().getMoney() + 2 + player.getModifiers().getOceanAdjacencyBonusModifier());
                 }
             }
         }

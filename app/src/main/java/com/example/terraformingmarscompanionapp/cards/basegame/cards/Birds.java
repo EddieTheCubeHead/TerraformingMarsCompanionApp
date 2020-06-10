@@ -25,8 +25,7 @@ public final class Birds extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
         EventScheduler.playNextEvent(context);
     }
@@ -58,7 +57,8 @@ public final class Birds extends ResourceCard implements ActionCard {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount);
+        victory_points = resource_amount;
+        super.onGameEnd();
     }
 
     @Override

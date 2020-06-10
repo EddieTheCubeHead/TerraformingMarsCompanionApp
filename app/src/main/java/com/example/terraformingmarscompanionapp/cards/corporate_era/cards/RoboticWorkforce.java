@@ -20,7 +20,7 @@ public final class RoboticWorkforce extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
 
     }
 

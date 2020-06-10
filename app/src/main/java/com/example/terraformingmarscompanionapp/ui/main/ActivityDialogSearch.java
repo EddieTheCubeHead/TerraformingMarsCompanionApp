@@ -116,7 +116,7 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
                 }
 
                 if (card instanceof ResourceCard) {
-                    if (card.getOwner().getOrganicsProtected() && organics.contains(type)) {
+                    if (card.getOwner().getModifiers().getOrganicsProtected() && organics.contains(type)) {
                         if (amount < 0 && card.getOwner().getName() != player) {
                             continue;
                         }
@@ -125,6 +125,8 @@ public class ActivityDialogSearch extends AppCompatActivity implements RecyclerA
                     if (((ResourceCard) card).getResourceType().equals(type)) {
                         card_list.add(card);
                     } else if (((ResourceCard) card).getResourceType() == ResourceCard.ResourceType.PET && type == ResourceCard.ResourceType.ANIMAL) {
+                        card_list.add(card);
+                    } else if (type.equals(ResourceCard.ResourceType.EXISTING) && ((ResourceCard) card).getResourceAmount() > 0) {
                         card_list.add(card);
                     } else {
                         System.out.println(((ResourceCard) card).getResourceType() + " : " + type);

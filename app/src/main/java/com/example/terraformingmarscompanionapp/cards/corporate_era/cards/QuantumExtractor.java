@@ -19,7 +19,7 @@ public final class QuantumExtractor extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(4);
-        player.changeSpaceTagDiscount(2);
+        player.getModifiers().setSpaceTagDiscount(player.getModifiers().getSpaceTagDiscount() + 2);
         super.playWithMetadata(player, data);
     }
 }

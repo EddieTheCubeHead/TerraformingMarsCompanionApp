@@ -50,7 +50,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         if (data != 0) {
-            owner_player.changePlants(1);
+            owner_player.getResources().setPlants(owner_player.getResources().getPlants() + 1);
         }
         EventScheduler.playNextEvent(GameController.getContext());
     }

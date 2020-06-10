@@ -20,7 +20,8 @@ public final class IndenturnedWorkers extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.setNextCardDiscount(8);
+
+        player.getModifiers().setNextCardDiscount(8);
         super.playWithMetadata(player, data);
     }
 }

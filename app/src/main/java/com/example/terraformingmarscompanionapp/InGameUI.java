@@ -26,6 +26,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
@@ -199,12 +200,12 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
 
         view.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-            //setting corporation
-            ((Card) spinner.getSelectedItem()).onPlay(self, self_context);
-
-            dialog.dismiss();
+            public void onClick(View v) {
+                //setting corporation
+                EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, game.modifiers.getPrelude())));
+                ((Card) spinner.getSelectedItem()).initializePlayEvents(self, self_context);
+                EventScheduler.playNextEvent(self_context);
+                dialog.dismiss();
             }
         });
     }
@@ -267,6 +268,9 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
 
         title.setText("Choose " + player_string + " preludes.");
 
+        //Quickly store context to use inside spinner
+        Context self_context = this;
+
         view.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
             private int player_index = 0;
 
@@ -284,9 +288,12 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
                     return;
                 }
 
-                //setting preludes
-                self.addPrelude((Card) spinner1.getSelectedItem());
-                self.addPrelude((Card) spinner2.getSelectedItem());
+                EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, false)));
+                prelude1.initializePlayEvents(GameController.getCurrentPlayer(), self_context);
+                prelude2.initializePlayEvents(GameController.getCurrentPlayer(), self_context);
+                EventScheduler.playNextEvent(self_context);
+
+                GameController.getCurrentPlayer().setPlayedPreludes(true);
 
                 //to the next player
                 spinner1.setSelection(0);

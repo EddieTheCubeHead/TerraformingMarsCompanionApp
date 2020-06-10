@@ -23,7 +23,7 @@ public final class Flooding extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new TileEvent(Placeable.FLOOD_OCEAN, owner_game));
         EventScheduler.playNextEvent(context);
@@ -32,7 +32,8 @@ public final class Flooding extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (!(data == 0)) {
-            GameController.getPlayer(data).takeMoney(4);
+            Player target = GameController.getPlayer(data);
+            target.getResources().setMoney(target.getResources().getMoney() - 4);
         }
     }
 }

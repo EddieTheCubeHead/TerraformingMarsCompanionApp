@@ -16,10 +16,11 @@ public final class CloudSeeding extends Card {
         name = "Cloud seeding";
         price = 11;
         requirements.setMinOceans(3);
+        requirements.setMinMoneyProduction(-4);
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
         EventScheduler.playNextEvent(context);

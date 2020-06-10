@@ -14,8 +14,8 @@ public final class Loan extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(-2);
-        player.changeMoney(30);
+        player.getResources().setMoneyProduction(player.getResources().getMoneyProduction() - 2);
+        player.getResources().setMoney(player.getResources().getMoney() + 30);
         super.playWithMetadata(player, data);
     }
 }

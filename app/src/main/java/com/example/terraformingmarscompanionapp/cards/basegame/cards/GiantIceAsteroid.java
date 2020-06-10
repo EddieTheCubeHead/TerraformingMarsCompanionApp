@@ -24,7 +24,7 @@ public final class GiantIceAsteroid extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
@@ -35,7 +35,8 @@ public final class GiantIceAsteroid extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data != 0) {
-            GameController.getPlayer(data).takePlants(6);
+            Player target = GameController.getPlayer(data);
+            target.getResources().setPlants(target.getResources().getPlants() - 6);
         }
         owner_game.raiseTemperature(player);
         owner_game.raiseTemperature(player);

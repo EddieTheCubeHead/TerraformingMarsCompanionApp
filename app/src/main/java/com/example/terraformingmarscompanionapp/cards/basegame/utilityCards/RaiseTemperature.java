@@ -14,7 +14,7 @@ public final class RaiseTemperature extends CardlikeOperation {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.raiseTemperature(player);
-        player.changeHeat(-8);
+        player.getResources().setHeat(player.getResources().getHeat() - 8);
         super.playWithMetadata(player, data);
     }
 }

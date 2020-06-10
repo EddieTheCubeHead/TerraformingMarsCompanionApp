@@ -15,7 +15,7 @@ public final class StandardPowerPlant extends StandardProject {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeEnergyProduction(1);
+        player.getResources().setEnergyProduction(player.getResources().getEnergyProduction() + 1);
         super.playWithMetadata(player, data);
     }
 }

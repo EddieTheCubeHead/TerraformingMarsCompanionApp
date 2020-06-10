@@ -24,10 +24,9 @@ public final class ArtificialPhotosynthesis extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         ArrayList<String> choices = new ArrayList<>(Arrays.asList("Plants (x1)", "Energy (x2)"));
 
-        EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose which production to raise:", choices, this, ChoiceDialog.USE_CASE.GENERAL));
         EventScheduler.playNextEvent(context);
     }

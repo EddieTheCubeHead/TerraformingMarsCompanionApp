@@ -17,13 +17,13 @@ public final class Insects extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        production_box.setPlantsProduction(player.getPlantTags());
+        production_box.setPlantsProduction(player.getTags().getPlantTags());
         super.playWithMetadata(player, data);
     }
 
     @Override
     public void playProductionBox() {
-        production_box.setPlantsProduction(owner_player.getPlantTags());
+        production_box.setPlantsProduction(owner_player.getTags().getPlantTags());
         super.playProductionBox();
     }
 }

@@ -32,7 +32,6 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
 
     @Override
     public void cardAction() {
-        EventScheduler.addEvent(new ActionUseEvent());
         if (resource_amount < 3) {
             onPlayServerHook(owner_player, 0);
             return;
@@ -47,7 +46,7 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
             resource_amount++;
         } else {
             resource_amount -= 3;
-            owner_player.changeTerraformingRating(1);
+            owner_player.getResources().setTerraformingRating(owner_player.getResources().getTerraformingRating() + 1);
         }
         EventScheduler.playNextEvent(GameController.getContext());
     }

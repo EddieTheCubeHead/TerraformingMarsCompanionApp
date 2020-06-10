@@ -15,8 +15,8 @@ public final class Teractor extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(60);
-        player.changeEarthTagDiscount(3);
+        player.getResources().setMoney(60);
+        player.getModifiers().setEarthTagDiscount(3);
         super.playWithMetadata(player, data);
     }
 }

@@ -13,6 +13,7 @@ public final class PeroxidePower extends Card {
         price = 7;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
+        requirements.setMinMoneyProduction(-1);
     }
 
     @Override

@@ -13,6 +13,7 @@ public final class NuclearPower extends Card {
         price = 10;
         tags.add(Tag.ENERGY);
         tags.add(Tag.BUILDING);
+        requirements.setMinMoneyProduction(-2);
     }
 
     @Override

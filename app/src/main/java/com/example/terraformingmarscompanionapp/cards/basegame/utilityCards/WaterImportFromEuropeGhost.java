@@ -19,7 +19,7 @@ public final class WaterImportFromEuropeGhost extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.playNextEvent(context);
     }

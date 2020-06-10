@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,6 +117,8 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
                 System.out.println(((ActionCard) card).getActionValidity());
                 Toast.makeText(getContext(), String.format("Action '%s' not usable.\nInsufficient requirements or already used", action_name), Toast.LENGTH_SHORT).show();
             } else {
+                // TODO event to handle UI better?
+                EventScheduler.addEvent(new ActionUseEvent());
                 ((ActionCard) card).cardAction();
                 Toast.makeText(getContext(), String.format("Action '%s' used", action_name), Toast.LENGTH_SHORT).show();
             }

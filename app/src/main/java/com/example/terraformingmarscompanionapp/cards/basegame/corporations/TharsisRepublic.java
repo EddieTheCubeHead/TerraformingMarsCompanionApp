@@ -27,14 +27,14 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
     public void playWithMetadata(Player player, Integer data) {
         EventScheduler.addEvent(new PlayCardEvent(owner_game.getGhosts().get("Tharsis republic ghost"), player, 0));
 
-        player.changeMoney(40);
+        player.getResources().setMoney(40);
         super.playWithMetadata(player, data);
     }
 
     @Override
     public void cardEffect(Player player) {
         if (owner_player != null && owner_player == player) {
-            owner_player.changeMoney(3);
+            owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 3);
         }
     }
 

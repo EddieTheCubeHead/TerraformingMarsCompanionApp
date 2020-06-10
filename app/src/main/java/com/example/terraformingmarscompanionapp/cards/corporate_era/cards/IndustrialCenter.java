@@ -9,6 +9,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.TileEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
@@ -23,8 +24,8 @@ public final class IndustrialCenter extends Card implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
-        defaultEvents(player);
+    public void initializePlayEvents(Player player, Context context) {
+        EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.addEvent(new TileEvent(Placeable.INDUSTRIAL_CENTER, owner_game));
         EventScheduler.playNextEvent(context);
     }
@@ -36,8 +37,8 @@ public final class IndustrialCenter extends Card implements ActionCard {
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeMoney(-7);
-        owner_player.changeSteelProduction(1);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() - 7);
+        owner_player.getResources().setSteelProduction(owner_player.getResources().getSteelProduction() + 1);
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
@@ -48,7 +49,7 @@ public final class IndustrialCenter extends Card implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return !action_used && owner_player.getMoney() >= 7;
+        return !action_used && owner_player.getResources().getMoney() >= 7;
     }
 
     @Override

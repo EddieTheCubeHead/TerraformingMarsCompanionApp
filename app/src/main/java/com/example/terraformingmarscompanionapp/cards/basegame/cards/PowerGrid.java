@@ -16,13 +16,13 @@ public final class PowerGrid extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        production_box.setEnergyProduction(player.getEnergyTags());
+        production_box.setEnergyProduction(player.getTags().getEnergyTags());
         super.playWithMetadata(player, data);
     }
 
     @Override
     public void playProductionBox() {
-        production_box.setEnergyProduction(owner_player.getEnergyTags());
+        production_box.setEnergyProduction(owner_player.getTags().getEnergyTags());
         super.playProductionBox();
     }
 }

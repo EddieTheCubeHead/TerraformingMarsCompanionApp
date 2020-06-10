@@ -22,7 +22,7 @@ public final class OptimalAerobraking extends Card implements EffectCard {
         } else if (owner_player != player){
             return;
         }
-        owner_player.changeMoney(3);
-        owner_player.changeHeat(3);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 3);
+        owner_player.getResources().setHeat(owner_player.getResources().getHeat() + 3);
     }
 }

@@ -17,7 +17,7 @@ public final class TharsisRepublicGhost extends Card implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.playNextEvent(context);
     }
@@ -28,6 +28,6 @@ public final class TharsisRepublicGhost extends Card implements EffectCard {
             return;
         }
 
-        owner_player.changeMoneyProduction(1);
+        owner_player.getResources().setMoneyProduction(owner_player.getResources().getMoneyProduction() + 1);
     }
 }

@@ -24,6 +24,7 @@ public final class ImmigrationShuttles extends Card {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints((owner_game.getCitiesOnMars() + owner_game.getCitiesInSpace())/3);
+        victory_points = (owner_game.getCitiesInSpace() + owner_game.getCitiesOnMars()) / 3;
+        super.onGameEnd();
     }
 }

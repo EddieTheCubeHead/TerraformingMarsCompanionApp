@@ -19,7 +19,7 @@ public final class SolarWindPower extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(1);
-        player.changeTitanium(2);
+        player.getResources().setTitanium(player.getResources().getTitanium() + 2);
         super.playWithMetadata(player, data);
     }
 }

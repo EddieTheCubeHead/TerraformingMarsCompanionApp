@@ -13,6 +13,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
@@ -32,7 +33,7 @@ public final class RegolithEaters extends ResourceCard implements ActionCard {
     @Override
     public void cardAction() {
         if (resource_amount < 2) {
-            defaultEvents(owner_player);
+            EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
             EventScheduler.playNextEvent(GameController.getContext());
             return;
         }

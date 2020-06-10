@@ -25,7 +25,7 @@ public final class Fish extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
         EventScheduler.playNextEvent(context);
@@ -51,7 +51,8 @@ public final class Fish extends ResourceCard implements ActionCard {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount);
+        victory_points = resource_amount;
+        super.onGameEnd();
     }
 
     @Override

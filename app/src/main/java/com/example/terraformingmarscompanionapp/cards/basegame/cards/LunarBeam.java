@@ -13,6 +13,7 @@ public final class LunarBeam extends Card {
         price = 13;
         tags.add(Tag.EARTH);
         tags.add(Tag.ENERGY);
+        requirements.setMinMoneyProduction(-3);
     }
 
     @Override

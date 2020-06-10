@@ -33,7 +33,8 @@ public final class Pets extends ResourceCard implements EffectCard {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount/2);
+        victory_points = resource_amount / 2;
+        super.onGameEnd();
     }
 
 }

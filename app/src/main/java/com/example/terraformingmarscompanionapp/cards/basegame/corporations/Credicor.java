@@ -15,14 +15,14 @@ public final class Credicor extends Card implements EffectCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(57);
+        player.getResources().setMoney(57);
         super.playWithMetadata(player, data);
     }
 
     @Override
     public void cardEffect(Player player) {
         if (owner_player != null && owner_player == player) {
-            player.changeMoney(4);
+            player.getResources().setMoney(player.getResources().getMoney() + 4);
         }
     }
 }

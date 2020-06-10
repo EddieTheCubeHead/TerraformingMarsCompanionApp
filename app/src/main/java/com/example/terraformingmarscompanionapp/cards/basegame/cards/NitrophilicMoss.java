@@ -18,7 +18,7 @@ public final class NitrophilicMoss extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(-2);
+        player.getResources().setPlants(player.getResources().getPlants() - 2);
         production_box.setPlantsProduction(2);
         super.playWithMetadata(player, data);
     }

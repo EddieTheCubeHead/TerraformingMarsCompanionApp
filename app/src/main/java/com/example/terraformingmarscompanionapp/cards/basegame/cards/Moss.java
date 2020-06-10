@@ -19,7 +19,7 @@ public final class Moss extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changePlants(-1);
+        player.getResources().setPlants(player.getResources().getPlants() - 1);
         production_box.setPlantsProduction(1);
         super.playWithMetadata(player, data);
     }

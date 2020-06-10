@@ -24,8 +24,7 @@ public final class Comet extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent());
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
         EventScheduler.playNextEvent(context);
@@ -35,7 +34,8 @@ public final class Comet extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data != 0) {
-            GameController.getPlayer(data).takePlants(3);
+            Player target = GameController.getPlayer(data);
+            target.getResources().setPlants(target.getResources().getPlants() - 3);
         }
         owner_game.raiseTemperature(player);
     }

@@ -646,9 +646,11 @@ public class Game {
 
         if (requirements.getMinFloaters() != null) {
             int floaters = 0;
-            for (ResourceCard resource_card : player.getResourceHolders()) {
-                if (resource_card.getResourceType() == ResourceCard.ResourceType.FLOATER) {
-                    floaters += resource_card.getResourceAmount();
+            for (Card resource_card : all_cards.values()) {
+                if (resource_card instanceof ResourceCard && resource_card.getOwner() == player) {
+                    if (((ResourceCard) resource_card).getResourceType() == ResourceCard.ResourceType.FLOATER) {
+                        floaters += ((ResourceCard) resource_card).getResourceAmount();
+                    }
                 }
             }
             if (floaters < requirements.getMinFloaters()) {
@@ -835,8 +837,10 @@ public class Game {
             GameActions.sendCardCost(resources_to_use);
         }
 
+        // TODO event to handle UI better?
         EventScheduler.addEvent(new ActionUseEvent());
-        card.onPlay(player, context);
+        card.initializePlayEvents(player, context);
+        EventScheduler.playNextEvent(context);
     }
 
     /**
@@ -852,6 +856,7 @@ public class Game {
         }
         for (Player player : GameController.getPlayers()) {
             player.getResources().addProduction();
+            player.setDrewCardsThisGen(false);
         }
 
         GameController.syncGenerationChange(context);

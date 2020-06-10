@@ -19,7 +19,7 @@ public final class MagneticDomeField extends Card {
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(-2);
         production_box.setPlantsProduction(1);
-        player.changeTerraformingRating(1);
+        player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + 1);
         super.playWithMetadata(player, data);
     }
 }

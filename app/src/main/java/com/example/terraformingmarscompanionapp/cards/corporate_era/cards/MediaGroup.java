@@ -22,6 +22,6 @@ public final class MediaGroup extends Card implements EffectCard {
         } else if (owner_player != player){
             return;
         }
-        owner_player.changeMoney(3);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 3);
     }
 }

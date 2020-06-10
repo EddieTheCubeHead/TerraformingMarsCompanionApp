@@ -30,7 +30,6 @@ public final class Ants extends ResourceCard implements ActionCard {
 
     @Override
     public void cardAction() {
-        EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.addEvent(new ResourceEvent(ResourceType.MICROBE, owner_player, -1));
         EventScheduler.playNextEvent(GameController.getContext());
@@ -49,7 +48,8 @@ public final class Ants extends ResourceCard implements ActionCard {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount/2);
+        victory_points = resource_amount / 2;
+        super.onGameEnd();
     }
 
     @Override

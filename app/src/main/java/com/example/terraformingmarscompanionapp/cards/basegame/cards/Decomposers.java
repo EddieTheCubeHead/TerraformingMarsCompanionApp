@@ -32,6 +32,7 @@ public final class Decomposers extends ResourceCard implements EffectCard {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount/3);
+        victory_points = resource_amount/3;
+        super.onGameEnd();
     }
 }

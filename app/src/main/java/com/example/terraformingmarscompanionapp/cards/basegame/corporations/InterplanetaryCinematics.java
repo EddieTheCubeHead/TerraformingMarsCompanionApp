@@ -16,8 +16,8 @@ public final class InterplanetaryCinematics extends Card implements EffectCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeSteel(20);
-        player.changeMoney(30);
+        player.getResources().setSteel(20);
+        player.getResources().setMoney(30);
         super.playWithMetadata(player, data);
     }
 
@@ -26,6 +26,6 @@ public final class InterplanetaryCinematics extends Card implements EffectCard {
         if (owner_player == null | owner_player != player) {
             return;
         }
-        owner_player.changeMoney(2);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 2);
     }
 }

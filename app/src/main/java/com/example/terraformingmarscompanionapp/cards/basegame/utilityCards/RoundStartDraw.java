@@ -19,8 +19,7 @@ public final class RoundStartDraw extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
-        EventScheduler.addEvent(new ActionUseEvent(new ActionUsePacket(true, true)));
+    public void initializePlayEvents(Player player, Context context) {
 
         //Setting the varying parameters of the draw
         String draw_message;
@@ -41,7 +40,7 @@ public final class RoundStartDraw extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.changeHandSize(data);
-        player.takeMoney(data * (3 + player.getCardBuyCostModifier()));
+        player.getResources().setMoney(player.getResources().getMoney() - (data * (3 + player.getModifiers().getCardResearchCostModifier())));
         super.playWithMetadata(player, data);
     }
 }

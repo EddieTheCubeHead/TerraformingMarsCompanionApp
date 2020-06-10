@@ -26,6 +26,7 @@ public final class GanymedeColony extends Card {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(owner_player.getJovianTags());
+        victory_points = owner_player.getTags().getJovianTags();
+        super.onGameEnd();
     }
 }

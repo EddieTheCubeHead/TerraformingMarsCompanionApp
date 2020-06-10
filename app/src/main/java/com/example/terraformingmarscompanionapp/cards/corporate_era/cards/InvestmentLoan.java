@@ -14,12 +14,13 @@ public final class InvestmentLoan extends Card {
         tags.add(Tag.EARTH);
         tags.add(Tag.EVENT);
         owner_game = game;
+        requirements.setMinMoneyProduction(-4);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoneyProduction(-1);
-        player.changeMoney(10);
+        player.getResources().setMoneyProduction(player.getResources().getMoneyProduction() - 1);
+        player.getResources().setMoney(player.getResources().getMoney() + 10);
         super.playWithMetadata(player, data);
     }
 }

@@ -21,7 +21,7 @@ public final class MedicalLab extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.changeMoneyProduction(player.getBuildingTags()/2);
+        player.getResources().setMoneyProduction(player.getResources().getMoney() + player.getTags().getBuildingTags()/2);
         super.playWithMetadata(player, data);
     }
 }

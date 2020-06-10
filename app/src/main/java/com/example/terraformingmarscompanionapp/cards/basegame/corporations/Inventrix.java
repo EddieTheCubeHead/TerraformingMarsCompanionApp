@@ -22,8 +22,8 @@ public final class Inventrix extends Card implements FirstAction {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(45);
-        player.changeBaseTrRequirementDiscount(2);
+        player.getResources().setMoney(45);
+        player.getModifiers().setBaseTrRequirementDiscount(2);
 
         player.changeHandSize(3);
         super.playWithMetadata(player, data);

@@ -7,6 +7,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
+import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
@@ -22,6 +24,7 @@ public final class BusinessNetwork extends Card implements ActionCard {
         price = 4;
         tags.add(Tag.EARTH);
         owner_game = game;
+        requirements.setMinMoneyProduction(-4);
     }
 
     @Override
@@ -33,7 +36,12 @@ public final class BusinessNetwork extends Card implements ActionCard {
     @Override
     public void cardAction() {
         EventScheduler.addEvent(new ActionUseEvent());
-        EventScheduler.addEvent(new MetadataChoiceEvent("Did you buy the card?", new ArrayList<>(Arrays.asList("Yes", "No")), this, ChoiceDialog.USE_CASE.GENERAL));
+        if (owner_player.getResources().getMoney() >= owner_player.getModifiers().getCardResearchCostModifier() + 3) {
+            EventScheduler.addEvent(new MetadataChoiceEvent("Did you buy the card?", new ArrayList<>(Arrays.asList("Yes", "No")), this, ChoiceDialog.USE_CASE.GENERAL));
+        } else {
+            EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
+            EventScheduler.addEvent(new PromptEvent("Not enough money to buy the card. Action used to look at a card."));
+        }
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
@@ -42,7 +50,7 @@ public final class BusinessNetwork extends Card implements ActionCard {
         if (data == 0) {
             return;
         }
-        owner_player.changeMoney(3 + owner_player.getCardBuyCostModifier());
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() - (3 + owner_player.getModifiers().getCardResearchCostModifier()));
         owner_player.changeHandSize(1);
         EventScheduler.playNextEvent(GameController.getContext());
     }

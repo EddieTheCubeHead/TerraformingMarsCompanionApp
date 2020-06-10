@@ -7,6 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class Steelworks extends Card implements ActionCard {
     public Steelworks(Game game) {
@@ -18,14 +19,14 @@ public final class Steelworks extends Card implements ActionCard {
 
     @Override
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeSteel(2);
-        owner_player.changeEnergy(-4);
+        owner_player.getResources().setSteel(owner_player.getResources().getSteel() + 2);
+        owner_player.getResources().setEnergy(owner_player.getResources().getEnergy() - 4);
         owner_game.raiseOxygen(owner_player);
         EventScheduler.playNextEvent(GameController.getContext());
     }
@@ -42,6 +43,6 @@ public final class Steelworks extends Card implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || (owner_player.getEnergy() < 4));
+        return (action_used || (owner_player.getResources().getEnergy() < 4));
     }
 }

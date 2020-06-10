@@ -18,7 +18,7 @@ public final class HousePrinting extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeSteelProduction(1);
+        player.getResources().setSteelProduction(player.getResources().getSteelProduction() + 1);
         owner_game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }

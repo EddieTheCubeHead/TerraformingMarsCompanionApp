@@ -18,7 +18,7 @@ public final class EarthCatapult extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         owner_game.update_manager.onVpCardPlayed(player);
-        player.changeCardDiscount(2);
+        player.getModifiers().setCardDiscount(player.getModifiers().getCardDiscount() + 2);
         super.playWithMetadata(player, data);
     }
 }

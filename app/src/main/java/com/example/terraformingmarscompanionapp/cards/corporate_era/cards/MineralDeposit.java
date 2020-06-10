@@ -16,7 +16,7 @@ public final class MineralDeposit extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_player.changeSteel(5);
+        player.getResources().setSteel(player.getResources().getSteel() + 5);
         super.playWithMetadata(player, data);
     }
 }

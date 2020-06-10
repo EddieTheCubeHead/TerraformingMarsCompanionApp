@@ -42,7 +42,7 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeMoney(-1);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() - 1);
         if (data >= 0) {
             resource_amount++;
         }
@@ -57,8 +57,9 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
     @Override
     public void onGameEnd() {
         if (resource_amount > 0) {
-            owner_player.changeVictoryPoints(3);
+            victory_points = 3;
         }
+        super.onGameEnd();
     }
 
     @Override
@@ -68,6 +69,6 @@ public final class SearchForLife extends ResourceCard implements ActionCard {
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || (owner_player.getMoney() < 1));
+        return (action_used || (owner_player.getResources().getMoney() < 1));
     }
 }

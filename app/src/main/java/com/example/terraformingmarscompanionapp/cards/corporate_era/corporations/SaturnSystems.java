@@ -14,8 +14,8 @@ public final class SaturnSystems extends Card implements EffectCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(42);
-        player.changeTitaniumProduction(1);
+        player.getResources().setMoney(42);
+        player.getResources().setTitaniumProduction(1);
         super.playWithMetadata(player, data);
     }
 
@@ -25,6 +25,6 @@ public final class SaturnSystems extends Card implements EffectCard {
             return;
         }
 
-        owner_player.changeMoneyProduction(1);
+        owner_player.getResources().setMoneyProduction(owner_player.getResources().getMoneyProduction() + 1);
     }
 }

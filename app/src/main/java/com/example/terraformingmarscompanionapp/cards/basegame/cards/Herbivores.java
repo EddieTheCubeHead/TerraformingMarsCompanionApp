@@ -23,7 +23,7 @@ public final class Herbivores extends ResourceCard implements EffectCard {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
         EventScheduler.playNextEvent(context);
@@ -48,6 +48,7 @@ public final class Herbivores extends ResourceCard implements EffectCard {
 
     @Override
     public void onGameEnd() {
-        owner_player.changeVictoryPoints(resource_amount/2);
+        victory_points = resource_amount / 2;
+        super.onGameEnd();
     }
 }

@@ -19,7 +19,7 @@ public final class TerraformingGanymede extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         super.playWithMetadata(player, data);
-        player.changeTerraformingRating(player.getJovianTags());
+        player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + player.getTags().getJovianTags() + 1);
         owner_game.update_manager.onVpCardPlayed(player);
     }
 }

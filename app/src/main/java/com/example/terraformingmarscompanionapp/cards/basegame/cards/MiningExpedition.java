@@ -22,7 +22,7 @@ public final class MiningExpedition extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
         EventScheduler.playNextEvent(context);
@@ -31,9 +31,10 @@ public final class MiningExpedition extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data != 0) {
-            GameController.getPlayer(data).takePlants(2);
+            Player target = GameController.getPlayer(data);
+            target.getResources().setPlants(target.getResources().getPlants() - 2);
         }
-        player.changeSteel(2);
+        player.getResources().setSteel(player.getResources().getSteel() + 2);
         owner_game.raiseOxygen(player);
         super.playWithMetadata(player, data);
     }

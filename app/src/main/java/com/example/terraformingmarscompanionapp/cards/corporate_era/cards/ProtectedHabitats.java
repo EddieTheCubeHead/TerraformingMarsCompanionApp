@@ -15,7 +15,7 @@ public final class ProtectedHabitats extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.setOrganicsProtected(true);
+        player.getModifiers().setOrganicsProtected(true);
         super.playWithMetadata(player, data);
     }
 }

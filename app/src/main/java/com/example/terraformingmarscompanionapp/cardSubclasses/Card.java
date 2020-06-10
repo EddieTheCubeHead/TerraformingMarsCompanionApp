@@ -10,10 +10,8 @@ import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
 
 import java.util.ArrayList;
@@ -21,10 +19,10 @@ import java.util.Arrays;
 
 /**
  * The main parent class of all cards. Most actions in the game are represented as a card. The process
- * of playing a card is split into three methods, {@link #onPlay(Player, Context)}, {@link #onPlayServerHook(Player, Integer)} and
+ * of playing a card is split into three methods, {@link #initializePlayEvents(Player, Context)}, {@link #onPlayServerHook(Player, Integer)} and
  * {@link #playWithMetadata(Player, Integer)}.
  * <p></p>
- * {@link #onPlay(Player, Context)} is called when starting the playing process and it
+ * {@link #initializePlayEvents(Player, Context)} is called when starting the playing process and it
  * queues events into the static {@link EventScheduler} -class. The events then call {@link #onPlayServerHook(Player, Integer)}
  * which in turn calls {@link #playWithMetadata(Player, Integer)}.
  *
@@ -67,12 +65,13 @@ public abstract class Card {
      * card into {@link EventScheduler}. Can be overriden if the card needs custom event queueing.
      * <p></p>
      * When overriding make sure to add a call for {@link PlayCardEvent} or some form of metadata
-     * gathering event and a call for {@link EventScheduler#playNextEvent(Context)}
+     * gathering event and a call for {@link EventScheduler#playNextEvent(Context)}. Never call
+     * super.onPlay when overriding
      *
      * @param player {@link Player} playing the card. Instance of {@link Player}
      * @param context {@link Context} the UI context onPlay is called from.
      */
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
         EventScheduler.playNextEvent(context);
     }
@@ -80,7 +79,7 @@ public abstract class Card {
     /**
      * A method mainly used for sending data to the server during the playing process of the card.
      * Might need to be rewritten in some more complex cases to allow for more intricate metadata
-     * operations like chaining two decisions together. Unlike {@link #onPlay(Player, Context)}, this should always
+     * operations like chaining two decisions together. Unlike {@link #initializePlayEvents(Player, Context)}, this should always
      * call {@code super.playWithMetadata} when overriding.
      *
      * @param player {@link Player} playing the card. Instance of {@link Player}

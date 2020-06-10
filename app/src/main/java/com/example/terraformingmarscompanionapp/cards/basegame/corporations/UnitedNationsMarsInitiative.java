@@ -7,6 +7,7 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class UnitedNationsMarsInitiative extends Card implements ActionCard {
@@ -19,20 +20,20 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeMoney(40);
+        player.getResources().setMoney(40);
         super.playWithMetadata(player, data);
     }
 
     @Override
     public void cardAction() {
-        defaultEvents(owner_player);
+        EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
     @Override
     public void actionWithMetadata(Integer data) {
-        owner_player.changeMoney(-3);
-        owner_player.changeTerraformingRating(1);
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() - 3);
+        owner_player.getResources().setTerraformingRating(owner_player.getResources().getTerraformingRating() + 1);
         EventScheduler.playNextEvent(GameController.getContext());
     }
 
@@ -48,6 +49,6 @@ public final class UnitedNationsMarsInitiative extends Card implements ActionCar
 
     @Override
     public Boolean getActionValidity() {
-        return (action_used || !owner_player.getRaisedTrThisGeneration() || owner_player.getMoney() < 3);
+        return (action_used || !owner_player.getModifiers().getRaisedTrThisGeneration() || owner_player.getResources().getMoney() < 3);
     }
 }

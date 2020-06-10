@@ -35,7 +35,7 @@ public final class LargeConvoy extends Card {
     }
 
     @Override
-    public void onPlay(Player player, Context context) {
+    public void initializePlayEvents(Player player, Context context) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x5)", "Animal (x4)")), this, ChoiceDialog.USE_CASE.GENERAL));
@@ -58,7 +58,7 @@ public final class LargeConvoy extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         if (data == 0) {
-            player.changePlants(5);
+            player.getResources().setPlants(player.getResources().getPlants() + 5);
         }
         player.changeHandSize(2);
         super.playWithMetadata(player, data);

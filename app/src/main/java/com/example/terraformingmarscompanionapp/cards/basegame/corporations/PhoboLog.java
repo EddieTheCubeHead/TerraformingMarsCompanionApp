@@ -15,9 +15,9 @@ public final class PhoboLog extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        player.changeTitaniumValueModifier(1);
-        player.changeMoney(23);
-        player.changeTitanium(10);
+        player.getModifiers().setTitaniumValueModifier(1);
+        player.getResources().setMoney(23);
+        player.getResources().setTitanium(10);
         super.playWithMetadata(player, data);
     }
 }
