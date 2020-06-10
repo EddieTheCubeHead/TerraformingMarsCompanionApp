@@ -1,6 +1,4 @@
-Assignment over, let's go. Rewrite everything.
-
-The big change, in parts:
+Road to 1.0:
 
 1 (Done): Change UI queue to stack instead of queue. Move to own class (EventScheduler)
 2 (Done): EventScheduler and GameController to static
@@ -8,46 +6,35 @@ The big change, in parts:
     - Gonna probably need to do a LOT of work on hex placement. Wanna have hexes, production bonuses etc. rendered
 4 (Done): Make everything an event (in EventScheduler). Mainly includes playing cards. Combine WebSocket and Scheduler events.
     - Get rid of hacky way of implementing things like corporation choice with multiple use actions.
-        - UseAction event. Add to the bottom of the event stack, integer whether one or two actions. Clean and simple
+        - UseAction event. Add to the bottom of the event stack, data about whether to end turn or use action. Clean and simple
     - Gonna need to rewrite the cards a lot
     - WebSocketPackets and GameEvents have not been merged. Will have another look at that once UI is
       fully revamped so I know exactly how all events will function
-5: Incorporate android's string holders as card names (later everything).
-    - Gets rid of typos and is cleaner.
-6: Clean up card system. The game only needs one deck, do everything else with filtering.
-7: Clean up the Player class. Move resources to a data class with small utility functions?
-8: Finish the scoring system
+5 (Done): Implement javadoc in all game logic classes.
+6 (Done): Clean up card system. The game only needs one deck, do everything else with filtering.
+7 (Done): Clean up the Player class. Move resources to a data class with small utility functions?
+8: Implement testing for at least all cards
+    - Ideally with one click you could play all cards once
+    - Testing for other features can come later as I get more comfortable with android testing
+9/10: Finish the scoring system
+9/10: Hex UI improvement by Softgitron
+11: Implement the rest of Corporate era functionality
+12: Server functionality improvements
+13: UI revamps
+14: Anything urgent that comes up
+15: Cleanup the best I can
 
-Taking a break from the main rewrites to try and improve overall code quality:
+After 1.0, in no particular order:
 
- - Study Java comment practices/JavaDoc. Actually comment all the code properly
-   - Need to decide how to represent versions as numbers. Assignment return version cannot be 1.0,
-     it was incomplete as can be.
-     - The current vision is consider "1.0" to be the version where I would myself feel like using this
-       with the game is beneficial and include basegame and corporate era functionality
-     - Think I am just gonna call assignment return version 0.1 and the current version (27/05/2020)
-       0.2. I think 1.0 is like 6-8 branch-merge cycles away:
-        1/2: Docs, testing and cleanup (0.3)
-        1/2: Roni's hex UI rewrite (0.3)
-        3: Corporate era special case implementation (0.4)
-        4: Serverside changes, error handling, rejoining, game loading etc. (0.5)
-        5: UI revamps (0.6)
-        (6-7): For anything that comes up during the development
-        8: Finalization and cleanup (1.0)
- - Reformat at least UI classes into proper folders. Have a look at the overall folder structure as well
- - Study and implement testing the best I can.
-
-After rewrite, in no particular order:
-
- - Bigger UI revision
-    - Everything from outside the game
  - Incorporate the event changes to the server so every move can be saved for analysis later
  - Add systems that support the expansions
  - Add the expansion cards
  - Make the app able to funtion when only one player in a game uses it
     - UI needs a lot of thought, especially card resources
+ - Expand user functionality, include statistics etc. and revision not-ingame UI
  - Flavor/information texts for cards, via android string resource
 
-Some general fun ideas:
+Some general ideas for future:
 
  - Some tongue in cheek achievment system
+ - Use android localization resources for card names to prevent typos
