@@ -1,9 +1,10 @@
 # TerraformingMarsCompanionApp
 An app for helping players maintain their resources when playing the board game terraforming mars.
 
-This is an app developed as the practice assignment for our Object-Oriented Programming course. The aim of the app is not to
-replace the physical board game, but to quicken the experience as well as make resource management much more convinient and reduce
-mistakes caused by lack of attention.
+This is an app that started developed as the practice assignment for our Object-Oriented Programming course by EddieTheCubeHead, Flankmain,
+Fyllin and ilupoS and has since been continued as a hobby project by Eddie. The aim of the app is not to replace the physical board game,
+but to quicken the experience as well as make resource management much more convinient and reduce mistakes caused by lack of attention. The
+app has a server solution Eddie is developing with it. The repository can be found here: https://github.com/EddieTheCubeHead/TFMCA_server
 
 The app aims to deliver four levels of assistance depending on player preference:
 
@@ -17,12 +18,10 @@ players and managing resources on cards, but the player can play cards via a sea
 where players pass the phone around the table and basically all resource management, including player interaction, is automated while the
 highest level is up to five players connecting to a shared game via a server and getting the aforementioned benefits.
 
-At the moment of writing this readme (15/04/2020) the app is still very much in development on both the server side and the client side
-with none of the functions ready. Deadline of the assignment is 08/05/2020, but development, at least by Eddie, will continue after the
-assignment is returned.
+The current development stage of the app is "kinda functional". In theory you could play a game without any expansions while using the app
+as a helper, hotseat or via a server. There are however problems such as poor login system, no error handling in server play, bugged edge
+cases, some really poor user interfaces etc. Development at the moment is mostly about fixing poor choices made due to lack of time in the
+assignment process and slowly fixing the aforementioned probelms while doing it.
 
-At the moment the are no plans to release the app in any way or form, only share with some friends after it is ready.
-
-Note about comments and documentation: Most of the documentations, commit messages and comments are Finnish right now, because the
-course for which this project will be submitted as practice assignment is in Finnish. After the assignment is done, comments and
-documentation should get translated into english.
+To see a more clear roadmap of the planned development process check the TODO file in the main app folder 
+(/app/src/main/java/com/example/terraformingmarscompanionapp/TODO)
