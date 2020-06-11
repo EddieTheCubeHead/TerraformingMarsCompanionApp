@@ -13,16 +13,14 @@ Road to 1.0:
 5 (Done): Implement javadoc in all game logic classes.
 6 (Done): Clean up card system. The game only needs one deck, do everything else with filtering.
 7 (Done): Clean up the Player class. Move resources to a data class with small utility functions?
-8: Implement testing for at least all cards
-    - Ideally with one click you could play all cards once
-    - Testing for other features can come later as I get more comfortable with android testing
-9/10: Finish the scoring system
-9/10: Hex UI improvement by Softgitron
-11: Implement the rest of Corporate era functionality
-12: Server functionality improvements
-13: UI revamps
-14: Anything urgent that comes up
-15: Cleanup the best I can
+
+8/9: Finish the scoring system
+8/9: Hex UI improvement by Softgitron
+10: Implement the rest of Corporate era functionality
+11: Server functionality improvements
+12: UI revamps
+13: Anything urgent that comes up
+14: Cleanup the best I can
 
 After 1.0, in no particular order:
 
