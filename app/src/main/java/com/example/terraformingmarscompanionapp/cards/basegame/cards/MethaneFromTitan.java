@@ -10,7 +10,7 @@ public final class MethaneFromTitan extends Card {
     public MethaneFromTitan(Game game) {
         super(Type.GREEN, game);
         name = "Methane from titan";
-        price = 10;
+        price = 28;
         tags.add(Tag.JOVIAN);
         tags.add(Tag.SPACE);
         requirements.setMinOxygen(2);

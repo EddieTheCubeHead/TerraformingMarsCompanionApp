@@ -8,9 +8,8 @@ import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
-import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
+import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 
 public final class Ants extends ResourceCard implements ActionCard {
     public Ants(Game game) {
@@ -31,7 +30,7 @@ public final class Ants extends ResourceCard implements ActionCard {
     @Override
     public void cardAction() {
         EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
-        EventScheduler.addEvent(new ResourceEvent(ResourceType.MICROBE, owner_player, -1));
+        EventScheduler.addEvent(new ResourceChoiceEvent(ResourceType.MICROBE, owner_player, -1));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

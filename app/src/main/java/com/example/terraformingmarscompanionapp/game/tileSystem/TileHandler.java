@@ -6,8 +6,11 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.ui.main.TilePlacementActivity;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.packets.TileEventPacket;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -298,7 +301,7 @@ public class TileHandler {
     }
 
     /**
-     * a method that hooks to the tile placement UI from the {@link com.example.terraformingmarscompanionapp.game.events.TileEvent} -Event
+     * a method that hooks to the tile placement UI from the {@link TileChoiceEvent} -Event
      *
      * @param tile_type {@link Placeable} being placed
      * @param context {@link Context} UI context the event is called from
@@ -337,22 +340,14 @@ public class TileHandler {
         }
 
         if (to_city.contains(tile_type)) {
-            player.addCity();
-            game.update_manager.onCityPlaced(player, true);
             tile_type = Placeable.CITY;
+
         } else if (to_ocean.contains(tile_type)) {
             tile_type = Placeable.OCEAN;
-            game.placeOcean();
-            player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + 1);
-            game.update_manager.onOceanPlaced(player);
+
         } else if (to_greenery.contains(tile_type)) {
             tile_type = Placeable.GREENERY;
-            player.addGreenery();
-            game.raiseOxygen(player);
-            game.update_manager.onGreeneryPlaced(player);
-        } else if (tile_type.equals(Placeable.CAPITAL)) {
-            game.update_manager.onCityPlaced(player, true);
-            player.addCity();
+
         }
 
         for (Tile neighbour : getNeighbours(target_tile)) {
@@ -363,8 +358,11 @@ public class TileHandler {
             }
         }
 
-        target_tile.placeHex(player, tile_type, GameController.getContext());
-        player.addTile(target_tile);
+        TileEventPacket packet = new TileEventPacket(tile_type, GameController.getCurrentPlayer().getName(), target_tile.getX(), target_tile.getY());
+        if (GameController.getServerMultiplayer()) {
+            GameActions.sendTileEvent(packet);
+        }
+        packet.playPacket();
 
         if (flood) {
             return flood_neighbours;

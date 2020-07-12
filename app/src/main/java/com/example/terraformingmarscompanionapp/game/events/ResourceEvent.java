@@ -1,67 +1,46 @@
 package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.ui.main.ActivityResourceAddition;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
+import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.packets.ResourceEventPacket;
 
 /**
- * An implementation of {@link GameEvent} used for getting the target of a card resource change from
- * the player
+ * An implementation of {@link GameEvent} representing a game event where a variable amount
+ * of resources are added onto a specified card
  *
  * @author Eetu Asikainen
- * @version 0.2
- * @since 0.2
+ * @version 0.3
+ * @since 0.3
  */
-public final class ResourceEvent implements GameEvent {
-    private ResourceCard.ResourceType resource_type;
-    private Player player;
-    private Integer amount;
-    private Boolean own_card_only = false;
+public class ResourceEvent implements GameEvent {
+
+    private ResourceCard card;
+    private Integer change;
 
     /**
-     * Default constructor
+     * Constructor
      *
-     * @param resource_type {@link com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard.ResourceType} the type of the resource to change
-     * @param player {@link Player} that is playing the card triggering the resource change operation
-     * @param amount {@link Integer} the amount of resource to change. Can be negative to substract resources instead of adding them
-     * @param own_card_only {@link Boolean} whether the operation can only target the playing player's cards
+     * @param card {@link ResourceCard} which resources are changed
+     * @param change {@link Integer} the amount of change to the resources of the card
      */
-    public ResourceEvent(ResourceCard.ResourceType resource_type, Player player, Integer amount, Boolean own_card_only) {
-        this.resource_type = resource_type;
-        this.player = player;
-        this.amount = amount;
-        this.own_card_only = own_card_only;
-    }
-
-    /**
-     * A Quality of Life constructor for cards that can target all resource holders, not only those
-     * owned by the playing player.
-     *
-     * @param resource_type {@link com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard.ResourceType} the type of the resource to change
-     * @param player {@link Player} that is playing the card triggering the resource change operation
-     * @param amount {@link Integer} the amount of resource to change. Can be negative to substract resources instead of adding them
-     */
-    public ResourceEvent(ResourceCard.ResourceType resource_type, Player player, Integer amount) {
-        this.resource_type = resource_type;
-        this.player = player;
-        this.amount = amount;
+    public ResourceEvent(ResourceCard card, Integer change) {
+        this.card = card;
+        this.change = change;
     }
 
     @Override
     public void playEvent(Context context) {
-        Log.i("Event played", toString());
-        Intent intent = new Intent(context, ActivityResourceAddition.class);
-        intent.putExtra(ActivityResourceAddition.RESOURCE_TYPE, resource_type.toString());
-        intent.putExtra(ActivityResourceAddition.AMOUNT, amount);
-        intent.putExtra(ActivityResourceAddition.OWNER_ONLY, own_card_only);
-        intent.putExtra(ActivityResourceAddition.PLAYER_NAME, player.getName());
-        context.startActivity(intent);
+        card.changeResourceAmount(change);
+        if (GameController.getServerMultiplayer()) {
+            GameActions.sendResourceEvent(new ResourceEventPacket(card.getName(), change));
+        }
+        EventScheduler.playNextEvent(context);
     }
 
     /**
@@ -72,6 +51,6 @@ public final class ResourceEvent implements GameEvent {
     @NonNull
     @Override
     public String toString() {
-        return String.format("Resource event: resource type: %s, resource amount: %d", resource_type.toString(), amount);
+        return super.toString();
     }
 }

@@ -1,7 +1,5 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import android.content.Context;
-
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -9,9 +7,8 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
-import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
+import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public final class LocalHeatTrapping extends Card {
     @Override
     public void onPlayServerHook(Player player, Integer data) {
         if (data != 0) {
-            EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
+            EventScheduler.addEvent(new ResourceChoiceEvent(ResourceCard.ResourceType.ANIMAL, player, 2, true));
         }
         super.onPlayServerHook(player, data);
     }

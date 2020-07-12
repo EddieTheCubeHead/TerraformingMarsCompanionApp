@@ -14,7 +14,7 @@ import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacke
  * action: updating the actions used by the player.
  *
  * @author Eetu Asikainen
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
 public final class ActionUseEvent implements GameEvent {
@@ -37,7 +37,6 @@ public final class ActionUseEvent implements GameEvent {
     public ActionUseEvent() {
         this.packet = new ActionUsePacket();
     }
-
 
     @Override
     public void playEvent(Context context) {

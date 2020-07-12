@@ -1,7 +1,5 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import android.content.Context;
-
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
@@ -10,7 +8,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
-import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class Flooding extends Card {
@@ -25,7 +23,7 @@ public final class Flooding extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
-        EventScheduler.addEvent(new TileEvent(Placeable.FLOOD_OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.FLOOD_OCEAN, owner_game));
     }
 
     @Override

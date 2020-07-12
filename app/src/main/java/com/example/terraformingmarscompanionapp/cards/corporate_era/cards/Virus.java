@@ -1,7 +1,5 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import android.content.Context;
-
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -12,7 +10,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
-import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
+import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 import java.util.ArrayList;
@@ -38,7 +36,7 @@ public final class Virus extends Card {
     @Override
     public void onPlayServerHook(Player player, Integer data) {
         if (data == 0) {
-            EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, -2));
+            EventScheduler.addEvent(new ResourceChoiceEvent(ResourceCard.ResourceType.ANIMAL, player, -2));
             EventScheduler.playNextEvent(GameController.getContext());
             return;
         } else if (data == 1) {

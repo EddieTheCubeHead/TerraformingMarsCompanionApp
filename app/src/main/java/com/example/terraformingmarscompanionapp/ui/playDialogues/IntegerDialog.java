@@ -97,10 +97,9 @@ public class IntegerDialog extends AppCompatActivity {
                 Toast.makeText(context, "Number too big, maximum: " + max, Toast.LENGTH_SHORT).show();
                 return;
             }
-            card.onPlayServerHook(GameController.getCurrentPlayer(), result);
             dialog.dismiss();
             Log.i("IntegerDialog", "Dialogue dismissed and calling next event");
-            EventScheduler.playNextEvent(context);
+            card.onPlayServerHook(GameController.getCurrentPlayer(), result);
         });
     }
 }

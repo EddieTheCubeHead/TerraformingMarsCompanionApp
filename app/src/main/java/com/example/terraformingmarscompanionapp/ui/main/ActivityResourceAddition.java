@@ -20,8 +20,10 @@ import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
 import com.example.terraformingmarscompanionapp.webSocket.packets.ResourceEventPacket;
@@ -195,10 +197,7 @@ public class ActivityResourceAddition extends AppCompatActivity implements Recyc
             //TODO Robotic workforce implementation
             GameActions.sendCardEvent(new CardEventPacket("Robotic workforce", GameController.getCurrentPlayer().getName(), 0));
         } else {
-            if (GameController.getGame().getServerMultiplayer()) {
-                GameActions.sendResourceEvent(new ResourceEventPacket(card.getName(), amount));
-            }
-            ((ResourceCard)card).changeResourceAmount(amount);
+            EventScheduler.addEvent(new ResourceEvent((ResourceCard) card, amount));
         }
         dialog.dismiss();
         Intent inGameUi = new Intent(this, InGameUI.class);

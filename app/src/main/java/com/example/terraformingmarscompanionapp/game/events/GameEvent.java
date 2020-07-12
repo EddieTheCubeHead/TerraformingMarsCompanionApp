@@ -2,6 +2,8 @@ package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
 
+import com.example.terraformingmarscompanionapp.game.GameController;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -10,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * and played from there using {@link #playEvent(Context)}.
  *
  * @author Eetu Asikainen
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
 public interface GameEvent {
@@ -21,4 +23,13 @@ public interface GameEvent {
      * @param context {@link Context} the android UI context that the action gets called from. Usually {@link com.example.terraformingmarscompanionapp.InGameUI}
      */
     void playEvent(Context context);
+
+    /**
+     * An overload to run {@link #playEvent(Context context)} with a Context recieved from {@link GameController}
+     * Should be avoided and mainly delegated to testing, instead preferring to get Context from
+     * a parameter
+     */
+    default void playEvent() {
+        playEvent(GameController.getContext());
+    }
 }

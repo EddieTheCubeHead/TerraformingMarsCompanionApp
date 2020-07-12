@@ -127,7 +127,7 @@ public class Tile {
      * @param hex_type {@link Placeable} that is being placed
      * @param context {@link Context} the UI context for the given action. Needed to generate a prompt for drawing cards.
      */
-    void placeHex(Player player, Placeable hex_type, Context context) {
+    public void placeHex(Player player, Placeable hex_type, Context context) {
         if (placed_hex != null) {
             return;
         }

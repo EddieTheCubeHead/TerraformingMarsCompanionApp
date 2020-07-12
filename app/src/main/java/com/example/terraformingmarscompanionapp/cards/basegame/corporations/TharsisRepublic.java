@@ -11,7 +11,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
-import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class TharsisRepublic extends Card implements EffectCard, FirstAction {
@@ -41,7 +41,7 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
     @Override
     public void firstAction() {
         EventScheduler.addEvent(new ActionUseEvent());
-        EventScheduler.addEvent(new TileEvent(Placeable.CITY, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, owner_game));
         EventScheduler.playNextEvent(GameController.getContext());
         first_action_used = true;
     }

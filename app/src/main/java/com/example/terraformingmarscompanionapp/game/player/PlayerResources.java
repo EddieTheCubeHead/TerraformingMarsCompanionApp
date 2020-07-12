@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.game.player;
 
+import android.util.Log;
+
 import com.example.terraformingmarscompanionapp.game.GameController;
 
 /**
@@ -33,7 +35,7 @@ public class PlayerResources {
 
     private Integer terraforming_rating = 20;
 
-    public PlayerResources(Player player) {
+    PlayerResources(Player player) {
         this.player = player;
     }
 
@@ -52,7 +54,7 @@ public class PlayerResources {
         plants += plants_production;
 
         heat += energy;
-        heat += energy_production;
+        heat += heat_production;
 
         energy = energy_production;
     }
@@ -276,6 +278,7 @@ public class PlayerResources {
      * @param amount {@link Integer} the amount of terraforming rating a {@link Player} has
      */
     public void setTerraformingRating(Integer amount) {
+        Log.i("PlayerResources", "Setting " + player.getName() + "'s terraforming rating to " + amount + ". Used to be " + terraforming_rating);
         // For UNMI special action
         if (amount > terraforming_rating) {
             player.getModifiers().setRaisedTrThisGeneration(true);

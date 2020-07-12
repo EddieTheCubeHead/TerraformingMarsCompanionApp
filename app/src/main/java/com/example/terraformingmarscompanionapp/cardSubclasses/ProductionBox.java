@@ -162,12 +162,12 @@ public final class ProductionBox {
             if (target_index != 0) {
                 Player target_player = GameController.getPlayer(target_index);
 
-                target_player.getResources().setMoneyProduction(target_player.getResources().getMoneyProduction() + money_production);
-                target_player.getResources().setSteelProduction(target_player.getResources().getSteelProduction() + steel_production);
-                target_player.getResources().setTitaniumProduction(target_player.getResources().getTitaniumProduction() + titanium_production);
-                target_player.getResources().setPlantsProduction(target_player.getResources().getPlantsProduction() + plants_production);
-                target_player.getResources().setEnergyProduction(target_player.getResources().getEnergyProduction() + energy_production);
-                target_player.getResources().setHeatProduction(target_player.getResources().getHeatProduction() + heat_production);
+                target_player.getResources().setMoneyProduction(target_player.getResources().getMoneyProduction() - steal_money_production);
+                target_player.getResources().setSteelProduction(target_player.getResources().getSteelProduction() - steal_steel_production);
+                target_player.getResources().setTitaniumProduction(target_player.getResources().getTitaniumProduction() - steal_titanium_production);
+                target_player.getResources().setPlantsProduction(target_player.getResources().getPlantsProduction() - steal_plants_production);
+                target_player.getResources().setEnergyProduction(target_player.getResources().getEnergyProduction() - steal_energy_production);
+                target_player.getResources().setHeatProduction(target_player.getResources().getHeatProduction() - steal_heat_production);
             }
         } catch (Exception ignored) {}
     }

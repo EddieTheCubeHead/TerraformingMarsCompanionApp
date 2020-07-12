@@ -16,11 +16,25 @@ Road to 1.0:
 
 8/9: Finish the scoring system
 8/9: Hex UI improvement by Softgitron
-10: Implement the rest of Corporate era functionality
+10: Implement the rest of Corporate era, Preludes and Hellas & Elysium functionality
+    - Robotic workforce (probably needs a new type of event)
+    - Viral enhancers (imitate manutech and aquifer pumping)
+    - Map selection in game creation
+    - Implement all preludes
 11: Server functionality improvements
+    - Error handling for losing connection
+    - Email functionality for user creation and password handling
+    - Save/Load games from server
 12: UI revamps
+    - Ability to observe other people's resources
+    - Condense the rest of ingame UI views into a single Activity with multiple fragments
+    - Ease of use : greeneries and raising temperature from main view by clicking resources
+    - Use Exceptions to deliver more precise info about why an action is not possible
 13: Anything urgent that comes up
 14: Cleanup the best I can
+    - Standardize Events and Packets
+        - Possibly differentiate producers and consumers more clearly
+        - Either have all consumers only have corresponding Packet as data or merge packets and consumers
 
 After 1.0, in no particular order:
 

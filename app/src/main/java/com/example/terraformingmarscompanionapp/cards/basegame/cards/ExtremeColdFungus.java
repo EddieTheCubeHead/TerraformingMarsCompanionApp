@@ -11,7 +11,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
-import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
+import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
@@ -42,7 +42,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
         }
         setActionToUsed();
         if (data == 0) {
-            EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.MICROBE, player, 2, true));
+            EventScheduler.addEvent(new ResourceChoiceEvent(ResourceCard.ResourceType.MICROBE, player, 2, true));
         }
         actionWithMetadata(data);
     }

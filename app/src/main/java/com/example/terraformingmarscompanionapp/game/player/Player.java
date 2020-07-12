@@ -12,6 +12,7 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Player {
 
@@ -265,19 +266,19 @@ public class Player {
      */
     public void countPoints() {
 
-        //Tiilien pisteet
+        // Scoring tiles
         for (Tile tile : owned_tiles) {
             switch (tile.getPlacedHex()) {
                 case CAPITAL:
                     for (Tile neighbour : game.tile_handler.getNeighbours(tile)) {
-                        if (neighbour.getPlacedHex().equals(Placeable.OCEAN) || neighbour.getPlacedHex().equals(Placeable.GREENERY)) {
+                        if (neighbour != null && (neighbour.getPlacedHex() == Placeable.OCEAN || neighbour.getPlacedHex().equals(Placeable.GREENERY))) {
                             victory_points++;
                         }
                     }
                     break;
                 case CITY:
                     for (Tile neighbour : game.tile_handler.getNeighbours(tile)) {
-                        if (neighbour.getPlacedHex().equals(Placeable.GREENERY)) {
+                        if (neighbour != null && (neighbour.getPlacedHex() == Placeable.GREENERY)) {
                             victory_points++;
                         }
                     }
@@ -290,6 +291,23 @@ public class Player {
 
         victory_points += resources.getTerraformingRating();
     }
+
+    // https://dzone.com/articles/sorting-java-arraylist
+    /**
+     * A comparator for sorting players by points at the end of the game
+     */
+    public static Comparator<Player> pointComparator = new Comparator<Player>() {
+        @Override
+        public int compare(Player p1, Player p2) {
+            // Raw point comparison
+            if (p2.getVictoryPoints() < p1.getVictoryPoints()) {
+                return -1;
+            } else if (p2.getVictoryPoints() > p1.getVictoryPoints()) {
+                return 1;
+            // Money as a tiebreaker
+            } else return p2.getResources().getMoney().compareTo(p1.getResources().getMoney());
+        }
+    };
 
     /**
      * Overriding toString for spinner use

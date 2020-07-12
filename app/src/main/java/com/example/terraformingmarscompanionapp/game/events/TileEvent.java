@@ -1,39 +1,41 @@
 package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
+import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.webSocket.GameActions;
+import com.example.terraformingmarscompanionapp.webSocket.packets.TileEventPacket;
 
 /**
- * An implementation of the {@link GameEvent} used to get the data of placing a tile from player
+ * An implementation of {@link GameEvent} representing a tile getting placed
  *
  * @author Eetu Asikainen
- * @version 0.2
- * @since 0.2
+ * @version 0.3
+ * @since 0.3
  */
-public final class TileEvent implements GameEvent {
-    private Placeable tile_type;
-    private Game game;
+public class TileEvent implements GameEvent {
+
+    private TileEventPacket packet;
 
     /**
      * Constructor
      *
-     * @param tile_type {@link Placeable} the type of the tile player is placing
-     * @param game {@link Game} the game the event is associated with
+     * @param packet {@link TileEventPacket} representing the event being played
      */
-    public TileEvent(Placeable tile_type, Game game) {
-        this.tile_type = tile_type;
-        this.game = game;
+    public TileEvent(TileEventPacket packet) {
+        this.packet = packet;
     }
 
     @Override
     public void playEvent(Context context) {
-        Log.i("Event played", toString());
-        game.tile_handler.getCoordinatesFromPlayer(tile_type, context);
+        if (GameController.getServerMultiplayer()) {
+            GameActions.sendTileEvent(packet);
+        }
+        packet.playPacket();
+        EventScheduler.playNextEvent(context);
     }
 
     /**
@@ -44,6 +46,6 @@ public final class TileEvent implements GameEvent {
     @NonNull
     @Override
     public String toString() {
-        return String.format("Tile event: tile type: %s", tile_type.toString());
+        return super.toString();
     }
 }

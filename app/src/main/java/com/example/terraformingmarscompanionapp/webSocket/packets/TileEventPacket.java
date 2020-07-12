@@ -7,7 +7,7 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.PlacementBonus;
 
 /**
- * Event representing playing a card
+ * Event representing placing a tile
  */
 public class TileEventPacket implements ServerPacket {
     private Placeable tile_type;
@@ -25,21 +25,39 @@ public class TileEventPacket implements ServerPacket {
     @Override
     public void playPacket() {
         Game game = GameController.getGame();
-        game.tile_handler.placeTile(GameController.getPlayer(player_name), game.tile_handler.getTile(x_coord, y_coord), tile_type);
+
+        game.tile_handler.getTile(x_coord, y_coord).placeHex(GameController.getPlayer(player_name), tile_type, GameController.getContext());
+
         Player player = GameController.getPlayer(player_name);
+        player.addTile(game.tile_handler.getTile(x_coord, y_coord));
+
         switch (tile_type) {
+            case CAPITAL:
+            case CITY:
+                player.addCity();
+                game.update_manager.onCityPlaced(player, true);
+                break;
+
             case OCEAN:
+                game.placeOcean();
                 player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + 1);
+                game.update_manager.onOceanPlaced(player);
                 break;
+
             case GREENERY:
-                game.raiseOxygen(GameController.getPlayer(player_name));
+                player.addGreenery();
+                game.raiseOxygen(player);
+                game.update_manager.onGreeneryPlaced(player);
                 break;
+
             case MINING_AREA:
                 if (game.tile_handler.getTile(x_coord, y_coord).getPlacementBonuses().contains(PlacementBonus.TITANIUM)) {
                     player.getResources().setTitaniumProduction(player.getResources().getTitaniumProduction() + 1);
                 } else {
                     player.getResources().setSteelProduction(player.getResources().getSteelProduction() + 1);
                 }
+                break;
+
             default:
                 break;
         }

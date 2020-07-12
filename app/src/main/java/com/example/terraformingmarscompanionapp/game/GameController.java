@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.game;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
@@ -13,6 +14,7 @@ import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
+import com.example.terraformingmarscompanionapp.ui.main.GameResultActivity;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
@@ -343,6 +345,7 @@ public class GameController
     private static void endGeneration(Context context)
     {
         if (greenery_round) {
+            Log.i("GameController", "Calling point counting function to end game");
             countPoints();
             return;
         }
@@ -455,8 +458,11 @@ public class GameController
 
         for (Player player : players) {
             player.countPoints();
-            System.out.println(player.getName() + ", points: " + player.getVictoryPoints());
         }
+
+        Intent result_intent = new Intent(getContext(), GameResultActivity.class);
+        Log.i("GameController", "Calling result screen");
+        getContext().startActivity(result_intent);
     }
 
     /**

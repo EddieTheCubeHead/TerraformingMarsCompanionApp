@@ -12,7 +12,7 @@ public final class Bushes extends Card {
         name = "Bushes";
         price = 10;
         tags.add(Tag.PLANT);
-        requirements.setMinTemperature(10);
+        requirements.setMinTemperature(-10);
     }
 
     @Override

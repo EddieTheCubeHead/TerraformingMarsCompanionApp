@@ -1,0 +1,44 @@
+Some rule clarifications that either are implemented in a wrong manner, should be considered in the
+implementation of future features or offer notable context into current implementations.
+
+IMPLEMENTED INCORRENCTLY:
+- Tag discounts trigger per tag, not if a card has at least one tag
+- Passing a generation before performing first action is a legal move
+- Removing PRODUCTION is always mandatory (birds, etc.), removing raw resources is case by case
+- Terraforming standard projects can be paid for (to stall) even if the corresponding parameter is maxed
+- 8 heat can be consumed when temperature is maxed (to stall)
+- Only first place is awarder with awards in 2-player games
+- Tile placing standard projects require you to be able to place the tile to be played
+- Volcanic tile granting cards require a free volcanic space if not playing on hellas
+- Greenery placement at the end of the game uses last generation's turn order and all at once instead
+  of 2 at a time
+
+FUTURE REFERENCE:
+- Colony placing cards require you to be able to place the colony to be played
+- If a corporate's first mandatory action cannot be performed, it should be ignored (applies to vitor)
+- The conditions for ending a game are checked before turmoil phase and world government terraforming
+- Card resources obtained from a single trigger must be placed in the same destination
+    - Colony bonus is a separate trigger from gaining trade income
+- A player is limited to 7 delegates in turmoil, free lobbying is disabled if a delegate is unable to
+  be placed in the lobby at the start of a generation/end of the turmoil phase
+- Land claim (card) acts as a community for Arcadian communities (corporation) if I ever get around
+  to implementing promo cards
+- Only a new tag that stays in play (i.e. not an event card) triggers Aridor's (corporation) effect
+- Mons insurance is complicated with action order (not clarifying as it would require a wall of text
+  and implementation of promo cards is faaaar in the future)
+- The ability of Pharmacy union does not count as an attack even if triggered by other players
+- The current way corporation and prelude playing is done creates an error with the corporations
+  Pristar and UNMI as playing corporations and preludes is considered a part of first generation and
+  thus TR raising preludes should disable pristar's ability, even when they currently do not do that.
+- Wild tags should not be counted towards neutral events and wild tag can count as a null tag if it
+  is the only tag on the card (wild tags currently referenced as Tag.JOKER -enum in the code)
+- Stormcraft doesn't use an action when converting floaters on the corporation into heat
+
+CONTEXT FOR CURRENT IMPLEMENTATIONS:
+- The player playing the card can freely decide the order of events the card triggers. Currently
+  not considered a problem despite not being supported due to the only line of play that I can imagine
+  this affecting with only basegame cards is triggering arctic algae with a card removal card and this
+  already resolves in the favor of the player playing the card. Needs to be kept under watch though,
+  if a feature to manually change the order of a card's effects is not implemented.
+- Checks for correct greenery placement not implemented as I deemed it too insignificant and thought
+  players can track it themselves well enough

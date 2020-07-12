@@ -1,7 +1,5 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import android.content.Context;
-
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -11,7 +9,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class IndustrialCenter extends Card implements ActionCard {
@@ -26,7 +24,7 @@ public final class IndustrialCenter extends Card implements ActionCard {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileEvent(Placeable.INDUSTRIAL_CENTER, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.INDUSTRIAL_CENTER, owner_game));
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.terraformingmarscompanionapp.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,11 +172,10 @@ public class TilePlacementActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Current placement is not valid!", Toast.LENGTH_SHORT).show();
         }
         else {
-            if (GameController.getGame().getServerMultiplayer()) {
-                GameActions.sendTileEvent(new TileEventPacket(tile, GameController.getCurrentPlayer().getName(), x, y));
-            }
+            Log.i("TilePlacementActivity", "Calling handler.placeTile");
             ArrayList<String> flood_targets = handler.placeTile(GameController.getCurrentPlayer(), handler.getTile(x, y), tile);
 
+            Log.i("TilePlacementActivity", "Finishing tile placement");
             if (flood_targets != null) {
                 playFlooding(flood_targets);
             } else {

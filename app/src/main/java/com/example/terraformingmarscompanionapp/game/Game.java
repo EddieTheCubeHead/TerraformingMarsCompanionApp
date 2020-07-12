@@ -1,6 +1,7 @@
 package com.example.terraformingmarscompanionapp.game;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
@@ -316,7 +317,7 @@ public class Game {
 
         raising_player.getResources().setTerraformingRating(raising_player.getResources().getTerraformingRating() + 1);
         global_temperature += 2;
-        if (global_temperature == 0) {
+        if (global_temperature == 0 && oceans_placed < 9) {
             tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN, GameController.getContext());
         } else if (global_temperature == -20 || global_temperature == -24) {
             raising_player.getResources().setHeatProduction(raising_player.getResources().getHeatProduction() + 1);
@@ -747,6 +748,8 @@ public class Game {
             return false;
         }
 
+        // TODO fix edge case with Tharsis and Immigrant city
+        // In the future be mindful of edge case with Black Polar Dust and Lakefront
         if (requirements.getMinMoneyProduction() != null && player.getResources().getMoneyProduction() < requirements.getMinMoneyProduction()) {
             return false;
         }
@@ -838,7 +841,10 @@ public class Game {
         }
 
         // TODO event to handle UI better?
-        EventScheduler.addEvent(new ActionUseEvent());
+        // AKA: implement a way to reset into main game view after every action
+        if (card.getType() != Type.OTHER) {
+            EventScheduler.addEvent(new ActionUseEvent());
+        }
         card.initializePlayEvents(player);
         EventScheduler.playNextEvent(context);
     }
@@ -852,10 +858,13 @@ public class Game {
      */
     void onGenerationEnd(Context context) {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {
+            Log.i("Game", "Calling GameController.gameEndPreparation");
             GameController.gameEndPreparation();
         }
         for (Player player : GameController.getPlayers()) {
-            player.getResources().addProduction();
+            if (GameController.getGeneration() != 0) {
+                player.getResources().addProduction();
+            }
             player.setDrewCardsThisGen(false);
         }
 

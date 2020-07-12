@@ -1,7 +1,5 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import android.content.Context;
-
 import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
 import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
@@ -13,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
-import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
-import com.example.terraformingmarscompanionapp.game.events.TileEvent;
+import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
+import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -40,7 +38,7 @@ public final class LargeConvoy extends Card {
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x5)", "Animal (x4)")), this, ChoiceDialog.USE_CASE.GENERAL));
         EventScheduler.addEvent(new PromptEvent("Please draw 2 cards"));
-        EventScheduler.addEvent(new TileEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
     }
 
     @Override
@@ -49,7 +47,7 @@ public final class LargeConvoy extends Card {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         if (data == 1) {
-            EventScheduler.addEvent(new ResourceEvent(ResourceCard.ResourceType.ANIMAL, player, 4, true));
+            EventScheduler.addEvent(new ResourceChoiceEvent(ResourceCard.ResourceType.ANIMAL, player, 4, true));
         }
         playWithMetadata(player, data);
     }
