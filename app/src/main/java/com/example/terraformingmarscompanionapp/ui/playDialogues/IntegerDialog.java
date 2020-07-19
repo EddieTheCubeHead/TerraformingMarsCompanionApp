@@ -2,11 +2,8 @@ package com.example.terraformingmarscompanionapp.ui.playDialogues;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.EventLog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +17,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.RoundStartDraw;
-import com.example.terraformingmarscompanionapp.game.EventScheduler;
-import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
 
 /**
  * Represents a numeric decision made by a player while playing a card.

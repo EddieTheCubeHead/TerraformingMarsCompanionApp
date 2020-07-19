@@ -18,8 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 

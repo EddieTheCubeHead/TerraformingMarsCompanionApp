@@ -529,7 +529,9 @@ public class TileHandler {
                     return false;
                 }
             case MINING_RIGHTS:
-                if ((!to_place.getPlacementBonuses().contains(PlacementBonus.STEEL) && !to_place.getPlacementBonuses().contains(PlacementBonus.TITANIUM))) {
+                if (to_place.getPlacementBonuses() != null &&
+                        (!to_place.getPlacementBonuses().contains(PlacementBonus.STEEL) &&
+                        !to_place.getPlacementBonuses().contains(PlacementBonus.TITANIUM))) {
                     Log.i("Invalid tile placement", "Requires placement bonus");
                     return false;
                 }

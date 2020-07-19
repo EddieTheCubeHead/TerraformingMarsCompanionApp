@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;

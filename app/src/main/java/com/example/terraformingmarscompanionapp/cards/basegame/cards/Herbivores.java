@@ -1,11 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import android.content.Context;
-
-import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;

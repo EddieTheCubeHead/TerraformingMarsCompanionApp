@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cardSubclasses;
+package com.example.terraformingmarscompanionapp.game.cardClasses;
 
 import android.content.Context;
 import android.util.Log;

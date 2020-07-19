@@ -1,20 +1,16 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
-import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
-import com.example.terraformingmarscompanionapp.ui.main.BooleanDialogActivity;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
 import java.util.ArrayList;
@@ -40,7 +36,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose what to do.",
                 new ArrayList<>(Arrays.asList("Add a microbe", "Raise temperature")),
-                this, ChoiceDialog.USE_CASE.GENERAL));
+                this, ChoiceDialog.UseCase.GENERAL));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

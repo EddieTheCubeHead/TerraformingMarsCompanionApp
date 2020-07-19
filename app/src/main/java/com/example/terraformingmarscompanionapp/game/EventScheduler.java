@@ -3,13 +3,14 @@ package com.example.terraformingmarscompanionapp.game;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 
 import java.util.Stack;
 
 /**
  * A class for scheduling instances of {@link GameEvent} into a stack representing the whole process
- * of playing a subclass of {@link com.example.terraformingmarscompanionapp.cardSubclasses.Card} and
+ * of playing a subclass of {@link Card} and
  * playing events from the stack.
  * <p></p>
  * The idea behind using a stack is if an action is evoked due to another action (for example a placement

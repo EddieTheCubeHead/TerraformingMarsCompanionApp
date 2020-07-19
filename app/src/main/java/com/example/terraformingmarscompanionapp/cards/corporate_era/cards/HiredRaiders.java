@@ -1,15 +1,12 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import android.content.Context;
-
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
@@ -28,7 +25,7 @@ public final class HiredRaiders extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resource to steal:",
-                new ArrayList<>(Arrays.asList("Steel (x2)", "Money (x3)")), this, ChoiceDialog.USE_CASE.GENERAL));
+                new ArrayList<>(Arrays.asList("Steel (x2)", "Money (x3)")), this, ChoiceDialog.UseCase.GENERAL));
     }
 
     @Override
@@ -40,10 +37,10 @@ public final class HiredRaiders extends Card {
             }
             if (data != 0) {
                 EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:",
-                        player_names, this, ChoiceDialog.USE_CASE.RAIDERS_STEEL));
+                        player_names, this, ChoiceDialog.UseCase.RAIDERS_STEEL));
             } else {
                 EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:",
-                        player_names, this, ChoiceDialog.USE_CASE.RAIDERS_MONEY));
+                        player_names, this, ChoiceDialog.UseCase.RAIDERS_MONEY));
             }
             EventScheduler.playNextEvent(GameController.getContext());
 

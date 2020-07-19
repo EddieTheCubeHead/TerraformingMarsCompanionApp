@@ -3,15 +3,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 
 public class Player {
@@ -104,7 +102,7 @@ public class Player {
     }
 
     /**
-     * @param card {@link Card} representing the corporation of this player. Should have a {@link com.example.terraformingmarscompanionapp.cardSubclasses.Type} of CORPORATION
+     * @param card {@link Card} representing the corporation of this player. Should have a {@link Type} of CORPORATION
      */
     public void setCorporation(Card card) {
         corporation=card;

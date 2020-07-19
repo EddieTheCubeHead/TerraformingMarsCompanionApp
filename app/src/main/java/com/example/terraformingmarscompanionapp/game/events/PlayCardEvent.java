@@ -6,8 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**

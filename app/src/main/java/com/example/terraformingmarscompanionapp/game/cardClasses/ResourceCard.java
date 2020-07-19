@@ -1,9 +1,6 @@
-package com.example.terraformingmarscompanionapp.cardSubclasses;
-
-import android.content.Context;
+package com.example.terraformingmarscompanionapp.game.cardClasses;
 
 import com.example.terraformingmarscompanionapp.game.Game;
-import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
  * A subclass of {@link Card} to represent cards that hold special resources on them during the game.
@@ -23,10 +20,12 @@ public abstract class ResourceCard extends Card {
      * Enum to indicate the type of the resource stored on the card
      */
     public enum ResourceType {
+        DEFAULT,
         MICROBE,
         ANIMAL,
         SCIENCE,
         FLOATER,
+        ASTEROID,
         PET,
         UNIQUE,
         EXISTING // Used with CEOs favourite project

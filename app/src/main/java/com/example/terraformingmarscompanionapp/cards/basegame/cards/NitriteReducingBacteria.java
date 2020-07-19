@@ -1,14 +1,13 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
@@ -37,7 +36,7 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
             return;
         }
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose what to do:",
-                new ArrayList<>(Arrays.asList("Add a microbe", "Raise TR")), this, ChoiceDialog.USE_CASE.GENERAL));
+                new ArrayList<>(Arrays.asList("Add a microbe", "Raise TR")), this, ChoiceDialog.UseCase.GENERAL));
     }
 
     @Override

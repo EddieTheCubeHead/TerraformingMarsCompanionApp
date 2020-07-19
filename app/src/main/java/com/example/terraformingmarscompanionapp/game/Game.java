@@ -3,12 +3,12 @@ package com.example.terraformingmarscompanionapp.game;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
@@ -785,7 +785,7 @@ public class Game {
         }
 
         if (requirements.getMinBuildingTags() != null) {
-            if (!(player.getTags().getBuildingTags() + unused_jokers > requirements.getMinBuildingTags())) {
+            if (!(player.getTags().getBuildingTags() + unused_jokers >= requirements.getMinBuildingTags())) {
                 return false;
             }
         }

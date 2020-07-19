@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.ui.main.ActivityResourceAddition;
 
@@ -23,11 +23,12 @@ public final class ResourceChoiceEvent implements GameEvent {
     private Player player;
     private Integer amount;
     private Boolean own_card_only = false;
+    private Boolean robotic_workforce = false;
 
     /**
      * Default constructor
      *
-     * @param resource_type {@link com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard.ResourceType} the type of the resource to change
+     * @param resource_type {@link ResourceCard.ResourceType} the type of the resource to change
      * @param player {@link Player} that is playing the card triggering the resource change operation
      * @param amount {@link Integer} the amount of resource to change. Can be negative to substract resources instead of adding them
      * @param own_card_only {@link Boolean} whether the operation can only target the playing player's cards
@@ -43,7 +44,7 @@ public final class ResourceChoiceEvent implements GameEvent {
      * A Quality of Life constructor for cards that can target all resource holders, not only those
      * owned by the playing player.
      *
-     * @param resource_type {@link com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard.ResourceType} the type of the resource to change
+     * @param resource_type {@link ResourceCard.ResourceType} the type of the resource to change
      * @param player {@link Player} that is playing the card triggering the resource change operation
      * @param amount {@link Integer} the amount of resource to change. Can be negative to substract resources instead of adding them
      */

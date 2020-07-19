@@ -2,6 +2,8 @@ package com.example.terraformingmarscompanionapp.game.tileSystem;
 
 import android.content.Context;
 
+import com.example.terraformingmarscompanionapp.cards.basegame.cards.MiningRights;
+import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MiningArea;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
@@ -164,14 +166,24 @@ public class Tile {
             }
             if (placement_bonuses.contains(PlacementBonus.STEEL)) {
                 game.update_manager.onPlacementBonus(player);
-                if (hex_type == Placeable.MINING_AREA || hex_type == Placeable.MINING_RIGHTS) {
-                    player.getResources().setSteelProduction(player.getResources().getSteelProduction() + 1);
+
+                // Robotic workforce creates unique challenges for playing mining area and/or mining
+                // rights. This atrocity works around that problem and enables saving the production
+                // type gained into the production box of the card.
+                if (hex_type == Placeable.MINING_AREA && game.modifiers.getCorporateEra()) {
+                    ((MiningArea)game.getDeck().get("Mining area")).setPlacementBonus(true);
+                } else if (hex_type == Placeable.MINING_RIGHTS) {
+                    ((MiningRights)game.getDeck().get("Mining rights")).setPlacementBonus(true);
                 }
 
             } else if (placement_bonuses.contains(PlacementBonus.TITANIUM)) {
                 game.update_manager.onPlacementBonus(player);
-                if (hex_type == Placeable.MINING_AREA || hex_type == Placeable.MINING_RIGHTS) {
-                    player.getResources().setTitaniumProduction(player.getResources().getTitaniumProduction() + 1);
+
+                // Again for robotic workforce
+                if (hex_type == Placeable.MINING_AREA && game.modifiers.getCorporateEra()) {
+                    ((MiningArea)game.getDeck().get("Mining area")).setPlacementBonus(false);
+                } else if (hex_type == Placeable.MINING_RIGHTS) {
+                    ((MiningRights)game.getDeck().get("Mining rights")).setPlacementBonus(false);
                 }
             }
         }

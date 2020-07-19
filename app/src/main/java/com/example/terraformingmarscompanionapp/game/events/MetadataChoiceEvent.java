@@ -5,7 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * An implementation of {@link GameEvent} used when a card requires the player to choose between
  * two or more non-numeric options, for example a target player for an action. The event calls
- * {@link ChoiceDialog#displayDialog(Context, String, ChoiceDialog.USE_CASE, ArrayList, Card, Player)}
+ * {@link ChoiceDialog#displayDialog(Context, String, ChoiceDialog.UseCase, ArrayList, Card, Player)}
  * to gather the needed data from the player.
  *
  * @author Eetu Asikainen
@@ -26,7 +26,7 @@ public final class MetadataChoiceEvent implements GameEvent {
     private String message;
     private ArrayList<String> choices;
     private Card card;
-    private ChoiceDialog.USE_CASE use_case;
+    private ChoiceDialog.UseCase use_case;
 
     /**
      * The main constructor, used when more precise declaration of the possible choices and the displayed
@@ -35,9 +35,9 @@ public final class MetadataChoiceEvent implements GameEvent {
      * @param message {@link String} message that should be displayed to tha player
      * @param choices {@link ArrayList} of {@link String} representing all the possible choices. Be careful with the order and metadata (see {@link ChoiceDialog}
      * @param card {@link Card} that the event is gathering data to play
-     * @param use_case {@link com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog.USE_CASE} the usecase the card is called with. Most often GENERAL
+     * @param use_case {@link ChoiceDialog.UseCase} the usecase the card is called with. Most often GENERAL
      */
-    public MetadataChoiceEvent(String message, ArrayList<String> choices, Card card, ChoiceDialog.USE_CASE use_case) {
+    public MetadataChoiceEvent(String message, ArrayList<String> choices, Card card, ChoiceDialog.UseCase use_case) {
         this.message = message;
         this.choices = choices;
         this.card = card;
@@ -59,7 +59,7 @@ public final class MetadataChoiceEvent implements GameEvent {
             choices.add(player.getName());
         }
 
-        this.use_case = ChoiceDialog.USE_CASE.PLAYER;
+        this.use_case = ChoiceDialog.UseCase.PLAYER;
     }
 
     @Override

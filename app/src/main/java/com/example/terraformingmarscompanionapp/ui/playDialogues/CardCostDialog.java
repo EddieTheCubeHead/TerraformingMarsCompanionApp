@@ -16,8 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;

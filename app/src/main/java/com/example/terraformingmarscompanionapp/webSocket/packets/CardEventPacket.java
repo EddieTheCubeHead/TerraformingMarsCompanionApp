@@ -2,8 +2,8 @@ package com.example.terraformingmarscompanionapp.webSocket.packets;
 
 import android.util.Log;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
@@ -14,9 +14,6 @@ public class CardEventPacket implements ServerPacket {
     private String card_name;
     private String player_name;
     private Integer metadata;
-    private String extra_card;
-
-    //TODO modifications to get robotic workforce to work
 
     public CardEventPacket(String card_name, String player_name, Integer metadata) {
         this.card_name = card_name;
@@ -24,7 +21,7 @@ public class CardEventPacket implements ServerPacket {
         this.metadata = metadata;
     }
 
-    //The game can deduce whether a card was played or an action was used based on the card's owner
+    // The game can deduce whether a card was played or an action was used based on the card's owner
     @Override
     public void playPacket() {
         Game game = GameController.getGame();

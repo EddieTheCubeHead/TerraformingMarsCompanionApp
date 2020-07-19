@@ -1,10 +1,10 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -31,7 +31,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
     @Override
     public void cardAction() {
         EventScheduler.addEvent(new ActionUseEvent());
-        EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resources to add:", new ArrayList<>(Arrays.asList("Plants (x1)", "Microbes(x2)")), this, ChoiceDialog.USE_CASE.GENERAL));
+        EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resources to add:", new ArrayList<>(Arrays.asList("Plants (x1)", "Microbes(x2)")), this, ChoiceDialog.UseCase.GENERAL));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

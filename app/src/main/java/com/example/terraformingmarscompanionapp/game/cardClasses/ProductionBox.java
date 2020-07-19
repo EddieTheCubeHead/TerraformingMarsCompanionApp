@@ -1,7 +1,13 @@
-package com.example.terraformingmarscompanionapp.cardSubclasses;
+package com.example.terraformingmarscompanionapp.game.cardClasses;
 
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
+import com.example.terraformingmarscompanionapp.game.events.RoboticWorkforcePlayEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
+import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+
+import java.util.ArrayList;
 
 /**
  * A dataclass representing the production box of cards. Only needed so robotic workforce functions
@@ -12,32 +18,7 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
  */
 public final class ProductionBox {
 
-    /**
-     * Stores required data for playing so calling {@link #playProductionBox(Player, Integer)} with
-     * {@link com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce} gets
-     * simplified.
-     */
-    private enum DATA_REQUIREMENT {
-        NONE,
-        TARGET,
-        AMOUNT
-    }
-
-    private DATA_REQUIREMENT data_requirement = DATA_REQUIREMENT.NONE;
-
-    /**
-     * Set the data requirement to inform that a target for a stealing action is required
-      */
-    private void setStealData() {
-        data_requirement = DATA_REQUIREMENT.TARGET;
-    }
-
-    /**
-     * Set the data requirement to inform that an amount of production change is needed.
-     */
-    public void setAmountData() {
-        data_requirement = DATA_REQUIREMENT.AMOUNT;
-    }
+    private Boolean has_target = false;
 
     private Integer money_production = 0;
     private Integer steel_production = 0;
@@ -52,6 +33,14 @@ public final class ProductionBox {
     private Integer steal_plants_production = 0;
     private Integer steal_energy_production = 0;
     private Integer steal_heat_production = 0;
+
+    /**
+     * A simple method to set the card as requiring a target. Needed for playing cards with robotic
+     * workforce.
+     */
+    public void requireTarget(){
+        has_target = true;
+    }
 
     /**
      * @param value {@link Integer} amount of money production changed when playing the card
@@ -101,7 +90,7 @@ public final class ProductionBox {
      */
     public void setStealMoneyProduction(Integer value) {
         steal_money_production = value;
-        setStealData();
+        requireTarget();
     }
 
     /**
@@ -109,7 +98,7 @@ public final class ProductionBox {
      */
     public void setStealSteelProduction(Integer value) {
         steal_steel_production = value;
-        setStealData();
+        requireTarget();
     }
 
     /**
@@ -117,7 +106,7 @@ public final class ProductionBox {
      */
     public void setStealTitaniumProduction(Integer value) {
         steal_titanium_production = value;
-        setStealData();
+        requireTarget();
     }
 
     /**
@@ -125,7 +114,7 @@ public final class ProductionBox {
      */
     public void setStealPlantsProduction(Integer value) {
         steal_plants_production = value;
-        setStealData();
+        requireTarget();
     }
 
     /**
@@ -133,7 +122,7 @@ public final class ProductionBox {
      */
     public void setStealEnergyProduction(Integer value) {
         steal_energy_production = value;
-        setStealData();
+        requireTarget();
     }
 
     /**
@@ -141,7 +130,7 @@ public final class ProductionBox {
      */
     public void setStealHeatProduction(Integer value) {
         steal_heat_production = value;
-        setStealData();
+        requireTarget();
     }
 
     /**
@@ -170,5 +159,23 @@ public final class ProductionBox {
                 target_player.getResources().setHeatProduction(target_player.getResources().getHeatProduction() - steal_heat_production);
             }
         } catch (Exception ignored) {}
+    }
+
+    /**
+     * A method for playing the card's production box again with the card {@link com.example.terraformingmarscompanionapp.cards.corporate_era.cards.RoboticWorkforce}.
+     *
+     * @param player {@link Player} playing the card
+     * @param card {@link Card} this production box belongs to
+     */
+    public void playWithRoboticWorkforce(Player player, Card card){
+        if (has_target) {
+            ArrayList<String> player_names = new ArrayList<>();
+            for(Player game_player : GameController.getPlayers()){
+                player_names.add(game_player.getName());
+            }
+            EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:", player_names, card, ChoiceDialog.UseCase.ROBOTIC_WORKFORCE));
+        } else {
+            EventScheduler.addEvent(new RoboticWorkforcePlayEvent(card, player, 0));
+        }
     }
 }

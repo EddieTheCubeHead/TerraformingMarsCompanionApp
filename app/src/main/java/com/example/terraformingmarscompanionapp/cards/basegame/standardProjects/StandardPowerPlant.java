@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.standardProjects;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.StandardProject;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.StandardProject;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 

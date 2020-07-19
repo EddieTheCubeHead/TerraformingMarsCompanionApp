@@ -17,9 +17,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.events.RoboticWorkforcePlayEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
  */
 public class ChoiceDialog {
 
-    public enum USE_CASE {
+    public enum UseCase {
         PLAYER,
         VIRUS,
         ROBOTIC_WORKFORCE,
@@ -41,9 +43,9 @@ public class ChoiceDialog {
         SABOTAGE_MONEY
     }
 
-    public static void displayDialog(Context context, String message, USE_CASE use_case, ArrayList<String> targets, Card card, Player player)
+    public static void displayDialog(Context context, String message, UseCase use_case, ArrayList<String> targets, Card card, Player player)
     {
-        if (use_case.equals(USE_CASE.PLAYER)) {
+        if (use_case.equals(UseCase.PLAYER)) {
             targets.add("nobody");
         }
 
@@ -91,7 +93,7 @@ public class ChoiceDialog {
 
         view.findViewById(R.id.button_confirm).setOnClickListener(v -> {
             Integer target_index;
-            if (!use_case.equals(USE_CASE.GENERAL)) {
+            if (!use_case.equals(UseCase.GENERAL)) {
                 if (spinner.getSelectedItem() == "nobody") {
                     target_index = 0;
                 } else {
@@ -102,8 +104,10 @@ public class ChoiceDialog {
             }
             switch (use_case) {
                 case ROBOTIC_WORKFORCE:
-                    card.getProductionBox().playProductionBox(player, target_index);
+                    EventScheduler.addEvent(new RoboticWorkforcePlayEvent(card, player, target_index));
+                    EventScheduler.playNextEvent(context);
                     break;
+
                 case VIRUS:
                     card.onPlayServerHook(player, target_index + 2);
                     break;

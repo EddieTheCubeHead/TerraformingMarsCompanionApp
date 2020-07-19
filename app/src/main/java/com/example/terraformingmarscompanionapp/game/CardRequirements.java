@@ -1,5 +1,8 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Milestone;
+
 /**
  * A dataclass for housing the requirements for playing a card
  *
@@ -721,7 +724,7 @@ public class CardRequirements {
 
     // Maximum milestones
     /**
-     * Used with {@link com.example.terraformingmarscompanionapp.cardSubclasses.Milestone}
+     * Used with {@link Milestone}
      *
      * @return {@link Integer} the maximum amount of milestones claimed in the game allowed to play the card
      */
@@ -730,7 +733,7 @@ public class CardRequirements {
     }
 
     /**
-     * Used with {@link com.example.terraformingmarscompanionapp.cardSubclasses.Milestone}
+     * Used with {@link Milestone}
      *
      * @param value {@link Integer} the maximum amount of milestones claimed in the game allowed to play the card
      */
@@ -741,7 +744,7 @@ public class CardRequirements {
 
     // Maximum awards
     /**
-     * Used with {@link com.example.terraformingmarscompanionapp.cardSubclasses.Award}
+     * Used with {@link Award}
      *
      * @return {@link Integer} the maximum amount of awards claimed in the game allowed to play the card
      */
@@ -750,7 +753,7 @@ public class CardRequirements {
     }
 
     /**
-     * Used with {@link com.example.terraformingmarscompanionapp.cardSubclasses.Award}
+     * Used with {@link Award}
      *
      * @param value {@link Integer} the maximum amount of awards claimed in the game allowed to play the card
      */

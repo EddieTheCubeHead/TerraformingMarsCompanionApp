@@ -1,6 +1,6 @@
 package com.example.terraformingmarscompanionapp.game;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.EffectCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 import java.util.HashMap;

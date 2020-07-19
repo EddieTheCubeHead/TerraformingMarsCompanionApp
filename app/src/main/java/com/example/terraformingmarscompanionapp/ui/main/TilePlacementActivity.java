@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
@@ -22,8 +22,6 @@ import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
-import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.packets.TileEventPacket;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -195,7 +193,7 @@ public class TilePlacementActivity extends AppCompatActivity {
         if (targets.size() == 0) {
             EventScheduler.addEvent(new PlayCardEvent(flooding, GameController.getCurrentPlayer(), 0));
         } else {
-            EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:", targets, flooding, ChoiceDialog.USE_CASE.PLAYER));
+            EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:", targets, flooding, ChoiceDialog.UseCase.PLAYER));
         }
         exit(view);
     }

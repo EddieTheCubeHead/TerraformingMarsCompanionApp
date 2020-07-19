@@ -1,9 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -30,7 +30,7 @@ public final class Virus extends Card {
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to remove",
-                new ArrayList<>(Arrays.asList("Animals (x2)", "Plants (x5)")), this, ChoiceDialog.USE_CASE.GENERAL));
+                new ArrayList<>(Arrays.asList("Animals (x2)", "Plants (x5)")), this, ChoiceDialog.UseCase.GENERAL));
     }
 
     @Override
@@ -45,7 +45,7 @@ public final class Virus extends Card {
                 player_names.add(target.getName());
             }
             EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target",
-                    player_names, this, ChoiceDialog.USE_CASE.VIRUS));
+                    player_names, this, ChoiceDialog.UseCase.VIRUS));
             EventScheduler.playNextEvent(GameController.getContext());
             return;
         } else {

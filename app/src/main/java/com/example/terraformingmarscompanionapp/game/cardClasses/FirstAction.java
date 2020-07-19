@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cardSubclasses;
+package com.example.terraformingmarscompanionapp.game.cardClasses;
 
 /**
  * Some corporations require you to perform a specific action as your first action in the game.

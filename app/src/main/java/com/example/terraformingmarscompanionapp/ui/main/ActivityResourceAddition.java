@@ -16,17 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
-import com.example.terraformingmarscompanionapp.webSocket.packets.ResourceEventPacket;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +59,7 @@ public class ActivityResourceAddition extends AppCompatActivity implements Recyc
 
     private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
-    private ArrayList<Type> valid_types = new ArrayList<>(Arrays.asList(Type.GREEN, Type.RED, Type.BLUE, Type.CORPORATION));
+    private ArrayList<Type> valid_types = new ArrayList<>(Arrays.asList(Type.GREEN, Type.BLUE, Type.CORPORATION));
     private ArrayList<ResourceCard.ResourceType> organics = new ArrayList<>(Arrays.asList(ResourceCard.ResourceType.ANIMAL, ResourceCard.ResourceType.MICROBE));
 
     View view;
@@ -77,21 +76,23 @@ public class ActivityResourceAddition extends AppCompatActivity implements Recyc
         owner_required = intent.getBooleanExtra(OWNER_ONLY, false);
         player =intent.getStringExtra(PLAYER_NAME);
         amount = intent.getIntExtra(AMOUNT, 0);
-        type = ResourceCard.ResourceType.valueOf(intent.getStringExtra(RESOURCE_TYPE));
+        if (intent.getStringExtra(SPECIAL_CASE) != null && !intent.getStringExtra(SPECIAL_CASE).equals("Robotic workforce")) {
+            type = ResourceCard.ResourceType.valueOf(intent.getStringExtra(RESOURCE_TYPE));
+        }
 
         Game game = GameController.getGame();
         HashMap<String, Card> deck = game.getAllCards();
 
-        //inflating layout
+        // inflating layout
         LayoutInflater inflater = LayoutInflater.from(this);
         view = inflater.inflate(R.layout.dialog_search, null);
 
-        //findviews
+        // findviews
         searchview = view.findViewById(R.id.searchview);
         RecyclerView recyclerview = view.findViewById(R.id.result_recyclerview);
 
         if (special_case.equals("Robotic workforce")) {
-            //filtering cards
+            // filtering cards
             for (Map.Entry<String, Card> entry : deck.entrySet()) {
                 Card card = entry.getValue();
 
@@ -112,7 +113,7 @@ public class ActivityResourceAddition extends AppCompatActivity implements Recyc
             }
             owner_required = true;
         } else {
-            //filtering cards
+            // filtering cards
             for (Map.Entry<String, Card> entry : deck.entrySet()) {
                 Card card = entry.getValue();
 
@@ -193,9 +194,7 @@ public class ActivityResourceAddition extends AppCompatActivity implements Recyc
     @Override public void onCardClick(int position) {
         Card card = card_list.get(position);
         if (special_case.equals("Robotic workforce")) {
-            card.playProductionBox();
-            //TODO Robotic workforce implementation
-            GameActions.sendCardEvent(new CardEventPacket("Robotic workforce", GameController.getCurrentPlayer().getName(), 0));
+            card.getProductionBox().playWithRoboticWorkforce(GameController.getPlayer(player), card);
         } else {
             EventScheduler.addEvent(new ResourceEvent((ResourceCard) card, amount));
         }

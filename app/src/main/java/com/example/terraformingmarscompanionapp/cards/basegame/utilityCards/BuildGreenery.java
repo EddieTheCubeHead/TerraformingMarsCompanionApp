@@ -1,6 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.utilityCards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.CardlikeOperation;
+import com.example.terraformingmarscompanionapp.game.cardClasses.CardlikeOperation;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;

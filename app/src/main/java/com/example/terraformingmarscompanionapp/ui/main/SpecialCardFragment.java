@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -105,7 +105,7 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
             return;
         }
 
-        com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
+        Card card = card_list.get(position);
 
         if (GameController.getGreeneryRound() && !(card instanceof BuildGreenery)) {
             Toast.makeText(getContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();

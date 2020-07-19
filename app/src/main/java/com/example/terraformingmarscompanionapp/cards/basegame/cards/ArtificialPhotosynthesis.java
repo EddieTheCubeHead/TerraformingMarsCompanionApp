@@ -1,14 +1,11 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import android.content.Context;
-
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
@@ -27,7 +24,7 @@ public final class ArtificialPhotosynthesis extends Card {
     public void initializePlayEvents(Player player) {
         ArrayList<String> choices = new ArrayList<>(Arrays.asList("Plants (x1)", "Energy (x2)"));
 
-        EventScheduler.addEvent(new MetadataChoiceEvent("Choose which production to raise:", choices, this, ChoiceDialog.USE_CASE.GENERAL));
+        EventScheduler.addEvent(new MetadataChoiceEvent("Choose which production to raise:", choices, this, ChoiceDialog.UseCase.GENERAL));
     }
 
     @Override

@@ -1,9 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -42,7 +42,7 @@ public final class ElectroCatapult extends Card implements ActionCard {
             EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 1));
         } else {
             EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resource to spend:",
-                    new ArrayList<>(Arrays.asList("Plants (x1)", "Steel (x1)")), this, ChoiceDialog.USE_CASE.GENERAL));
+                    new ArrayList<>(Arrays.asList("Plants (x1)", "Steel (x1)")), this, ChoiceDialog.UseCase.GENERAL));
         }
         EventScheduler.playNextEvent(GameController.getContext());
     }

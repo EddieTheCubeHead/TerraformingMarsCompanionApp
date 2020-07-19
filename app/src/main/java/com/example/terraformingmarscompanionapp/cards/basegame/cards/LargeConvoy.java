@@ -1,9 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -36,7 +36,7 @@ public final class LargeConvoy extends Card {
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
-                new ArrayList<>(Arrays.asList("Plants (x5)", "Animal (x4)")), this, ChoiceDialog.USE_CASE.GENERAL));
+                new ArrayList<>(Arrays.asList("Plants (x5)", "Animal (x4)")), this, ChoiceDialog.UseCase.GENERAL));
         EventScheduler.addEvent(new PromptEvent("Please draw 2 cards"));
         EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
     }

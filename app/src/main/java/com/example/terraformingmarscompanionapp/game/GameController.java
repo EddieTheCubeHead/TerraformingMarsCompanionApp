@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.FirstAction;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.FirstAction;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
@@ -165,12 +165,13 @@ public class GameController
      * @param name {@link String} the name of the wanted player
      * @return {@link Player} corresponding to the given name
      */
-    public static Player getPlayer(String name)
-    {
-        for (Player p : players)
-        {
-            if (p.getName() == name)
-                return p;
+    public static Player getPlayer(String name) {
+        for (Player player : players) {
+            if (player.getName().equals(name)) {
+                return player;
+            } else {
+                System.out.println(name + " " + player.getName());
+            }
         }
         return null;
     }

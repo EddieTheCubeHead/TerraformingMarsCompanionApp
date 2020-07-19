@@ -1,10 +1,8 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import android.content.Context;
-
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -29,7 +27,7 @@ public final class Sabotage extends Card {
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose which resource you want to sabotage",
-                new ArrayList<>(Arrays.asList("Titanium (x3), Steel (x4), Money (x7)")), this, ChoiceDialog.USE_CASE.GENERAL));
+                new ArrayList<>(Arrays.asList("Titanium (x3), Steel (x4), Money (x7)")), this, ChoiceDialog.UseCase.GENERAL));
     }
 
     @Override
@@ -41,13 +39,13 @@ public final class Sabotage extends Card {
             }
             if (data == 0) {
                 EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:",
-                        player_names, this, ChoiceDialog.USE_CASE.SABOTAGE_TITANIUM));
+                        player_names, this, ChoiceDialog.UseCase.SABOTAGE_TITANIUM));
             } else if (data == 1) {
                 EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:",
-                        player_names, this, ChoiceDialog.USE_CASE.SABOTAGE_STEEL));
+                        player_names, this, ChoiceDialog.UseCase.SABOTAGE_STEEL));
             } else {
                 EventScheduler.addEvent(new MetadataChoiceEvent("Choose your target:",
-                        player_names, this, ChoiceDialog.USE_CASE.SABOTAGE_MONEY));
+                        player_names, this, ChoiceDialog.UseCase.SABOTAGE_MONEY));
             }
             EventScheduler.playNextEvent(GameController.getContext());
 

@@ -2,8 +2,8 @@ package com.example.terraformingmarscompanionapp.game;
 
 import android.util.Log;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Award;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.cards.basegame.awards.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.cards.*;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.*;
@@ -870,10 +870,12 @@ class DeckConstructor {
         corporations.put(united_nations_mars_initiative.getName(), united_nations_mars_initiative);
 
         // Adding corporate era corporations:
-        if (corporate_era) {
-            //TODO add corporate era corps
-        } else if (extra_corporations) {
+        if (corporate_era || extra_corporations) {
+            Card saturn_systems = new SaturnSystems(game);
+            corporations.put(saturn_systems.getName(), saturn_systems);
 
+            Card teractor = new Teractor(game);
+            corporations.put(teractor.getName(), teractor);
         }
 
         // Adding prelude corporations:

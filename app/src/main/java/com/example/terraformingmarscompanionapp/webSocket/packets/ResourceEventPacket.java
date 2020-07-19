@@ -1,7 +1,7 @@
 package com.example.terraformingmarscompanionapp.webSocket.packets;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ResourceCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
 /**

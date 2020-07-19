@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -30,7 +30,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
     private SearchView searchview;
     private GameController controller;
     private Game game;
-    private ArrayList<com.example.terraformingmarscompanionapp.cardSubclasses.Card> card_list = new ArrayList<>();
+    private ArrayList<Card> card_list = new ArrayList<>();
     private RecyclerAdapter adapter;
     RecyclerView recyclerview;
     RecyclerView.LayoutManager layout_manager;
@@ -107,9 +107,9 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             Toast.makeText(getContext(), "Can only build greeneries!", Toast.LENGTH_SHORT).show();
         }
 
-        com.example.terraformingmarscompanionapp.cardSubclasses.Card card = card_list.get(position);
+        Card card = card_list.get(position);
 
-        if (card instanceof com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard) {
+        if (card instanceof ActionCard) {
             Boolean validity = ((ActionCard) card).getActionValidity();
             String action_name = ((ActionCard) card).getActionName();
 

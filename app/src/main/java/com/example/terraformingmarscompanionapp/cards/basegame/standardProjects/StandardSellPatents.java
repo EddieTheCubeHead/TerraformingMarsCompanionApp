@@ -1,12 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.standardProjects;
 
-import android.content.Context;
-
-import com.example.terraformingmarscompanionapp.cardSubclasses.StandardProject;
+import com.example.terraformingmarscompanionapp.game.cardClasses.StandardProject;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataIntegerEvent;
 
 public final class StandardSellPatents extends StandardProject {

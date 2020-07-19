@@ -1,9 +1,9 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
-import com.example.terraformingmarscompanionapp.cardSubclasses.Card;
-import com.example.terraformingmarscompanionapp.cardSubclasses.ActionCard;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Tag;
-import com.example.terraformingmarscompanionapp.cardSubclasses.Type;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
+import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -37,7 +37,7 @@ public final class BusinessNetwork extends Card implements ActionCard {
     public void cardAction() {
         EventScheduler.addEvent(new ActionUseEvent());
         if (owner_player.getResources().getMoney() >= owner_player.getModifiers().getCardResearchCostModifier() + 3) {
-            EventScheduler.addEvent(new MetadataChoiceEvent("Did you buy the card?", new ArrayList<>(Arrays.asList("Yes", "No")), this, ChoiceDialog.USE_CASE.GENERAL));
+            EventScheduler.addEvent(new MetadataChoiceEvent("Did you buy the card?", new ArrayList<>(Arrays.asList("Yes", "No")), this, ChoiceDialog.UseCase.GENERAL));
         } else {
             EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
             EventScheduler.addEvent(new PromptEvent("Not enough money to buy the card. Action used to look at a card."));

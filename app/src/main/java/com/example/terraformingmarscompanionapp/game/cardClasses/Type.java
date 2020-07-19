@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.cardSubclasses;
+package com.example.terraformingmarscompanionapp.game.cardClasses;
 
 /**
  * An enum to represent the different types a {@link Card} childclass can be
