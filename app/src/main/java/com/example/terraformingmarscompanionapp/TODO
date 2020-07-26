@@ -13,14 +13,18 @@ Road to 1.0:
 5 (Done): Implement javadoc in all game logic classes.
 6 (Done): Clean up card system. The game only needs one deck, do everything else with filtering.
 7 (Done): Clean up the Player class. Move resources to a data class with small utility functions?
+8 (Done): Finish the scoring system
 
-8/9: Finish the scoring system
-8/9: Hex UI improvement by Softgitron
-10: Implement the rest of Corporate era, Preludes and Hellas & Elysium functionality
+9/10: Hex UI improvement by Softgitron
+9/10: Implement the rest of Corporate era, Preludes and Hellas & Elysium functionality and improve
+      code functionality
     - Robotic workforce (probably needs a new type of event)
     - Viral enhancers (imitate manutech and aquifer pumping)
     - Map selection in game creation
     - Implement all preludes
+    - Implement algorithm to check adjacent owned place requirements in advance (greeneries, mining area)
+    - Use Exceptions to deliver more precise info about why an action is not possible
+    - Serializing game (via GameState -object) and undo move -button
 11: Server functionality improvements
     - Error handling for losing connection
     - Email functionality for user creation and password handling
@@ -29,7 +33,6 @@ Road to 1.0:
     - Ability to observe other people's resources
     - Condense the rest of ingame UI views into a single Activity with multiple fragments
     - Ease of use : greeneries and raising temperature from main view by clicking resources
-    - Use Exceptions to deliver more precise info about why an action is not possible
 13: Anything urgent that comes up
 14: Cleanup the best I can
     - Standardize Events and Packets
