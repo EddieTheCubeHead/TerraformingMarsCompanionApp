@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class Psychrophiles extends ResourceCard implements ActionCard {
-    public Psychrophiles(Game game) {
-        super(Type.BLUE, game);
+    public Psychrophiles() {
+        super(Type.BLUE);
         name = "Psychrophiles";
         price = 2;
         tags.add(Tag.MICROBE);

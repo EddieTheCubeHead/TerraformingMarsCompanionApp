@@ -13,18 +13,17 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class IndustrialCenter extends Card implements ActionCard {
-    public IndustrialCenter(Game game) {
-        super(Type.BLUE, game);
+    public IndustrialCenter() {
+        super(Type.BLUE);
         name = "Industrial center";
         price = 4;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.INDUSTRIAL_CENTER, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.INDUSTRIAL_CENTER, game));
     }
 
     @Override

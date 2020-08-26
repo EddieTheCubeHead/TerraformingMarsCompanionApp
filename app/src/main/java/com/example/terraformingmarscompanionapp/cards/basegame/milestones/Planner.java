@@ -4,8 +4,8 @@ import com.example.terraformingmarscompanionapp.game.cardClasses.Milestone;
 import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class Planner extends Milestone {
-    public Planner(Game game) {
-        super(game);
+    public Planner() {
+        super();
         name = "Planner";
         requirements.setMinCardsInHand(16);
     }

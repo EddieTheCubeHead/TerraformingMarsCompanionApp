@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataIntegerEvent;
 
 public final class PowerInfrastructure extends Card implements ActionCard {
-    public PowerInfrastructure(Game game) {
-        super(Type.BLUE, game);
+    public PowerInfrastructure() {
+        super(Type.BLUE);
         name = "Power infrastructure";
         price = 4;
         tags.add(Tag.ENERGY);

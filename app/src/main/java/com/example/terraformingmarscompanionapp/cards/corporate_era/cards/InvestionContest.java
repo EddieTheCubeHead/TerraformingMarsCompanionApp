@@ -10,13 +10,12 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class InvestionContest extends Card {
-    public InvestionContest(Game game) {
-        super(Type.RED, game);
+    public InvestionContest() {
+        super(Type.RED);
         name = "Investion contest";
         price = 2;
         tags.add(Tag.SPACE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override

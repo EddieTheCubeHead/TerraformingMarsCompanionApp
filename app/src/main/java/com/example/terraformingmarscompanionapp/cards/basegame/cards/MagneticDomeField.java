@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MagneticDomeField extends Card {
-    public MagneticDomeField(Game game) {
-        super(Type.GREEN, game);
+    public MagneticDomeField() {
+        super(Type.GREEN);
         name = "Magnetic dome field";
         price = 5;
         tags.add(Tag.BUILDING);

@@ -9,12 +9,11 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class CaretakerContract extends Card implements ActionCard {
-    public CaretakerContract(Game game) {
-        super(Type.BLUE, game);
+    public CaretakerContract() {
+        super(Type.BLUE);
         name = "Caretaker contract";
         price = 3;
         requirements.setMinTemperature(0);
-        owner_game = game;
     }
 
     @Override

@@ -7,14 +7,14 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class TundraFarming extends Card {
-    public TundraFarming(Game game) {
-        super(Type.GREEN, game);
+    public TundraFarming() {
+        super(Type.GREEN);
         name = "Tundra farming";
         price = 16;
         tags.add(Tag.PLANT);
         requirements.setMinTemperature(-6);
         victory_points = 2;
-        owner_game = game;
+        Card.game = game;
     }
 
     @Override
@@ -22,7 +22,7 @@ public final class TundraFarming extends Card {
         player.getResources().setPlants(player.getResources().getPlants() + 1);
         production_box.setPlantsProduction(1);
         production_box.setMoneyProduction(2);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

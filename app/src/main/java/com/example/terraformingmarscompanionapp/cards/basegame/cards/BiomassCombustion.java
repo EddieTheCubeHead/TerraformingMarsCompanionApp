@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
@@ -9,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class BiomassCombustion extends Card {
-    public BiomassCombustion(Game game) {
-        super(Type.GREEN, game);
+    public BiomassCombustion() {
+        super(Type.GREEN);
         name = "Biomass combustion";
         price = 4;
         tags.add(Tag.ENERGY);
@@ -25,7 +26,7 @@ public final class BiomassCombustion extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         production_box.setStealPlantsProduction(1);
         production_box.setEnergyProduction(2);
         super.playWithMetadata(player, data);

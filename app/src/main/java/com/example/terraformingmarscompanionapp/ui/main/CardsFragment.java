@@ -21,6 +21,7 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,12 +37,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
     RecyclerView.LayoutManager layout_manager;
 
     //otettu
-    @Override public View onCreateView
-    (
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    )
-    {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //default: return inflater.inflate(R.layout.fragment_second, container, false);
         return inflater.inflate(R.layout.activity_search, container, false);
     }
@@ -72,7 +68,7 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
         recyclerview = view.findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
 
-        adapter = new RecyclerAdapter(card_list, this, this); //this koska tämä luokka implementoi metodit
+        adapter = new RecyclerAdapter(this, this); //this koska tämä luokka implementoi metodit
         recyclerview.setAdapter(adapter);
 
         layout_manager = new LinearLayoutManager(getContext()); //en tiedä onko oikea konteksti
@@ -118,6 +114,13 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
                 Toast.makeText(getContext(), String.format("Action '%s' not usable.\nInsufficient requirements or already used", action_name), Toast.LENGTH_SHORT).show();
             } else {
                 // TODO event to handle UI better?
+
+                try {
+                    GameController.saveGame();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 EventScheduler.addEvent(new ActionUseEvent());
                 ((ActionCard) card).cardAction();
                 Toast.makeText(getContext(), String.format("Action '%s' used", action_name), Toast.LENGTH_SHORT).show();
@@ -125,11 +128,15 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
             update();
         }
 
-        else Log.i("non-interactable card","Pelaajan korttilistassa kortilla ei ollut CardActionia");
+        else Log.i("CardsFragment","Trying to use action on a card with no action attached");
     }
 
     @Override public boolean onCardLongClick(int position) { return false; }
 
     //updates by refiltering
-    @Override public void update() { adapter.getPlayedFilter().filter(""); }
+    @Override public void update() {
+        game = GameController.getGame();
+        adapter.getPlayedFilter().filter("");
+        Log.i("CardsFragment", "Fragment updated");
+    }
 }

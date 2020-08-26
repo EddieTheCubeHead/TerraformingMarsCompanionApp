@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -12,8 +13,8 @@ import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 
 public final class Ants extends ResourceCard implements ActionCard {
-    public Ants(Game game) {
-        super(Type.BLUE, game);
+    public Ants() {
+        super(Type.BLUE);
         name = "Ants";
         price = 9;
         tags.add(Tag.MICROBE);
@@ -22,8 +23,8 @@ public final class Ants extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 

@@ -4,6 +4,7 @@ package com.example.terraformingmarscompanionapp.ui.main;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +31,9 @@ import java.util.List;
  * An adapter that filters and updates a recyclerview that contains cards.
  */
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable
-{
-    private ArrayList<Card> card_list;
-    private ArrayList<Card> card_list_full;
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
+
+    private ArrayList<Card> card_list = new ArrayList<>(GameController.getGame().getAllCards().values());
 
     private OnCardListener onCardListener;
     private OnCardLongListener onCardLongListener;
@@ -67,14 +67,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             tag4_view = card_inflated.findViewById(R.id.tag4);
 
 
-            //card typing is done by tinting an imageview
+            // card typing is done by tinting an imageview
             type_view_mid = card_inflated.findViewById(R.id.type_image_mid);
             token_view = card_inflated.findViewById(R.id.token_text);
 
-            //short click is implemented in the calling class
+            // short click is implemented in the calling class
             card_inflated.setOnClickListener(this);
             this.on_card_listener = onCardListener;
-            //same for the long click
+
+            // same for the long click
             card_inflated.setOnLongClickListener(this);
             this.on_card_long_listener = onCardLongListener;
         }
@@ -90,22 +91,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
-    public interface OnCardListener
-    {
+    public interface OnCardListener {
         void onCardClick(int position);
     }
 
-    public interface OnCardLongListener
-    {
+    public interface OnCardLongListener {
         boolean onCardLongClick(int position);
     }
 
 
-    public RecyclerAdapter(ArrayList<Card> card_list, OnCardListener onCardListener, OnCardLongListener onCardLongListener)
-    {
-        this.card_list = card_list;
-        card_list_full = new ArrayList<>(card_list);
-
+    public RecyclerAdapter(OnCardListener onCardListener, OnCardLongListener onCardLongListener) {
         this.onCardListener = onCardListener;
         this.onCardLongListener = onCardLongListener;
     }
@@ -130,14 +125,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Integer requirement = card.getRequirementInt();
 
         //setting the layout's resources at reload.
-        Integer tag1, tag2, tag3, tag4;
         ArrayList<Integer> tags = card.getTagIntegers();
+
         try {
             holder.tag1_view.setImageResource(tags.get(0));
             holder.tag2_view.setImageResource(tags.get(1));
             holder.tag3_view.setImageResource(tags.get(2));
             holder.tag4_view.setImageResource(tags.get(3));
-        } catch (IndexOutOfBoundsException e) {}
+        } catch (IndexOutOfBoundsException ignored) {}
 
         holder.card_name_view.setText(card_name);
         holder.card_credit_view.setText(card.getPrice().toString());
@@ -164,39 +159,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.token_view.setText(card.getResourceText());
     }
 
-    private Filter filter = new Filter()
+    private Filter play_search_filter = new Filter()
     {
+        private List<Type> valid_types = Arrays.asList(Type.RED, Type.BLUE, Type.GREEN);
+
         @Override
         protected FilterResults performFiltering(CharSequence search_string)
         {
+            ArrayList<Card> card_list_full = new ArrayList<>(GameController.getGame().getAllCards().values());
+
             List<Card> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();
 
-            //clause for performance
-            if (search_string == null || search_string.length() == 0)
-            {
-                filtered_list.addAll(card_list_full);
-                results.values = filtered_list;
-                return results;
-            }
-
             String[] keywords = search_string.toString().toLowerCase().trim().split(" ");
-            for (Card card : card_list_full)
-            {
-                //removing owned cards from the buy menu
-                if (card.getOwner() != null) {
+            for (Card card : card_list_full) {
+                // removing owned cards and non-valid typed cards from the buy menu
+                if (card.getOwner() != null || !valid_types.contains(card.getType())) {
                     continue;
                 }
 
                 String card_name = card.getName();
-                String regex = ".*";
-                for (String word : keywords)
-                {
-                    regex += word + ".*";
+                StringBuilder regex = new StringBuilder(".*");
+                for (String word : keywords) {
+                    regex.append(word).append(".*");
                 }
 
-                if (card_name.toLowerCase().matches(regex))
-                {
+                if (card_name.toLowerCase().matches(regex.toString())) {
                     filtered_list.add(card);
                 }
             }
@@ -222,6 +210,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Card> card_list_full = new ArrayList<>(GameController.getGame().getAllCards().values());
             List<Card> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();
 
@@ -247,34 +236,26 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     };
 
-    //filters to GameController.displayplayer 's cards.
+    // filters to GameController.displayplayer 's cards.
     private Filter played_filter = new Filter()
     {
         @Override
         protected FilterResults performFiltering(CharSequence search_string)
         {
+            ArrayList<Card> card_list_full = new ArrayList<>(GameController.getGame().getAllCards().values());
             Player display_player = GameController.getDisplayPlayer();
 
             List<Card> filtered_list = new ArrayList<>();
             FilterResults results = new FilterResults();
 
-            String[] keywords = search_string.toString().toLowerCase().trim().split(" ");
             for (Card card : card_list_full)
             {
-                if (card.getOwner() != display_player)
+                if (card.getOwner() == null || !card.getOwner().getName().equals(display_player.getName())) {
                     continue;
-
-                String card_name = card.getName();
-                String regex = ".*";
-                for (String word : keywords)
-                {
-                    regex += word + ".*";
                 }
 
-                if (card_name.toLowerCase().matches(regex))
-                {
-                    filtered_list.add(card);
-                }
+                Log.i("RecyclerAdapter", "Added a card to played filter, owner: " + display_player.getName() + " name: " + card.getName());
+                filtered_list.add(card);
             }
 
             results.values = filtered_list;
@@ -300,9 +281,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return card_list.get(position);
     }
 
-    public Filter getFilter() { return filter; }
+    public ArrayList<Card> getCardList() {
+        return card_list;
+    }
 
-    public Filter getPlayedFilter() { return played_filter; }
+    public Filter getFilter() {
+        return play_search_filter;
+    }
 
-    public Filter getSpecialFilter() { return special_filter; }
+    public Filter getPlayedFilter() {
+        return played_filter;
+    }
+
+    public Filter getSpecialFilter() {
+        return special_filter;
+    }
+
 }

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class StripMine extends Card {
-    public StripMine(Game game) {
-        super(Type.GREEN, game);
+    public StripMine() {
+        super(Type.GREEN);
         name = "Strip mine";
         price = 25;
         tags.add(Tag.BUILDING);
@@ -20,8 +20,8 @@ public final class StripMine extends Card {
         production_box.setEnergyProduction(-2);
         production_box.setSteelProduction(2);
         production_box.setTitaniumProduction(1);
-        owner_game.raiseOxygen(player);
-        owner_game.raiseOxygen(player);
+        game.raiseOxygen(player);
+        game.raiseOxygen(player);
         super.playWithMetadata(player, data);
     }
 }

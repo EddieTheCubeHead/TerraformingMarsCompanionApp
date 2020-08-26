@@ -6,8 +6,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MicroMills extends Card {
-    public MicroMills(Game game) {
-        super(Type.GREEN, game);
+    public MicroMills() {
+        super(Type.GREEN);
         name = "Micro-mills";
         price = 3;
     }

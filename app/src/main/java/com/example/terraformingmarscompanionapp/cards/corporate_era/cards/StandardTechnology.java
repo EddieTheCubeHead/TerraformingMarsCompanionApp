@@ -8,12 +8,11 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class StandardTechnology extends Card implements EffectCard {
-    public StandardTechnology(Game game) {
-        super(Type.BLUE, game);
+    public StandardTechnology() {
+        super(Type.BLUE);
         name = "Standard technology";
         price = 6;
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override

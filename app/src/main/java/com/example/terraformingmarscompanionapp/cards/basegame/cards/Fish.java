@@ -13,8 +13,8 @@ import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class Fish extends ResourceCard implements ActionCard {
-    public Fish(Game game) {
-        super(Type.BLUE, game);
+    public Fish() {
+        super(Type.BLUE);
         name = "Fish";
         price = 9;
         tags.add(Tag.ANIMAL);
@@ -31,7 +31,7 @@ public final class Fish extends ResourceCard implements ActionCard {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setStealPlantsProduction(1);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 

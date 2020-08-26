@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class IndenturnedWorkers extends Card {
-    public IndenturnedWorkers(Game game) {
-        super(Type.RED, game);
+    public IndenturnedWorkers() {
+        super(Type.RED);
         name = "Indenturned workers";
         price = 0;
         tags.add(Tag.EVENT);
@@ -19,7 +19,7 @@ public final class IndenturnedWorkers extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
 
         player.getModifiers().setNextCardDiscount(8);
         super.playWithMetadata(player, data);

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class FueledGenerators extends Card {
-    public FueledGenerators(Game game) {
-        super(Type.GREEN, game);
+    public FueledGenerators() {
+        super(Type.GREEN);
         name = "Fueled generators";
         price = 1;
         tags.add(Tag.ENERGY);

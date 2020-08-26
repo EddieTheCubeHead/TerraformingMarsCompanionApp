@@ -1,12 +1,13 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.milestones;
 
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Milestone;
 import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class Terraformer extends Milestone {
-    public Terraformer(Game game) {
-        super(game);
+    public Terraformer() {
+        super();
         name = "Terraformer";
-        requirements.setMinTr(owner_game.modifiers.getTurmoil() ? 25 : 35);
+        requirements.setMinTr(Card.game.modifiers.getTurmoil() ? 25 : 35);
     }
 }

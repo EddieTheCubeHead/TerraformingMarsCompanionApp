@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class MartianRails extends Card implements ActionCard {
-    public MartianRails(Game game) {
-        super(Type.BLUE, game);
+    public MartianRails() {
+        super(Type.BLUE);
         name = "Martian rails";
         price = 13;
         tags.add(Tag.BUILDING);
@@ -25,7 +25,7 @@ public final class MartianRails extends Card implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         owner_player.getResources().setEnergy(owner_player.getResources().getEnergy() - 1);
-        owner_player.getResources().setMoney(owner_player.getResources().getMoney() + owner_game.getCitiesOnMars());
+        owner_player.getResources().setMoney(owner_player.getResources().getMoney() + game.getCitiesOnMars());
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

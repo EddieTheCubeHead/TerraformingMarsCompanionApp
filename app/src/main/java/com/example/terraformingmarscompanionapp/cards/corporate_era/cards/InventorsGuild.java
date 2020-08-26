@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class InventorsGuild extends Card implements ActionCard {
-    public InventorsGuild(Game game) {
-        super(Type.GREEN, game);
+    public InventorsGuild() {
+        super(Type.GREEN);
         name = "Inventors' guild";
         price = 9;
         tags.add(Tag.SCIENCE);

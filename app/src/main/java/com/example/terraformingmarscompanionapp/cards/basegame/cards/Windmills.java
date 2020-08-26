@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Windmills extends Card {
-    public Windmills(Game game) {
-        super(Type.GREEN, game);
+    public Windmills() {
+        super(Type.GREEN);
         name = "Windmills";
         price = 6;
         tags.add(Tag.ENERGY);
@@ -20,7 +20,7 @@ public final class Windmills extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(1);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

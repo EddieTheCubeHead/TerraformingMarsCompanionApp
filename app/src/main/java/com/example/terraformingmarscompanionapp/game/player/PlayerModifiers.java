@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.game.player;
 
+import java.io.Serializable;
+
 /**
  * A dataclass to host the modifiers associated with a player. Associated with{@link Player} via
  * composition.
@@ -8,7 +10,7 @@ package com.example.terraformingmarscompanionapp.game.player;
  * @version 0.2
  * @since 0.2
  */
-public class PlayerModifiers {
+public class PlayerModifiers implements Serializable {
 
     // Discounts
     private Integer card_discount = 0;

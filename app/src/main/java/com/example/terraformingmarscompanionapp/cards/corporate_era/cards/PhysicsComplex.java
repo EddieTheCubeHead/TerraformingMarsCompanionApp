@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class PhysicsComplex extends ResourceCard implements ActionCard {
-    public PhysicsComplex(Game game) {
-        super(Type.BLUE, game);
+    public PhysicsComplex() {
+        super(Type.BLUE);
         name = "Physics complex";
         price = 12;
         tags.add(Tag.BUILDING);

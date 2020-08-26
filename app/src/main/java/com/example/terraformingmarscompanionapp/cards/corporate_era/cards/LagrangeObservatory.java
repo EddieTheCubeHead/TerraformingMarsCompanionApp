@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class LagrangeObservatory extends Card {
-    public LagrangeObservatory(Game game) {
-        super(Type.GREEN, game);
+    public LagrangeObservatory() {
+        super(Type.GREEN);
         name = "Lagrange obsrevatory";
         price = 9;
         tags.add(Tag.SCIENCE);
@@ -27,7 +27,7 @@ public final class LagrangeObservatory extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

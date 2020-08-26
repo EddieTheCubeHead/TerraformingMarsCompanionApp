@@ -12,8 +12,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class AiCentral extends Card implements ActionCard {
-    public AiCentral(Game game) {
-        super(Type.BLUE, game);
+    public AiCentral() {
+        super(Type.BLUE);
         name = "AI centeral";
         price = 21;
         requirements.setMinScienceTags(3);
@@ -25,7 +25,7 @@ public final class AiCentral extends Card implements ActionCard {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(-1);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 

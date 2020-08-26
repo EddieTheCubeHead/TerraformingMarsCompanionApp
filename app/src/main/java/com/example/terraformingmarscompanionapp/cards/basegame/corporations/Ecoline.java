@@ -7,11 +7,10 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Ecoline extends Card {
-    public Ecoline(Game game) {
-        super(Type.CORPORATION, game);
+    public Ecoline() {
+        super(Type.CORPORATION);
         name = "Ecoline";
         tags.add(Tag.PLANT);
-        owner_game = game;
     }
 
     @Override

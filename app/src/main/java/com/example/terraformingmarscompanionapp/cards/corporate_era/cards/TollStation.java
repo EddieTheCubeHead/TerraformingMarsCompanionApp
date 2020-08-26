@@ -8,12 +8,11 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class TollStation extends Card {
-    public TollStation(Game game) {
-        super(Type.GREEN, game);
+    public TollStation() {
+        super(Type.GREEN);
         name = "Toll station";
         price = 12;
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override

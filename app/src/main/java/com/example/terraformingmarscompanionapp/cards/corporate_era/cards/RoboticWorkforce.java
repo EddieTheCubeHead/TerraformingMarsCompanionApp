@@ -13,8 +13,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 
 //TODO system to play this fluidly
 public final class RoboticWorkforce extends Card {
-    public RoboticWorkforce(Game game) {
-        super(Type.GREEN, game);
+    public RoboticWorkforce() {
+        super(Type.GREEN);
         name = "Robotic workforce";
         price = 9;
         tags.add(Tag.SCIENCE);

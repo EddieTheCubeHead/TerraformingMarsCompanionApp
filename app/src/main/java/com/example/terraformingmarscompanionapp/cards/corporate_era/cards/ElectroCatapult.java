@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class ElectroCatapult extends Card implements ActionCard {
-    public ElectroCatapult(Game game) {
-        super(Type.BLUE, game);
+    public ElectroCatapult() {
+        super(Type.BLUE);
         name = "Electro catapult";
         price = 17;
         tags.add(Tag.BUILDING);
@@ -30,7 +30,7 @@ public final class ElectroCatapult extends Card implements ActionCard {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(-1);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 

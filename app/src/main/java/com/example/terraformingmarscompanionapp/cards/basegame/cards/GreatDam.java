@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class GreatDam extends Card {
-    public GreatDam(Game game) {
-        super(Type.GREEN, game);
+    public GreatDam() {
+        super(Type.GREEN);
         name = "Great dam";
         price = 12;
         tags.add(Tag.ENERGY);
@@ -20,7 +20,7 @@ public final class GreatDam extends Card {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setEnergyProduction(2);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

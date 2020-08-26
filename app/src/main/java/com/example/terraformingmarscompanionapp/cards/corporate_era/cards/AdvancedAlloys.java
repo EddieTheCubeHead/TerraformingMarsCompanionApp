@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class AdvancedAlloys extends Card {
-    public AdvancedAlloys(Game game) {
-        super(Type.BLUE, game);
+    public AdvancedAlloys() {
+        super(Type.BLUE);
         name = "Advanced alloys";
         price = 9;
         tags.add(Tag.SCIENCE);

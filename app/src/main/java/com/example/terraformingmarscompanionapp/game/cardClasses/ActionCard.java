@@ -9,7 +9,7 @@ import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacke
  * Interface to be implemented by {@link Card} instances that represent cards with playable actions.
  *
  * @author Eetu Asikainen
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
 public interface ActionCard {

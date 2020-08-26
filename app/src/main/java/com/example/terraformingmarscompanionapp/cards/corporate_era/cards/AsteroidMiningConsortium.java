@@ -9,8 +9,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class AsteroidMiningConsortium extends Card {
-    public AsteroidMiningConsortium(Game game) {
-        super(Type.GREEN, game);
+    public AsteroidMiningConsortium() {
+        super(Type.GREEN);
         name = "Asteroid mining consortium";
         price = 13;
         tags.add(Tag.JOVIAN);
@@ -28,7 +28,7 @@ public final class AsteroidMiningConsortium extends Card {
     {
         production_box.setStealTitaniumProduction(data);
         production_box.setTitaniumProduction(1);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

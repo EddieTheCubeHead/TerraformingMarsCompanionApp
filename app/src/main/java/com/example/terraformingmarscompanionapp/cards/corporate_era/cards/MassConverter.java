@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MassConverter extends Card {
-    public MassConverter(Game game) {
-        super(Type.BLUE, game);
+    public MassConverter() {
+        super(Type.BLUE);
         name = "Mass conventer";
         price = 8;
         tags.add(Tag.SCIENCE);

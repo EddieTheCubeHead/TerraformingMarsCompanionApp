@@ -14,8 +14,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class WaterImportFromEurope extends Card implements ActionCard {
-    public WaterImportFromEurope(Game game) {
-        super(Type.BLUE, game);
+    public WaterImportFromEurope() {
+        super(Type.BLUE);
         name = "Water import from europe";
         price = 25;
         tags.add(Tag.SPACE);
@@ -24,15 +24,15 @@ public final class WaterImportFromEurope extends Card implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 
     @Override
     public void cardAction() {
         EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
-        EventScheduler.addEvent(new CardCostEvent(owner_game.getDeck().get("Water import from europe ghost")));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
+        EventScheduler.addEvent(new CardCostEvent(game.getDeck().get("Water import from europe ghost")));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

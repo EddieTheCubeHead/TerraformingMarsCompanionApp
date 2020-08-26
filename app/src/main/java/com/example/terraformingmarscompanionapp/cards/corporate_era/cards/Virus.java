@@ -17,13 +17,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class Virus extends Card {
-    public Virus(Game game) {
-        super(Type.RED, game);
+    public Virus() {
+        super(Type.RED);
         name = "Virus";
         price = 1;
         tags.add(Tag.MICROBE);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override

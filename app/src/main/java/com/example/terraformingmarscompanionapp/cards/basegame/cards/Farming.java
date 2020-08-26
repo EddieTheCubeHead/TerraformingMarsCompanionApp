@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Farming extends Card {
-    public Farming(Game game) {
-        super(Type.GREEN, game);
+    public Farming() {
+        super(Type.GREEN);
         name = "Farming";
         price = 16;
         tags.add(Tag.PLANT);
@@ -21,7 +21,7 @@ public final class Farming extends Card {
         player.getResources().setPlants(player.getResources().getPlants() + 2);
         production_box.setPlantsProduction(2);
         production_box.setMoneyProduction(2);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

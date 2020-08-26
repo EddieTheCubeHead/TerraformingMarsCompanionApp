@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class OpenCity extends Card {
-    public OpenCity(Game game) {
-        super(Type.GREEN, game);
+    public OpenCity() {
+        super(Type.GREEN);
         name = "Open city";
         price = 23;
         tags.add(Tag.BUILDING);
@@ -20,13 +20,12 @@ public final class OpenCity extends Card {
         requirements.setMinOxygen(12);
         requirements.setMinEnergyProduction(1);
         victory_points = 1;
-        owner_game = game;
     }
 
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, game));
     }
 
     @Override
@@ -34,7 +33,7 @@ public final class OpenCity extends Card {
         production_box.setEnergyProduction(-1);
         production_box.setMoneyProduction(4);
         player.getResources().setPlants(player.getResources().getPlants() + 2);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

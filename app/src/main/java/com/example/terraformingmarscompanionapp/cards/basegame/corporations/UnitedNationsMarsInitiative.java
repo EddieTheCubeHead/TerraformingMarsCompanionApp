@@ -11,11 +11,10 @@ import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class UnitedNationsMarsInitiative extends Card implements ActionCard {
-    public UnitedNationsMarsInitiative(Game game) {
-        super(Type.CORPORATION, game);
+    public UnitedNationsMarsInitiative() {
+        super(Type.CORPORATION);
         name = "UNMI";
         tags.add(Tag.EARTH);
-        owner_game = game;
     }
 
     @Override

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class NitrophilicMoss extends Card {
-    public NitrophilicMoss(Game game) {
-        super(Type.GREEN, game);
+    public NitrophilicMoss() {
+        super(Type.GREEN);
         name = "Nitrophilic moss";
         price = 8;
         tags.add(Tag.PLANT);

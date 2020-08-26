@@ -22,7 +22,6 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 public class ResourcesFragment extends Fragment implements GameController.GameUpdateListener {
 
     private Player player = GameController.getDisplayPlayer();
-    private Game game = GameController.getGame();
 
     //Paikalliset muuttujat muutosmoodiin
     private Integer multiplier;
@@ -102,10 +101,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     private TextView textview_heat_production;
 
 
-    @Override public View onCreateView(
-            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState
-    )
-    {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         editmode = false;
         multiplier = 1;
 
@@ -488,6 +484,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
                 player.changeTerraformingRating(terraformingRating - player.getTerraformingRating());
                 */
 
+                Game game = GameController.getGame();
                 game.rawChangeTemperature(temperature - game.getGlobalTemperature());
                 game.rawChangeOxygen(oxygen - game.getGlobalOxygen());
 
@@ -732,6 +729,7 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
     //Setting the numbers to the current player's resources, used for updating the view
     private void setResourceAmounts()
     {
+        Game game = GameController.getGame();
         player = GameController.getDisplayPlayer();
 
         try {
@@ -762,6 +760,8 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
     // refreshing the local variables for editmode
     private void refreshEditVariables() {
+        Game game = GameController.getGame();
+
         terraformingRating = player.getResources().getTerraformingRating();
 
         money = player.getResources().getMoney();

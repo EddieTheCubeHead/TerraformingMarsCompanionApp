@@ -11,12 +11,11 @@ import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class MiningExpedition extends Card {
-    public MiningExpedition(Game game) {
-        super(Type.RED, game);
+    public MiningExpedition() {
+        super(Type.RED);
         name = "Mining expedition";
         price = 12;
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override
@@ -32,7 +31,7 @@ public final class MiningExpedition extends Card {
             target.getResources().setPlants(target.getResources().getPlants() - 2);
         }
         player.getResources().setSteel(player.getResources().getSteel() + 2);
-        owner_game.raiseOxygen(player);
+        game.raiseOxygen(player);
         super.playWithMetadata(player, data);
     }
 }

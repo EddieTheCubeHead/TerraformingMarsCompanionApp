@@ -9,8 +9,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class HeatTrappers extends Card {
-    public HeatTrappers(Game game) {
-        super(Type.GREEN, game);
+    public HeatTrappers() {
+        super(Type.GREEN);
         name = "Heat trappers";
         price = 6;
         tags.add(Tag.ENERGY);

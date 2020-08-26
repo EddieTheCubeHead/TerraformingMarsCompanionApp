@@ -2,7 +2,11 @@ package com.example.terraformingmarscompanionapp.game.player;
 
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.GameResourceType;
+
+import java.io.Serializable;
 
 /**
  * A dataclass to host the resources and productions associated with a player. Associated with
@@ -12,7 +16,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
  * @version 0.2
  * @since 0.2
  */
-public class PlayerResources {
+public class PlayerResources implements Serializable {
 
     // Storing the player for triggering Manutech and UNMI effects
     private Player player;
@@ -72,8 +76,11 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of money a {@link Player} has
      */
-    public void setMoney(Integer amount) {
-        money = amount > 0 ? amount : 0;
+    public void setMoney(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.MEGACREDIT, -amount);
+        }
+        money = amount;
     }
 
     /**
@@ -86,13 +93,17 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of money production a {@link Player} has
      */
-    public void setMoneyProduction(Integer amount) {
+    public void setMoneyProduction(Integer amount) throws InvalidResourcesException {
+
+        if (amount < -5) {
+            throw new InvalidResourcesException(GameResourceType.MEGACREDIT_PRODUCTION, -(amount+5));
+        }
 
         // Triggering the unique effect of Manutech corporation
         if (amount > money_production && player.getModifiers().getResourcesFromRaisingProduction()) {
             money += (amount - money_production);
         }
-        money_production = amount > -5 ? amount : -5;
+        money_production = amount;
     }
 
 
@@ -107,8 +118,11 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of steel a {@link Player} has
      */
-    public void setSteel(Integer amount) {
-        steel = amount > 0 ? amount : 0;
+    public void setSteel(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.STEEL, -amount);
+        }
+        steel = amount;
     }
 
     /**
@@ -121,12 +135,17 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of steel production a {@link Player} has
      */
-    public void setSteelProduction(Integer amount) {
+    public void setSteelProduction(Integer amount) throws InvalidResourcesException {
+
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.STEEL_PRODUCTION, -amount);
+        }
+
         // Triggering the unique effect of Manutech corporation
         if (amount > steel && player.getModifiers().getResourcesFromRaisingProduction()) {
             steel += (amount - steel_production);
         }
-        steel_production = amount > 0 ? amount : 0;
+        steel_production = amount;
     }
 
 
@@ -141,8 +160,12 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of titanium a {@link Player} has
      */
-    public void setTitanium(Integer amount) {
-        titanium = amount > 0 ? amount : 0;
+    public void setTitanium(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.TITANIUM, -amount);
+        }
+
+        titanium = amount;
     }
 
     /**
@@ -155,12 +178,16 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of titanium production a {@link Player} has
      */
-    public void setTitaniumProduction(Integer amount) {
+    public void setTitaniumProduction(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.TITANIUM_PRODUCTION, -amount);
+        }
+
         // Triggering the unique effect of Manutech corporation
         if (amount > titanium_production && player.getModifiers().getResourcesFromRaisingProduction()) {
             titanium += (amount - titanium_production);
         }
-        titanium_production = amount > 0 ? amount : 0;
+        titanium_production = amount;
     }
 
 
@@ -175,8 +202,12 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of plants a {@link Player} has
      */
-    public void setPlants(Integer amount) {
-        plants = amount > 0 ? amount : 0;
+    public void setPlants(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.PLANT, -amount);
+        }
+
+        plants = amount;
     }
 
     /**
@@ -189,12 +220,16 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of plants productopm a {@link Player} has
      */
-    public void setPlantsProduction(Integer amount) {
+    public void setPlantsProduction(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.PLANT_PRODUCTION, -amount);
+        }
+
         // Triggering the unique effect of Manutech corporation
         if (amount > plants_production && player.getModifiers().getResourcesFromRaisingProduction()) {
             plants += (amount - plants_production);
         }
-        plants_production = amount > 0 ? amount : 0;
+        plants_production = amount;
     }
 
 
@@ -209,8 +244,12 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of energy a {@link Player} has
      */
-    public void setEnergy(Integer amount) {
-        energy = amount > 0 ? amount : 0;
+    public void setEnergy(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.ENERGY, -amount);
+        }
+
+        energy = amount;
     }
 
     /**
@@ -223,12 +262,16 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of energy production a {@link Player} has
      */
-    public void setEnergyProduction(Integer amount) {
+    public void setEnergyProduction(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.ENERGY_PRODUCTION, -amount);
+        }
+
         // Triggering the unique effect of Manutech corporation
         if (amount > energy_production && player.getModifiers().getResourcesFromRaisingProduction()) {
             energy += (amount - energy_production);
         }
-        energy_production = amount > 0 ? amount : 0;
+        energy_production = amount;
     }
 
 
@@ -243,8 +286,12 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of heat a {@link Player} has
      */
-    public void setHeat(Integer amount) {
-        heat = amount > 0 ? amount : 0;
+    public void setHeat(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.HEAT, -amount);
+        }
+
+        heat = amount;
     }
 
     /**
@@ -257,12 +304,16 @@ public class PlayerResources {
     /**
      * @param amount {@link Integer} the amount of heat production a {@link Player} has
      */
-    public void setHeatProduction(Integer amount) {
+    public void setHeatProduction(Integer amount) throws InvalidResourcesException {
+        if (amount < 0) {
+            throw new InvalidResourcesException(GameResourceType.HEAT_PRODUCTION, -amount);
+        }
+
         // Triggering the unique effect of Manutech corporation
         if (amount > heat_production && player.getModifiers().getResourcesFromRaisingProduction()) {
             heat += (amount - heat_production);
         }
-        heat_production = amount > 0 ? amount : 0;
+        heat_production = amount;
     }
 
 

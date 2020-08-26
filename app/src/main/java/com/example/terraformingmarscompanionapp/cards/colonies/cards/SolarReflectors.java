@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class SolarReflectors extends Card {
-    public SolarReflectors(Game game) {
-        super(Type.GREEN, game);
+    public SolarReflectors() {
+        super(Type.GREEN);
         name = "Solar reflectors";
         price = 23;
         tags.add(Tag.SPACE);

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MirandaResort extends Card {
-    public MirandaResort(Game game) {
-        super(Type.GREEN, game);
+    public MirandaResort() {
+        super(Type.GREEN);
         name = "Miranda resort";
         price = 12;
         tags.add(Tag.JOVIAN);
@@ -18,7 +18,7 @@ public final class MirandaResort extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         production_box.setMoneyProduction(player.getTags().getEarthTags());
         super.playWithMetadata(player, data);
     }

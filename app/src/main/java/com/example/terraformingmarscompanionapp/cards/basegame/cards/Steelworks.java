@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class Steelworks extends Card implements ActionCard {
-    public Steelworks(Game game) {
-        super(Type.BLUE, game);
+    public Steelworks() {
+        super(Type.BLUE);
         name = "Steelworks";
         price = 15;
         tags.add(Tag.BUILDING);
@@ -27,7 +27,7 @@ public final class Steelworks extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.getResources().setSteel(owner_player.getResources().getSteel() + 2);
         owner_player.getResources().setEnergy(owner_player.getResources().getEnergy() - 4);
-        owner_game.raiseOxygen(owner_player);
+        game.raiseOxygen(owner_player);
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

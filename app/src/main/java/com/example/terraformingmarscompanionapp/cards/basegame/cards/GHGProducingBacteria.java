@@ -17,8 +17,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class GHGProducingBacteria extends ResourceCard implements ActionCard {
-    public GHGProducingBacteria(Game game) {
-        super(Type.BLUE, game);
+    public GHGProducingBacteria() {
+        super(Type.BLUE);
         name = "GHG producing bacteria";
         price = 8;
         tags.add(Tag.SCIENCE);
@@ -48,7 +48,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
             Log.i("Card", "Error in GHG producing bacteria checks!");
         } else {
             resource_amount -= 2;
-            owner_game.raiseTemperature(owner_player);
+            game.raiseTemperature(owner_player);
         }
         EventScheduler.playNextEvent(GameController.getContext());
     }

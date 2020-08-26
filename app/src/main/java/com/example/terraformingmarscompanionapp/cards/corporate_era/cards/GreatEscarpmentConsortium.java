@@ -9,8 +9,8 @@ import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class GreatEscarpmentConsortium extends Card {
-    public GreatEscarpmentConsortium(Game game) {
-        super(Type.GREEN, game);
+    public GreatEscarpmentConsortium() {
+        super(Type.GREEN);
         name = "Great escarpment consortium";
         price = 6;
         requirements.setMinSteelProduction(1);

@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class SaturnSystems extends Card implements EffectCard {
-    public SaturnSystems(Game game) {
-        super(Type.CORPORATION, game);
+    public SaturnSystems() {
+        super(Type.CORPORATION);
         name = "Saturn systems";
         tags.add(Tag.JOVIAN);
     }

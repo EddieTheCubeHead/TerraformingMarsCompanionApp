@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class RadChemFactory extends Card {
-    public RadChemFactory(Game game) {
-        super(Type.GREEN, game);
+    public RadChemFactory() {
+        super(Type.GREEN);
         name = "Rad-chem factory";
         price = 8;
         tags.add(Tag.BUILDING);

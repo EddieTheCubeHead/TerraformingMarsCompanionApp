@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Helion extends Card {
-    public Helion(Game game) {
-        super(Type.CORPORATION, game);
+    public Helion() {
+        super(Type.CORPORATION);
         name = "Helion";
         tags.add(Tag.SPACE);
     }

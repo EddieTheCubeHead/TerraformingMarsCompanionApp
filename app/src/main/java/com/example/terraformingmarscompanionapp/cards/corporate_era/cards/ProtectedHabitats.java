@@ -6,11 +6,10 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class ProtectedHabitats extends Card {
-    public ProtectedHabitats(Game game) {
-        super(Type.BLUE, game);
+    public ProtectedHabitats() {
+        super(Type.BLUE);
         name = "Protected habitats";
         price = 5;
-        owner_game = game;
     }
 
     @Override

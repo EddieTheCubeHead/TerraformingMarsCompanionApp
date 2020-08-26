@@ -3,14 +3,16 @@ package com.example.terraformingmarscompanionapp.game;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Milestone;
 
+import java.io.Serializable;
+
 /**
  * A dataclass for housing the requirements for playing a card
  *
  * @author Eetu Asikainen
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
-public class CardRequirements {
+public class CardRequirements implements Serializable {
     private Integer min_oceans;
     private Integer min_plants;
     private Integer min_energy_production;

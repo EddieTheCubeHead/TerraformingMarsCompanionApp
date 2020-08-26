@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +30,7 @@ public interface GameEvent {
      * Should be avoided and mainly delegated to testing, instead preferring to get Context from
      * a parameter
      */
-    default void playEvent() {
+    default void playEvent() throws InvalidResourcesException {
         playEvent(GameController.getContext());
     }
 }

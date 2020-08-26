@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 
 public final class ImportedNitrogen extends Card {
-    public ImportedNitrogen(Game game) {
-        super(Type.RED, game);
+    public ImportedNitrogen() {
+        super(Type.RED);
         name = "Imported nitrogen";
         price = 23;
         tags.add(Tag.EARTH);

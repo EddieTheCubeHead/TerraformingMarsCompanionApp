@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.game.cardClasses;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
@@ -7,6 +8,7 @@ import com.example.terraformingmarscompanionapp.game.events.RoboticWorkforcePlay
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +18,7 @@ import java.util.ArrayList;
  * @version 0.2
  * @since 0.2
  */
-public final class ProductionBox {
+public final class ProductionBox implements Serializable {
 
     private Boolean has_target = false;
 
@@ -139,7 +141,7 @@ public final class ProductionBox {
      * @param player {@link Player} that is playing the card
      * @param target_index {@link Integer} representing the target for production stealing. See {@link GameController#getPlayer(Integer)}
      */
-    public void playProductionBox(Player player, Integer target_index) {
+    public void playProductionBox(Player player, Integer target_index) throws InvalidResourcesException {
         player.getResources().setMoneyProduction(player.getResources().getMoneyProduction() + money_production);
         player.getResources().setSteelProduction(player.getResources().getSteelProduction() + steel_production);
         player.getResources().setTitaniumProduction(player.getResources().getTitaniumProduction() + titanium_production);

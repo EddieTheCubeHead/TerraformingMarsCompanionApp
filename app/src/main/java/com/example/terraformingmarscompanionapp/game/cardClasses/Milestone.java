@@ -7,18 +7,16 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
  * A subclass of {@link Card} representing the milestone gameplay system of the game.
  *
  * @author Eetu Asikainen
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
 public abstract class Milestone extends Card {
 
     /**
      * A constuctor to ease the creation of milestones
-     *
-     * @param game {@link Game} the card is associated with
      */
-    public Milestone(Game game) {
-        super(Type.MILESTONE, game);
+    public Milestone() {
+        super(Type.MILESTONE);
         requirements.setMaxMilestonesClaimed(2);
         victory_points = 5;
         price = 8;
@@ -26,7 +24,7 @@ public abstract class Milestone extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.claimMilestone();
+        game.claimMilestone();
         super.playWithMetadata(player, data);
     }
 }

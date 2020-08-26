@@ -10,13 +10,13 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class WaterSplittingPlant extends Card implements ActionCard {
-    public WaterSplittingPlant(Game game) {
-        super(Type.BLUE, game);
+    public WaterSplittingPlant() {
+        super(Type.BLUE);
         name = "Water splitting plant";
         price = 12;
         tags.add(Tag.BUILDING);
         requirements.setMinOceans(2);
-        owner_game = game;
+        Card.game = game;
     }
 
     @Override
@@ -28,7 +28,7 @@ public final class WaterSplittingPlant extends Card implements ActionCard {
     @Override
     public void actionWithMetadata(Integer data) {
         owner_player.getResources().setEnergy(owner_player.getResources().getEnergy() - 3);
-        owner_game.raiseOxygen(owner_player);
+        game.raiseOxygen(owner_player);
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

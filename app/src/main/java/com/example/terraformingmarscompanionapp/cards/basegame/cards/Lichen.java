@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Lichen extends Card {
-    public Lichen(Game game) {
-        super(Type.GREEN, game);
+    public Lichen() {
+        super(Type.GREEN);
         name = "Lichen";
         price = 7;
         tags.add(Tag.PLANT);

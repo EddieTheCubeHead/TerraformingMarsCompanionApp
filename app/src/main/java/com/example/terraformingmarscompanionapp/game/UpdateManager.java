@@ -3,6 +3,7 @@ package com.example.terraformingmarscompanionapp.game;
 import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -17,18 +18,14 @@ import java.util.HashMap;
  * @since 0.2
  */
 @SuppressWarnings("EmptyMethod")
-public final class UpdateManager {
+public final class UpdateManager implements Serializable {
     private final HashMap<String, EffectCard> effect_cards;
-    private final Game owner_game;
 
     /**
      * Constructor
-     * 
-     * @param game {@link Game} this class is associated with
      */
     UpdateManager(Game game) {
         effect_cards = game.getEffectCards();
-        owner_game = game;
     }
 
     /**
@@ -48,10 +45,10 @@ public final class UpdateManager {
      */
     public void onCityPlaced(Player player, Boolean onMars) {
         if (onMars) {
-            owner_game.addCityOnMars();
+            GameController.getGame().addCityOnMars();
             effect_cards.get("Tharsis republic ghost").cardEffect(player);
         } else {
-            owner_game.addCityInSpace();
+            GameController.getGame().addCityInSpace();
         }
         effect_cards.get("Tharsis republic").cardEffect(player);
         effect_cards.get("Immigrant city").cardEffect(player);
@@ -120,7 +117,7 @@ public final class UpdateManager {
      * @param player {@link Player} playing the tag
      */
     public void onJovianTag(Player player) {
-        if (owner_game.modifiers.getCorporateEra()) {
+        if (GameController.getGame().modifiers.getCorporateEra()) {
             effect_cards.get("Saturn systems").cardEffect(player);
         }
     }
@@ -165,7 +162,7 @@ public final class UpdateManager {
     /**
      * A trigger for playing a card that has a non-negative VP value (includes gaining VP from resources etc.)
      *
-     * @param player
+     * @param player {@link Player} playing the card
      */
     public void onVpCardPlayed(Player player) {
 
@@ -186,7 +183,7 @@ public final class UpdateManager {
      * @param player {@link Player} playing the project
      */
     public void onStandardProjectPayment(Player player) {
-        if (owner_game.modifiers.getCorporateEra()) {
+        if (GameController.getGame().modifiers.getCorporateEra()) {
             effect_cards.get("Standard technology").cardEffect(player);
         }
     }

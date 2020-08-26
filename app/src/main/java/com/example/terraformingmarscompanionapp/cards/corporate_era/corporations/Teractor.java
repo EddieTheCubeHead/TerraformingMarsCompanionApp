@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Teractor extends Card {
-    public Teractor(Game game) {
-        super(Type.CORPORATION, game);
+    public Teractor() {
+        super(Type.CORPORATION);
         name = "Teractor";
         tags.add(Tag.EARTH);
     }

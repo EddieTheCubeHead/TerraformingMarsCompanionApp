@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class InterstellarColonyShip extends Card {
-    public InterstellarColonyShip(Game game) {
-        super(Type.RED, game);
+    public InterstellarColonyShip() {
+        super(Type.RED);
         name = "Interstellar colony ship";
         price = 24;
         tags.add(Tag.EARTH);
@@ -20,7 +20,7 @@ public final class InterstellarColonyShip extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class UndergroundDetonation extends Card implements ActionCard {
-    public UndergroundDetonation(Game game) {
-        super(Type.BLUE, game);
+    public UndergroundDetonation() {
+        super(Type.BLUE);
         name = "Underground detonation";
         price = 6;
         tags.add(Tag.BUILDING);

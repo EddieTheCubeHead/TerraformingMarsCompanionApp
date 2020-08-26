@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.webSocket.packets;
 
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
@@ -52,10 +53,14 @@ public class CardCostPacket implements ServerPacket
     public void playPacket() {
         Player player = GameController.getPlayer(player_name);
 
-        player.getResources().setMoney(player.getResources().getMoney() - money);
-        player.getResources().setSteel(player.getResources().getSteel() - steel);
-        player.getResources().setTitanium(player.getResources().getTitanium() - titanium);
-        player.getResources().setHeat(player.getResources().getHeat() - heat);
+        // InvalidResourcesException here can be safely caught because only valid resource events
+        // can get sent in a server-based game
+        try {
+            player.getResources().setMoney(player.getResources().getMoney() - money);
+            player.getResources().setSteel(player.getResources().getSteel() - steel);
+            player.getResources().setTitanium(player.getResources().getTitanium() - titanium);
+            player.getResources().setHeat(player.getResources().getHeat() - heat);
+        } catch (InvalidResourcesException ignored) {}
 
         Log.i("Game", String.format("%d, %d, %d, %d", -money, -steel, -titanium, -heat));
         // TODO card resource integration when expansions added (plants on Psychrophiles, floaters on Dirigibles)

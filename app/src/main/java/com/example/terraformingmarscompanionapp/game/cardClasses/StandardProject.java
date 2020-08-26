@@ -16,10 +16,8 @@ public abstract class StandardProject extends Card {
 
     /**
      * Constuctor for QoL while building standard projects
-     *
-     * @param game {@link Game} associated with this card
      */
-    public StandardProject(Game game) {
-        super(Type.STANDARD_PROJECT, game);
+    public StandardProject() {
+        super(Type.STANDARD_PROJECT);
     }
 }

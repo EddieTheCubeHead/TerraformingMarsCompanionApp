@@ -7,12 +7,11 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Satellites extends Card {
-    public Satellites(Game game) {
-        super(Type.GREEN, game);
+    public Satellites() {
+        super(Type.GREEN);
         name = "Satellites";
         price = 10;
         tags.add(Tag.SPACE);
-        owner_game = game;
     }
 
     @Override

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class TransNeptuneProbe extends Card {
-    public TransNeptuneProbe(Game game) {
-        super(Type.GREEN, game);
+    public TransNeptuneProbe() {
+        super(Type.GREEN);
         name = "Trans-neptune probe";
         price = 6;
         tags.add(Tag.SPACE);
@@ -18,7 +18,7 @@ public final class TransNeptuneProbe extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

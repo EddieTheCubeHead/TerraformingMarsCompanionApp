@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Soletta extends Card {
-    public Soletta(Game game) {
-        super(Type.GREEN, game);
+    public Soletta() {
+        super(Type.GREEN);
         name = "Soletta";
         price = 35;
         tags.add(Tag.SPACE);

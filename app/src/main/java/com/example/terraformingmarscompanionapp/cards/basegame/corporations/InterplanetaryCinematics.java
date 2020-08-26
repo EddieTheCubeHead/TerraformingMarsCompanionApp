@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class InterplanetaryCinematics extends Card implements EffectCard {
-    public InterplanetaryCinematics(Game game) {
-        super(Type.CORPORATION, game);
+    public InterplanetaryCinematics() {
+        super(Type.CORPORATION);
         name = "Interplanetary cinematics";
         tags.add(Tag.BUILDING);
     }

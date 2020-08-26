@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MiningGuild extends Card implements EffectCard {
-    public MiningGuild(Game game) {
-        super(Type.CORPORATION, game);
+    public MiningGuild() {
+        super(Type.CORPORATION);
         name = "Mining guild";
         tags.add(Tag.BUILDING);
         tags.add(Tag.BUILDING);

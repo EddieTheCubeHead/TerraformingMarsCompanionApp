@@ -14,8 +14,8 @@ import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 public final class Inventrix extends Card implements FirstAction {
     private Boolean first_action_used = false;
 
-    public Inventrix(Game game) {
-        super(Type.CORPORATION, game);
+    public Inventrix() {
+        super(Type.CORPORATION);
         name = "Inventrix";
         tags.add(Tag.SCIENCE);
     }

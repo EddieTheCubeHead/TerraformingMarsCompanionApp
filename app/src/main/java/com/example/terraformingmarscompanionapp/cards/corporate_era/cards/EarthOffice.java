@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class EarthOffice extends Card {
-    public EarthOffice(Game game) {
-        super(Type.BLUE, game);
+    public EarthOffice() {
+        super(Type.BLUE);
         name = "Earth Office";
         price = 1;
         tags.add(Tag.EARTH);

@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class IceAsteroid extends Card {
-    public IceAsteroid(Game game) {
-        super(Type.RED, game);
+    public IceAsteroid() {
+        super(Type.RED);
         name = "Ice asteroid";
         price = 23;
         tags.add(Tag.SPACE);
@@ -22,7 +22,7 @@ public final class IceAsteroid extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
     }
 }

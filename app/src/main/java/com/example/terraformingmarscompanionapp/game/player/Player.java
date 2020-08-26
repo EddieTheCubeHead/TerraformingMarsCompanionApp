@@ -9,12 +9,13 @@ import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Tile;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Player {
+public class Player implements Serializable {
 
-    private final Game game;
+    private transient final Game game;
     private final String name;
 
     private Integer cities = 0;

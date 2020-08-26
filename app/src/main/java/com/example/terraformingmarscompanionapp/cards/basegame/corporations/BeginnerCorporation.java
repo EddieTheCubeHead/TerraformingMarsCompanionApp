@@ -6,8 +6,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class BeginnerCorporation extends Card {
-    public BeginnerCorporation(Game game) {
-        super(Type.CORPORATION, game);
+    public BeginnerCorporation() {
+        super(Type.CORPORATION);
         name = "Beginner corporation";
     }
 

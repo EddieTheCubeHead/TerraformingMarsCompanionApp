@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class FusionPower extends Card {
-    public FusionPower(Game game) {
-        super(Type.GREEN, game);
+    public FusionPower() {
+        super(Type.GREEN);
         name = "Fusion power";
         price = 14;
         tags.add(Tag.SCIENCE);

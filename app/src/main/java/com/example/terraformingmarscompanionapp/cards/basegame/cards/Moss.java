@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Moss extends Card {
 
-    public Moss(Game game) {
-        super(Type.GREEN, game);
+    public Moss() {
+        super(Type.GREEN);
         name = "Moss";
         price = 4;
         tags.add(Tag.PLANT);

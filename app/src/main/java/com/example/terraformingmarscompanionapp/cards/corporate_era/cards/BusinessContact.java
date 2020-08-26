@@ -10,13 +10,12 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class BusinessContact extends Card {
-    public BusinessContact(Game game) {
-        super(Type.RED, game);
+    public BusinessContact() {
+        super(Type.RED);
         name = "Business contact";
         price = 7;
         tags.add(Tag.EARTH);
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override

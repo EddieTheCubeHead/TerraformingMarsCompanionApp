@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Insects extends Card {
-    public Insects(Game game) {
-        super(Type.GREEN, game);
+    public Insects() {
+        super(Type.GREEN);
         name = "Insects";
         price = 9;
         tags.add(Tag.MICROBE);

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Shuttles extends Card {
-    public Shuttles(Game game) {
-        super(Type.BLUE, game);
+    public Shuttles() {
+        super(Type.BLUE);
         name = "Shuttles";
         price = 10;
         tags.add(Tag.SPACE);
@@ -22,7 +22,7 @@ public final class Shuttles extends Card {
         player.getModifiers().setSpaceTagDiscount(player.getModifiers().getSpaceTagDiscount() + 2);
         production_box.setEnergyProduction(-1);
         production_box.setMoneyProduction(2);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

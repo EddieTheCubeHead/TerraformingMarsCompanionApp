@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class TharsisRepublicGhost extends Card implements EffectCard {
-    public TharsisRepublicGhost(Game game) {
-        super(Type.GHOST, game);
+    public TharsisRepublicGhost() {
+        super(Type.GHOST);
         name = "Tharsis republic ghost";
     }
 

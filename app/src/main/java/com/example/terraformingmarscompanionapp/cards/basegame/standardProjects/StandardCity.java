@@ -9,8 +9,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class StandardCity extends StandardProject {
-    public StandardCity(Game game) {
-        super(game);
+    public StandardCity() {
+        super();
         name = "Standard project: City";
         price = 25;
     }
@@ -18,7 +18,7 @@ public final class StandardCity extends StandardProject {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, game));
     }
 
     @Override

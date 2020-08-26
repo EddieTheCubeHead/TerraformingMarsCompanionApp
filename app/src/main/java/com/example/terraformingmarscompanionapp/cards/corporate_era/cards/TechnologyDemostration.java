@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class TechnologyDemostration extends Card {
-    public TechnologyDemostration(Game game) {
-        super(Type.RED, game);
+    public TechnologyDemostration() {
+        super(Type.RED);
         name = "Technology Demonstration";
         price = 5;
         tags.add(Tag.SCIENCE);

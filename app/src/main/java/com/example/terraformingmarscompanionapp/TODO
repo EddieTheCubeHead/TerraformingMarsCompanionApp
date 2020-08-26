@@ -38,6 +38,9 @@ Road to 1.0:
     - Standardize Events and Packets
         - Possibly differentiate producers and consumers more clearly
         - Either have all consumers only have corresponding Packet as data or merge packets and consumers
+    - Cleanup filtering code
+        - Either needs to be split into smaller classes or find a way to reuse code more in the current class
+    - Cards in recyclerviews randomly gain more tags when scrolling up and down: needs fixing
 
 After 1.0, in no particular order:
 

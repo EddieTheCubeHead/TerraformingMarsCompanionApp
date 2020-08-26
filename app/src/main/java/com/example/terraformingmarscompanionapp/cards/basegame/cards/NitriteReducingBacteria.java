@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class NitriteReducingBacteria extends ResourceCard implements ActionCard {
-    public NitriteReducingBacteria(Game game) {
-        super(Type.BLUE, game);
+    public NitriteReducingBacteria() {
+        super(Type.BLUE);
         name = "Nitrite reducing bacteria";
         price = 11;
         tags.add(Tag.MICROBE);

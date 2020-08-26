@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ProtectedValley extends Card {
-    public ProtectedValley(Game game) {
-        super(Type.GREEN, game);
+    public ProtectedValley() {
+        super(Type.GREEN);
         name = "Protected valley";
         price = 23;
         tags.add(Tag.PLANT);
@@ -22,7 +22,7 @@ public final class ProtectedValley extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN_GREENERY, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN_GREENERY, game));
     }
 
     @Override

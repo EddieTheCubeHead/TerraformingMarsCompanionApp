@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class NoctisCity extends Card {
-    public NoctisCity(Game game) {
-        super(Type.GREEN, game);
+    public NoctisCity() {
+        super(Type.GREEN);
         name = "Noctis city";
         price = 18;
         tags.add(Tag.CITY);
@@ -23,7 +23,7 @@ public final class NoctisCity extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.NOCTIS, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.NOCTIS, game));
     }
 
     @Override

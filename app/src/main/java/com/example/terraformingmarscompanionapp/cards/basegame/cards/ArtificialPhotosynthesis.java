@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
@@ -13,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class ArtificialPhotosynthesis extends Card {
-    public ArtificialPhotosynthesis(Game game) {
-        super(Type.GREEN, game);
+    public ArtificialPhotosynthesis() {
+        super(Type.GREEN);
         name = "Artificial photosynthesis";
         price = 12;
         tags.add(Tag.SCIENCE);
@@ -28,7 +29,7 @@ public final class ArtificialPhotosynthesis extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         if (data == 0) {
             production_box.setPlantsProduction(1);
         } else {

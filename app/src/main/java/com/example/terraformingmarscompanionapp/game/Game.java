@@ -3,6 +3,8 @@ package com.example.terraformingmarscompanionapp.game;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
@@ -19,9 +21,11 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,14 +37,14 @@ import java.util.Map;
  * @version 0.2
  * @since 0.2
  */
-public class Game {
+public class Game implements Serializable {
 
     public final UpdateManager update_manager;
     public final TileHandler tile_handler;
 
     // Different decks
     private final HashMap<String, Card> deck;
-    private HashMap<String, Card> preludes = new HashMap<>();
+    private final HashMap<String, Card> preludes;
     private final HashMap<String, Card> corporations;
     private final HashMap<String, Card> ghosts;
     private final HashMap<String, Award> awards;
@@ -75,6 +79,9 @@ public class Game {
             boolean server_multiplayer,
             GameMap map) {
         this.modifiers = modifiers;
+
+        Card.SetGame(this);
+
         DeckConstructor constructor = new DeckConstructor(this, map);
         deck = constructor.createDeck();
         corporations = constructor.createCorporations();
@@ -86,14 +93,16 @@ public class Game {
 
         if (modifiers.getPrelude()) {
             preludes = constructor.createPreludes();
+        } else {
+            preludes = new HashMap<>();
         }
 
         // Using a stream would require higher API level. This keeps API level low
-        for (Map.Entry<String, Card> entry : deck.entrySet()) {
+        for (Map.Entry<String, Card> entry : corporations.entrySet()) {
             all_cards.put(entry.getKey(), entry.getValue());
         }
 
-        for (Map.Entry<String, Card> entry : corporations.entrySet()) {
+        for (Map.Entry<String, Card> entry : deck.entrySet()) {
             all_cards.put(entry.getKey(), entry.getValue());
         }
 
@@ -320,7 +329,11 @@ public class Game {
         if (global_temperature == 0 && oceans_placed < 9) {
             tile_handler.getCoordinatesFromPlayer(Placeable.OCEAN, GameController.getContext());
         } else if (global_temperature == -20 || global_temperature == -24) {
-            raising_player.getResources().setHeatProduction(raising_player.getResources().getHeatProduction() + 1);
+
+            // This can only raise heat production, thus it can be ignored
+            try {
+                raising_player.getResources().setHeatProduction(raising_player.getResources().getHeatProduction() + 1);
+            } catch (InvalidResourcesException ignored) {}
         }
         return true;
     }
@@ -825,8 +838,7 @@ public class Game {
      * @param resources_to_use {@link CardCostPacket} representing the resources the player has to use for playing the card
      * @param context {@link Context} the UI context the playing action is being played from
      */
-    public void playCard(Card card, CardCostPacket resources_to_use, Context context)
-    {
+    public void playCard(Card card, CardCostPacket resources_to_use, Context context) throws InvalidResourcesException {
         Player player = GameController.getCurrentPlayer();
 
         if (!resources_to_use.isEligible())

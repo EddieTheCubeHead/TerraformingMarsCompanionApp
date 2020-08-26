@@ -12,8 +12,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
  * @since 0.2
  */
 public abstract class ResourceCard extends Card {
-    public ResourceCard(Type type, Game game) {
-        super(type, game);
+    public ResourceCard(Type type) {
+        super(type);
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import java.io.Serializable;
+
 /**
  * A dataclass for the expansions and houserules of the game (both TBA)
  *
@@ -7,7 +9,7 @@ package com.example.terraformingmarscompanionapp.game;
  * @version 0.2
  * @since 0.2
  */
-public class GameModifiers {
+public class GameModifiers implements Serializable {
     private Boolean corporate_era = false;
     private Boolean prelude = false;
     private Boolean colonies = false;

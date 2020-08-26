@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MediaArchives extends Card {
-    public MediaArchives(Game game) {
-        super(Type.GREEN, game);
+    public MediaArchives() {
+        super(Type.GREEN);
         name = "Media archives";
         price = 8;
         tags.add(Tag.EARTH);

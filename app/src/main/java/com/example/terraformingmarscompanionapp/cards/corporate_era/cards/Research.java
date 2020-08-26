@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class Research extends Card {
-    public Research(Game game) {
-        super(Type.GREEN, game);
+    public Research() {
+        super(Type.GREEN);
         name = "Research";
         price = 11;
         tags.add(Tag.SCIENCE);
@@ -27,7 +27,7 @@ public final class Research extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         player.changeHandSize(2);
         super.playWithMetadata(player, data);
     }

@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class MoholeArea extends Card {
-    public MoholeArea(Game game) {
-        super(Type.GREEN, game);
+    public MoholeArea() {
+        super(Type.GREEN);
         name = "Mohole area";
         price = 20;
         tags.add(Tag.BUILDING);
@@ -21,7 +21,7 @@ public final class MoholeArea extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.MOHOLE, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.MOHOLE, game));
     }
 
     @Override

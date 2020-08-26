@@ -17,15 +17,15 @@ import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 public final class TharsisRepublic extends Card implements EffectCard, FirstAction {
     private Boolean first_action_used = false;
 
-    public TharsisRepublic(Game game) {
-        super(Type.CORPORATION, game);
+    public TharsisRepublic() {
+        super(Type.CORPORATION);
         name = "Tharsis republic";
         tags.add(Tag.BUILDING);
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        EventScheduler.addEvent(new PlayCardEvent(owner_game.getGhosts().get("Tharsis republic ghost"), player, 0));
+        EventScheduler.addEvent(new PlayCardEvent(game.getGhosts().get("Tharsis republic ghost"), player, 0));
 
         player.getResources().setMoney(40);
         super.playWithMetadata(player, data);
@@ -41,7 +41,7 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
     @Override
     public void firstAction() {
         EventScheduler.addEvent(new ActionUseEvent());
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, game));
         EventScheduler.playNextEvent(GameController.getContext());
         first_action_used = true;
     }

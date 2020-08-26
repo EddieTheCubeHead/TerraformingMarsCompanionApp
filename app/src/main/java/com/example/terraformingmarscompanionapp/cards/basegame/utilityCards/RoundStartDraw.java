@@ -9,8 +9,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.MetadataIntegerEvent;
 
 public final class RoundStartDraw extends Card {
-    public RoundStartDraw(Game game) {
-        super(Type.OTHER, game);
+    public RoundStartDraw() {
+        super(Type.OTHER);
         name = "Round start draw";
     }
 
@@ -21,7 +21,7 @@ public final class RoundStartDraw extends Card {
         String draw_message;
         Integer max_draw_amount;
 
-        if (owner_game.getServerMultiplayer()) {
+        if (game.getServerMultiplayer()) {
             draw_message = "Enter the amount of cards you bought:";
         } else {
             draw_message = String.format("%s, enter the amount of cards you bought:", player.getName());

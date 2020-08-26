@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class ResearchOutpost extends Card {
-    public ResearchOutpost(Game game) {
-        super(Type.BLUE, game);
+    public ResearchOutpost() {
+        super(Type.BLUE);
         name = "Research outpost";
         price = 18;
         tags.add(Tag.SCIENCE);
@@ -23,7 +23,7 @@ public final class ResearchOutpost extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.RESEARCH_OUTPOST, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.RESEARCH_OUTPOST, game));
     }
 
     @Override

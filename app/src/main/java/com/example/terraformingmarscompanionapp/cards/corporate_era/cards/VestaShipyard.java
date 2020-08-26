@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class VestaShipyard extends Card {
-    public VestaShipyard(Game game) {
-        super(Type.GREEN, game);
+    public VestaShipyard() {
+        super(Type.GREEN);
         name = "Vesta shipyard";
         price = 15;
         tags.add(Tag.JOVIAN);
@@ -18,7 +18,7 @@ public final class VestaShipyard extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         production_box.setTitaniumProduction(1);
         super.playWithMetadata(player, data);
     }

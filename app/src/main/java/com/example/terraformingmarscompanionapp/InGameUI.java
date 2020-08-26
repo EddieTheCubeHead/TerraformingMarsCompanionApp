@@ -35,6 +35,7 @@ import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +49,7 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
     SectionsPagerAdapter sectionsPagerAdapter;
     ViewPager viewPager;
 
-    //Will probably be used for managing state. Might get removed
+    // Will probably be used for managing state. Might get removed
     private enum State {
         MAIN_VIEW,
         MAP,
@@ -78,12 +79,25 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
 
         //Placeholder for map fragment testing. Doesn really function but at least gets the fragment open
         findViewById(R.id.item_1).setOnClickListener(view -> {
-            TileMapFragment map_fragment = new TileMapFragment(/*add data here*/);
+
+            // Temporary undo button
+
+            try {
+                GameController.loadGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            // Hex-ui testing code commented out
+
+            /*2TileMapFragment map_fragment = new TileMapFragment(/*add data here/);
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction map_transaction = manager.beginTransaction();
             map_transaction.replace(R.id.main_layout, map_fragment, "map");
             state = State.MAP;
-            map_transaction.commit();
+            map_transaction.commit();*/
         });
 
         findViewById(R.id.item_2).setOnClickListener(v -> {

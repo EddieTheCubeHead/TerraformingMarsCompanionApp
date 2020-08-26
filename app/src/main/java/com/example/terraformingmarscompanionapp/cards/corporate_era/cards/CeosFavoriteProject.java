@@ -11,12 +11,11 @@ import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class CeosFavoriteProject extends Card {
-    public CeosFavoriteProject(Game game) {
-        super(Type.RED, game);
+    public CeosFavoriteProject() {
+        super(Type.RED);
         name = "CEO's favorite project";
         price = 1;
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override

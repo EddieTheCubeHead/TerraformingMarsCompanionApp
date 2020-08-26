@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class ImportedHydrogen extends Card {
-    public ImportedHydrogen(Game game) {
-        super(Type.RED, game);
+    public ImportedHydrogen() {
+        super(Type.RED);
         name = "Imported hydrogen";
         price = 16;
         tags.add(Tag.EARTH);
@@ -32,7 +32,7 @@ public final class ImportedHydrogen extends Card {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x3)", "Microbes (x3)", "Animals (x2)")), this, ChoiceDialog.UseCase.GENERAL));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
     }
 
     @Override

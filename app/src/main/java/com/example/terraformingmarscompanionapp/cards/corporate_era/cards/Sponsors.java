@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Sponsors extends Card {
-    public Sponsors(Game game) {
-        super(Type.GREEN, game);
+    public Sponsors() {
+        super(Type.GREEN);
         name = "Sponsors";
         price = 6;
         tags.add(Tag.EARTH);

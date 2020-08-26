@@ -15,12 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class Sabotage extends Card {
-    public Sabotage(Game game) {
-        super(Type.GREEN, game);
+    public Sabotage() {
+        super(Type.GREEN);
         name = "Sabotage";
         price = 1;
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override

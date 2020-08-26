@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Pets extends ResourceCard implements EffectCard {
-    public Pets(Game game) {
-        super(Type.BLUE, game);
+    public Pets() {
+        super(Type.BLUE);
         name = "Pets";
         price = 10;
         tags.add(Tag.EARTH);

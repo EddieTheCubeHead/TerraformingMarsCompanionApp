@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class PhoboLog extends Card {
-    public PhoboLog(Game game) {
-        super(Type.CORPORATION, game);
+    public PhoboLog() {
+        super(Type.CORPORATION);
         name = "PhoboLog";
         tags.add(Tag.SPACE);
     }

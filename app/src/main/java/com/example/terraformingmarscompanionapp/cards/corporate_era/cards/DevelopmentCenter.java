@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class DevelopmentCenter extends Card implements ActionCard {
-    public DevelopmentCenter(Game game) {
-        super(Type.BLUE, game);
+    public DevelopmentCenter() {
+        super(Type.BLUE);
         name = "Development center";
         price = 11;
         tags.add(Tag.BUILDING);

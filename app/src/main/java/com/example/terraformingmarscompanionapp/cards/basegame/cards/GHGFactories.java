@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class GHGFactories extends Card {
-    public GHGFactories(Game game) {
-        super(Type.GREEN, game);
+    public GHGFactories() {
+        super(Type.GREEN);
         name = "GHG factories";
         price = 11;
         tags.add(Tag.BUILDING);

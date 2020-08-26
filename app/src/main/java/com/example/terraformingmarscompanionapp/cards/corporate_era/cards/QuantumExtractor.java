@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class QuantumExtractor extends Card {
-    public QuantumExtractor(Game game) {
-        super(Type.BLUE, game);
+    public QuantumExtractor() {
+        super(Type.BLUE);
         name = "Quantum extractor";
         price = 13;
         tags.add(Tag.SCIENCE);

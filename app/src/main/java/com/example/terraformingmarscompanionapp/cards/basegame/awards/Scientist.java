@@ -5,8 +5,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Scientist extends Award {
-    public Scientist(Game game) {
-        super(game);
+    public Scientist() {
+        super();
         name = "Scientist";
     }
 

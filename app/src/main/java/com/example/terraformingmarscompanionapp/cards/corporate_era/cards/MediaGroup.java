@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MediaGroup extends Card implements EffectCard {
-    public MediaGroup(Game game) {
-        super(Type.BLUE, game);
+    public MediaGroup() {
+        super(Type.BLUE);
         name = "Media group";
         price = 6;
         tags.add(Tag.EARTH);

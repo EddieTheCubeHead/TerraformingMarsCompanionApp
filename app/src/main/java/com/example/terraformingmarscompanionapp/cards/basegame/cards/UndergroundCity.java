@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class UndergroundCity extends Card {
-    public UndergroundCity(Game game) {
-        super(Type.GREEN, game);
+    public UndergroundCity() {
+        super(Type.GREEN);
         name = "Underground city";
         price = 18;
         tags.add(Tag.CITY);
@@ -23,7 +23,7 @@ public final class UndergroundCity extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, game));
     }
 
     @Override

@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Livestock extends ResourceCard implements ActionCard {
-    public Livestock(Game game) {
-        super(Type.BLUE, game);
+    public Livestock() {
+        super(Type.BLUE);
         name = "Livestock";
         price = 13;
         tags.add(Tag.ANIMAL);

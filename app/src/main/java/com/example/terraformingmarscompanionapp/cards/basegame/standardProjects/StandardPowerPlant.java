@@ -6,8 +6,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class StandardPowerPlant extends StandardProject {
-    public StandardPowerPlant(Game game) {
-        super(game);
+    public StandardPowerPlant() {
+        super();
         name = "Standard project: Power plant";
         price = 11;
         tags.add(Tag.ENERGY);

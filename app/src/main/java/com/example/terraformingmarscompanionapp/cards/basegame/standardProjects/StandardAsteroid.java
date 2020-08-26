@@ -5,8 +5,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class StandardAsteroid extends StandardProject {
-    public StandardAsteroid(Game game) {
-        super(game);
+    public StandardAsteroid() {
+        super();
         name = "Standard project: Asteroid";
         price = 14;
         requirements.setMaxTemperature(6);
@@ -14,7 +14,7 @@ public final class StandardAsteroid extends StandardProject {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.raiseTemperature(player);
+        game.raiseTemperature(player);
         super.playWithMetadata(player, data);
     }
 }

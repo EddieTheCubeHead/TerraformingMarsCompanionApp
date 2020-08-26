@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class PeroxidePower extends Card {
-    public PeroxidePower(Game game) {
-        super(Type.GREEN, game);
+    public PeroxidePower() {
+        super(Type.GREEN);
         name = "Peroxide power";
         price = 7;
         tags.add(Tag.ENERGY);

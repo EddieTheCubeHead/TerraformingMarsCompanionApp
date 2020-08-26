@@ -7,20 +7,19 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class BribedCommittee extends Card {
-    public BribedCommittee(Game game) {
-        super(Type.RED, game);
+    public BribedCommittee() {
+        super(Type.RED);
         name = "Bribed committee";
         price = 7;
         tags.add(Tag.EARTH);
         tags.add(Tag.EVENT);
         victory_points = -2;
-        owner_game = game;
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.getResources().setTerraformingRating(player.getResources().getTerraformingRating() + 2);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

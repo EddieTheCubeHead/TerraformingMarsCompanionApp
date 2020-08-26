@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class Herbivores extends ResourceCard implements EffectCard {
-    public Herbivores(Game game) {
-        super(Type.BLUE, game);
+    public Herbivores() {
+        super(Type.BLUE);
         name = "Herbivores";
         price = 12;
         tags.add(Tag.ANIMAL);

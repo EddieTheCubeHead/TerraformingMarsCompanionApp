@@ -12,8 +12,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 
 public final class Predators extends ResourceCard implements ActionCard {
-    public Predators(Game game) {
-        super(Type.BLUE, game);
+    public Predators() {
+        super(Type.BLUE);
         name = "Predators";
         price = 14;
         tags.add(Tag.ANIMAL);
@@ -23,7 +23,7 @@ public final class Predators extends ResourceCard implements ActionCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 

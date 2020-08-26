@@ -13,8 +13,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class GiantIceAsteroid extends Card {
-    public GiantIceAsteroid(Game game) {
-        super(Type.RED, game);
+    public GiantIceAsteroid() {
+        super(Type.RED);
         name = "Giant ice asteroid";
         price = 36;
         tags.add(Tag.SPACE);
@@ -25,8 +25,8 @@ public final class GiantIceAsteroid extends Card {
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
         EventScheduler.addEvent(new MetadataChoiceEvent(this));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
     }
 
     @Override
@@ -35,8 +35,8 @@ public final class GiantIceAsteroid extends Card {
             Player target = GameController.getPlayer(data);
             target.getResources().setPlants(target.getResources().getPlants() - 6);
         }
-        owner_game.raiseTemperature(player);
-        owner_game.raiseTemperature(player);
+        game.raiseTemperature(player);
+        game.raiseTemperature(player);
         super.playWithMetadata(player, data);
     }
 }

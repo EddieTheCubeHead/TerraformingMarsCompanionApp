@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class PowerGrid extends Card {
-    public PowerGrid(Game game) {
-        super(Type.GREEN, game);
+    public PowerGrid() {
+        super(Type.GREEN);
         name = "Power grid";
         price = 18;
         tags.add(Tag.ENERGY);

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class EarthCatapult extends Card {
-    public EarthCatapult(Game game) {
-        super(Type.BLUE, game);
+    public EarthCatapult() {
+        super(Type.BLUE);
         name = "Earth catapult";
         price = 23;
         tags.add(Tag.EARTH);
@@ -17,7 +17,7 @@ public final class EarthCatapult extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         player.getModifiers().setCardDiscount(player.getModifiers().getCardDiscount() + 2);
         super.playWithMetadata(player, data);
     }

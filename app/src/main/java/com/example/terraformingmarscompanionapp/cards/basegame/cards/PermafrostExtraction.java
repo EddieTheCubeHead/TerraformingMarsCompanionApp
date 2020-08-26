@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class PermafrostExtraction extends Card {
-    public PermafrostExtraction(Game game) {
-        super(Type.RED, game);
+    public PermafrostExtraction() {
+        super(Type.RED);
         name = "Permafrost extraction";
         price = 8;
         tags.add(Tag.EVENT);
@@ -22,6 +22,6 @@ public final class PermafrostExtraction extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
     }
 }

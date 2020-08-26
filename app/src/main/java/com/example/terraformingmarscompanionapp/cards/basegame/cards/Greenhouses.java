@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Greenhouses extends Card {
-    public Greenhouses(Game game) {
-        super(Type.GREEN, game);
+    public Greenhouses() {
+        super(Type.GREEN);
         name = "Greenhouses";
         price = 6;
         tags.add(Tag.BUILDING);
@@ -17,7 +17,7 @@ public final class Greenhouses extends Card {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        Integer city_count = owner_game.getCitiesInSpace() + owner_game.getCitiesOnMars();
+        Integer city_count = game.getCitiesInSpace() + game.getCitiesOnMars();
         player.getResources().setPlants(player.getResources().getPlants() + city_count);
         super.playWithMetadata(player, data);
     }

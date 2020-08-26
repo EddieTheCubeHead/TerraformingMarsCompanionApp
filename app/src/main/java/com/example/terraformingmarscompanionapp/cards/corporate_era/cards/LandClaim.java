@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class LandClaim extends Card {
-    public LandClaim(Game game) {
-        super(Type.RED, game);
+    public LandClaim() {
+        super(Type.RED);
         name = "Asteroid mining consortium";
         price = 1;
         tags.add(Tag.EVENT);
@@ -21,6 +21,6 @@ public final class LandClaim extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.LAND_CLAIM, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.LAND_CLAIM, game));
     }
 }

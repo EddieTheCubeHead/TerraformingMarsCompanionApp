@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
 public final class MarsUniverse extends Card implements EffectCard {
-    public MarsUniverse(Game game) {
-        super(Type.BLUE, game);
+    public MarsUniverse() {
+        super(Type.BLUE);
         name = "Mars universe";
         price = 8;
         tags.add(Tag.SCIENCE);
@@ -22,7 +22,7 @@ public final class MarsUniverse extends Card implements EffectCard {
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 
@@ -32,7 +32,7 @@ public final class MarsUniverse extends Card implements EffectCard {
             return;
         }
 
-        if (owner_game.getServerMultiplayer()) {
+        if (game.getServerMultiplayer()) {
             if (owner_player != GameController.getSelfPlayer()) {
                 return;
             }

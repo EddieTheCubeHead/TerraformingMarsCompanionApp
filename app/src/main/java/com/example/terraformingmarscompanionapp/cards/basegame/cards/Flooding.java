@@ -12,8 +12,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class Flooding extends Card {
-    public Flooding(Game game) {
-        super(Type.RED, game);
+    public Flooding() {
+        super(Type.RED);
         name = "Flooding";
         price = 7;
         tags.add(Tag.EVENT);
@@ -23,7 +23,7 @@ public final class Flooding extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new ActionUseEvent());
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.FLOOD_OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.FLOOD_OCEAN, game));
     }
 
     @Override

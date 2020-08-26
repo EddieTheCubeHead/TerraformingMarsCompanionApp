@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class LargeConvoy extends Card {
-    public LargeConvoy(Game game) {
-        super(Type.RED, game);
+    public LargeConvoy() {
+        super(Type.RED);
         name = "Large convoy";
         price = 36;
         tags.add(Tag.SPACE);
@@ -38,7 +38,7 @@ public final class LargeConvoy extends Card {
         EventScheduler.addEvent(new MetadataChoiceEvent("Choose resource to recieve:",
                 new ArrayList<>(Arrays.asList("Plants (x5)", "Animal (x4)")), this, ChoiceDialog.UseCase.GENERAL));
         EventScheduler.addEvent(new PromptEvent("Please draw 2 cards"));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
     }
 
     @Override

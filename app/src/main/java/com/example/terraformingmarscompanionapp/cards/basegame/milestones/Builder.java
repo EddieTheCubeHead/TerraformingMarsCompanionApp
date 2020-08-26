@@ -4,8 +4,8 @@ import com.example.terraformingmarscompanionapp.game.cardClasses.Milestone;
 import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class Builder extends Milestone {
-    public Builder(Game game) {
-        super(game);
+    public Builder() {
+        super();
         name = "Builder";
         requirements.setMinBuildingTags(8);
     }

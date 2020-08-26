@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class TowingAComet extends Card {
-    public TowingAComet(Game game) {
-        super(Type.RED, game);
+    public TowingAComet() {
+        super(Type.RED);
         name = "Towing a comet";
         price = 23;
         tags.add(Tag.SPACE);
@@ -22,13 +22,13 @@ public final class TowingAComet extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
     }
 
     @Override
     public void playWithMetadata(Player player, Integer data) {
         player.getResources().setPlants(player.getResources().getPlants() + 2);
-        owner_game.raiseOxygen(player);
+        game.raiseOxygen(player);
         super.playWithMetadata(player, data);
     }
 }

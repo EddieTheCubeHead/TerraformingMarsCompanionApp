@@ -9,13 +9,12 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class PowerSupplyConsortium extends Card {
-    public PowerSupplyConsortium(Game game) {
-        super(Type.GREEN, game);
+    public PowerSupplyConsortium() {
+        super(Type.GREEN);
         name = "Power supply consortium";
         price = 5;
         tags.add(Tag.ENERGY);
         requirements.setMinEnergyTags(2);
-        owner_game = game;
     }
 
     @Override

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class ImportOfAdvancedGHG extends Card {
-    public ImportOfAdvancedGHG(Game game) {
-        super(Type.RED, game);
+    public ImportOfAdvancedGHG() {
+        super(Type.RED);
         name = "Import of advanced GHG";
         price = 9;
         tags.add(Tag.SPACE);

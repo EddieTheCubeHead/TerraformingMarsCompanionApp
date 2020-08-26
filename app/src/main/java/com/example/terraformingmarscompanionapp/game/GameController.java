@@ -21,6 +21,11 @@ import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacke
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -46,8 +51,14 @@ public class GameController
     private static Integer generation = 0;
     private static Integer action_number = 0;
 
-    public static Integer getGeneration() {return generation;}
-    public static Integer getActionNumber() {return action_number;}
+    public static Integer getGeneration() {
+        return generation;
+    }
+
+    public static Integer getActionNumber() {
+        return action_number;
+    }
+
     public static Integer getDisplayActions() {
         return 2 - actions_used;
     }
@@ -76,6 +87,12 @@ public class GameController
     // UI classes that require updating with game logic
     // TODO have a look at whether this is storing Contextes in a static class and whether it is really bad
     private static List<GameUpdateListener> game_listeners = new ArrayList<>();
+
+    // Storing the gamestates in a stack for undo
+    private static Deque<byte[]> game_states = new LinkedList<>();
+
+    // Maz size of the undo list
+    private static final Integer MAX_UNDO_SIZE = 10;
 
     /**
      * A simple method to set the owner of this game instance
@@ -156,6 +173,10 @@ public class GameController
      * @return {@link Player} corresponding to the given index
      */
     public static Player getPlayer(Integer index) {
+        if (index == 0) {
+            Log.i("GameController", "CAUTION: getPlayer(index) called with index of 0!");
+            return null;
+        }
         return players.get(index - 1);
     }
 
@@ -168,9 +189,10 @@ public class GameController
     public static Player getPlayer(String name) {
         for (Player player : players) {
             if (player.getName().equals(name)) {
+                Log.i("GameController", "Found player matching name '" + name + "'");
                 return player;
             } else {
-                System.out.println(name + " " + player.getName());
+                Log.i("GameController", "Looking for player '" + name + "' didn't match player '" + player.getName() + "'.");
             }
         }
         return null;
@@ -473,6 +495,61 @@ public class GameController
         return greenery_round;
     }
 
+    /**
+     * A method to save the current state of the game for undoing
+     *
+     * @throws IOException
+     */
+    public static void saveGame() throws IOException {
+
+        ByteArrayOutputStream byte_out = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(byte_out);
+
+        GameState state = new GameState(game, players, current_player, current_starter, actions_used, generation, action_number);
+
+        out.writeObject(state);
+        out.flush();
+
+        game_states.add(byte_out.toByteArray());
+
+        Log.i("GameController", "Gamestate saved, list size: " + game_states.size());
+
+        if (game_states.size() > MAX_UNDO_SIZE) {
+            Log.i("GameController", "Gamestate list over max allowed size, removing oldest state");
+            game_states.removeFirst();
+        }
+    }
+
+    /**
+     * A method for loading the game from a saved gamestate
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static void loadGame() throws IOException, ClassNotFoundException {
+
+        if (game_states.isEmpty()) {
+            promptUser("Cannot undo further!", getContext());
+            return;
+        }
+
+        ByteArrayInputStream byte_in = new ByteArrayInputStream(game_states.removeLast());
+        ObjectInputStream in = new ObjectInputStream(byte_in);
+
+        GameState state = (GameState) in.readObject();
+
+        Log.i("GameController", "Deserializing gamestate from GameState-object");
+        game = state.getGame();
+        players = state.getPlayers();
+        current_player = getPlayer(state.getCurrentPlayerName());
+        current_starter = getPlayer(state.getCurrentStarterName());
+        actions_used = state.getActionsUsed();
+        generation = state.getGeneration();
+        action_number = state.getActionNumber();
+
+        gameUpdate();
+    }
+
 
     // https://stackoverflow.com/questions/37759734/dynamically-updating-a-fragment/37761276#37761276
     /**
@@ -488,7 +565,15 @@ public class GameController
      * @param listener {@link GameUpdateListener} a UI element implementing the interface
      */
     public static synchronized void registerGameUpdateListener(GameUpdateListener listener) {
+
+        // Avoiding duplicates
+        if (game_listeners.contains(listener)) {
+            Log.i("GameController", "CAUTION: attempting to re-register listener: " + listener);
+            return;
+        }
+
         game_listeners.add(listener);
+        Log.i("GameController", "Registered an update listener: " + listener);
     }
 
     // TODO find out if irrelevant, maybe replace with emptying the listener list at game end?
@@ -505,6 +590,7 @@ public class GameController
      * A method to update all registered update listeners
      */
     static void gameUpdate() {
+        Log.i("GameController", "Updating UI");
         for (GameUpdateListener listener : game_listeners) {
             listener.update();
         }

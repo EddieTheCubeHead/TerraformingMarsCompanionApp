@@ -149,7 +149,7 @@ public class ActivityResourceAddition extends AppCompatActivity implements Recyc
         //recyclerview setup
         recyclerview.setHasFixedSize(true);
 
-        adapter = new RecyclerAdapter(card_list, this, this); //this koska tämä luokka implementoi metodit
+        adapter = new RecyclerAdapter(this, this); //this koska tämä luokka implementoi metodit
         recyclerview.setAdapter(adapter);
 
         RecyclerView.LayoutManager layout_manager = new LinearLayoutManager(this);

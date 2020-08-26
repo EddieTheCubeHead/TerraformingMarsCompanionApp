@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class MineralDeposit extends Card {
-    public MineralDeposit(Game game) {
-        super(Type.RED, game);
+    public MineralDeposit() {
+        super(Type.RED);
         name = "Mineral deposit";
         price = 5;
         tags.add(Tag.EVENT);

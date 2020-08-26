@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class GiantSpaceMirror extends Card {
-    public GiantSpaceMirror(Game game) {
-        super(Type.GREEN, game);
+    public GiantSpaceMirror() {
+        super(Type.GREEN);
         name = "Giant space mirror";
         price = 17;
         tags.add(Tag.ENERGY);

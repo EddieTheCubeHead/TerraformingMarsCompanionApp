@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class LunarBeam extends Card {
-    public LunarBeam(Game game) {
-        super(Type.GREEN, game);
+    public LunarBeam() {
+        super(Type.GREEN);
         name = "Lunar beam";
         price = 13;
         tags.add(Tag.EARTH);

@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Thorgate extends Card {
-    public Thorgate(Game game) {
-        super(Type.CORPORATION, game);
+    public Thorgate() {
+        super(Type.CORPORATION);
         name = "Thorgate";
         tags.add(Tag.ENERGY);
     }

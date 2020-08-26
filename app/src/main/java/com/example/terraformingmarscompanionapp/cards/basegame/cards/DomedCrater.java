@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class DomedCrater extends Card {
-    public DomedCrater(Game game) {
-        super(Type.GREEN, game);
+    public DomedCrater() {
+        super(Type.GREEN);
         name = "Domed crater";
         price = 24;
         tags.add(Tag.BUILDING);
@@ -25,7 +25,7 @@ public final class DomedCrater extends Card {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.CITY, game));
     }
 
     @Override
@@ -33,7 +33,7 @@ public final class DomedCrater extends Card {
         player.getResources().setPlants(player.getResources().getPlants() + 3);
         production_box.setEnergyProduction(-1);
         production_box.setMoneyProduction(3);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 }

@@ -7,12 +7,11 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class FuelFactory extends Card {
-    public FuelFactory(Game game) {
-        super(Type.GREEN, game);
+    public FuelFactory() {
+        super(Type.GREEN);
         name = "Fuel factory";
         price = 6;
         tags.add(Tag.BUILDING);
-        owner_game = game;
     }
 
     @Override

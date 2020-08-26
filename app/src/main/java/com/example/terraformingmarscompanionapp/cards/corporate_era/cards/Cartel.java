@@ -7,12 +7,11 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class Cartel extends Card {
-    public Cartel(Game game) {
-        super(Type.GREEN, game);
+    public Cartel() {
+        super(Type.GREEN);
         name = "Cartel";
         price = 8;
         tags.add(Tag.EARTH);
-        owner_game = game;
     }
 
     @Override

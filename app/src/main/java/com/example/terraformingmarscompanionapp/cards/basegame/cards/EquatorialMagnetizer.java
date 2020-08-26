@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class EquatorialMagnetizer extends Card implements ActionCard {
-    public EquatorialMagnetizer(Game game) {
-        super(Type.BLUE, game);
+    public EquatorialMagnetizer() {
+        super(Type.BLUE);
         name = "Equatorial magnetizer";
         price = 11;
         tags.add(Tag.BUILDING);

@@ -2,6 +2,8 @@ package com.example.terraformingmarscompanionapp.game.player;
 
 import com.example.terraformingmarscompanionapp.game.GameController;
 
+import java.io.Serializable;
+
 /**
  * A dataclass to host the list of tags associated with a player. Associated with {@link Player} via
  * composition.
@@ -10,7 +12,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
  * @version 0.2
  * @since 0.2
  */
-public class PlayerTags {
+public class PlayerTags implements Serializable {
 
     private Integer building_tags = 0;
     private Integer space_tags = 0;

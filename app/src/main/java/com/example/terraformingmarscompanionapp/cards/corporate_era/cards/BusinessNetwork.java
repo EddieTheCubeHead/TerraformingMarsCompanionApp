@@ -18,12 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class BusinessNetwork extends Card implements ActionCard {
-    public BusinessNetwork(Game game) {
-        super(Type.BLUE, game);
+    public BusinessNetwork() {
+        super(Type.BLUE);
         name = "Business network";
         price = 4;
         tags.add(Tag.EARTH);
-        owner_game = game;
         requirements.setMinMoneyProduction(-4);
     }
 

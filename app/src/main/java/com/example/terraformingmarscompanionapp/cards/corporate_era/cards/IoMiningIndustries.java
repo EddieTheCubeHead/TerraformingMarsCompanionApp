@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class IoMiningIndustries extends Card {
-    public IoMiningIndustries(Game game) {
-        super(Type.GREEN, game);
+    public IoMiningIndustries() {
+        super(Type.GREEN);
         name = "Io mining indrustries";
         price = 41;
         tags.add(Tag.JOVIAN);

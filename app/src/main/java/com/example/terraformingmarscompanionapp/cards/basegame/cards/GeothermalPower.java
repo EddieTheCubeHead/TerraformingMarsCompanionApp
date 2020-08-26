@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class GeothermalPower extends Card {
-    public GeothermalPower(Game game) {
-        super(Type.GREEN, game);
+    public GeothermalPower() {
+        super(Type.GREEN);
         name = "Geothermal power";
         price = 11;
         tags.add(Tag.BUILDING);

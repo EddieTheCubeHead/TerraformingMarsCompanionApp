@@ -9,8 +9,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class StandardAquifer extends StandardProject {
-    public StandardAquifer(Game game) {
-        super(game);
+    public StandardAquifer() {
+        super();
         name = "Standard project: Aquifer";
         price = 18;
         requirements.setMaxOceans(8);
@@ -19,6 +19,6 @@ public final class StandardAquifer extends StandardProject {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
     }
 }

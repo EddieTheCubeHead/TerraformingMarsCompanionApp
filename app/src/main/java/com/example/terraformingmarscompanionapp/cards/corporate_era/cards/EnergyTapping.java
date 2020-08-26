@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 
 public final class EnergyTapping extends Card {
-    public EnergyTapping(Game game) {
-        super(Type.GREEN, game);
+    public EnergyTapping() {
+        super(Type.GREEN);
         name = "Energy tapping";
         price = 3;
         tags.add(Tag.ENERGY);

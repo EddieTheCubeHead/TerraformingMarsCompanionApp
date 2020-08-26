@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class OreProcessor extends Card implements ActionCard {
-    public OreProcessor(Game game) {
-        super(Type.BLUE, game);
+    public OreProcessor() {
+        super(Type.BLUE);
         name = "Ore processor";
         price = 13;
         tags.add(Tag.BUILDING);
@@ -27,7 +27,7 @@ public final class OreProcessor extends Card implements ActionCard {
     public void actionWithMetadata(Integer data) {
         owner_player.getResources().setEnergy(owner_player.getResources().getEnergy() - 4);
         owner_player.getResources().setTitanium(owner_player.getResources().getTitanium() + 1);
-        owner_game.raiseOxygen(owner_player);
+        game.raiseOxygen(owner_player);
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

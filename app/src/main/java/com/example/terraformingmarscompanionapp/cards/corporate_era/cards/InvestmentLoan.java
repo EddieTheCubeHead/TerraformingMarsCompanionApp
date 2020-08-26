@@ -7,13 +7,12 @@ import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class InvestmentLoan extends Card {
-    public InvestmentLoan(Game game) {
-        super(Type.RED, game);
+    public InvestmentLoan() {
+        super(Type.RED);
         name = "Investment loaan";
         price = 3;
         tags.add(Tag.EARTH);
         tags.add(Tag.EVENT);
-        owner_game = game;
         requirements.setMinMoneyProduction(-4);
     }
 

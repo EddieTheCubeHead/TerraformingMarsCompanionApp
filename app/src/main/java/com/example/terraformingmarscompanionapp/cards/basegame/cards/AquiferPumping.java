@@ -13,8 +13,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class AquiferPumping extends Card implements ActionCard {
-    public AquiferPumping(Game game) {
-        super(Type.BLUE, game);
+    public AquiferPumping() {
+        super(Type.BLUE);
         name = "Aquifer pumping";
         price = 18;
         tags.add(Tag.BUILDING);
@@ -23,8 +23,8 @@ public final class AquiferPumping extends Card implements ActionCard {
     @Override
     public void cardAction() {
         EventScheduler.addEvent(new PlayCardEvent(this, owner_player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, owner_game));
-        EventScheduler.addEvent(new CardCostEvent(owner_game.getDeck().get("Aquifer pumping ghost")));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.OCEAN, game));
+        EventScheduler.addEvent(new CardCostEvent(game.getDeck().get("Aquifer pumping ghost")));
         EventScheduler.playNextEvent(GameController.getContext());
     }
 

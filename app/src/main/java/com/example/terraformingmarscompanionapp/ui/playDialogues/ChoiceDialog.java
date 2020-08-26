@@ -136,6 +136,7 @@ public class ChoiceDialog {
                     if (card.getOwner() == null) {
                         card.onPlayServerHook(player, target_index);
                     } else if (card instanceof ActionCard) {
+                        Log.i("ChoiceDialog", "Using action with metadata " + target_index);
                         ((ActionCard) card).actionServerHook(player, target_index);
                     } else {
                         Log.i("Choice dialog Error", "Choice dialog called from an owned card that is not an action card.");

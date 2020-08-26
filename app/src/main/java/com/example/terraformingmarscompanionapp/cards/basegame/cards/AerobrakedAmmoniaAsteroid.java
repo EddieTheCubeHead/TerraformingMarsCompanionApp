@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -11,8 +12,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 
 public final class AerobrakedAmmoniaAsteroid extends Card {
-    public AerobrakedAmmoniaAsteroid(Game game) {
-        super(Type.RED, game);
+    public AerobrakedAmmoniaAsteroid() {
+        super(Type.RED);
         name = "Aerobraked ammonia asteroid";
         price = 26;
         tags.add(Tag.SPACE);
@@ -26,7 +27,7 @@ public final class AerobrakedAmmoniaAsteroid extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         production_box.setHeatProduction(3);
         production_box.setPlantsProduction(1);
         super.playWithMetadata(player, data);

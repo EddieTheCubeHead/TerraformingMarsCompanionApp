@@ -14,8 +14,8 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class RestrictedArea extends Card implements ActionCard {
-    public RestrictedArea(Game game) {
-        super(Type.BLUE, game);
+    public RestrictedArea() {
+        super(Type.BLUE);
         name = "Restricted area";
         price = 11;
         tags.add(Tag.SCIENCE);
@@ -24,7 +24,7 @@ public final class RestrictedArea extends Card implements ActionCard {
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.RESTRICTED_AREA, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.RESTRICTED_AREA, game));
     }
 
     @Override

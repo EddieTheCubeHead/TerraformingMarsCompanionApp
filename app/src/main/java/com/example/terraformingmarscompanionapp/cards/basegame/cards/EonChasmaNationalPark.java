@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -11,8 +12,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 
 public final class EonChasmaNationalPark extends Card {
-    public EonChasmaNationalPark(Game game) {
-        super(Type.GREEN, game);
+    public EonChasmaNationalPark() {
+        super(Type.GREEN);
         name = "Eon chasma national park";
         price = 16;
         tags.add(Tag.PLANT);
@@ -29,7 +30,7 @@ public final class EonChasmaNationalPark extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         player.getResources().setPlants(player.getResources().getPlants() + 3);
         production_box.setMoneyProduction(2);
         super.playWithMetadata(player, data);

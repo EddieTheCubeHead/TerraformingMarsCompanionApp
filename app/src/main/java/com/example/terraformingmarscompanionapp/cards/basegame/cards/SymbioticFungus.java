@@ -12,8 +12,8 @@ import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 
 public final class SymbioticFungus extends Card implements ActionCard {
-    public SymbioticFungus(Game game) {
-        super(Type.BLUE, game);
+    public SymbioticFungus() {
+        super(Type.BLUE);
         name = "Symbiotic fungus";
         price = 4;
         tags.add(Tag.MICROBE);

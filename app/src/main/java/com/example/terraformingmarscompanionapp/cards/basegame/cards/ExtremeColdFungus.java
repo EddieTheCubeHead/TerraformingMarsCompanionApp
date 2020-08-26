@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class ExtremeColdFungus extends Card implements ActionCard {
-    public ExtremeColdFungus(Game game) {
-        super(Type.BLUE, game);
+    public ExtremeColdFungus() {
+        super(Type.BLUE);
         name = "Extreme-cold fungus";
         price = 13;
         tags.add(Tag.MICROBE);
@@ -37,7 +37,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
 
     @Override
     public void actionServerHook(Player player, Integer data) {
-        if (owner_game.getServerMultiplayer()) {
+        if (game.getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), data));
         }
         setActionToUsed();

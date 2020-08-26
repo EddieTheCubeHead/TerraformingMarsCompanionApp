@@ -14,12 +14,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class HiredRaiders extends Card {
-    public HiredRaiders(Game game) {
-        super(Type.RED, game);
+    public HiredRaiders() {
+        super(Type.RED);
         name = "Hired raiders";
         price = 1;
         tags.add(Tag.EVENT);
-        owner_game = game;
     }
 
     @Override

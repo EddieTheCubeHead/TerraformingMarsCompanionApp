@@ -11,8 +11,8 @@ import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 public final class SpaceElevator extends Card implements ActionCard {
-    public SpaceElevator(Game game) {
-        super(Type.BLUE, game);
+    public SpaceElevator() {
+        super(Type.BLUE);
         name = "Space elevator";
         price = 27;
         tags.add(Tag.SPACE);
@@ -23,7 +23,7 @@ public final class SpaceElevator extends Card implements ActionCard {
     @Override
     public void playWithMetadata(Player player, Integer data) {
         production_box.setTitaniumProduction(1);
-        owner_game.update_manager.onVpCardPlayed(player);
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 

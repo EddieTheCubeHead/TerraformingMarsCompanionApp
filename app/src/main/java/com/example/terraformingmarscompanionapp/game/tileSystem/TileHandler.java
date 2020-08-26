@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
@@ -12,6 +13,7 @@ import com.example.terraformingmarscompanionapp.ui.main.TilePlacementActivity;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.TileEventPacket;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,14 +22,13 @@ import java.util.Collections;
  * A class for managing the map of the game
  *
  * @author Eetu Asikainen
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
-public class TileHandler {
+public class TileHandler implements Serializable {
     private final GameMap map;
     private final Tile[][] mars_tiles = new Tile[17][9];
     private final Tile[] space_tiles;
-    private final Game game;
     /* Coordnates are x and y. Note that only y=4 is a full row. The tiles are staggered and in a
      * hex formation.
      */
@@ -35,11 +36,9 @@ public class TileHandler {
     /**
      * Constructor. Generates one of the three maps based on the given value
      *
-     * @param owner_game {@link Game} that the handler is associated with
      * @param game_map {@link Integer} declaring the map to be used
      */
-    public TileHandler(Game owner_game, GameMap game_map) {
-        game = owner_game;
+    public TileHandler(Game game, GameMap game_map) {
 
         map = game_map;
 
@@ -54,230 +53,230 @@ public class TileHandler {
         switch (map) {
             case THARSIS:
 
-                mars_tiles[4][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{4, 8});
-                mars_tiles[6][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), true, new Integer[]{6, 8});
-                mars_tiles[8][8] = new Tile(game, null, false, new Integer[]{8, 8});
-                mars_tiles[10][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), true, new Integer[]{10, 8});
-                mars_tiles[12][8] = new Tile(game, null, true, new Integer[]{12, 8});
+                mars_tiles[4][8] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{4, 8});
+                mars_tiles[6][8] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), true, new Integer[]{6, 8});
+                mars_tiles[8][8] = new Tile(null, false, new Integer[]{8, 8});
+                mars_tiles[10][8] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), true, new Integer[]{10, 8});
+                mars_tiles[12][8] = new Tile(null, true, new Integer[]{12, 8});
 
-                mars_tiles[3][7] = new Tile(game, null, false, new Integer[]{3, 7});
-                mars_tiles[5][7] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{5, 7}, true);
-                mars_tiles[7][7] = new Tile(game, null, false, new Integer[]{7, 7});
-                mars_tiles[9][7] = new Tile(game, null, false, new Integer[]{9, 7});
-                mars_tiles[11][7] = new Tile(game, null, false, new Integer[]{11, 7});
-                mars_tiles[13][7] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.CARD, PlacementBonus.CARD)), true, new Integer[]{13, 7});
+                mars_tiles[3][7] = new Tile(null, false, new Integer[]{3, 7});
+                mars_tiles[5][7] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{5, 7}, true);
+                mars_tiles[7][7] = new Tile(null, false, new Integer[]{7, 7});
+                mars_tiles[9][7] = new Tile(null, false, new Integer[]{9, 7});
+                mars_tiles[11][7] = new Tile(null, false, new Integer[]{11, 7});
+                mars_tiles[13][7] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.CARD, PlacementBonus.CARD)), true, new Integer[]{13, 7});
 
-                mars_tiles[2][6] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{2, 6}, true);
-                mars_tiles[4][6] = new Tile(game, null, false, new Integer[]{4, 6});
-                mars_tiles[6][6] = new Tile(game, null, false, new Integer[]{6, 6});
-                mars_tiles[8][6] = new Tile(game, null, false, new Integer[]{8, 6});
-                mars_tiles[10][6] = new Tile(game, null, false, new Integer[]{10, 6});
-                mars_tiles[12][6] = new Tile(game, null, false, new Integer[]{12, 6});
-                mars_tiles[14][6] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{14, 6});
+                mars_tiles[2][6] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{2, 6}, true);
+                mars_tiles[4][6] = new Tile(null, false, new Integer[]{4, 6});
+                mars_tiles[6][6] = new Tile(null, false, new Integer[]{6, 6});
+                mars_tiles[8][6] = new Tile(null, false, new Integer[]{8, 6});
+                mars_tiles[10][6] = new Tile(null, false, new Integer[]{10, 6});
+                mars_tiles[12][6] = new Tile(null, false, new Integer[]{12, 6});
+                mars_tiles[14][6] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{14, 6});
 
-                mars_tiles[1][5] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.PLANT)), false, new Integer[]{1, 5}, true);
-                mars_tiles[3][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{3, 5});
-                mars_tiles[5][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{5, 5});
-                mars_tiles[7][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{7, 5});
-                mars_tiles[9][5] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{9, 5});
-                mars_tiles[11][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{11, 5});
-                mars_tiles[13][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{13, 5});
-                mars_tiles[15][5] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{15, 5});
+                mars_tiles[1][5] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.PLANT)), false, new Integer[]{1, 5}, true);
+                mars_tiles[3][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{3, 5});
+                mars_tiles[5][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{5, 5});
+                mars_tiles[7][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{7, 5});
+                mars_tiles[9][5] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{9, 5});
+                mars_tiles[11][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{11, 5});
+                mars_tiles[13][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{13, 5});
+                mars_tiles[15][5] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{15, 5});
 
-                mars_tiles[0][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{0, 4}, true);
-                mars_tiles[2][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{2, 4});
-                mars_tiles[4][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{4, 4});
-                mars_tiles[6][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{6, 4});
-                mars_tiles[8][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{8, 4});
-                mars_tiles[10][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{10, 4});
-                mars_tiles[12][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{12, 4});
-                mars_tiles[14][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{14, 4});
-                mars_tiles[16][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{16, 4});
+                mars_tiles[0][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{0, 4}, true);
+                mars_tiles[2][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{2, 4});
+                mars_tiles[4][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{4, 4});
+                mars_tiles[6][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{6, 4});
+                mars_tiles[8][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{8, 4});
+                mars_tiles[10][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{10, 4});
+                mars_tiles[12][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{12, 4});
+                mars_tiles[14][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{14, 4});
+                mars_tiles[16][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{16, 4});
 
-                mars_tiles[1][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{1, 3});
-                mars_tiles[3][3] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{3, 3});
-                mars_tiles[5][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{5, 3});
-                mars_tiles[7][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{7, 3});
-                mars_tiles[9][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{9, 3});
-                mars_tiles[11][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{11, 3});
-                mars_tiles[13][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{13, 3});
-                mars_tiles[15][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{15, 3});
+                mars_tiles[1][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{1, 3});
+                mars_tiles[3][3] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{3, 3});
+                mars_tiles[5][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{5, 3});
+                mars_tiles[7][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{7, 3});
+                mars_tiles[9][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{9, 3});
+                mars_tiles[11][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{11, 3});
+                mars_tiles[13][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{13, 3});
+                mars_tiles[15][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{15, 3});
 
-                mars_tiles[2][2] = new Tile(game, null, false, new Integer[]{2, 2});
-                mars_tiles[4][2] = new Tile(game, null, false, new Integer[]{4, 2});
-                mars_tiles[6][2] = new Tile(game, null, false, new Integer[]{6, 2});
-                mars_tiles[8][2] = new Tile(game, null, false, new Integer[]{8, 2});
-                mars_tiles[10][2] = new Tile(game, null, false, new Integer[]{10, 2});
-                mars_tiles[12][2] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{12, 2});
-                mars_tiles[14][2] = new Tile(game, null, false, new Integer[]{14, 2});
+                mars_tiles[2][2] = new Tile(null, false, new Integer[]{2, 2});
+                mars_tiles[4][2] = new Tile(null, false, new Integer[]{4, 2});
+                mars_tiles[6][2] = new Tile(null, false, new Integer[]{6, 2});
+                mars_tiles[8][2] = new Tile(null, false, new Integer[]{8, 2});
+                mars_tiles[10][2] = new Tile(null, false, new Integer[]{10, 2});
+                mars_tiles[12][2] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{12, 2});
+                mars_tiles[14][2] = new Tile(null, false, new Integer[]{14, 2});
 
-                mars_tiles[3][1] = new Tile(game, null, false, new Integer[]{3, 1});
-                mars_tiles[5][1] = new Tile(game, null, false, new Integer[]{5, 1});
-                mars_tiles[7][1] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{7, 1});
-                mars_tiles[9][1] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{9, 1});
-                mars_tiles[11][1] = new Tile(game, null, false, new Integer[]{11, 1});
-                mars_tiles[13][1] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{13, 1});
+                mars_tiles[3][1] = new Tile(null, false, new Integer[]{3, 1});
+                mars_tiles[5][1] = new Tile(null, false, new Integer[]{5, 1});
+                mars_tiles[7][1] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{7, 1});
+                mars_tiles[9][1] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{9, 1});
+                mars_tiles[11][1] = new Tile(null, false, new Integer[]{11, 1});
+                mars_tiles[13][1] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{13, 1});
 
-                mars_tiles[4][0] = new Tile(game, null, false, new Integer[]{4, 0});
-                mars_tiles[6][0] = new Tile(game, null, false, new Integer[]{6, 0});
-                mars_tiles[8][0] = new Tile(game, null, false, new Integer[]{8, 0});
-                mars_tiles[10][0] = new Tile(game, null, false, new Integer[]{10, 0});
-                mars_tiles[12][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), true, new Integer[]{12, 0});
+                mars_tiles[4][0] = new Tile(null, false, new Integer[]{4, 0});
+                mars_tiles[6][0] = new Tile(null, false, new Integer[]{6, 0});
+                mars_tiles[8][0] = new Tile(null, false, new Integer[]{8, 0});
+                mars_tiles[10][0] = new Tile(null, false, new Integer[]{10, 0});
+                mars_tiles[12][0] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), true, new Integer[]{12, 0});
                 break;
 
 
             case HELLAS:
 
-                mars_tiles[4][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{4, 8});
-                mars_tiles[5][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{6, 8});
-                mars_tiles[8][8] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{8, 8});
-                mars_tiles[10][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{10, 8});
-                mars_tiles[12][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{12, 8});
+                mars_tiles[4][8] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{4, 8});
+                mars_tiles[5][8] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{6, 8});
+                mars_tiles[8][8] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{8, 8});
+                mars_tiles[10][8] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{10, 8});
+                mars_tiles[12][8] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{12, 8});
 
-                mars_tiles[3][7] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{3, 7});
-                mars_tiles[5][7] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{5, 7});
-                mars_tiles[7][7] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{7, 7});
-                mars_tiles[9][7] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.STEEL)), false, new Integer[]{9, 7});
-                mars_tiles[11][7] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{11, 7});
-                mars_tiles[13][7] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{13, 7});
+                mars_tiles[3][7] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{3, 7});
+                mars_tiles[5][7] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{5, 7});
+                mars_tiles[7][7] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{7, 7});
+                mars_tiles[9][7] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.STEEL)), false, new Integer[]{9, 7});
+                mars_tiles[11][7] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{11, 7});
+                mars_tiles[13][7] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{13, 7});
 
-                mars_tiles[2][6] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{2, 6});
-                mars_tiles[4][6] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{4, 6});
-                mars_tiles[6][6] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{6, 6});
-                mars_tiles[8][6] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{8, 6});
-                mars_tiles[10][6] = new Tile(game, null, false, new Integer[]{10, 6});
-                mars_tiles[12][6] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{12, 6});
-                mars_tiles[14][6] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.TITANIUM)), false, new Integer[]{14, 6});
+                mars_tiles[2][6] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{2, 6});
+                mars_tiles[4][6] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{4, 6});
+                mars_tiles[6][6] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{6, 6});
+                mars_tiles[8][6] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{8, 6});
+                mars_tiles[10][6] = new Tile(null, false, new Integer[]{10, 6});
+                mars_tiles[12][6] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{12, 6});
+                mars_tiles[14][6] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.TITANIUM)), false, new Integer[]{14, 6});
 
-                mars_tiles[1][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{1, 5});
-                mars_tiles[3][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{3, 5});
-                mars_tiles[5][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{5, 5});
-                mars_tiles[7][5] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{7, 5});
-                mars_tiles[9][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{9, 5});
-                mars_tiles[11][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{11, 5});
-                mars_tiles[13][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{13, 5});
-                mars_tiles[15][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{15, 5});
+                mars_tiles[1][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{1, 5});
+                mars_tiles[3][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{3, 5});
+                mars_tiles[5][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{5, 5});
+                mars_tiles[7][5] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{7, 5});
+                mars_tiles[9][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{9, 5});
+                mars_tiles[11][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{11, 5});
+                mars_tiles[13][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{13, 5});
+                mars_tiles[15][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{15, 5});
 
-                mars_tiles[0][4] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{0, 4});
-                mars_tiles[2][4] = new Tile(game, null, false, new Integer[]{2, 4});
-                mars_tiles[4][4] = new Tile(game, null, false, new Integer[]{4, 4});
-                mars_tiles[6][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{6, 4});
-                mars_tiles[8][4] = new Tile(game, null, false, new Integer[]{8, 4});
-                mars_tiles[10][4] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), true, new Integer[]{10, 4});
-                mars_tiles[12][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT, PlacementBonus.HEAT)), true, new Integer[]{12, 4});
-                mars_tiles[14][4] = new Tile(game, null, true, new Integer[]{14, 4});
-                mars_tiles[16][4] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{16, 4});
+                mars_tiles[0][4] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{0, 4});
+                mars_tiles[2][4] = new Tile(null, false, new Integer[]{2, 4});
+                mars_tiles[4][4] = new Tile(null, false, new Integer[]{4, 4});
+                mars_tiles[6][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{6, 4});
+                mars_tiles[8][4] = new Tile(null, false, new Integer[]{8, 4});
+                mars_tiles[10][4] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), true, new Integer[]{10, 4});
+                mars_tiles[12][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT, PlacementBonus.HEAT)), true, new Integer[]{12, 4});
+                mars_tiles[14][4] = new Tile(null, true, new Integer[]{14, 4});
+                mars_tiles[16][4] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{16, 4});
 
-                mars_tiles[1][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{1, 3});
-                mars_tiles[3][3] = new Tile(game, null, false, new Integer[]{3, 3});
-                mars_tiles[5][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{5, 3});
-                mars_tiles[7][3] = new Tile(game, null, false, new Integer[]{7, 3});
-                mars_tiles[9][3] = new Tile(game, null, false, new Integer[]{9, 3});
-                mars_tiles[11][3] = new Tile(game, null, true, new Integer[]{11, 3});
-                mars_tiles[13][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), true, new Integer[]{13, 3});
-                mars_tiles[15][3] = new Tile(game, null, false, new Integer[]{15, 3});
+                mars_tiles[1][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{1, 3});
+                mars_tiles[3][3] = new Tile(null, false, new Integer[]{3, 3});
+                mars_tiles[5][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{5, 3});
+                mars_tiles[7][3] = new Tile(null, false, new Integer[]{7, 3});
+                mars_tiles[9][3] = new Tile(null, false, new Integer[]{9, 3});
+                mars_tiles[11][3] = new Tile(null, true, new Integer[]{11, 3});
+                mars_tiles[13][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), true, new Integer[]{13, 3});
+                mars_tiles[15][3] = new Tile(null, false, new Integer[]{15, 3});
 
-                mars_tiles[2][2] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), true, new Integer[]{2, 2});
-                mars_tiles[4][2] = new Tile(game, null, false, new Integer[]{4, 2});
-                mars_tiles[6][2] = new Tile(game, null, false, new Integer[]{6, 2});
-                mars_tiles[8][2] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{8, 2});
-                mars_tiles[10][2] = new Tile(game, null, false, new Integer[]{10, 2});
-                mars_tiles[12][2] = new Tile(game, null, false, new Integer[]{12, 2});
-                mars_tiles[14][2] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{14, 2});
+                mars_tiles[2][2] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), true, new Integer[]{2, 2});
+                mars_tiles[4][2] = new Tile(null, false, new Integer[]{4, 2});
+                mars_tiles[6][2] = new Tile(null, false, new Integer[]{6, 2});
+                mars_tiles[8][2] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{8, 2});
+                mars_tiles[10][2] = new Tile(null, false, new Integer[]{10, 2});
+                mars_tiles[12][2] = new Tile(null, false, new Integer[]{12, 2});
+                mars_tiles[14][2] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{14, 2});
 
-                mars_tiles[3][1] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{3, 1});
-                mars_tiles[5][1] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{5, 1});
-                mars_tiles[7][1] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{7, 1});
-                mars_tiles[9][1] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{9, 1});
-                mars_tiles[11][1] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{11, 1});
-                mars_tiles[13][1] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{13, 1});
+                mars_tiles[3][1] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{3, 1});
+                mars_tiles[5][1] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{5, 1});
+                mars_tiles[7][1] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{7, 1});
+                mars_tiles[9][1] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{9, 1});
+                mars_tiles[11][1] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{11, 1});
+                mars_tiles[13][1] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{13, 1});
 
-                mars_tiles[4][0] = new Tile(game, null, false, new Integer[]{4, 0});
-                mars_tiles[6][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{6, 0});
-                mars_tiles[8][0] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.OCEAN)), false, new Integer[]{8, 0});
-                mars_tiles[10][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{10, 0});
-                mars_tiles[12][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), false, new Integer[]{12, 0});
+                mars_tiles[4][0] = new Tile(null, false, new Integer[]{4, 0});
+                mars_tiles[6][0] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{6, 0});
+                mars_tiles[8][0] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.OCEAN)), false, new Integer[]{8, 0});
+                mars_tiles[10][0] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.HEAT, PlacementBonus.HEAT)), false, new Integer[]{10, 0});
+                mars_tiles[12][0] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), false, new Integer[]{12, 0});
                 break;
 
 
             case ELYSIUM:
 
-                mars_tiles[4][8] = new Tile(game, null, true, new Integer[]{4, 8});
-                mars_tiles[5][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), true, new Integer[]{6, 8});
-                mars_tiles[8][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), true, new Integer[]{8, 8});
-                mars_tiles[10][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), true, new Integer[]{10, 8});
-                mars_tiles[12][8] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{12, 8});
+                mars_tiles[4][8] = new Tile(null, true, new Integer[]{4, 8});
+                mars_tiles[5][8] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), true, new Integer[]{6, 8});
+                mars_tiles[8][8] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), true, new Integer[]{8, 8});
+                mars_tiles[10][8] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), true, new Integer[]{10, 8});
+                mars_tiles[12][8] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{12, 8});
 
-                mars_tiles[3][7] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{3, 7}, true);
-                mars_tiles[5][7] = new Tile(game, null, false, new Integer[]{5, 7});
-                mars_tiles[7][7] = new Tile(game, null, false, new Integer[]{7, 7});
-                mars_tiles[9][7] = new Tile(game, null, true, new Integer[]{9, 7});
-                mars_tiles[11][7] = new Tile(game, null, true, new Integer[]{11, 7});
-                mars_tiles[13][7] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{13, 7});
+                mars_tiles[3][7] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{3, 7}, true);
+                mars_tiles[5][7] = new Tile(null, false, new Integer[]{5, 7});
+                mars_tiles[7][7] = new Tile(null, false, new Integer[]{7, 7});
+                mars_tiles[9][7] = new Tile(null, true, new Integer[]{9, 7});
+                mars_tiles[11][7] = new Tile(null, true, new Integer[]{11, 7});
+                mars_tiles[13][7] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{13, 7});
 
-                mars_tiles[2][6] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), false, new Integer[]{2, 6}, true);
-                mars_tiles[4][6] = new Tile(game, null, false, new Integer[]{4, 6});
-                mars_tiles[6][6] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{6, 6});
-                mars_tiles[8][6] = new Tile(game, null, false, new Integer[]{8, 6});
-                mars_tiles[10][6] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{10, 6});
-                mars_tiles[12][6] = new Tile(game, null, true, new Integer[]{12, 6});
-                mars_tiles[14][6] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.CARD, PlacementBonus.CARD, PlacementBonus.CARD)), false, new Integer[]{14, 6}, true);
+                mars_tiles[2][6] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.TITANIUM, PlacementBonus.TITANIUM)), false, new Integer[]{2, 6}, true);
+                mars_tiles[4][6] = new Tile(null, false, new Integer[]{4, 6});
+                mars_tiles[6][6] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{6, 6});
+                mars_tiles[8][6] = new Tile(null, false, new Integer[]{8, 6});
+                mars_tiles[10][6] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{10, 6});
+                mars_tiles[12][6] = new Tile(null, true, new Integer[]{12, 6});
+                mars_tiles[14][6] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.CARD, PlacementBonus.CARD, PlacementBonus.CARD)), false, new Integer[]{14, 6}, true);
 
-                mars_tiles[1][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{1, 5});
-                mars_tiles[3][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{3, 5});
-                mars_tiles[5][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{5, 5});
-                mars_tiles[7][5] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{7, 5});
-                mars_tiles[9][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{9, 5});
-                mars_tiles[11][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{11, 5});
-                mars_tiles[13][5] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{13, 5});
-                mars_tiles[15][5] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{15, 5}, true);
+                mars_tiles[1][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{1, 5});
+                mars_tiles[3][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{3, 5});
+                mars_tiles[5][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{5, 5});
+                mars_tiles[7][5] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{7, 5});
+                mars_tiles[9][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{9, 5});
+                mars_tiles[11][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{11, 5});
+                mars_tiles[13][5] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), true, new Integer[]{13, 5});
+                mars_tiles[15][5] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{15, 5}, true);
 
-                mars_tiles[0][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{0, 4});
-                mars_tiles[2][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{2, 4});
-                mars_tiles[4][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{4, 4});
-                mars_tiles[6][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{6, 4});
-                mars_tiles[8][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{8, 4});
-                mars_tiles[10][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{10, 4});
-                mars_tiles[12][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{12, 4});
-                mars_tiles[14][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{14, 4});
-                mars_tiles[16][4] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.TITANIUM)), false, new Integer[]{16, 4});
+                mars_tiles[0][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{0, 4});
+                mars_tiles[2][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{2, 4});
+                mars_tiles[4][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{4, 4});
+                mars_tiles[6][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), true, new Integer[]{6, 4});
+                mars_tiles[8][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{8, 4});
+                mars_tiles[10][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{10, 4});
+                mars_tiles[12][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{12, 4});
+                mars_tiles[14][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.PLANT)), false, new Integer[]{14, 4});
+                mars_tiles[16][4] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.PLANT, PlacementBonus.TITANIUM)), false, new Integer[]{16, 4});
 
-                mars_tiles[1][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{1, 3});
-                mars_tiles[3][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{3, 3});
-                mars_tiles[5][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{5, 3});
-                mars_tiles[7][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{7, 3});
-                mars_tiles[9][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{9, 3});
-                mars_tiles[11][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{11, 3});
-                mars_tiles[13][3] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{13, 3});
-                mars_tiles[15][3] = new Tile(game, null, false, new Integer[]{15, 3});
+                mars_tiles[1][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{1, 3});
+                mars_tiles[3][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{3, 3});
+                mars_tiles[5][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{5, 3});
+                mars_tiles[7][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{7, 3});
+                mars_tiles[9][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{9, 3});
+                mars_tiles[11][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{11, 3});
+                mars_tiles[13][3] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.PLANT)), false, new Integer[]{13, 3});
+                mars_tiles[15][3] = new Tile(null, false, new Integer[]{15, 3});
 
-                mars_tiles[2][2] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{2, 2});
-                mars_tiles[4][2] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{4, 2});
-                mars_tiles[6][2] = new Tile(game, null, false, new Integer[]{6, 2});
-                mars_tiles[8][2] = new Tile(game, null, false, new Integer[]{8, 2});
-                mars_tiles[10][2] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{10, 2});
-                mars_tiles[12][2] = new Tile(game, null, false, new Integer[]{12, 2});
-                mars_tiles[14][2] = new Tile(game, null, false, new Integer[]{14, 2});
+                mars_tiles[2][2] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.TITANIUM)), false, new Integer[]{2, 2});
+                mars_tiles[4][2] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{4, 2});
+                mars_tiles[6][2] = new Tile(null, false, new Integer[]{6, 2});
+                mars_tiles[8][2] = new Tile(null, false, new Integer[]{8, 2});
+                mars_tiles[10][2] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{10, 2});
+                mars_tiles[12][2] = new Tile(null, false, new Integer[]{12, 2});
+                mars_tiles[14][2] = new Tile(null, false, new Integer[]{14, 2});
 
-                mars_tiles[3][1] = new Tile(game,  new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{3, 1});
-                mars_tiles[5][1] = new Tile(game, null, false, new Integer[]{5, 1});
-                mars_tiles[7][1] = new Tile(game, null, false, new Integer[]{7, 1});
-                mars_tiles[9][1] = new Tile(game, null, false, new Integer[]{9, 1});
-                mars_tiles[11][1] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{11, 1});
-                mars_tiles[13][1] = new Tile(game, null, false, new Integer[]{13, 1});
+                mars_tiles[3][1] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{3, 1});
+                mars_tiles[5][1] = new Tile(null, false, new Integer[]{5, 1});
+                mars_tiles[7][1] = new Tile(null, false, new Integer[]{7, 1});
+                mars_tiles[9][1] = new Tile(null, false, new Integer[]{9, 1});
+                mars_tiles[11][1] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{11, 1});
+                mars_tiles[13][1] = new Tile(null, false, new Integer[]{13, 1});
 
-                mars_tiles[4][0] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{4, 0});
-                mars_tiles[6][0] = new Tile(game, null, false, new Integer[]{6, 0});
-                mars_tiles[8][0] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{8, 0});
-                mars_tiles[10][0] = new Tile(game, new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{10, 0});
-                mars_tiles[12][0] = new Tile(game, new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{12, 0});
+                mars_tiles[4][0] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.STEEL)), false, new Integer[]{4, 0});
+                mars_tiles[6][0] = new Tile(null, false, new Integer[]{6, 0});
+                mars_tiles[8][0] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{8, 0});
+                mars_tiles[10][0] = new Tile(new ArrayList<>(Collections.singletonList(PlacementBonus.CARD)), false, new Integer[]{10, 0});
+                mars_tiles[12][0] = new Tile(new ArrayList<>(Arrays.asList(PlacementBonus.STEEL, PlacementBonus.STEEL)), false, new Integer[]{12, 0});
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + map);
         }
 
         // Space tiles don't have placement or adjacency bonuses. Venus-expansion adds 4 of these
-        if (owner_game.modifiers.getVenus()) {
+        if (game.modifiers.getVenus()) {
             space_tiles = new Tile[7];
         } else {
             space_tiles = new Tile[3];
@@ -285,7 +284,7 @@ public class TileHandler {
 
         // Init space tiles
         for (int i = 0; i < space_tiles.length; i++) {
-            space_tiles[i] = new Tile(game);
+            space_tiles[i] = new Tile();
         }
     }
 
@@ -321,7 +320,7 @@ public class TileHandler {
      * @param tile_type {@link Placeable} that is being placed
      * @return {@link ArrayList} of {@link String} if the placealbe is of type FLOOD_OCEAN. Represents the players flood money removal can target. Otherwise returns null
      */
-    public ArrayList<String> placeTile(Player player, Tile target_tile, Placeable tile_type) {
+    public ArrayList<String> placeTile(Player player, Tile target_tile, Placeable tile_type) throws InvalidResourcesException {
         ArrayList<Placeable> to_city = new ArrayList<>(Arrays.asList(Placeable.CITY, Placeable.RESEARCH_OUTPOST, Placeable.NOCTIS, Placeable.VOLCANIC_CITY, Placeable.URBANIZED_AREA));
         ArrayList<Placeable> to_ocean = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.LAND_OCEAN, Placeable.FLOOD_OCEAN));
         ArrayList<Placeable> to_greenery = new ArrayList<>(Arrays.asList(Placeable.GREENERY, Placeable.OCEAN_GREENERY));
@@ -562,8 +561,8 @@ public class TileHandler {
      *
      * @param player {@link Player} placing the tile
      */
-    public void placeGanymede(Player player) {
-        game.update_manager.onCityPlaced(player, false);
+    public void placeGanymede(Player player) throws InvalidResourcesException {
+        GameController.getGame().update_manager.onCityPlaced(player, false);
         space_tiles[0].placeHex(player, Placeable.CITY, GameController.getContext());
     }
 
@@ -573,8 +572,8 @@ public class TileHandler {
      *
      * @param player {@link Player} placing the tile
      */
-    public void placePhobos(Player player) {
-        game.update_manager.onCityPlaced(player, false);
+    public void placePhobos(Player player) throws InvalidResourcesException {
+        GameController.getGame().update_manager.onCityPlaced(player, false);
         space_tiles[1].placeHex(player, Placeable.CITY, GameController.getContext());
     }
 }

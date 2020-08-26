@@ -4,11 +4,14 @@ import android.content.Context;
 
 import com.example.terraformingmarscompanionapp.cards.basegame.cards.MiningRights;
 import com.example.terraformingmarscompanionapp.cards.corporate_era.cards.MiningArea;
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -16,11 +19,10 @@ import java.util.ArrayList;
  * placed hex on the tile.
  *
  * @author Eetu Asikainen
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
-public class Tile {
-    private final Game game;
+public class Tile implements Serializable {
     private Boolean is_ocean = false;
     private ArrayList<PlacementBonus> placement_bonuses = new ArrayList<>();
     private Integer[] coordinates = new Integer[2];
@@ -31,43 +33,36 @@ public class Tile {
     /**
      * Default constructor
      *
-     * @param tile_game {@link Game} the tile is associated with
      * @param tile_placement_bonuses {@link ArrayList} of {@link PlacementBonus} the tile has.
      * @param tile_is_ocean {@link Boolean} whether the tile is ocean tile or not
      * @param tile_coordinates {@link java.lang.reflect.Array} of two {@link Integer} representing the x and y coordinate of the tile.
      */
-    Tile(Game tile_game, ArrayList<PlacementBonus> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates) {
+    Tile(ArrayList<PlacementBonus> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates) {
         placement_bonuses = tile_placement_bonuses;
         coordinates = tile_coordinates;
         is_ocean = tile_is_ocean;
-        game = tile_game;
     }
 
     /**
      * Custom constructor for creating volcanic tiles
      *
-     * @param tile_game {@link Game} the tile is associated with
      * @param tile_placement_bonuses {@link ArrayList} of {@link PlacementBonus} the tile has.
      * @param tile_is_ocean {@link Boolean} whether the tile is ocean tile or not
      * @param tile_coordinates {@link java.lang.reflect.Array} of two {@link Integer} representing the x and y coordinate of the tile.
      * @param tile_is_volcanic {@link Boolean}
      */
-    Tile(Game tile_game, ArrayList<PlacementBonus> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates, Boolean tile_is_volcanic) {
+    Tile (ArrayList<PlacementBonus> tile_placement_bonuses, Boolean tile_is_ocean, Integer[] tile_coordinates, Boolean tile_is_volcanic) {
         placement_bonuses = tile_placement_bonuses;
         coordinates = tile_coordinates;
         is_ocean = tile_is_ocean;
-        game = tile_game;
         is_volcanic = tile_is_volcanic;
     }
 
     /**
      * Custom constructor for creating space tiles. Space tiles have no coordinates or placement bonuses
      * and are stored separately in a one-dimensional array instead of a two-dimensional one
-     *
-     * @param tile_game {@link Game} the tile is associated with
      */
-    Tile(Game tile_game) {
-        game = tile_game;
+    Tile() {
         coordinates[0] = null;
         coordinates[1] = null;
     }
@@ -129,7 +124,10 @@ public class Tile {
      * @param hex_type {@link Placeable} that is being placed
      * @param context {@link Context} the UI context for the given action. Needed to generate a prompt for drawing cards.
      */
-    public void placeHex(Player player, Placeable hex_type, Context context) {
+    public void placeHex(Player player, Placeable hex_type, Context context) throws InvalidResourcesException {
+
+        Game game = GameController.getGame();
+
         if (placed_hex != null) {
             return;
         }

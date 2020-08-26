@@ -7,8 +7,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.MetadataIntegerEvent;
 
 public final class StandardSellPatents extends StandardProject {
-    public StandardSellPatents(Game game) {
-        super(game);
+    public StandardSellPatents() {
+        super();
         name = "Standard project: Sell patents";
     }
 

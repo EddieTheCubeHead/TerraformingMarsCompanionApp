@@ -8,8 +8,8 @@ import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.MetadataIntegerEvent;
 
 public final class Insulation extends Card {
-    public Insulation(Game game) {
-        super(Type.GREEN, game);
+    public Insulation() {
+        super(Type.GREEN);
         name = "Insulation";
         price = 2;
     }

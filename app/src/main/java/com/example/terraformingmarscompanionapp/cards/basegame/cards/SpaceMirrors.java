@@ -10,8 +10,8 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 
 public final class SpaceMirrors extends Card implements ActionCard {
-    public SpaceMirrors(Game game) {
-        super(Type.BLUE, game);
+    public SpaceMirrors() {
+        super(Type.BLUE);
         name = "Space mirrors";
         price = 3;
         tags.add(Tag.ENERGY);

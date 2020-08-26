@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
+import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -12,26 +14,26 @@ import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 
 public final class EcologicalZone extends ResourceCard implements EffectCard {
-    public EcologicalZone(Game game) {
-        super(Type.GREEN, game);
+    public EcologicalZone() {
+        super(Type.GREEN);
         name = "Ecological zone";
         price = 12;
         tags.add(Tag.ANIMAL);
         tags.add(Tag.PLANT);
         requirements.setMinPersonalGreeneries(1);
         resource_type = ResourceType.ANIMAL;
-        owner_game = game;
+        Card.game = game;
     }
 
     @Override
     public void initializePlayEvents(Player player) {
         EventScheduler.addEvent(new PlayCardEvent(this, player, 0));
-        EventScheduler.addEvent(new TileChoiceEvent(Placeable.ECOLOGICAL_ZONE, owner_game));
+        EventScheduler.addEvent(new TileChoiceEvent(Placeable.ECOLOGICAL_ZONE, game));
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
-        owner_game.update_manager.onVpCardPlayed(player);
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
+        game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 

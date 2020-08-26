@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class LocalHeatTrapping extends Card {
-    public LocalHeatTrapping(Game game) {
-        super(Type.RED, game);
+    public LocalHeatTrapping() {
+        super(Type.RED);
         name = "Local heat trapping";
         price = 1;
         tags.add(Tag.EVENT);

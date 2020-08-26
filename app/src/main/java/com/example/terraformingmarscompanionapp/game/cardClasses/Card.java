@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.cards.basegame.corporations.BeginnerCorporation;
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.CardRequirements;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -14,30 +15,34 @@ import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * The main parent class of all cards. Most actions in the game are represented as a card. The process
- * of playing a card is split into three methods, {@link #initializePlayEvents(Player, Context)}, {@link #onPlayServerHook(Player, Integer)} and
+ * of playing a card is split into three methods, {@link #initializePlayEvents(Player)}, {@link #onPlayServerHook(Player, Integer)} and
  * {@link #playWithMetadata(Player, Integer)}.
  * <p></p>
- * {@link #initializePlayEvents(Player, Context)} is called when starting the playing process and it
+ * {@link #initializePlayEvents(Player)} is called when starting the playing process and it
  * queues events into the static {@link EventScheduler} -class. The events then call {@link #onPlayServerHook(Player, Integer)}
  * which in turn calls {@link #playWithMetadata(Player, Integer)}.
  *
  * @author Eetu Asikainen
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
-public abstract class Card {
-    protected Game owner_game;
+public abstract class Card implements Serializable {
+    protected static Game game;
     protected String name = "ABSTRACT_BASE_CARD";
     protected Integer price = 0;
     protected Integer victory_points = 0;
     private Type type;
     protected Boolean action_used = false;
-    protected Player owner_player = null; //null if unowned
+    protected transient Player owner_player = null; //null if unowned
+    protected String player_name = null; //used in serialization
     protected ArrayList<Tag> tags = new ArrayList<>();
     protected CardRequirements requirements = new CardRequirements();
     protected ProductionBox production_box = new ProductionBox();
@@ -52,11 +57,13 @@ public abstract class Card {
      * name and the price of the card.
      *
      * @param card_type {@link Type} of the card
-     * @param game {@link Game} the card is tied to.
      */
-    public Card(Type card_type, Game game) {
+    public Card(Type card_type) {
         type = card_type;
-        owner_game = game;
+    }
+
+    public static void SetGame(Game game) {
+        Card.game = game;
     }
 
 
@@ -83,8 +90,8 @@ public abstract class Card {
      * @param player {@link Player} playing the card. Instance of {@link Player}
      * @param data {@link Integer} the metadata associated with the play event
      */
-    public void onPlayServerHook(Player player, Integer data) {
-        if (owner_game.getServerMultiplayer()) {
+    public void onPlayServerHook(Player player, Integer data) throws InvalidResourcesException {
+        if (game.getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
         playWithMetadata(player, data);
@@ -100,7 +107,7 @@ public abstract class Card {
      * @param player {@link Player} playing the card. Instance of {@link Player}
      * @param data {@link Integer} the metadata associated with the play event
      */
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         production_box.playProductionBox(player, data);
         finishPlay(player);
     }
@@ -115,6 +122,7 @@ public abstract class Card {
         Log.i("Card", String.format("Finishing playing card '%s'", name));
         if (OWNABLES.contains(type) && !(this instanceof BeginnerCorporation)) {
             owner_player = player;
+            player_name = player.getName();
         }
 
         if (MAIN_DECK.contains(type)) {
@@ -138,7 +146,7 @@ public abstract class Card {
                     if (!is_event && OWNABLES.contains(type)) {
                         player.getTags().addSpaceTag();
                     } else {
-                        owner_game.update_manager.onSpaceEvent(player);
+                        game.update_manager.onSpaceEvent(player);
                     }
                     break;
 
@@ -146,7 +154,7 @@ public abstract class Card {
                     if (!is_event && OWNABLES.contains(type)) {
                         player.getTags().addEarthTag();
                     }
-                    owner_game.update_manager.onEarthTag(player);
+                    game.update_manager.onEarthTag(player);
                     break;
 
                 case CITY:
@@ -159,21 +167,21 @@ public abstract class Card {
                     if (!is_event && OWNABLES.contains(type)) {
                         player.getTags().addPlantTag();
                     }
-                    owner_game.update_manager.onPlantTag(player);
+                    game.update_manager.onPlantTag(player);
                     break;
 
                 case MICROBE:
                     if (!is_event && OWNABLES.contains(type)) {
                         player.getTags().addMicrobeTag();
                     }
-                    owner_game.update_manager.onMicrobeTag(player);
+                    game.update_manager.onMicrobeTag(player);
                     break;
 
                 case SCIENCE:
                     if (!is_event && OWNABLES.contains(type)) {
                         player.getTags().addScienceTag();
                     }
-                    owner_game.update_manager.onScienceTag(player);
+                    game.update_manager.onScienceTag(player);
                     break;
 
                 case ENERGY:
@@ -186,7 +194,7 @@ public abstract class Card {
                     if (!is_event && OWNABLES.contains(type)) {
                         player.getTags().addJovianTag();
                     }
-                    owner_game.update_manager.onJovianTag(player);
+                    game.update_manager.onJovianTag(player);
                     break;
 
                 case VENUS:
@@ -199,7 +207,7 @@ public abstract class Card {
                     if (!is_event && OWNABLES.contains(type)) {
                         player.getTags().addAnimalTag();
                     }
-                    owner_game.update_manager.onAnimalTag(player);
+                    game.update_manager.onAnimalTag(player);
                     break;
 
                 case JOKER:
@@ -209,7 +217,7 @@ public abstract class Card {
 
                 case EVENT:
                     player.getTags().addEventTag();
-                    owner_game.update_manager.onEventPlayed(player);
+                    game.update_manager.onEventPlayed(player);
                     break;
                 default:
                     System.out.println("Tag error in card " + getName());
@@ -241,7 +249,7 @@ public abstract class Card {
             case OTHER:
                 break;
             case STANDARD_PROJECT:
-                owner_game.update_manager.onStandardProjectPayment(player);
+                game.update_manager.onStandardProjectPayment(player);
                 break;
             default:
                 Log.i("Card","Type error in card " + getName());
@@ -263,22 +271,37 @@ public abstract class Card {
     /**
      * @return {@link String} the name of the card
      */
-    public final String getName() {return name;}
+    public final String getName() {
+        return name;
+    }
 
     /**
      * @return {@link Player} the owner player
      */
-    public final Player getOwner() {return owner_player;}
+    public final Player getOwner() {
+        return owner_player;
+    }
 
     /**
      * @return {@link Integer} the price of the card
      */
-    public Integer getPrice() {return price;}
+    public Integer getPrice() {
+        return price;
+    }
 
     /**
      * @return {@link Type} of the card
      */
-    public final Type getType() {return type;}
+    public final Type getType() {
+        return type;
+    }
+
+    /**
+     * @return {@link Boolean} whether the action of the card is used this generation
+     */
+    public final Boolean getActionUsed() {
+        return action_used;
+    }
 
     /**
      * @return {@link ArrayList} of {@link Tag} enums that represent the tags of the card
@@ -306,7 +329,7 @@ public abstract class Card {
      * needs this. Runs {@link ProductionBox#playProductionBox(Player, Integer)} on the {@link ProductionBox}
      * of the card.
      */
-    public void playProductionBox() {
+    public void playProductionBox() throws InvalidResourcesException {
         //TODO playing robotic workforce
         production_box.playProductionBox(owner_player, 0);
     }
@@ -381,6 +404,25 @@ public abstract class Card {
             resource_text += ((ResourceCard) this).getResourceAmount().toString();
         }
         return resource_text;
+    }
+
+    /**
+     * Providing a way to avoid serializing card owning players
+     *
+     * @param in_stream {@link ObjectInputStream} used in the serialization process
+     * @throws IOException default exception thrown by deserialization
+     * @throws ClassNotFoundException default exception thrown by deserialization
+     */
+    private void readObject(ObjectInputStream in_stream) throws IOException, ClassNotFoundException {
+
+        in_stream.defaultReadObject();
+
+        if (player_name != null) {
+            owner_player = GameController.getPlayer(player_name);
+            Log.i("Card", "Deserialized an owned card '" + name + "', owner: " + player_name);
+        } else {
+            owner_player = null;
+        }
     }
 
     // Future-proofing for the tactician -achievement in Hellas -board

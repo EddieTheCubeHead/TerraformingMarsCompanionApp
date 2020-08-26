@@ -8,6 +8,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,27 +36,26 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
     RecyclerView recyclerview;
     RecyclerView.LayoutManager layout_manager;
 
-    @Override public View onCreateView
-    (
-            LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState
-    )
-    {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        GameController.registerGameUpdateListener(this);
+
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.activity_search, container, false);
     }
 
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
-    {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         searchview = view.findViewById(R.id.searchview);
 
-        GameController.registerGameUpdateListener(this);
-
         game = GameController.getGame();
         HashMap<String, Card> deck = game.getDeck();
 
-        //cards into arraylist
+        // cards into arraylist
         for (Map.Entry<String, Card> entry : deck.entrySet())
         {
             Card card = entry.getValue();
@@ -73,7 +73,7 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
         recyclerview = view.findViewById(R.id.result_recyclerview);
         recyclerview.setHasFixedSize(true);
 
-        adapter = new RecyclerAdapter(card_list, this, this);
+        adapter = new RecyclerAdapter(this, this);
         recyclerview.setAdapter(adapter);
 
         layout_manager = new LinearLayoutManager(getContext());
@@ -117,7 +117,10 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
                  Toast.makeText(getContext(), "Invalid requirements!", Toast.LENGTH_SHORT).show();
                  return;
              }
-            Toast.makeText(getContext(), String.format("Action %s performed", card.getName()), Toast.LENGTH_SHORT).show();
+
+             GameController.saveGame();
+
+             Toast.makeText(getContext(), String.format("Action %s performed", card.getName()), Toast.LENGTH_SHORT).show();
              game.playCard(card, packet, this.getContext());
         } catch (Exception ignored) {}
     }
@@ -127,8 +130,5 @@ public class SpecialCardFragment extends Fragment implements RecyclerAdapter.OnC
     @Override
     public void update() {
         adapter.getSpecialFilter().filter("");
-
-        if (adapter.getItemCount() == 0)
-            return;
     }
 }

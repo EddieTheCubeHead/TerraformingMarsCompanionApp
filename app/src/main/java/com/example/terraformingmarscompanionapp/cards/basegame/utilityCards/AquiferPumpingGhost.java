@@ -6,8 +6,8 @@ import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
 
 public final class AquiferPumpingGhost extends Card {
-    public AquiferPumpingGhost(Game game) {
-        super(Type.OTHER, game);
+    public AquiferPumpingGhost() {
+        super(Type.OTHER);
         tags.add(Tag.BUILDING);
         name = "Aquifer pumping ghost";
         price = 8;

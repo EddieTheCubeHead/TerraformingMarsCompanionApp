@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public final class RegolithEaters extends ResourceCard implements ActionCard {
-    public RegolithEaters(Game game) {
-        super(Type.BLUE, game);
+    public RegolithEaters() {
+        super(Type.BLUE);
         name = "Regolith eaters";
         price = 13;
         tags.add(Tag.SCIENCE);
@@ -46,7 +46,7 @@ public final class RegolithEaters extends ResourceCard implements ActionCard {
             resource_amount++;
         } else if (resource_amount <= 2) {
             resource_amount -= 2;
-            owner_game.raiseOxygen(owner_player);
+            game.raiseOxygen(owner_player);
         } else {
             Log.i("Regolith eaters Error", "Invalid checks led to this being played to raise oxygen without sufficient microbes.");
         }
