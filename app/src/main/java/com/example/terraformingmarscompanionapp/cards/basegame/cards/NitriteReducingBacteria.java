@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -24,13 +25,13 @@ public final class NitriteReducingBacteria extends ResourceCard implements Actio
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         resource_amount += 3;
         super.playWithMetadata(player, data);
     }
 
     @Override
-    public void cardAction() {
+    public void cardAction() throws InvalidResourcesException {
         if (resource_amount < 3) {
             onPlayServerHook(owner_player, 0);
             return;

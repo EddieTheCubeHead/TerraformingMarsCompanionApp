@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -26,7 +27,7 @@ public final class EquatorialMagnetizer extends Card implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) throws InvalidResourcesException {
         owner_player.getResources().setEnergyProduction(owner_player.getResources().getEnergyProduction() - 1);
         owner_player.getResources().setTerraformingRating(owner_player.getResources().getTerraformingRating() + 1);
         EventScheduler.playNextEvent(GameController.getContext());

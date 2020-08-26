@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.player.Player;
@@ -33,7 +34,7 @@ public final class PlayCardEvent implements GameEvent {
     }
 
     @Override
-    public void playEvent(Context context) {
+    public void playEvent(Context context) throws GameplayException {
         Log.i("Event played", toString());
         if (card.getOwner() == null) {
             card.onPlayServerHook(player, metadata);
@@ -42,6 +43,7 @@ public final class PlayCardEvent implements GameEvent {
         } else {
             Log.i("PlayCardEvent Error", "Called from owned card that is not an action card.");
         }
+
     }
 
     /**

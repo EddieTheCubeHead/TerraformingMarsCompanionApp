@@ -25,7 +25,7 @@ public final class ArcticAlgae extends Card implements EffectCard {
     }
 
     @Override
-    public void cardEffect(Player player) {
+    public void cardEffect(Player player) throws InvalidResourcesException {
         if (owner_player == null) {
             return;
         }

@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -23,7 +24,7 @@ public final class MartianRails extends Card implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) throws InvalidResourcesException {
         owner_player.getResources().setEnergy(owner_player.getResources().getEnergy() - 1);
         owner_player.getResources().setMoney(owner_player.getResources().getMoney() + game.getCitiesOnMars());
         EventScheduler.playNextEvent(GameController.getContext());

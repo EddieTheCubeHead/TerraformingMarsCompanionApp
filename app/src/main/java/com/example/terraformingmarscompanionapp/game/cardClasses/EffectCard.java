@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.game.cardClasses;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
 /**
@@ -16,5 +17,5 @@ public interface EffectCard {
      *
      * @param player {@link Player} that played the action that triggered the event.
      */
-    void cardEffect(Player player);
+    void cardEffect(Player player) throws InvalidResourcesException;
 }

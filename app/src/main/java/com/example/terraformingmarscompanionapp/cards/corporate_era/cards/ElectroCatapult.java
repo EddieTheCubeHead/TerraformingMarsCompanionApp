@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -28,7 +29,7 @@ public final class ElectroCatapult extends Card implements ActionCard {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         production_box.setEnergyProduction(-1);
         game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
@@ -49,7 +50,7 @@ public final class ElectroCatapult extends Card implements ActionCard {
 
 
     @Override
-    public void actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) throws InvalidResourcesException {
         if (data == 0) {
             owner_player.getResources().setPlants(owner_player.getResources().getPlants() - 1);
         } else {

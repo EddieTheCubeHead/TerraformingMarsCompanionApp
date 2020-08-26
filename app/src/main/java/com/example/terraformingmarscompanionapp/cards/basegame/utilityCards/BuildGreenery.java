@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.utilityCards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.CardlikeOperation;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -22,7 +23,7 @@ public final class BuildGreenery extends CardlikeOperation {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         Integer greenery_cost = 8 + player.getModifiers().getGreeneryPlantCostModifier();
         player.getResources().setPlants(player.getResources().getPlants() - greenery_cost);
         super.playWithMetadata(player, data);

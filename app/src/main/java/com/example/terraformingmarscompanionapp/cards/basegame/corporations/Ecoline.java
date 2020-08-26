@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
@@ -14,7 +15,7 @@ public final class Ecoline extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         player.getModifiers().setGreeneryPlantCostModifier(-1);
         production_box.setPlantsProduction(2);
         player.getResources().setPlants(3);

@@ -98,6 +98,7 @@ public class BooleanDialogActivity extends AppCompatActivity {
         window.setLayout(  4*width / 5, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
+    /*
     private void executeWithData(Integer data) {
         if (card.getOwner() == null) {
             card.onPlayServerHook(GameController.getCurrentPlayer(), data);
@@ -108,6 +109,7 @@ public class BooleanDialogActivity extends AppCompatActivity {
         }
         exit();
     }
+     */
 
     private void exit() {
         dialog.dismiss();

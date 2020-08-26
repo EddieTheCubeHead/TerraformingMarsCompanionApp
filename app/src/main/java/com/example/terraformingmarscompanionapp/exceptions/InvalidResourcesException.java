@@ -1,9 +1,11 @@
 package com.example.terraformingmarscompanionapp.exceptions;
 
+import android.content.Context;
+
+import com.example.terraformingmarscompanionapp.game.EventScheduler;
+import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.GameResourceType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A custom exception for handling a situation where playing a card, using an action, or other gameplay
@@ -32,5 +34,20 @@ public class InvalidResourcesException extends GameplayException {
      */
     public Integer getAmount() {
         return amount;
+    }
+
+    @Override
+    public void resolve(Context context) {
+        EventScheduler.clear();
+
+        try {
+            GameController.loadGame();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String player_message = "";
+
+        GameController.promptUser(player_message ,context);
     }
 }

@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.webSocket.packets;
 
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -23,9 +24,10 @@ public class CardEventPacket implements ServerPacket {
 
     // The game can deduce whether a card was played or an action was used based on the card's owner
     @Override
-    public void playPacket() {
+    public void playPacket() throws GameplayException {
         Game game = GameController.getGame();
         Card card = game.getAllCards().get(card_name);
+
         if (card.getOwner() == null) {
             card.playWithMetadata(GameController.getPlayer(player_name), metadata);
         } else if (card instanceof ActionCard) {

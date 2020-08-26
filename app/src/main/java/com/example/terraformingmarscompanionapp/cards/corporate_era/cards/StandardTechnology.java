@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -16,7 +17,7 @@ public final class StandardTechnology extends Card implements EffectCard {
     }
 
     @Override
-    public void cardEffect(Player player) {
+    public void cardEffect(Player player) throws InvalidResourcesException {
         if (owner_player == null) {
             return;
         }

@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
@@ -17,14 +18,14 @@ public final class MirandaResort extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         game.update_manager.onVpCardPlayed(player);
         production_box.setMoneyProduction(player.getTags().getEarthTags());
         super.playWithMetadata(player, data);
     }
 
     @Override
-    public void playProductionBox() {
+    public void playProductionBox() throws InvalidResourcesException {
         production_box.setMoneyProduction(owner_player.getTags().getEarthTags());
         super.playProductionBox();
     }

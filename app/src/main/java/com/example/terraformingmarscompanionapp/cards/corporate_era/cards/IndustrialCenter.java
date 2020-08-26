@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -27,12 +28,12 @@ public final class IndustrialCenter extends Card implements ActionCard {
     }
 
     @Override
-    public void cardAction() {
+    public void cardAction() throws InvalidResourcesException {
         actionServerHook(owner_player);
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) throws InvalidResourcesException {
         owner_player.getResources().setMoney(owner_player.getResources().getMoney() - 7);
         owner_player.getResources().setSteelProduction(owner_player.getResources().getSteelProduction() + 1);
         EventScheduler.playNextEvent(GameController.getContext());

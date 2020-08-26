@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -21,7 +22,7 @@ public final class SpaceElevator extends Card implements ActionCard {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         production_box.setTitaniumProduction(1);
         game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
@@ -34,7 +35,7 @@ public final class SpaceElevator extends Card implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) throws InvalidResourcesException {
         owner_player.getResources().setSteel(owner_player.getResources().getSteel() - 1);
         owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 5);
         EventScheduler.playNextEvent(GameController.getContext());

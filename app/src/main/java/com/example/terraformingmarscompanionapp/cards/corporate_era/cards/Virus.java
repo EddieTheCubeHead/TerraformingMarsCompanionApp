@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -33,7 +34,7 @@ public final class Virus extends Card {
     }
 
     @Override
-    public void onPlayServerHook(Player player, Integer data) {
+    public void onPlayServerHook(Player player, Integer data) throws InvalidResourcesException {
         if (data == 0) {
             EventScheduler.addEvent(new ResourceChoiceEvent(ResourceCard.ResourceType.ANIMAL, player, -2));
             EventScheduler.playNextEvent(GameController.getContext());
@@ -54,10 +55,10 @@ public final class Virus extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         if (data > 0) {
             Player target = GameController.getPlayer(data);
-            target.getResources().setPlants(target.getResources().getPlants() - 5);
+            target.getResources().setPlants(Math.max(target.getResources().getPlants() - 5, 0));
         }
         super.playWithMetadata(player, data);
     }

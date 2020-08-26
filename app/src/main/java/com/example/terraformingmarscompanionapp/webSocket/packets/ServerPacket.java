@@ -6,5 +6,5 @@ import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
  * The server implementation works by senting ServerPacket -interface implementing objects with gson
  */
 interface ServerPacket {
-    void playPacket();
+    void playPacket() throws GameplayException;
 }

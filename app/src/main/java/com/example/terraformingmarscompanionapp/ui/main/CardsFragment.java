@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
@@ -122,7 +123,11 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
                 }
 
                 EventScheduler.addEvent(new ActionUseEvent());
-                ((ActionCard) card).cardAction();
+                try {
+                    ((ActionCard) card).cardAction();
+                } catch (GameplayException e) {
+                    e.resolve(getContext());
+                }
                 Toast.makeText(getContext(), String.format("Action '%s' used", action_name), Toast.LENGTH_SHORT).show();
             }
             update();

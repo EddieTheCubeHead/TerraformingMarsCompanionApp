@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.player.Player;
@@ -28,7 +29,7 @@ public class RoboticWorkforcePlayEvent implements GameEvent {
     }
 
     @Override
-    public void playEvent(Context context) {
+    public void playEvent(Context context) throws GameplayException {
         card.getProductionBox().playProductionBox(player, metadata);
         EventScheduler.playNextEvent(context);
     }

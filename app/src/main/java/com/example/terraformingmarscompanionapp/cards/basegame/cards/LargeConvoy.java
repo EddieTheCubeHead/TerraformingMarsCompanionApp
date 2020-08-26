@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -42,7 +43,7 @@ public final class LargeConvoy extends Card {
     }
 
     @Override
-    public void onPlayServerHook(Player player, Integer data) {
+    public void onPlayServerHook(Player player, Integer data) throws InvalidResourcesException {
         if (GameController.getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getName(), player.getName(), data));
         }
@@ -53,7 +54,7 @@ public final class LargeConvoy extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         if (data == 0) {
             player.getResources().setPlants(player.getResources().getPlants() + 5);
         }

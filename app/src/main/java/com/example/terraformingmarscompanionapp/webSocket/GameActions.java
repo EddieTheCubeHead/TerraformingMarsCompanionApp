@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
 import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
@@ -49,27 +50,31 @@ public class GameActions {
         String event_type = event_data.split(Pattern.quote(";"))[1];
         String event = event_data.split(Pattern.quote(";"))[2];
         new Thread(() -> ((InGameUI)GameController.getContext()).runOnUiThread(() -> {
-            switch (event_type) {
-                case CARD_EVENT:
-                    gson.fromJson(event, CardEventPacket.class).playPacket();
-                    break;
-                case CARD_COST:
-                    gson.fromJson(event, CardCostPacket.class).playPacket();
-                    break;
-                case RESOURCE_EVENT:
-                    gson.fromJson(event, ResourceEventPacket.class).playPacket();
-                    break;
-                case TILE_EVENT:
-                    gson.fromJson(event, TileEventPacket.class).playPacket();
-                    break;
-                case ACTION_USE:
-                    gson.fromJson(event, ActionUsePacket.class).playPacket();
-                    break;
-                case START_GENERATION:
-                    GameController.atGenerationStart();
-                    break;
-                default:
-                    Log.i("GameActions", "Unrecognized game action: " + event_data);
+            try {
+                switch (event_type) {
+                    case CARD_EVENT:
+                        gson.fromJson(event, CardEventPacket.class).playPacket();
+                        break;
+                    case CARD_COST:
+                        gson.fromJson(event, CardCostPacket.class).playPacket();
+                        break;
+                    case RESOURCE_EVENT:
+                        gson.fromJson(event, ResourceEventPacket.class).playPacket();
+                        break;
+                    case TILE_EVENT:
+                        gson.fromJson(event, TileEventPacket.class).playPacket();
+                        break;
+                    case ACTION_USE:
+                        gson.fromJson(event, ActionUsePacket.class).playPacket();
+                        break;
+                    case START_GENERATION:
+                        GameController.atGenerationStart();
+                        break;
+                    default:
+                        Log.i("GameActions", "Unrecognized game action: " + event_data);
+                }
+            } catch (GameplayException e) {
+                e.resolve(creation_context.get());
             }
         })).start();
     }

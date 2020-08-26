@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
@@ -36,7 +37,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
     }
 
     @Override
-    public void actionServerHook(Player player, Integer data) {
+    public void actionServerHook(Player player, Integer data) throws InvalidResourcesException {
         if (game.getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), data));
         }
@@ -48,7 +49,7 @@ public final class ExtremeColdFungus extends Card implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) throws InvalidResourcesException {
         if (data != 0) {
             owner_player.getResources().setPlants(owner_player.getResources().getPlants() + 1);
         }

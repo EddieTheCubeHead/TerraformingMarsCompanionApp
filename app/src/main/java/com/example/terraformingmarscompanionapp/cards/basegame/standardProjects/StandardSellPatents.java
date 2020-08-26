@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.standardProjects;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.StandardProject;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -18,7 +19,7 @@ public final class StandardSellPatents extends StandardProject {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         player.getResources().setMoney(player.getResources().getMoney() + data);
         player.changeHandSize(-data);
     }

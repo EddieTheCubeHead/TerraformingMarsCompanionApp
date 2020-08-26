@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.game.cardClasses;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
@@ -23,7 +24,7 @@ public abstract class Milestone extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         game.claimMilestone();
         super.playWithMetadata(player, data);
     }

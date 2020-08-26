@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.corporations;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -15,14 +16,14 @@ public final class SaturnSystems extends Card implements EffectCard {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         player.getResources().setMoney(42);
         player.getResources().setTitaniumProduction(1);
         super.playWithMetadata(player, data);
     }
 
     @Override
-    public void cardEffect(Player player) {
+    public void cardEffect(Player player) throws InvalidResourcesException {
         if (owner_player == null) {
             return;
         }

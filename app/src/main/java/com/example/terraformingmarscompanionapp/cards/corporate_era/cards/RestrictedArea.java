@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -28,7 +29,7 @@ public final class RestrictedArea extends Card implements ActionCard {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         super.playWithMetadata(player, data);
     }
 
@@ -40,7 +41,7 @@ public final class RestrictedArea extends Card implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) throws InvalidResourcesException {
         owner_player.getResources().setMoney(owner_player.getResources().getMoney() - 2);
         owner_player.changeHandSize(1);
         EventScheduler.playNextEvent(GameController.getContext());

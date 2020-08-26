@@ -1,5 +1,7 @@
 package com.example.terraformingmarscompanionapp.game.cardClasses;
 
+import com.example.terraformingmarscompanionapp.exceptions.ActionUsedException;
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -18,7 +20,7 @@ public interface ActionCard {
      * Method used to start playing the action from card. All functionalities that should only
      * be seen on the client playing the card should go here.
      */
-    void cardAction();
+    void cardAction() throws InvalidResourcesException, ActionUsedException;
 
     /**
      * Method used in the playing process. Main functionality of the method is sending data to
@@ -28,7 +30,7 @@ public interface ActionCard {
      * @param player {@link Player} using the action
      * @param data {@link Integer} metadata associated with the action
      */
-    default void actionServerHook(Player player, Integer data) {
+    default void actionServerHook(Player player, Integer data) throws InvalidResourcesException {
         if (GameController.getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), data));
         }
@@ -41,7 +43,7 @@ public interface ActionCard {
      *
      * @param player {@link Player} using the action
      */
-    default void actionServerHook(Player player) {
+    default void actionServerHook(Player player) throws InvalidResourcesException {
         if (GameController.getGame().getServerMultiplayer()) {
             GameActions.sendCardEvent(new CardEventPacket(this.getActionName(), player.getName(), 0));
         }
@@ -55,7 +57,7 @@ public interface ActionCard {
      *
      * @param data {@link Integer} metadata associated with the action
      */
-    void actionWithMetadata(Integer data);
+    void actionWithMetadata(Integer data) throws InvalidResourcesException;
 
     /**
      * Special getter for the name of the card implementing the interface. Mainly used in the default

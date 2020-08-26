@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -15,14 +16,14 @@ public final class Zeppelins extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         game.update_manager.onVpCardPlayed(player);
         production_box.setMoneyProduction(game.getCitiesOnMars());
         super.playWithMetadata(player, data);
     }
 
     @Override
-    public void playProductionBox() {
+    public void playProductionBox() throws InvalidResourcesException {
         production_box.setMoneyProduction(game.getCitiesOnMars());
         super.playProductionBox();
     }

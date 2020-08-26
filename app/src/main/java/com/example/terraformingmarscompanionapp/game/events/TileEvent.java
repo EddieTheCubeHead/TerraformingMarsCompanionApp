@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -30,7 +31,7 @@ public class TileEvent implements GameEvent {
     }
 
     @Override
-    public void playEvent(Context context) {
+    public void playEvent(Context context) throws GameplayException {
         if (GameController.getServerMultiplayer()) {
             GameActions.sendTileEvent(packet);
         }

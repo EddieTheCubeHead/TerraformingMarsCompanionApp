@@ -3,6 +3,7 @@ package com.example.terraformingmarscompanionapp.game;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 
@@ -46,7 +47,11 @@ public class EventScheduler {
         Log.i("Event Scheduler", "Playing event, stack size: " + eventStack.size());
         GameController.gameUpdate();
         if (eventStack.size() > 0) {
-            eventStack.pop().playEvent(context);
+            try {
+                eventStack.pop().playEvent(context);
+            } catch (GameplayException e) {
+                e.resolve(context);
+            }
         }
     }
 
@@ -57,5 +62,12 @@ public class EventScheduler {
      */
     public static Boolean getStackHasEvents() {
         return eventStack.size() > 0;
+    }
+
+    /**
+     * A simple method to clear the event stack while handling instances of {@link com.example.terraformingmarscompanionapp.exceptions.GameplayException}
+     */
+    public static void clear() {
+        eventStack.clear();
     }
 }

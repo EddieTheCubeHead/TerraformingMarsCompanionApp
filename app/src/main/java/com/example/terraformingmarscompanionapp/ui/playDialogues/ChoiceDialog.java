@@ -17,6 +17,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
@@ -43,8 +45,8 @@ public class ChoiceDialog {
         SABOTAGE_MONEY
     }
 
-    public static void displayDialog(Context context, String message, UseCase use_case, ArrayList<String> targets, Card card, Player player)
-    {
+    public static void displayDialog(Context context, String message, UseCase use_case,
+                                     ArrayList<String> targets, Card card, Player player) {
         if (use_case.equals(UseCase.PLAYER)) {
             targets.add("nobody");
         }
@@ -109,7 +111,15 @@ public class ChoiceDialog {
                     break;
 
                 case VIRUS:
-                    card.onPlayServerHook(player, target_index + 2);
+                    // Catching the exception in virus with a simple stacktrace as virus should never
+                    // cause a player's resources to go negative and thus this is a logic error, not
+                    // a faulty state caused by the user
+                    try {
+                        card.onPlayServerHook(player, target_index + 2);
+                    } catch (InvalidResourcesException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
 
                 // These work the same way. The card first gets an integer through usecase GENERAl
@@ -126,24 +136,35 @@ public class ChoiceDialog {
                     }
                 case SABOTAGE_TITANIUM:
                 case RAIDERS_STEEL:
-                    card.playWithMetadata(player, target_index + 3);
+                    // Like virus, this should never cause a players resources to go below 0, so
+                    // the exception is caught with stacktrace instead of resolve
+                    try {
+                        card.playWithMetadata(player, target_index + 3);
+                    } catch (InvalidResourcesException e) {
+                        e.printStackTrace();
+                    }
                     break;
 
                 case GENERAL:
                 case PLAYER:
 
-                    // See if dialog called from onPlay or action. Call methods in card accordingly
-                    if (card.getOwner() == null) {
-                        card.onPlayServerHook(player, target_index);
-                    } else if (card instanceof ActionCard) {
-                        Log.i("ChoiceDialog", "Using action with metadata " + target_index);
-                        ((ActionCard) card).actionServerHook(player, target_index);
-                    } else {
-                        Log.i("Choice dialog Error", "Choice dialog called from an owned card that is not an action card.");
+                    try {
+                        // See if dialog called from onPlay or action. Call methods in card accordingly
+                        if (card.getOwner() == null) {
+                            card.onPlayServerHook(player, target_index);
+                        } else if (card instanceof ActionCard) {
+                            Log.i("ChoiceDialog", "Using action with metadata " + target_index);
+                            ((ActionCard) card).actionServerHook(player, target_index);
+                        } else {
+                            Log.i("ChoiceDialog", "Error: Choice dialog called from an owned card that is not an action card.");
+                        }
+                    } catch (GameplayException e) {
+                        e.resolve(context);
                     }
                     break;
+
                 default:
-                    Log.i("Choice dialog", "Error in use case");
+                    Log.i("ChoiceDialog", "Error in use case");
             }
             dialog.dismiss();
         });

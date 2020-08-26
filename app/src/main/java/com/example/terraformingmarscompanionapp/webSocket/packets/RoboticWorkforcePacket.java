@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.webSocket.packets;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
@@ -18,7 +19,7 @@ public class RoboticWorkforcePacket implements ServerPacket {
     }
 
     @Override
-    public void playPacket() {
+    public void playPacket() throws GameplayException {
 
         Card card = GameController.getGame().getAllCards().get(card_name);
         Player player = GameController.getPlayer(player_name);

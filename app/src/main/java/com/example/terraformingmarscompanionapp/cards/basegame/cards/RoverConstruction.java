@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -17,13 +18,13 @@ public final class RoverConstruction extends Card implements EffectCard {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
 
     @Override
-    public void cardEffect(Player player) {
+    public void cardEffect(Player player) throws InvalidResourcesException {
         if (owner_player != null) {
             owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 2);
         }

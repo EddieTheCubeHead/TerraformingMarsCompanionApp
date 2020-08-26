@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -320,7 +321,7 @@ public class TileHandler implements Serializable {
      * @param tile_type {@link Placeable} that is being placed
      * @return {@link ArrayList} of {@link String} if the placealbe is of type FLOOD_OCEAN. Represents the players flood money removal can target. Otherwise returns null
      */
-    public ArrayList<String> placeTile(Player player, Tile target_tile, Placeable tile_type) throws InvalidResourcesException {
+    public ArrayList<String> placeTile(Player player, Tile target_tile, Placeable tile_type) throws GameplayException {
         ArrayList<Placeable> to_city = new ArrayList<>(Arrays.asList(Placeable.CITY, Placeable.RESEARCH_OUTPOST, Placeable.NOCTIS, Placeable.VOLCANIC_CITY, Placeable.URBANIZED_AREA));
         ArrayList<Placeable> to_ocean = new ArrayList<>(Arrays.asList(Placeable.OCEAN, Placeable.LAND_OCEAN, Placeable.FLOOD_OCEAN));
         ArrayList<Placeable> to_greenery = new ArrayList<>(Arrays.asList(Placeable.GREENERY, Placeable.OCEAN_GREENERY));

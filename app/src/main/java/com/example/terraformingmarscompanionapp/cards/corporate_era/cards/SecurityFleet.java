@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -20,7 +21,7 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);
     }
@@ -38,7 +39,7 @@ public final class SecurityFleet extends ResourceCard implements ActionCard {
     }
 
     @Override
-    public void actionWithMetadata(Integer data) {
+    public void actionWithMetadata(Integer data) throws InvalidResourcesException {
         owner_player.getResources().setTitanium(owner_player.getResources().getTitanium() - 1);
         resource_amount++;
         EventScheduler.playNextEvent(GameController.getContext());

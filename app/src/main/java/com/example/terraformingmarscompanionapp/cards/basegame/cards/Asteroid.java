@@ -28,7 +28,7 @@ public final class Asteroid extends Card {
     public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         if (data != 0) {
            Player target = GameController.getPlayer(data);
-           target.getResources().setPlants(target.getResources().getPlants() - 3);
+           target.getResources().setPlants(Math.max(target.getResources().getPlants() - 3, 0));
         }
         game.raiseTemperature(player);
         player.getResources().setTitanium(player.getResources().getTitanium() + 2);

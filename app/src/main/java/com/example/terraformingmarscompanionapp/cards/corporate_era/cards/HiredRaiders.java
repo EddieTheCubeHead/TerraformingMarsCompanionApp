@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.corporate_era.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
@@ -28,7 +29,7 @@ public final class HiredRaiders extends Card {
     }
 
     @Override
-    public void onPlayServerHook(Player player, Integer data) {
+    public void onPlayServerHook(Player player, Integer data) throws InvalidResourcesException {
         if (data < 3) {
             ArrayList<String> player_names = new ArrayList<>();
             for (Player target : GameController.getPlayers()) {
@@ -50,7 +51,7 @@ public final class HiredRaiders extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         Integer steal_amount;
         Player target;
         if (data > 0 && data < 6) {

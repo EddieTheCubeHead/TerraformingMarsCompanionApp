@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -36,7 +37,7 @@ public final class ImportedHydrogen extends Card {
     }
 
     @Override
-    public void onPlayServerHook(Player player, Integer data) {
+    public void onPlayServerHook(Player player, Integer data) throws InvalidResourcesException {
         if (data == 1) {
             EventScheduler.addEvent(new ResourceChoiceEvent(ResourceCard.ResourceType.MICROBE, player, 3));
         } else if (data == 2) {
@@ -47,7 +48,7 @@ public final class ImportedHydrogen extends Card {
 
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         if (data == 0) {
             player.getResources().setPlants(player.getResources().getPlants() + 3);
         }

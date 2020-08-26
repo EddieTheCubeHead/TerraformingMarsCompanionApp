@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.prelude.cards;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
@@ -16,7 +17,7 @@ public final class HousePrinting extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         player.getResources().setSteelProduction(player.getResources().getSteelProduction() + 1);
         game.update_manager.onVpCardPlayed(player);
         super.playWithMetadata(player, data);

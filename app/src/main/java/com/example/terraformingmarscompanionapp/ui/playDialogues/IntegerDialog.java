@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
@@ -91,7 +92,11 @@ public class IntegerDialog extends AppCompatActivity {
             }
             dialog.dismiss();
             Log.i("IntegerDialog", "Dialogue dismissed and calling next event");
-            card.onPlayServerHook(GameController.getCurrentPlayer(), result);
+            try {
+                card.onPlayServerHook(GameController.getCurrentPlayer(), result);
+            } catch (GameplayException e) {
+                e.resolve(context);
+            }
         });
     }
 }

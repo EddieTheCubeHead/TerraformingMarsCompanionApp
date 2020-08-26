@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
@@ -452,19 +453,21 @@ public class ResourcesFragment extends Fragment implements GameController.GameUp
 
                 editmode = false;
 
-                player.getResources().setMoney(money);
-                player.getResources().setSteel(steel);
-                player.getResources().setTitanium(titanium);
-                player.getResources().setPlants(plants);
-                player.getResources().setEnergy(energy);
-                player.getResources().setHeat(heat);
+                try {
+                    player.getResources().setMoney(money);
+                    player.getResources().setSteel(steel);
+                    player.getResources().setTitanium(titanium);
+                    player.getResources().setPlants(plants);
+                    player.getResources().setEnergy(energy);
+                    player.getResources().setHeat(heat);
 
-                player.getResources().setMoneyProduction(moneyProduction);
-                player.getResources().setSteelProduction(steelProduction);
-                player.getResources().setTitaniumProduction(titaniumProduction);
-                player.getResources().setPlantsProduction(plantsProduction);
-                player.getResources().setEnergyProduction(energyProduction);
-                player.getResources().setHeatProduction(heatProduction);
+                    player.getResources().setMoneyProduction(moneyProduction);
+                    player.getResources().setSteelProduction(steelProduction);
+                    player.getResources().setTitaniumProduction(titaniumProduction);
+                    player.getResources().setPlantsProduction(plantsProduction);
+                    player.getResources().setEnergyProduction(energyProduction);
+                    player.getResources().setHeatProduction(heatProduction);
+                } catch (InvalidResourcesException ignored) {}
 
                 // Leaving the old code here for reference as I am not 100% sure the new one will work
 

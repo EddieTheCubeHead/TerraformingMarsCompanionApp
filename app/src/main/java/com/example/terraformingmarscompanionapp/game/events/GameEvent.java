@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
 
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.GameController;
 
@@ -23,14 +24,14 @@ public interface GameEvent {
      *
      * @param context {@link Context} the android UI context that the action gets called from. Usually {@link com.example.terraformingmarscompanionapp.InGameUI}
      */
-    void playEvent(Context context);
+    void playEvent(Context context) throws GameplayException;
 
     /**
      * An overload to run {@link #playEvent(Context context)} with a Context recieved from {@link GameController}
      * Should be avoided and mainly delegated to testing, instead preferring to get Context from
      * a parameter
      */
-    default void playEvent() throws InvalidResourcesException {
+    default void playEvent() throws GameplayException {
         playEvent(GameController.getContext());
     }
 }

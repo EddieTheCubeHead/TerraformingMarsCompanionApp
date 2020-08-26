@@ -2,6 +2,7 @@ package com.example.terraformingmarscompanionapp.cards.basegame.cards;
 
 import android.util.Log;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -28,7 +29,7 @@ public final class GHGProducingBacteria extends ResourceCard implements ActionCa
     }
 
     @Override
-    public void cardAction() {
+    public void cardAction() throws InvalidResourcesException {
         if (resource_amount < 2) {
             actionServerHook(owner_player, 0);
             return;

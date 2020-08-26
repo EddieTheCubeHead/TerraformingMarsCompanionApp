@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.game;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 
@@ -12,6 +13,10 @@ import java.util.HashMap;
  * instances that should get triggered.
  * <p></p>
  * All effect triggers take {@link Player} as a parameter and use it to run {@link EffectCard#cardEffect(Player)}
+ * <p></p>
+ *  note the high amount of {@link com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException}
+ *  ignored. This is because all card effects are beneficial and never redact resources, thus an effect
+ *  triggering cannot produce a situation where a player lacks the resources needed to trigger the effect
  *
  * @author Eetu Asikainen
  * @version 0.2
@@ -44,16 +49,18 @@ public final class UpdateManager implements Serializable {
      * @param onMars {@link Boolean} whether the city was placed on mars or not
      */
     public void onCityPlaced(Player player, Boolean onMars) {
-        if (onMars) {
-            GameController.getGame().addCityOnMars();
-            effect_cards.get("Tharsis republic ghost").cardEffect(player);
-        } else {
-            GameController.getGame().addCityInSpace();
-        }
-        effect_cards.get("Tharsis republic").cardEffect(player);
-        effect_cards.get("Immigrant city").cardEffect(player);
-        effect_cards.get("Rover construction").cardEffect(player);
-        effect_cards.get("Pets").cardEffect(player);
+        try {
+            if (onMars) {
+                GameController.getGame().addCityOnMars();
+                effect_cards.get("Tharsis republic ghost").cardEffect(player);
+            } else {
+                GameController.getGame().addCityInSpace();
+            }
+            effect_cards.get("Tharsis republic").cardEffect(player);
+            effect_cards.get("Immigrant city").cardEffect(player);
+            effect_cards.get("Rover construction").cardEffect(player);
+            effect_cards.get("Pets").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -72,7 +79,9 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} playing the tag
      */
     public void onPlantTag(Player player) {
-        effect_cards.get("Ecological zone").cardEffect(player);
+        try {
+            effect_cards.get("Ecological zone").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -81,7 +90,9 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} playing the tag
      */
     public void onAnimalTag(Player player) {
-        effect_cards.get("Ecological zone").cardEffect(player);
+        try {
+            effect_cards.get("Ecological zone").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -108,7 +119,9 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} placing the ocean. Might be null in case of solar phase
      */
     public void onOceanPlaced(Player player) {
-        effect_cards.get("Arctic algae").cardEffect(player);
+        try {
+            effect_cards.get("Arctic algae").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -117,9 +130,11 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} playing the tag
      */
     public void onJovianTag(Player player) {
-        if (GameController.getGame().modifiers.getCorporateEra()) {
-            effect_cards.get("Saturn systems").cardEffect(player);
-        }
+        try {
+            if (GameController.getGame().modifiers.getCorporateEra()) {
+                effect_cards.get("Saturn systems").cardEffect(player);
+            }
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -147,7 +162,9 @@ public final class UpdateManager implements Serializable {
      * @param standard_project {@link Boolean} whether the card was a standard project
      */
     void onBaseCost20(Player player, Boolean standard_project) {
-        effect_cards.get("Credicor").cardEffect(player);
+        try {
+            effect_cards.get("Credicor").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -156,7 +173,9 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} gaining the placement bonus
      */
     public void onPlacementBonus(Player player) {
-        effect_cards.get("Mining guild").cardEffect(player);
+        try {
+            effect_cards.get("Mining guild").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -174,7 +193,9 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} playing the card
      */
     public void onEventPlayed(Player player) {
-        effect_cards.get("Interplanetary cinematics").cardEffect(player);
+        try {
+            effect_cards.get("Interplanetary cinematics").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -183,9 +204,11 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} playing the project
      */
     public void onStandardProjectPayment(Player player) {
-        if (GameController.getGame().modifiers.getCorporateEra()) {
-            effect_cards.get("Standard technology").cardEffect(player);
-        }
+        try {
+            if (GameController.getGame().modifiers.getCorporateEra()) {
+                effect_cards.get("Standard technology").cardEffect(player);
+            }
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -194,7 +217,9 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} placing the greenery
      */
     public void onGreeneryPlaced(Player player) {
-        effect_cards.get("Herbivores").cardEffect(player);
+        try {
+            effect_cards.get("Herbivores").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 
     /**
@@ -203,6 +228,8 @@ public final class UpdateManager implements Serializable {
      * @param player {@link Player} plaing the event
      */
     public void onSpaceEvent(Player player) {
-        effect_cards.get("Optimal aerobraking").cardEffect(player);
+        try {
+            effect_cards.get("Optimal aerobraking").cardEffect(player);
+        } catch (InvalidResourcesException ignored) {}
     }
 }

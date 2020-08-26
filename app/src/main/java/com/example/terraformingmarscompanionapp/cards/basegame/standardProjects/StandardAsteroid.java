@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.standardProjects;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.StandardProject;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.player.Player;
@@ -13,7 +14,7 @@ public final class StandardAsteroid extends StandardProject {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         game.raiseTemperature(player);
         super.playWithMetadata(player, data);
     }

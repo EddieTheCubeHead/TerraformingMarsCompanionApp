@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.standardProjects;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.StandardProject;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -22,7 +23,7 @@ public final class StandardCity extends StandardProject {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         player.getResources().setMoneyProduction(player.getResources().getMoneyProduction() + 1);
         super.playWithMetadata(player, data);
     }

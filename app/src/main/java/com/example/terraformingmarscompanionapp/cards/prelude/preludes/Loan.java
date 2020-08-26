@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.prelude.preludes;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.Game;
@@ -12,7 +13,7 @@ public final class Loan extends Card {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         player.getResources().setMoneyProduction(player.getResources().getMoneyProduction() - 2);
         player.getResources().setMoney(player.getResources().getMoney() + 30);
         super.playWithMetadata(player, data);

@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.EffectCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.FirstAction;
@@ -24,7 +25,7 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         EventScheduler.addEvent(new PlayCardEvent(game.getGhosts().get("Tharsis republic ghost"), player, 0));
 
         player.getResources().setMoney(40);
@@ -32,7 +33,7 @@ public final class TharsisRepublic extends Card implements EffectCard, FirstActi
     }
 
     @Override
-    public void cardEffect(Player player) {
+    public void cardEffect(Player player) throws InvalidResourcesException {
         if (owner_player != null && owner_player == player) {
             owner_player.getResources().setMoney(owner_player.getResources().getMoney() + 3);
         }

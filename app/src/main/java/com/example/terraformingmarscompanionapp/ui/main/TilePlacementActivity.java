@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.terraformingmarscompanionapp.InGameUI;
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -171,13 +172,17 @@ public class TilePlacementActivity extends AppCompatActivity {
         }
         else {
             Log.i("TilePlacementActivity", "Calling handler.placeTile");
-            ArrayList<String> flood_targets = handler.placeTile(GameController.getCurrentPlayer(), handler.getTile(x, y), tile);
+            try {
+                ArrayList<String> flood_targets = handler.placeTile(GameController.getCurrentPlayer(), handler.getTile(x, y), tile);
 
-            Log.i("TilePlacementActivity", "Finishing tile placement");
-            if (flood_targets != null) {
-                playFlooding(flood_targets);
-            } else {
-                exit(view);
+                Log.i("TilePlacementActivity", "Finishing tile placement");
+                if (flood_targets != null) {
+                    playFlooding(flood_targets);
+                } else {
+                    exit(view);
+                }
+            } catch (GameplayException e) {
+                e.resolve(view.getContext());
             }
         }
     }

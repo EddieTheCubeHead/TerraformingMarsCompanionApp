@@ -1,5 +1,6 @@
 package com.example.terraformingmarscompanionapp.cards.basegame.corporations;
 
+import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.FirstAction;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
@@ -21,7 +22,7 @@ public final class Inventrix extends Card implements FirstAction {
     }
 
     @Override
-    public void playWithMetadata(Player player, Integer data) {
+    public void playWithMetadata(Player player, Integer data) throws InvalidResourcesException {
         player.getResources().setMoney(45);
         player.getModifiers().setBaseTrRequirementDiscount(2);
 
