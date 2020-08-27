@@ -13,7 +13,6 @@ public final class StripMine extends Card {
         name = "Strip mine";
         price = 25;
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(2);
     }
 
     @Override

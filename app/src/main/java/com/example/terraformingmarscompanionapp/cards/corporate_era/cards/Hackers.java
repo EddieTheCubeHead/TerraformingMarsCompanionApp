@@ -15,7 +15,6 @@ public final class Hackers extends Card {
         name = "Hackers";
         price = 3;
         victory_points = -1;
-        requirements.setMinEnergyProduction(1);
     }
 
     @Override

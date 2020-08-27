@@ -13,7 +13,6 @@ public final class SoilFactory extends Card {
         name = "Soil factory";
         price = 9;
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(1);
         victory_points = 1;
     }
 

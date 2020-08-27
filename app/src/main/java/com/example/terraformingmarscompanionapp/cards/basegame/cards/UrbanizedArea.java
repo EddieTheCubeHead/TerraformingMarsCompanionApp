@@ -18,7 +18,6 @@ public final class UrbanizedArea extends Card {
         price = 10;
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(1);
     }
 
     @Override

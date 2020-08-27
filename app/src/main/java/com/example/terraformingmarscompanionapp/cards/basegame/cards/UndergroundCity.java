@@ -18,7 +18,6 @@ public final class UndergroundCity extends Card {
         price = 18;
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(2);
     }
 
     @Override

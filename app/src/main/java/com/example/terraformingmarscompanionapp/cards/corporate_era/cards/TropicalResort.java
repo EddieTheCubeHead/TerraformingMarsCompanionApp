@@ -13,7 +13,6 @@ public final class TropicalResort extends Card {
         name = "Tropical resort";
         price = 13;
         tags.add(Tag.BUILDING);
-        requirements.setMinHeatProduction(2);
         victory_points = 2;
     }
 

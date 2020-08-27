@@ -19,7 +19,6 @@ public final class DomedCrater extends Card {
         tags.add(Tag.BUILDING);
         tags.add(Tag.CITY);
         requirements.setMaxOxygen(7);
-        requirements.setMinEnergyProduction(1);
         victory_points = 1;
     }
 

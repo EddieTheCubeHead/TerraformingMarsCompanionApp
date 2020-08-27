@@ -14,7 +14,6 @@ public final class NitrophilicMoss extends Card {
         price = 8;
         tags.add(Tag.PLANT);
         requirements.setMinOceans(3);
-        requirements.setMinPlants(2);
     }
 
     @Override

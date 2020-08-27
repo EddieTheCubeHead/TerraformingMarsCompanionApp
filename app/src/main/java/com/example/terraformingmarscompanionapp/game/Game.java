@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
+import com.example.terraformingmarscompanionapp.exceptions.InvalidRequirementsException;
 import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
@@ -387,20 +388,18 @@ public class Game implements Serializable {
      * @param card {@link Card} that is being played
      * @return {@link CardCostPacket} representing the resources the player has to use for playing the card
      */
-    public CardCostPacket prepareCardPlayAction(Card card)
-    {
+    public CardCostPacket prepareCardPlayAction(Card card) throws InvalidRequirementsException {
         ArrayList<Type> single_owner = new ArrayList<>(Arrays.asList(Type.BLUE, Type.RED, Type.GREEN, Type.CORPORATION, Type.GHOST, Type.AWARD, Type.MILESTONE));
 
         CardCostPacket resources_to_use = getRecommendedCardCost(card);
 
+        // This should never happen if all menus work correctly but this is here just in case something
+        // goes wrong in the UI.
         if (single_owner.contains(card.getType()) && card.getOwner() != null) {
-            resources_to_use.reject();
+            throw new InvalidRequirementsException("trying to play a card that has been played already");
         }
 
-        if (!checkCardRequirements(card))
-        {
-            resources_to_use.reject();
-        }
+        checkCardRequirements(card);
 
         return resources_to_use;
     }
@@ -548,15 +547,17 @@ public class Game implements Serializable {
     }
 
     /**
-     * A method to check whether the requirements of a card have been met.
+     * A method to check whether the requirements of a card have been met. Throws an exception detailing
+     * the missing requirements if any exist.
      *
      * @param card {@link Card} which requirements need to be checked
-     * @return {@link Boolean} whether the resources are met or not
+     *
+     * @throws InvalidRequirementsException detailing the missing requirements
      */
-    private Boolean checkCardRequirements(Card card) {
+    private void checkCardRequirements(Card card) throws InvalidRequirementsException {
 
         if (GameController.getGreeneryRound() && !(card instanceof BuildGreenery)) {
-            return false;
+            throw new InvalidRequirementsException("Can only play greeneries.");
         }
 
         Player player = GameController.getCurrentPlayer();
@@ -568,29 +569,44 @@ public class Game implements Serializable {
 
         Integer unused_jokers = player.getTags().getJokerTags();
 
-        // Separate if cases in case I have enough energy at some point to implement exact feedback
-        // on what requirement caused the playing action to be rejected
+        String error_message;
+        Integer amount;
+
         if (requirements.getMinOceans() != null && oceans_placed < requirements.getMinOceans() - base_discount) {
-            return false;
-        }
 
-        if (requirements.getMinEnergyProduction() != null && player.getResources().getEnergyProduction() < requirements.getMinEnergyProduction()) {
-            return false;
-        }
+            amount = (requirements.getMinOceans() - oceans_placed - base_discount);
 
-        if (requirements.getMinPlants() != null && player.getResources().getPlants() < requirements.getMinPlants()) {
-            return false;
+            error_message = "requires " + amount + " more ocean tile";
+            if (amount > 1) {
+                error_message += "s";
+            }
+            error_message += ".";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinOxygen() != null && global_oxygen < requirements.getMinOxygen() - base_discount) {
-            return false;
+
+            amount = (requirements.getMinOxygen() - global_oxygen - base_discount);
+            error_message = "requires " + amount + "% higher oxygen level.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinScienceTags() != null && player.getTags().getScienceTags() < requirements.getMinScienceTags()) {
             if (player.getTags().getScienceTags() + unused_jokers > requirements.getMinScienceTags()) {
                 unused_jokers -= (requirements.getMinScienceTags() - player.getTags().getScienceTags());
             } else {
-                return false;
+
+                amount = (requirements.getMinScienceTags() - player.getTags().getScienceTags() - unused_jokers);
+
+                error_message = "requires " + amount + " more science tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
@@ -598,39 +614,96 @@ public class Game implements Serializable {
             if (player.getTags().getJovianTags() + unused_jokers > requirements.getMinJovianTags()) {
                 unused_jokers -= (requirements.getMinJovianTags() - player.getTags().getJovianTags());
             } else {
-                return false;
+
+                amount = (requirements.getMinJovianTags() - player.getTags().getJovianTags() - unused_jokers);
+
+                error_message = "requires " + amount + " more jovian tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
         if (requirements.getMinSteelProduction() != null && player.getResources().getSteelProduction() < requirements.getMinSteelProduction()) {
-            return false;
+
+            amount = (requirements.getMinSteelProduction() - player.getResources().getSteelProduction());
+
+            error_message = "requires " + amount + " more steel production.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinGlobalCities() != null && cities_in_space + cities_on_mars < requirements.getMinGlobalCities()) {
-            return false;
+
+            amount = (requirements.getMinGlobalCities() - cities_in_space - cities_on_mars);
+
+            error_message = "requires " + amount + " more ";
+            if (amount > 1) {
+                error_message += "cities";
+            } else {
+                error_message += "city";
+            }
+            error_message += " in play.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinPersonalCities() != null && player.getCities() < requirements.getMinPersonalCities()) {
-            return false;
+
+            amount = (requirements.getMinPersonalCities() - player.getCities());
+
+            error_message = "requires " + amount + " more ";
+            if (amount > 1) {
+                error_message += "cities";
+            } else {
+                error_message += "city";
+            }
+            error_message += " you own in play.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinVenusTr() != null && venus_terraform < requirements.getMinVenusTr() - venus_discount) {
-            return false;
+
+            amount = (requirements.getMinVenusTr() - venus_terraform - venus_discount);
+
+            error_message = "requires " + amount + " point";
+            if (amount > 1) {
+                error_message += "s";
+            }
+
+            error_message += " higher venus terraforming rating.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinTemperature() != null && global_temperature < requirements.getMinTemperature() - venus_discount) {
-            return false;
-        }
 
-        if (requirements.getMinPlantProduction() != null && player.getResources().getPlantsProduction() < requirements.getMinPlantProduction()) {
-            return false;
+            amount = (requirements.getMinTemperature() - global_temperature - base_discount * 2);
+
+            error_message = "requires " + amount + " degrees higher global temperature";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinMicrobeTags() != null && player.getTags().getMicrobeTags() < requirements.getMinMicrobeTags()) {
             if (player.getTags().getMicrobeTags() + unused_jokers > requirements.getMinMicrobeTags()) {
                 unused_jokers -= (requirements.getMinMicrobeTags() - player.getTags().getMicrobeTags());
+
             } else {
-                return false;
+
+                amount = (requirements.getMinMicrobeTags() - player.getTags().getMicrobeTags() - unused_jokers);
+
+                error_message = "requires " + amount + " more microbe tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
@@ -638,7 +711,16 @@ public class Game implements Serializable {
             if (player.getTags().getAnimalTags() + unused_jokers > requirements.getMinAnimalTags()) {
                 unused_jokers -= (requirements.getMinAnimalTags() - player.getTags().getAnimalTags());
             } else {
-                return false;
+
+                amount = (requirements.getMinAnimalTags() - player.getTags().getAnimalTags() - unused_jokers);
+
+                error_message = "requires " + amount + " more animal tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
@@ -646,7 +728,16 @@ public class Game implements Serializable {
             if (player.getTags().getEarthTags() + unused_jokers > requirements.getMinEarthTags()) {
                 unused_jokers -= (requirements.getMinEarthTags() - player.getTags().getEarthTags());
             } else {
-                return false;
+
+                amount = (requirements.getMinEarthTags() - player.getTags().getEarthTags() - unused_jokers);
+
+                error_message = "requires " + amount + " more earth tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
@@ -654,7 +745,16 @@ public class Game implements Serializable {
             if (player.getTags().getEnergyTags() + unused_jokers > requirements.getMinEnergyTags()) {
                 unused_jokers -= (requirements.getMinEnergyTags() - player.getTags().getEnergyTags());
             } else {
-                return false;
+
+                amount = (requirements.getMinEnergyTags() - player.getTags().getEnergyTags() - unused_jokers);
+
+                error_message = "requires " + amount + " more energy tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
@@ -668,46 +768,101 @@ public class Game implements Serializable {
                 }
             }
             if (floaters < requirements.getMinFloaters()) {
-                return false;
+
+                amount = (requirements.getMinFloaters() - floaters);
+
+                error_message = "requires " + amount + " more floater";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
         if (requirements.getPlantsForGreenery()) {
             if (player.getResources().getPlants() < (8 + player.getModifiers().getGreeneryPlantCostModifier())) {
-                return false;
+
+                amount = ((8 + player.getModifiers().getGreeneryPlantCostModifier()) - player.getResources().getPlants());
+
+                error_message = "requires " + amount + " more plant";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
         if (requirements.getMinPersonalColonies() != null && player.getColonies() < requirements.getMinPersonalColonies()) {
-            return false;
+
+            amount = (requirements.getMinPersonalColonies() - player.getColonies());
+
+            error_message = "requires " + amount + " more ";
+            if (amount > 1) {
+                error_message += "colonies";
+            } else {
+                error_message += "colony";
+            }
+            error_message += " you own in play.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinTitaniumProduction() != null && player.getResources().getTitaniumProduction() < requirements.getMinTitaniumProduction()) {
-            return false;
+
+            amount = (requirements.getMinTitaniumProduction() - player.getResources().getTitaniumProduction());
+
+            error_message = "requires " + amount + " more titanium.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinPersonalGreeneries() != null && player.getGreeneries() < requirements.getMinPersonalGreeneries()) {
-            return false;
-        }
 
-        if (requirements.getMinHeatProduction() != null && player.getResources().getHeatProduction() < requirements.getMinHeatProduction()) {
-            return false;
+            amount = (requirements.getMinPersonalGreeneries() - player.getGreeneries());
+
+            error_message = "requires " + amount + " more ";
+            if (amount > 1) {
+                error_message += "greeneries";
+            } else {
+                error_message += "greenery";
+            }
+            error_message += " you own in play.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinTr() != null && player.getResources().getTerraformingRating() < requirements.getMinTr()) {
-            return false;
+
+            amount = (requirements.getMinTr() - player.getResources().getTerraformingRating());
+
+            error_message = "requires " + amount + " point";
+            if (amount > 1) {
+                error_message += "s";
+            }
+            error_message += " higher terraforming rating.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinVenusTags() != null && player.getTags().getVenusTags() < requirements.getMinVenusTags()) {
             if (player.getTags().getVenusTags() + unused_jokers > requirements.getMinVenusTags()) {
                 unused_jokers -= (requirements.getMinVenusTags() - player.getTags().getVenusTags());
             } else {
-                return false;
-            }
-        }
 
-        if (requirements.getMinHeat() != null && player.getResources().getHeat() < requirements.getMinHeat()) {
-            return false;
+                amount = (requirements.getMinVenusTags() - player.getTags().getVenusTags() - unused_jokers);
+
+                error_message = "requires " + amount + " more venus tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
+            }
         }
 
         if (requirements.getMinHighestProduction() != null) {
@@ -737,98 +892,213 @@ public class Game implements Serializable {
             }
 
             if (max < requirements.getMinHighestProduction()) {
-                return false;
+
+                amount = (requirements.getMinHighestProduction() - max);
+
+                error_message = "highest production must be " + amount + " point";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += " higher.";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
         // Always in a milestone: never in the same card as other tag requirements
         if (requirements.getMinOrganicTags() != null) {
             if (player.getTags().getPlantTags() + player.getTags().getMicrobeTags() + player.getTags().getAnimalTags() + player.getTags().getJokerTags() < requirements.getMinOrganicTags()) {
-                return false;
+
+                amount = (requirements.getMinOrganicTags() - (player.getTags().getPlantTags() + player.getTags().getMicrobeTags() + player.getTags().getAnimalTags() + player.getTags().getJokerTags()));
+
+                error_message = "requires " + amount + " more organic tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
         if (requirements.getMinCardsInHand() != null && player.getHandSize() < requirements.getMinCardsInHand()) {
-            return false;
+
+            amount = (requirements.getMinCardsInHand() - player.getHandSize());
+
+            error_message = "requires " + amount + " more card";
+            if (amount > 1) {
+                error_message += "s";
+            }
+            error_message += " in hand.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinCardsOnTable() != null &&
                 player.getGreen() + player.getBlue() < requirements.getMinCardsOnTable()) {
-            return false;
+
+            amount = (requirements.getMinCardsOnTable() - player.getGreen() - player.getBlue());
+
+            error_message = "requires " + amount + " more card";
+            if (amount > 1) {
+                error_message += "s";
+            }
+            error_message += " owned by you in play.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinEventsPlayed() != null && player.getRed() < requirements.getMinEventsPlayed()) {
-            return false;
-        }
 
-        // TODO fix edge case with Tharsis and Immigrant city
-        // In the future be mindful of edge case with Black Polar Dust and Lakefront
-        if (requirements.getMinMoneyProduction() != null && player.getResources().getMoneyProduction() < requirements.getMinMoneyProduction()) {
-            return false;
+            amount = (requirements.getMinEventsPlayed() - player.getRed());
+
+            error_message = "requires " + amount + " more event";
+            if (amount > 1) {
+                error_message += "s";
+            }
+            error_message += " played by you.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinUniqueTags() != null && player.getTags().getUniqueTags() < requirements.getMinUniqueTags()) {
-            return false;
+
+            amount = (requirements.getMinUniqueTags() - player.getTags().getUniqueTags());
+
+            error_message = "requires " + amount + " more unique tag";
+            if (amount > 1) {
+                error_message += "s";
+            }
+            error_message += ".";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMinRequirementCards() != null) {
-            Integer amount = 0;
+            Integer card_amount = 0;
             for (Card card_to_check : all_cards.values()) {
                 if (card_to_check.getRequirements().getDrawableRequrement() != null && card_to_check.getOwner() == player) {
-                    amount++;
+                    card_amount++;
                 }
             }
 
-            if (amount < requirements.getMinRequirementCards()) {
-                return false;
+            if (card_amount < requirements.getMinRequirementCards()) {
+
+                amount = (requirements.getMinRequirementCards() - card_amount);
+
+                error_message = "requires " + amount + " more card";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += " with requirements owned by you in play.";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
         if (requirements.getMinPolarTiles() != null) {
-            Integer amount = 0;
+            Integer tile_amount = 0;
             for (Tile tile : player.getOwnedTiles()) {
                 if (tile.getY() < 2) {
-                    amount++;
+                    tile_amount++;
                 }
             }
 
-            if (amount < requirements.getMinPolarTiles()) {
-                return false;
+            if (tile_amount < requirements.getMinPolarTiles()) {
+
+                amount = (requirements.getMinPolarTiles() - tile_amount);
+
+                error_message = "requires " + amount + " more tile";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += " in the polar are owned by you.";
+
+                throw new InvalidRequirementsException(error_message);
             }
         }
 
-        if (requirements.getMinBuildingTags() != null) {
-            if (!(player.getTags().getBuildingTags() + unused_jokers >= requirements.getMinBuildingTags())) {
-                return false;
-            }
+        if (requirements.getMinBuildingTags() != null &&
+                (!(player.getTags().getBuildingTags() + unused_jokers >= requirements.getMinBuildingTags()))) {
+
+                amount = (requirements.getMinBuildingTags() - player.getTags().getBuildingTags() - unused_jokers);
+
+                error_message = "requires " + amount + " more building tag";
+                if (amount > 1) {
+                    error_message += "s";
+                }
+                error_message += ".";
+
+                throw new InvalidRequirementsException(error_message);
         }
 
 
         if (requirements.getMaxTemperature() != null && global_temperature > requirements.getMaxTemperature() + base_discount) {
-            return false;
+
+            amount = -(requirements.getMaxTemperature() - global_temperature + base_discount * 2);
+
+            error_message = "requires " + amount + " degrees lower global temperature";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMaxOceans() != null && oceans_placed > requirements.getMaxOceans() + base_discount) {
-            return false;
+
+            amount = -(requirements.getMaxOceans() - oceans_placed + base_discount);
+
+            error_message = "requires " + amount + " fewer ocean tile";
+            if (amount > 1) {
+                error_message += "s";
+            }
+            error_message += ".";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMaxOxygen() != null && global_oxygen > requirements.getMaxOxygen() + base_discount) {
-            return false;
+
+            amount = -(requirements.getMaxOxygen() - global_oxygen + base_discount);
+
+            error_message = "requires " + amount + "% lower global oxygen level.";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMaxPersonalColonies() != null && player.getColonies() > requirements.getMaxPersonalColonies()) {
-            return false;
+
+            amount = -(requirements.getMaxPersonalColonies() - player.getColonies());
+
+            error_message = "requires " + amount + " fewer ";
+            if (amount > 1) {
+                error_message += "colonies";
+            } else {
+                error_message += "colony";
+            }
+            error_message += " you own in play";
+
+            throw new InvalidRequirementsException(error_message);
         }
 
         if (requirements.getMaxMilestonesClaimed() != null && claimed_milestones > requirements.getMaxMilestonesClaimed()) {
-            return false;
+            throw new InvalidRequirementsException("Maximum number of milestones claimed already.");
         }
 
         if (requirements.getMaxAwardsClaimed() != null && claimed_awards > requirements.getMaxAwardsClaimed()) {
-            return false;
+            throw new InvalidRequirementsException("Maximum number of awards funded already.");
         }
 
-        return requirements.getMaxVenusTr() == null || venus_terraform <= requirements.getMaxVenusTr() + base_discount;
+        if (requirements.getMaxVenusTr() != null && venus_terraform > requirements.getMaxVenusTr() + base_discount) {
+
+            amount = -(requirements.getMaxVenusTr() - venus_terraform + venus_discount);
+
+            error_message = "requires " + amount + " point";
+            if (amount > 1) {
+                error_message += "s";
+            }
+            error_message += " lower venus terraforming rating.";
+
+            throw new InvalidRequirementsException(error_message);
+        }
     }
 
     /**

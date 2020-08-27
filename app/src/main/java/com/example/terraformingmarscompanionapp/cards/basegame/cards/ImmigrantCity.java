@@ -19,7 +19,6 @@ public final class ImmigrantCity extends Card implements EffectCard {
         price = 13;
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(1);
         requirements.setMinMoneyProduction(-4);
     }
 

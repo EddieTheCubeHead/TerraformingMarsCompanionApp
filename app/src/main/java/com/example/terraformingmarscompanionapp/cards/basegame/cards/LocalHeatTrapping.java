@@ -21,7 +21,6 @@ public final class LocalHeatTrapping extends Card {
         name = "Local heat trapping";
         price = 1;
         tags.add(Tag.EVENT);
-        requirements.setMinHeat(5);
     }
 
     @Override

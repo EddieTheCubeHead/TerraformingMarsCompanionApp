@@ -13,7 +13,6 @@ public final class FoodFactory extends Card {
         name = "Food factory";
         price = 12;
         tags.add(Tag.BUILDING);
-        requirements.setMinPlantProduction(1);
         victory_points = 1;
     }
 

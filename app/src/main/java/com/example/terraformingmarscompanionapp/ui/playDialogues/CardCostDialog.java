@@ -58,19 +58,23 @@ public class CardCostDialog {
         steel_value = (2 + player.getModifiers().getSteelValueModifier());
         titanium_value = (3 + player.getModifiers().getTitaniumValueModifier());
 
-        CardCostPacket cost = game.prepareCardPlayAction(card);
+        try {
+            CardCostPacket cost = game.prepareCardPlayAction(card);
 
-        if (!cost.isEligible()) {
-            Toast.makeText(context, String.format("Can not play card '%s'", card.getName()), Toast.LENGTH_SHORT).show();
-            return;
+            if (!cost.isEligible()) {
+                Toast.makeText(context, String.format("Can not play card '%s'", card.getName()), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            credit = cost.getMoney();
+            steel = cost.getSteel();
+            titanium = cost.getTitanium();
+            heat = cost.getHeat();
+            plant = cost.getPlantResources();
+            floater = cost.getFloaterResources();
+        } catch (GameplayException e) {
+            e.resolve(context);
         }
-
-        credit = cost.getMoney();
-        steel = cost.getSteel();
-        titanium = cost.getTitanium();
-        heat = cost.getHeat();
-        plant = cost.getPlantResources();
-        floater = cost.getFloaterResources();
 
         //inflating layout
         LayoutInflater inflater = LayoutInflater.from(context);

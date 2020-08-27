@@ -17,7 +17,6 @@ public final class CommercialDistrict extends Card {
         name = "Commercial district";
         price = 16;
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(1);
     }
 
     @Override

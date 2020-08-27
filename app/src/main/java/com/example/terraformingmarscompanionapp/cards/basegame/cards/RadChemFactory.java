@@ -13,7 +13,6 @@ public final class RadChemFactory extends Card {
         name = "Rad-chem factory";
         price = 8;
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(1);
     }
 
     @Override

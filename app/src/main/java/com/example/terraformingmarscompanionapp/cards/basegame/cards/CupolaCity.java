@@ -19,7 +19,6 @@ public final class CupolaCity extends Card {
         tags.add(Tag.CITY);
         tags.add(Tag.BUILDING);
         requirements.setMaxOxygen(9);
-        requirements.setMinEnergyProduction(1);
     }
 
     @Override

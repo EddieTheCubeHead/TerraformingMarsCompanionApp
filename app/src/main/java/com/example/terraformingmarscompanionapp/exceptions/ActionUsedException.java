@@ -9,6 +9,6 @@ public class ActionUsedException extends GameplayException {
 
     @Override
     public void resolve(Context context) {
-
+        defaultResolveLogic("Cannot perform action:\nAction already used", context);
     }
 }

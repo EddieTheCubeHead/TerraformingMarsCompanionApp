@@ -14,8 +14,6 @@ import java.io.Serializable;
  */
 public class CardRequirements implements Serializable {
     private Integer min_oceans;
-    private Integer min_plants;
-    private Integer min_energy_production;
     private Integer min_oxygen;
     private Integer min_science_tags;
     private Integer min_jovian_tags;
@@ -24,7 +22,6 @@ public class CardRequirements implements Serializable {
     private Integer min_personal_cities;
     private Integer min_venus_tr;
     private Integer min_temperature;
-    private Integer min_plant_production;
     private Integer min_plant_tags;
     private Integer min_microbe_tags;
     private Integer min_animal_tags;
@@ -34,10 +31,8 @@ public class CardRequirements implements Serializable {
     private Integer min_personal_colonies;
     private Integer min_titanium_production;
     private Integer min_personal_greeneries;
-    private Integer min_heat_production;
     private Integer min_tr;
     private Integer min_venus_tags;
-    private Integer min_heat;
 
     // For milestones
     private Integer min_highest_production;
@@ -75,38 +70,6 @@ public class CardRequirements implements Serializable {
      */
     public void setMinOceans(Integer value) {
         min_oceans = value;
-    }
-
-
-    // Minimum plant tags
-    /**
-     * @return {@link Integer} the minimum number of owned plant resources required to play the card
-     */
-    Integer getMinPlants() {
-        return min_plants;
-    }
-
-    /**
-     * @param value {@link Integer} the minimum number of owned plant resources required to play the card
-     */
-    public void setMinPlants(Integer value) {
-        min_plants = value;
-    }
-
-
-    // Minimum energy production
-    /**
-     * @return {@link Integer} the minimum number of owned energy resources required to play the card
-     */
-    Integer getMinEnergyProduction() {
-        return min_energy_production;
-    }
-
-    /**
-     * @param value {@link Integer} the minimum number of energy resources required to play the card
-     */
-    public void setMinEnergyProduction(Integer value) {
-        min_energy_production = value;
     }
 
 
@@ -233,22 +196,6 @@ public class CardRequirements implements Serializable {
      */
     public void setMinTemperature(Integer value) {
         min_temperature = value;
-    }
-
-
-    // Minimum plant production
-    /**
-     * @return {@link Integer} the minimum plant production required to play the card
-     */
-    Integer getMinPlantProduction() {
-        return min_plant_production;
-    }
-
-    /**
-     * @param value {@link Integer} the minimum plant production required to play the card
-     */
-    public void setMinPlantProduction(Integer value) {
-        min_plant_production = value;
     }
 
 
@@ -394,22 +341,6 @@ public class CardRequirements implements Serializable {
     }
 
 
-    // Minimum heat production
-    /**
-     * @return {@link Integer} the minimum heat production required to play the card
-     */
-    Integer getMinHeatProduction() {
-        return min_heat_production;
-    }
-
-    /**
-     * @param value {@link Integer} the minimum heat production required to play the card
-     */
-    public void setMinHeatProduction(Integer value) {
-        min_heat_production = value;
-    }
-
-
     // Minimum tr
     /**
      * @return {@link Integer} the minimum terraforming rating required to play the card
@@ -439,22 +370,6 @@ public class CardRequirements implements Serializable {
      */
     public void setMinVenusTags(Integer value) {
         min_venus_tags = value;
-    }
-
-
-    // Minimum heat resources
-    /**
-     * @return {@link Integer} the minimum owned heat resources required to play the card
-     */
-    Integer getMinHeat() {
-        return min_heat;
-    }
-
-    /**
-     * @param value {@link Integer} the minimum owned heat resources required to play the card
-     */
-    public void setMinHeat(Integer value) {
-        min_heat = value;
     }
 
 

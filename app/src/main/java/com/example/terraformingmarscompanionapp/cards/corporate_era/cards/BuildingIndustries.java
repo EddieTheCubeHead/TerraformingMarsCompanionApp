@@ -13,7 +13,6 @@ public final class BuildingIndustries extends Card {
         name = "Building industries";
         price = 6;
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(1);
     }
 
     @Override

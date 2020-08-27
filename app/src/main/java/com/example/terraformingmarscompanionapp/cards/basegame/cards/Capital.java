@@ -19,7 +19,6 @@ public final class Capital extends Card {
         tags.add(Tag.BUILDING);
         tags.add(Tag.CITY);
         requirements.setMinOceans(4);
-        requirements.setMinEnergyProduction(2);
     }
 
     @Override

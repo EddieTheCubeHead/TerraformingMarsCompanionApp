@@ -9,7 +9,6 @@ public final class RaiseTemperature extends CardlikeOperation {
     public RaiseTemperature() {
         super();
         name = "Raise temperature";
-        requirements.setMinHeat(8);
     }
 
     @Override

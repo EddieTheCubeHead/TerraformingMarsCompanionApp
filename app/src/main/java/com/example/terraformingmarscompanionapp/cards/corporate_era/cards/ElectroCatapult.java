@@ -24,7 +24,6 @@ public final class ElectroCatapult extends Card implements ActionCard {
         price = 17;
         tags.add(Tag.BUILDING);
         requirements.setMaxOxygen(8);
-        requirements.setMinEnergyProduction(1);
         victory_points = 1;
     }
 

@@ -19,7 +19,6 @@ public final class OpenCity extends Card {
         tags.add(Tag.BUILDING);
         tags.add(Tag.CITY);
         requirements.setMinOxygen(12);
-        requirements.setMinEnergyProduction(1);
         victory_points = 1;
     }
 

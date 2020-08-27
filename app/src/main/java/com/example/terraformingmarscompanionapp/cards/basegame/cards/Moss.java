@@ -15,7 +15,6 @@ public final class Moss extends Card {
         price = 4;
         tags.add(Tag.PLANT);
         requirements.setMinOceans(3);
-        requirements.setMinPlants(1);
     }
 
     @Override

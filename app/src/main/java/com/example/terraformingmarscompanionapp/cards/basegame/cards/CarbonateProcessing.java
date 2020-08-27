@@ -13,7 +13,6 @@ public final class CarbonateProcessing extends Card {
         name = "Carbonate processing";
         price = 6;
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(1);
     }
 
     @Override

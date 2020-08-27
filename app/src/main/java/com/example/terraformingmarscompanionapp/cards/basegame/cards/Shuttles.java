@@ -14,7 +14,6 @@ public final class Shuttles extends Card {
         price = 10;
         tags.add(Tag.SPACE);
         requirements.setMinOxygen(5);
-        requirements.setMinEnergyProduction(1);
         victory_points = 0;
     }
 

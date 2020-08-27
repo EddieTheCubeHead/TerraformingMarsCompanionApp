@@ -13,7 +13,6 @@ public final class MagneticDomeField extends Card {
         name = "Magnetic dome field";
         price = 5;
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(2);
     }
 
     @Override

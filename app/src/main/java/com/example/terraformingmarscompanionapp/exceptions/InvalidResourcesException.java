@@ -38,16 +38,14 @@ public class InvalidResourcesException extends GameplayException {
 
     @Override
     public void resolve(Context context) {
-        EventScheduler.clear();
+        String player_message = "Cannot perform action:\nNeed " + amount + " more " + resource.toString();
 
-        try {
-            GameController.loadGame();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (amount != 1 && resource.requiresPlural()) {
+            player_message += "s";
         }
 
-        String player_message = "";
+        player_message += ".";
 
-        GameController.promptUser(player_message ,context);
+        defaultResolveLogic(player_message, context);
     }
 }

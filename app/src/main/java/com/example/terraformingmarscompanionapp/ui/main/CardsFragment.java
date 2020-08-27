@@ -131,9 +131,9 @@ public class CardsFragment extends Fragment implements RecyclerAdapter.OnCardLis
                 Toast.makeText(getContext(), String.format("Action '%s' used", action_name), Toast.LENGTH_SHORT).show();
             }
             update();
+        } else {
+            Log.i("CardsFragment","Trying to use action on a card with no action attached");
         }
-
-        else Log.i("CardsFragment","Trying to use action on a card with no action attached");
     }
 
     @Override public boolean onCardLongClick(int position) { return false; }

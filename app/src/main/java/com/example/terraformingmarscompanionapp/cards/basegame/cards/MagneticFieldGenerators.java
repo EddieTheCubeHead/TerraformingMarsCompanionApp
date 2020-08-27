@@ -13,7 +13,6 @@ public final class MagneticFieldGenerators extends Card {
         name = "Magnetic field generators";
         price = 20;
         tags.add(Tag.BUILDING);
-        requirements.setMinEnergyProduction(4);
     }
 
     @Override
