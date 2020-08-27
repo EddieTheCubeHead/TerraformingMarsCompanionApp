@@ -7,17 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
-import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
-import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.ui.playDialogues.CardCostDialog;
-import com.example.terraformingmarscompanionapp.ui.main.RecyclerAdapter;
+import com.example.terraformingmarscompanionapp.ui.cardRecyclerAdapterClasses.RecyclerAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity implements RecyclerAdapter.OnCardListener, RecyclerAdapter.OnCardLongListener
 {

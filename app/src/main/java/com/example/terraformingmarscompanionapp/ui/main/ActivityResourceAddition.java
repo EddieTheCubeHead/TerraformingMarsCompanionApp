@@ -24,8 +24,7 @@ import com.example.terraformingmarscompanionapp.game.EventScheduler;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ResourceEvent;
-import com.example.terraformingmarscompanionapp.webSocket.GameActions;
-import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
+import com.example.terraformingmarscompanionapp.ui.cardRecyclerAdapterClasses.RecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;

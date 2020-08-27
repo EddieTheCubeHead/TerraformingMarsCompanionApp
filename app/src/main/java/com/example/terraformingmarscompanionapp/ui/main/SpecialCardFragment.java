@@ -18,6 +18,7 @@ import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.cards.basegame.utilityCards.BuildGreenery;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.ui.cardRecyclerAdapterClasses.RecyclerAdapter;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardCostPacket;
 
 import java.util.ArrayList;

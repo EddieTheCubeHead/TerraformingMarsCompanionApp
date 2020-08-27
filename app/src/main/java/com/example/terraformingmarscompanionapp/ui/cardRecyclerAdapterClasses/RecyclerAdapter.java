@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.ui.main;
+package com.example.terraformingmarscompanionapp.ui.cardRecyclerAdapterClasses;
 
 
 import android.annotation.SuppressLint;
@@ -30,7 +30,6 @@ import java.util.List;
 /**
  * An adapter that filters and updates a recyclerview that contains cards.
  */
-
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
 
     private ArrayList<Card> card_list = new ArrayList<>(GameController.getGame().getAllCards().values());
@@ -159,8 +158,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.token_view.setText(card.getResourceText());
     }
 
-    private Filter play_search_filter = new Filter()
-    {
+    private Filter play_search_filter = new Filter() {
         private List<Type> valid_types = Arrays.asList(Type.RED, Type.BLUE, Type.GREEN);
 
         @Override
@@ -276,10 +274,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() { return card_list.size(); }
-
-    public Card getItemAtPosition(int position){
-        return card_list.get(position);
-    }
 
     public ArrayList<Card> getCardList() {
         return card_list;
