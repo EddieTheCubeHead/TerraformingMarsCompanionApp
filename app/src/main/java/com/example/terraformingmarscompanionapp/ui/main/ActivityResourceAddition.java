@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
+import com.example.terraformingmarscompanionapp.InGameUi;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
@@ -198,8 +198,8 @@ public class ActivityResourceAddition extends AppCompatActivity implements Recyc
             EventScheduler.addEvent(new ResourceEvent((ResourceCard) card, amount));
         }
         dialog.dismiss();
-        Intent inGameUi = new Intent(this, InGameUI.class);
-        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        Intent inGameUi = new Intent(this, InGameUi.class);
+        inGameUi.putExtra(InGameUi.UI_QUEUE_CHECK, true);
         startActivity(inGameUi);
     }
 
@@ -209,8 +209,8 @@ public class ActivityResourceAddition extends AppCompatActivity implements Recyc
     @Override
     public void onBackPressed() {
         dialog.dismiss();
-        Intent inGameUi = new Intent(this, InGameUI.class);
-        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        Intent inGameUi = new Intent(this, InGameUi.class);
+        inGameUi.putExtra(InGameUi.UI_QUEUE_CHECK, true);
         startActivity(inGameUi);
     }
 }

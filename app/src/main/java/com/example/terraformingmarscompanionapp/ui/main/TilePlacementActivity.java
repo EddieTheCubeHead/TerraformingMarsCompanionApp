@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
+import com.example.terraformingmarscompanionapp.InGameUi;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
@@ -22,7 +22,7 @@ import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
 import com.example.terraformingmarscompanionapp.game.tileSystem.TileHandler;
-import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+import com.example.terraformingmarscompanionapp.ui.gameMainElements.dialogues.ChoiceDialog;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -188,8 +188,8 @@ public class TilePlacementActivity extends AppCompatActivity {
     }
 
     public void exit(View view) {
-        Intent intent = new Intent(this, InGameUI.class);
-        intent.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        Intent intent = new Intent(this, InGameUi.class);
+        intent.putExtra(InGameUi.UI_QUEUE_CHECK, true);
         startActivity(intent);
     }
 

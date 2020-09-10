@@ -18,8 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
@@ -29,8 +27,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
-import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
-import com.example.terraformingmarscompanionapp.ui.main.TileMapFragment;
+import com.example.terraformingmarscompanionapp.ui.gameMainElements.SectionsPagerAdapter;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 import com.google.android.material.tabs.TabLayout;
@@ -40,7 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InGameUI extends AppCompatActivity implements GameUiElement {
+public class InGameUi extends AppCompatActivity implements GameUiElement {
 
     public static final String UI_QUEUE_CHECK = "ui";
 
@@ -59,7 +56,7 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
     private State state = State.MAIN_VIEW;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_game_u_i);
 
@@ -138,7 +135,7 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
 
     @Override
     protected void onResume() {
-        Log.i("InGameUI", "Calling on resume");
+        Log.i("InGameUi", "Calling on resume");
         GameController.setContextReference(this);
         if (EventScheduler.getStackHasEvents()) {
             EventScheduler.playNextEvent(this);
@@ -347,7 +344,7 @@ public class InGameUI extends AppCompatActivity implements GameUiElement {
                 break;
             case MAP:
                 //TODO this
-                Log.i("InGameUI", "Back pressed from map.");
+                Log.i("InGameUi", "Back pressed from map.");
         }
     }
 

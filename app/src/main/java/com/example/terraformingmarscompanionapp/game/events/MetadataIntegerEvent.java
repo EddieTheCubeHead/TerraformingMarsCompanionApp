@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
-import com.example.terraformingmarscompanionapp.ui.playDialogues.IntegerDialog;
+import com.example.terraformingmarscompanionapp.ui.gameMainElements.dialogues.IntegerDialog;
 
 /**
  * An implementation of {@link GameEvent} used when a card needs data in the form of a numerical

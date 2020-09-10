@@ -3,7 +3,6 @@ package com.example.terraformingmarscompanionapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -112,7 +111,7 @@ public class GameCreationServerActivity extends AppCompatActivity implements Ser
         GameController.initGameController(game, true, player_names);
         GameController.setSelfPlayer(GameController.getPlayer(UserActions.getUser()));
 
-        Intent intent = new Intent(this, InGameUI.class);
+        Intent intent = new Intent(this, InGameUi.class);
         startActivity(intent);
     }
 

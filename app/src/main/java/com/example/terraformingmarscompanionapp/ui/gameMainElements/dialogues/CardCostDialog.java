@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.ui.playDialogues;
+package com.example.terraformingmarscompanionapp.ui.gameMainElements.dialogues;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;

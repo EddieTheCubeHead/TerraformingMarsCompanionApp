@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.ui.main;
+package com.example.terraformingmarscompanionapp.ui.gameMainElements;
 
 import android.content.Context;
 
@@ -7,8 +7,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.terraformingmarscompanionapp.ui.main.CardsFragment;
+import com.example.terraformingmarscompanionapp.ui.main.ResourcesFragment;
+import com.example.terraformingmarscompanionapp.ui.main.SpecialCardFragment;
+
 /**
- * A [FragmentPagerAdapter] that returns a fragment corresponding to
+ * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter

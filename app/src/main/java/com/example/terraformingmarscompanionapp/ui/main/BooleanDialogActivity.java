@@ -16,9 +16,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
+import com.example.terraformingmarscompanionapp.InGameUi;
 import com.example.terraformingmarscompanionapp.R;
-import com.example.terraformingmarscompanionapp.game.cardClasses.ActionCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
@@ -113,8 +112,8 @@ public class BooleanDialogActivity extends AppCompatActivity {
 
     private void exit() {
         dialog.dismiss();
-        Intent inGameUi = new Intent(this, InGameUI.class);
-        inGameUi.putExtra(InGameUI.UI_QUEUE_CHECK, true);
+        Intent inGameUi = new Intent(this, InGameUi.class);
+        inGameUi.putExtra(InGameUi.UI_QUEUE_CHECK, true);
         startActivity(inGameUi);
     }
 }

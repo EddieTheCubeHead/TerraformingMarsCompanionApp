@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
-import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+import com.example.terraformingmarscompanionapp.ui.gameMainElements.dialogues.ChoiceDialog;
 
 import java.util.ArrayList;
 

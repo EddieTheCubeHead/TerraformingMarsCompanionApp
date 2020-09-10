@@ -3,7 +3,7 @@ package com.example.terraformingmarscompanionapp.game;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
+import com.example.terraformingmarscompanionapp.InGameUi;
 import com.example.terraformingmarscompanionapp.exceptions.InvalidRequirementsException;
 import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
@@ -26,7 +26,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -1136,7 +1135,7 @@ public class Game implements Serializable {
      * A part of the chain of methods responsible for changing the generation. Calls {@link GameController#syncGenerationChange(Context)}
      * as the next part of the chain.
      *
-     * @param context {@link Context} the UI context the method is called from. Should be {@link com.example.terraformingmarscompanionapp.InGameUI}
+     * @param context {@link Context} the UI context the method is called from. Should be {@link InGameUi}
      */
     void onGenerationEnd(Context context) {
         if (global_temperature >= 8 && global_oxygen >= 14 && oceans_placed >= 9) {

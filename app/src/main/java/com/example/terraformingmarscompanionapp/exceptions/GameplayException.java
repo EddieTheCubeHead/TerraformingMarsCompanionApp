@@ -17,7 +17,7 @@ public abstract class GameplayException extends Exception {
 
     public abstract void resolve(Context context);
 
-    protected void defaultResolveLogic(String player_message, Context context) {
+    protected final void defaultResolveLogic(String player_message, Context context) {
         EventScheduler.clear();
 
         try {

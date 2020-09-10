@@ -6,7 +6,6 @@ import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
-import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.player.Player;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
@@ -15,7 +14,7 @@ import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.game.events.ResourceChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.TileChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.tileSystem.Placeable;
-import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+import com.example.terraformingmarscompanionapp.ui.gameMainElements.dialogues.ChoiceDialog;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.CardEventPacket;
 

@@ -29,6 +29,8 @@ import java.util.List;
 
 /**
  * An adapter that filters and updates a recyclerview that contains cards.
+ *
+ * Obsolete after UI rework
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> implements Filterable {
 

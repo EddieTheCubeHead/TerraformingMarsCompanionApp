@@ -20,10 +20,8 @@ import android.widget.TextView;
 import com.example.terraformingmarscompanionapp.R;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
-import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,8 +38,10 @@ import java.util.List;
  */
 public abstract class CardParentRecyclerAdapter extends RecyclerView.Adapter<CardParentRecyclerAdapter.CardViewHolder> implements Filterable {
 
-    // A list of cards matching the given conditions
-    protected ArrayList<Card> card_list;
+    // A list of all cards matching the given conditions of the childclass and a list filtered by
+    // the regex search
+    protected ArrayList<Card> full_card_list = new ArrayList<>();
+    protected ArrayList<Card> card_list = new ArrayList<>();
 
     /**
      * Constructor
@@ -49,23 +49,18 @@ public abstract class CardParentRecyclerAdapter extends RecyclerView.Adapter<Car
     public CardParentRecyclerAdapter() {
         for (Card card : GameController.getGame().getDeck().values()) {
             if (isValidCard(card)) {
-                card_list.add(card);
+                full_card_list.add(card);
             }
         }
-    }
 
-    /**
-     * @return {@link ArrayList} of {@link Card} representing a copy of the cards in the card list of the class
-     */
-    public ArrayList<Card> getCardList() {
-        return new ArrayList<>(card_list);
+        card_list.addAll(full_card_list);
     }
 
     /**
      * An abstract method to be implemented by childclasses for filtering the base set of cards while
      * the class specific filter handles subsequent, finer filtering.
      *
-     * @param card {@link Card} which validity should be checked
+     * @param card {@link Card} the validity of which should be checked
      * @return {@link Boolean} representing whether the given card meets the requirements or not
      */
     protected abstract Boolean isValidCard(Card card);
@@ -115,6 +110,8 @@ public abstract class CardParentRecyclerAdapter extends RecyclerView.Adapter<Car
             // Card type is implied by tinting an imageview
             type_view_mid = card_inflated.findViewById(R.id.type_image_mid);
             token_view = card_inflated.findViewById(R.id.token_text);
+
+            card_inflated.setOnClickListener(this);
         }
 
         void setCard(Card card) {
@@ -129,6 +126,7 @@ public abstract class CardParentRecyclerAdapter extends RecyclerView.Adapter<Car
          */
         @Override
         public void onClick(View view) {
+            Log.i("CardRecyclerAdapter", "Card clicked, name: " + card.getName());
             listener.onCardClick(card);
         }
 
@@ -213,7 +211,13 @@ public abstract class CardParentRecyclerAdapter extends RecyclerView.Adapter<Car
             FilterResults results = new FilterResults();
 
             String[] keywords = search_string.toString().toLowerCase().trim().split(" ");
-            for (Card card : card_list) {
+
+            if (keywords.length == 0) {
+                results.values = full_card_list;
+                return results;
+            }
+
+            for (Card card : full_card_list) {
 
                 if (!isValidCard(card)) {
                     continue;

@@ -37,7 +37,7 @@ FUTURE REFERENCE:
 CONTEXT FOR CURRENT IMPLEMENTATIONS:
 - The player playing the card can freely decide the order of events the card triggers. Currently
   not considered a problem despite not being supported due to the only line of play that I can imagine
-  this affecting with only basegame cards is triggering arctic algae with a card removal card and this
+  this affecting with only basegame cards is triggering arctic algae with a plant removal card and this
   already resolves in the favor of the player playing the card. Needs to be kept under watch though,
   if a feature to manually change the order of a card's effects is not implemented.
 - Checks for correct greenery placement not implemented as I deemed it too insignificant and thought

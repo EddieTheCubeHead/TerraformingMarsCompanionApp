@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
+import com.example.terraformingmarscompanionapp.InGameUi;
 import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
@@ -49,7 +49,7 @@ public class GameActions {
     static void handleGameEvent(String event_data) {
         String event_type = event_data.split(Pattern.quote(";"))[1];
         String event = event_data.split(Pattern.quote(";"))[2];
-        new Thread(() -> ((InGameUI)GameController.getContext()).runOnUiThread(() -> {
+        new Thread(() -> ((InGameUi)GameController.getContext()).runOnUiThread(() -> {
             try {
                 switch (event_type) {
                     case CARD_EVENT:

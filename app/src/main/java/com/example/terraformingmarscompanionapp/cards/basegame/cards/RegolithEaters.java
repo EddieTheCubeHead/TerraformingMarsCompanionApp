@@ -7,12 +7,11 @@ import com.example.terraformingmarscompanionapp.game.cardClasses.ResourceCard;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Tag;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Type;
 import com.example.terraformingmarscompanionapp.game.EventScheduler;
-import com.example.terraformingmarscompanionapp.game.Game;
 import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.MetadataChoiceEvent;
 import com.example.terraformingmarscompanionapp.game.events.PlayCardEvent;
-import com.example.terraformingmarscompanionapp.ui.playDialogues.ChoiceDialog;
+import com.example.terraformingmarscompanionapp.ui.gameMainElements.dialogues.ChoiceDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;

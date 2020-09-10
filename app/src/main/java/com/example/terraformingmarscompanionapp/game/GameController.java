@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.terraformingmarscompanionapp.InGameUI;
+import com.example.terraformingmarscompanionapp.InGameUi;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Award;
 import com.example.terraformingmarscompanionapp.game.cardClasses.Card;
 import com.example.terraformingmarscompanionapp.game.cardClasses.FirstAction;
@@ -14,6 +14,7 @@ import com.example.terraformingmarscompanionapp.game.events.ActionUseEvent;
 import com.example.terraformingmarscompanionapp.game.events.GameEvent;
 import com.example.terraformingmarscompanionapp.game.events.PromptEvent;
 import com.example.terraformingmarscompanionapp.game.player.Player;
+import com.example.terraformingmarscompanionapp.ui.gameMainElements.InGameActivity;
 import com.example.terraformingmarscompanionapp.ui.main.GameResultActivity;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
@@ -319,9 +320,9 @@ public class GameController
         if (generation == 0) {
             if (self_player == null || current_player == self_player) {
                 if (current_player.getCorporation() == null) {
-                    ((InGameUI) context).playCorporation();
+                    ((InGameActivity) context).playCorporation();
                 } else if (game.modifiers.getPrelude() && current_player.getPlayedPreludes()) {
-                    ((InGameUI) context).playPreludes();
+                    ((InGameActivity) context).playPreludes();
                 }
             }
 
@@ -384,7 +385,7 @@ public class GameController
             queue.addLast(queue.removeFirst());
 
             current_starter = queue.getFirst();
-            ((InGameUI) context).generationEndPrompt();
+            ((InGameUi) context).generationEndPrompt();
         }
         current_player = current_starter;
 
@@ -603,6 +604,6 @@ public class GameController
      * @param context {@link Context} the context to display the message in
      */
     public static void promptUser(String text, Context context) {
-        ((GameUiElement)context).displayPrompt(text);
+        ((InGameActivity)context).displayPrompt(text);
     }
 }

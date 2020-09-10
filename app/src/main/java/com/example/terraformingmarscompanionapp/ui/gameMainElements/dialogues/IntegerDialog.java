@@ -1,4 +1,4 @@
-package com.example.terraformingmarscompanionapp.ui.playDialogues;
+package com.example.terraformingmarscompanionapp.ui.gameMainElements.dialogues;
 
 import android.app.AlertDialog;
 import android.content.Context;

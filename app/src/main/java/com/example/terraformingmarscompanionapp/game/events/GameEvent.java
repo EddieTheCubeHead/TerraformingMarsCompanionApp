@@ -2,11 +2,9 @@ package com.example.terraformingmarscompanionapp.game.events;
 
 import android.content.Context;
 
+import com.example.terraformingmarscompanionapp.InGameUi;
 import com.example.terraformingmarscompanionapp.exceptions.GameplayException;
-import com.example.terraformingmarscompanionapp.exceptions.InvalidResourcesException;
 import com.example.terraformingmarscompanionapp.game.GameController;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * An interface that represents all different events that can be called during the process of
@@ -22,7 +20,7 @@ public interface GameEvent {
     /**
      * The most important function of all implementations. Gets called from {@link com.example.terraformingmarscompanionapp.game.EventScheduler#playNextEvent(Context)}.
      *
-     * @param context {@link Context} the android UI context that the action gets called from. Usually {@link com.example.terraformingmarscompanionapp.InGameUI}
+     * @param context {@link Context} the android UI context that the action gets called from. Usually {@link InGameUi}
      */
     void playEvent(Context context) throws GameplayException;
 

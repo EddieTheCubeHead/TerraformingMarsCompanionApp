@@ -15,9 +15,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.terraformingmarscompanionapp.GameCreationActivity;
 import com.example.terraformingmarscompanionapp.GameCreationServerActivity;
 import com.example.terraformingmarscompanionapp.GameJoiningActivity;
+import com.example.terraformingmarscompanionapp.InGameUi;
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.game.Game;
+import com.example.terraformingmarscompanionapp.game.GameController;
+import com.example.terraformingmarscompanionapp.game.GameModifiers;
+import com.example.terraformingmarscompanionapp.game.tileSystem.GameMap;
+import com.example.terraformingmarscompanionapp.ui.gameMainElements.InGameActivity;
 import com.example.terraformingmarscompanionapp.webSocket.UserActions;
 import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * The startup screen of the app.
@@ -137,6 +146,20 @@ public class TitleScreen extends AppCompatActivity {
             sign_up.setText("Sign up");
             log_in.setText("Log in");
         }
+    }
+
+    // TODO remove before merge
+    public void startUiTestingActivity(View view) {
+        GameModifiers modifiers = new GameModifiers();
+        modifiers.setCorporateEra(true);
+        ArrayList<String> player_names = new ArrayList<>(Arrays.asList("Tester 1", "Tester 2"));
+
+        Game game = new Game(modifiers, false, GameMap.THARSIS);
+
+        GameController.initGameController(game, true, player_names);
+
+        Intent intent = new Intent(this, InGameActivity.class);
+        startActivity(intent);
     }
 
     private void initializeWebSocket() {

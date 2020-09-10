@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".ui.main.GameResultActivity"></activity>
+        <activity android:name=".ui.gameMainElements.InGameActivity"></activity>
+        <activity android:name=".ui.main.GameResultActivity" />
         <activity android:name=".ui.main.TilePlacementActivity" />
         <activity
             android:name=".ui.main.TitleScreen"
@@ -24,15 +25,15 @@
         </activity>
         <activity android:name=".GameCreationActivity" />
         <activity
-            android:name=".ui.playDialogues.ChoiceDialog"
+            android:name=".ui.gameMainElements.dialogues.ChoiceDialog"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".InGameUI" />
+        <activity android:name=".InGameUi" />
         <activity android:name=".SearchActivity" />
         <activity android:name=".ui.main.LoginActivity" />
         <activity android:name=".GameCreationServerActivity" />
         <activity android:name=".GameJoiningActivity" />
         <activity android:name=".ui.main.ActivityResourceAddition" />
-        <activity android:name=".ui.playDialogues.IntegerDialog" />
+        <activity android:name=".ui.gameMainElements.dialogues.IntegerDialog" />
     </application>
 
 </manifest>
