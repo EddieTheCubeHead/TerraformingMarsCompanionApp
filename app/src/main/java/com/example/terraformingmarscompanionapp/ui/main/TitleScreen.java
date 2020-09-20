@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +18,7 @@ import com.example.terraformingmarscompanionapp.GameCreationActivity;
 import com.example.terraformingmarscompanionapp.GameCreationServerActivity;
 import com.example.terraformingmarscompanionapp.GameJoiningActivity;
 import com.example.terraformingmarscompanionapp.R;
+import com.example.terraformingmarscompanionapp.ui.main.tilemap.TileMapFragment;
 import com.example.terraformingmarscompanionapp.webSocket.UserActions;
 import com.example.terraformingmarscompanionapp.webSocket.WebSocketHandler;
 
@@ -44,9 +47,28 @@ public class TitleScreen extends AppCompatActivity {
             sign_up.setText("Log out");
             log_in.setText("Change user");
         }
+        goToTileUiTest();
     }
 
 
+    public void tileUiTest(View view) {
+        goToTileUiTest();
+    }
+
+    private void goToTileUiTest() {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.fragmentContainer, new TileMapFragment());
+        transaction.addToBackStack(null);
+        transaction.commit();
+        findViewById(R.id.button).setVisibility(View.GONE);
+        findViewById(R.id.button2).setVisibility(View.GONE);
+        findViewById(R.id.button3).setVisibility(View.GONE);
+        findViewById(R.id.button4).setVisibility(View.GONE);
+        findViewById(R.id.button5).setVisibility(View.GONE);
+        findViewById(R.id.button6).setVisibility(View.GONE);
+        findViewById(R.id.button7).setVisibility(View.GONE);
+    }
 
     public void startSoloGame(View view) {
         Toast.makeText(getApplicationContext(), "To be added", Toast.LENGTH_SHORT).show();

@@ -29,7 +29,7 @@ import com.example.terraformingmarscompanionapp.game.GameController;
 import com.example.terraformingmarscompanionapp.game.Player;
 import com.example.terraformingmarscompanionapp.ui.main.GameUiElement;
 import com.example.terraformingmarscompanionapp.ui.main.SectionsPagerAdapter;
-import com.example.terraformingmarscompanionapp.ui.main.TileMapFragment;
+import com.example.terraformingmarscompanionapp.ui.main.tilemap.TileMapFragment;
 import com.example.terraformingmarscompanionapp.webSocket.GameActions;
 import com.example.terraformingmarscompanionapp.webSocket.packets.ActionUsePacket;
 import com.google.android.material.tabs.TabLayout;

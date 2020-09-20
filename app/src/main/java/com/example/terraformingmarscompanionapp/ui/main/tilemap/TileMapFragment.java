@@ -1,5 +1,7 @@
-package com.example.terraformingmarscompanionapp.ui.main;
+package com.example.terraformingmarscompanionapp.ui.main.tilemap;
 
+import android.content.Context;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +9,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.terraformingmarscompanionapp.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +18,8 @@ import com.example.terraformingmarscompanionapp.R;
 
 //Fragment for the map UI element rewrite
 public class TileMapFragment extends Fragment {
+    private GLSurfaceView gLView;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,6 +54,8 @@ public class TileMapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -61,7 +65,26 @@ public class TileMapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tile_map, container, false);
+        // Create a GLSurfaceView instance and set it
+        // as the ContentView for this Activity.
+        TileMapSurfaceView gLView = new TileMapSurfaceView(getActivity());
+        return gLView;
+    }
+
+    class TileMapSurfaceView extends GLSurfaceView {
+
+        private final TileMapRender renderer;
+
+        public TileMapSurfaceView(Context context){
+            super(context);
+
+            // Create an OpenGL ES 2.0 context
+            setEGLContextClientVersion(2);
+            renderer = new TileMapRender(context);
+
+            // Set the Renderer for drawing on the GLSurfaceView
+            setRenderer(renderer);
+            setRenderMode(TileMapSurfaceView.RENDERMODE_WHEN_DIRTY);
+        }
     }
 }
